@@ -7,10 +7,10 @@ Technologies used:
 - assets: [nlohmann/json](https://github.com/nlohmann/json), [nothings/stb](https://github.com/nothings/stb/blob/master/stb_image.h)
 ## Asset Formats
 ### Format: ".parrot.json"
-```json
+```jsonc
 {
     // general
-    "main": <window>,
+    "main": "<window>",
     
     // assets
     "loading-policy": "app|scene|lazy", // default: "lazy"
@@ -18,7 +18,7 @@ Technologies used:
 }
 ```
 ### Format: ".wndw.json"
-```json
+```jsonc
 {
     // general
     "uuid": 1234567889,
@@ -26,22 +26,22 @@ Technologies used:
     "size": [ 1080, 720 ], // default: [ 1080, 720 ]
 
     // content
-    "scene": <scene> // default: null
+    "scene": "<scene>" // default: null
 }
 ```
 ### Format: ".scn.json
-```json
+```jsonc
 {
     // general
     "uuid": 1234567889,
     "name": "Scene Name", // default: "Unnamed Scene"
     
     // hierarchy
-    "root": <entity> // default: null
+    "root": "<entity>" // default: null
 }
 ```
 ### Format: ".entt.json"
-```json
+```jsonc
 {
     // general
     "uuid": 1234567889,
@@ -55,19 +55,19 @@ Technologies used:
     },
     // children
     "children": [ // default: []
-        <entity>, ...
+        "<entity>", /* ... */
     ],
     // scripts
     "scripts": { // default: {}
         "script_name": {
             /* depends on script */
-        }, ...
+        }, /* ... */
     },
     // components
     "components": { // default: {}
         "component_name": {
             /* depends on component */
-        }, ...
+        }, /* ... */
     }
 }
 ```
