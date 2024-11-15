@@ -1,5 +1,5 @@
 #pragma once
-#include "common.hh"
+#include "entity.hh"
 
 namespace Parrot {
 	// Scene
@@ -9,5 +9,6 @@ namespace Parrot {
 		Scene(const stdf::path& filepath);
 	private:
 		string _name;
+		UniquePtr<Entity> _root;
 	};
 }
