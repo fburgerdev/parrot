@@ -3,11 +3,11 @@
 
 namespace Parrot {
 	// onUpdate
-	void Script::onUpdate(float32 delta_time) {
+	void Script::onUpdate([[maybe_unused]] float32 delta_time) {
 		// do nothing
 	}
 	// onEvent
-	bool Script::onEvent(const Event& event) {
+	bool Script::onEvent([[maybe_unused]] const Event& event) {
 		return false;
 	}
 }
