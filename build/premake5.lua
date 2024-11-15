@@ -88,12 +88,12 @@ project "demo"
    includedirs {
       ROOT .. "/src",
       ROOT .. "/vendor/",
-      ROOT .. "/test/demo/"
+      ROOT .. "/example/demo/"
       --[[ INSERT ADDITIONAL DIRECTORIES HERE ]]
    }
    -- files
    files {
-      ROOT .. "/test/demo/**",
+      ROOT .. "/example/demo/**",
       --[[ INSERT ADDITIONAL FILES HERE ]]
    }
 
