@@ -32,4 +32,12 @@ namespace Parrot {
 	void Window::update() {
 		_physical.update();
 	}
+	// bind
+	void Window::bind() {
+		_physical.bind();
+	}
+	// unbind
+	void Window::unbind() {
+		_physical.unbind();
+	}
 }

@@ -24,6 +24,10 @@ namespace Parrot {
 
 		// update
 		void update();
+		// bind
+		void bind();
+		// unbind
+		void unbind();
 	private:
 		string _title;
 		uint _width, _height;

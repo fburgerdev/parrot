@@ -1,4 +1,5 @@
 #pragma once
+#include "graphics/guard.hh"
 #include "graphics/shader.hh"
 
 namespace Parrot {
@@ -6,6 +7,6 @@ namespace Parrot {
 	class ShaderOpenGL {
 	public:
 		// ShaderOpenGL
-		ShaderOpenGL(const Shader& shader);
+		ShaderOpenGL(const Shader& shader, ContextGuard&& guard);
 	};
 }

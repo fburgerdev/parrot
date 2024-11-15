@@ -35,7 +35,7 @@ namespace Parrot {
             glfwTerminate();
             return false;
         }
-        glfwMakeContextCurrent(handle(_handle));
+        bind();
         glfwSwapInterval(1);
 
         // init glad
@@ -61,5 +61,22 @@ namespace Parrot {
     void WindowGLFW::update() {
         glfwSwapBuffers(handle(_handle));
         glfwPollEvents();
+    }
+    
+    static Stack<WindowGLFW*> s_bound;
+    // bind
+    void WindowGLFW::bind() {
+        s_bound.push(this);
+        glfwMakeContextCurrent(handle(_handle));
+    }
+    // unbind
+    void WindowGLFW::unbind() {
+        s_bound.pop();
+        if (s_bound.empty()) {
+            glfwMakeContextCurrent(nullptr);
+        }
+        else {
+            glfwMakeContextCurrent(handle(s_bound.top()->_handle));
+        }
     }
 }

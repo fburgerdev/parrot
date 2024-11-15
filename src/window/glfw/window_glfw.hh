@@ -19,6 +19,10 @@ namespace Parrot {
 
         // update
         void update();
+        // bind
+        void bind();
+        // unbind
+        void unbind();
     private:
         void* _handle = nullptr;
     };
