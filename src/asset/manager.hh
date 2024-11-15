@@ -5,17 +5,18 @@
 namespace Parrot {
 	// LoadingPolicy
 	enum class LoadingPolicy {
-		/* PRELOAD_APP, PRELOAD_SCENE, */ JUST_IN_TIME
+		/* PRELOAD_APP, PRELOAD_SCENE, */ LAZY_LOAD
 	};
 	// UnloadingPolicy
 	enum class UnloadingPolicy {
-		STAY_FOREVER, /* UNLOAD_SCENE, */ INSTANT
+		UNLOAD_APP, /* UNLOAD_SCENE, */ UNLOAD_UNUSED
 	};
 
 	// AssetManager
 	class AssetManager {
 	public:
 		// AssetManager
+		AssetManager() = default;
 		AssetManager(const stdf::path& asset_dir);
 		AssetManager(
 			const stdf::path& asset_dir,
@@ -27,9 +28,9 @@ namespace Parrot {
 		template<class T>
 		AssetView<T> getAsset(const stdf::path& filepath) {
 			stdf::path canonical_path = stdf::canonical(_asset_dir / filepath);
-			usize hash_key = std::hash<stdf::path>()(canonical_path);
+			usize hash_key = std::hash<stdf::path>()(canonical_path); //! hash not unique identifier
 			if (!_assets.contains(hash_key)) {
-				bool destroy_if_unviewed = (_unloading_policy == UnloadingPolicy::INSTANT);
+				bool destroy_if_unviewed = (_unloading_policy == UnloadingPolicy::UNLOAD_UNUSED);
 				_assets.emplace(hash_key, makeAsset<T>(canonical_path, destroy_if_unviewed));
 			}
 			return AssetView<T>(_assets.at(hash_key), [&, hash_key] {
@@ -38,8 +39,8 @@ namespace Parrot {
 		}
 	private:
 		stdf::path _asset_dir;
-		LoadingPolicy _loading_policy = LoadingPolicy::JUST_IN_TIME;
-		UnloadingPolicy _unloading_policy = UnloadingPolicy::STAY_FOREVER;
+		LoadingPolicy _loading_policy = LoadingPolicy::LAZY_LOAD;
+		UnloadingPolicy _unloading_policy = UnloadingPolicy::UNLOAD_APP;
 		Map<usize, Asset> _assets;
 	};
 }
