@@ -1,34 +1,45 @@
 #pragma once
-#include "common.hh"
+#include "asset.hh"
+#include "view.hh"
 
 namespace Parrot {
+	// LoadingPolicy
+	enum class LoadingPolicy {
+		/* PRELOAD_APP, PRELOAD_SCENE, */ JUST_IN_TIME
+	};
+	// UnloadingPolicy
+	enum class UnloadingPolicy {
+		STAY_FOREVER, /* UNLOAD_SCENE, */ INSTANT
+	};
+
 	// AssetManager
 	class AssetManager {
 	public:
 		// AssetManager
 		AssetManager(const stdf::path& asset_dir);
+		AssetManager(
+			const stdf::path& asset_dir,
+			LoadingPolicy loading_policy,
+			UnloadingPolicy unloading_policy
+		);
 		
 		// getAsset
 		template<class T>
-		T& getAsset(const stdf::path& filepath) {
+		AssetView<T> getAsset(const stdf::path& filepath) {
 			stdf::path canonical_path = stdf::canonical(_asset_dir / filepath);
-			if (!_cache.contains(canonical_path)) {
-				_cache.emplace(canonical_path, new T(canonical_path));
+			usize hash_key = std::hash<stdf::path>()(canonical_path);
+			if (!_assets.contains(hash_key)) {
+				bool destroy_if_unviewed = (_unloading_policy == UnloadingPolicy::INSTANT);
+				_assets.emplace(hash_key, makeAsset<T>(canonical_path, destroy_if_unviewed));
 			}
-			return *(reinterpret_cast<T*>(_cache.at(canonical_path)));
+			return AssetView<T>(_assets.at(hash_key), [&, hash_key] {
+				_assets.erase(hash_key);
+			});
 		}
-		//TODO:
-		// window
-		// scene
-		// prefab
-		// mesh
-		// material
-		// script
-		// texture
-		// image
-		// shader
 	private:
 		stdf::path _asset_dir;
-		Map<stdf::path, void*> _cache;
+		LoadingPolicy _loading_policy = LoadingPolicy::JUST_IN_TIME;
+		UnloadingPolicy _unloading_policy = UnloadingPolicy::STAY_FOREVER;
+		Map<usize, Asset> _assets;
 	};
 }
