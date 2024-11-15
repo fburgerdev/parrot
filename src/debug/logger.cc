@@ -75,4 +75,8 @@ namespace Parrot {
 		}
 		cout << s_white_code << "\n";
 	}
+	// log
+	void Logger::log(strview format) {
+		cout << format << endl;
+	}
 }
