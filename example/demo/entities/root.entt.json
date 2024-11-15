@@ -1,0 +1,12 @@
+{
+  "uuid": 4333563683971168836,
+  "tag": "Root",
+  "transform": {
+    "position": [ 0, 0, 0 ],
+    "rotation": [ 0, 0, 0 ],
+    "scale": [ 1, 1, 1 ]
+  },
+  "children": [],
+  "scripts": {},
+  "components": {}
+}

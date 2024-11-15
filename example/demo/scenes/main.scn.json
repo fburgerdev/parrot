@@ -1,0 +1,5 @@
+{
+  "uuid": 12303461204403500793,
+  "name": "Main Scene",
+  "root": "entities/root.entt.json"
+}

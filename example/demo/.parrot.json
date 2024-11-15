@@ -1,0 +1,5 @@
+{
+  "main": "windows/main.wndw.json",
+  "loading_policy": "lazy",
+  "unloading_policy": "unused"
+}
