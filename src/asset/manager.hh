@@ -1,4 +1,5 @@
 #pragma once
+#include "uuid.hh"
 #include "asset.hh"
 #include "view.hh"
 
@@ -10,6 +11,20 @@ namespace Parrot {
 	// UnloadingPolicy
 	enum class UnloadingPolicy {
 		UNLOAD_APP, /* UNLOAD_SCENE, */ UNLOAD_UNUSED
+	};
+
+	// AssetIndex
+	class AssetIndex {
+	public:
+		// AssetIndex
+		AssetIndex(const stdf::path& asset_dir);
+		// getUUID
+		uuid getUUID(const stdf::path& path) const;
+		// getPath
+		const stdf::path& getPath(uuid uuid) const;
+	private:
+		Map<stdf::path, uuid> _uuids;
+		Map<uuid, stdf::path> _paths;
 	};
 
 	// AssetManager
@@ -24,23 +39,25 @@ namespace Parrot {
 			UnloadingPolicy unloading_policy
 		);
 		
-		// getAsset
+		// asset
 		template<class T>
-		AssetView<T> getAsset(const stdf::path& filepath) {
-			stdf::path canonical_path = stdf::canonical(_asset_dir / filepath);
-			usize hash_key = std::hash<stdf::path>()(canonical_path); //! hash not unique identifier
-			if (!_assets.contains(hash_key)) {
+		AssetView<T> asset(uuid uuid) {
+			if (!_assets.contains(uuid)) {
+				stdf::path path = _asset_dir / _index.getPath(uuid);
 				bool destroy_if_unviewed = (_unloading_policy == UnloadingPolicy::UNLOAD_UNUSED);
-				_assets.emplace(hash_key, makeAsset<T>(canonical_path, destroy_if_unviewed));
+				_assets.emplace(uuid, makeAsset<T>(path, destroy_if_unviewed));
 			}
-			return AssetView<T>(_assets.at(hash_key), [&, hash_key] {
-				_assets.erase(hash_key);
-			});
+			return _assets.at(uuid);
+		}
+		template<class T>
+		AssetView<T> asset(const stdf::path& filepath) {
+			return asset<T>(_index.getUUID(filepath));
 		}
 	private:
 		stdf::path _asset_dir;
-		LoadingPolicy _loading_policy = LoadingPolicy::LAZY_LOAD;
-		UnloadingPolicy _unloading_policy = UnloadingPolicy::UNLOAD_APP;
-		Map<usize, Asset> _assets;
+		LoadingPolicy _loading_policy;
+		UnloadingPolicy _unloading_policy;
+		AssetIndex _index;
+		Map<uuid, Asset> _assets;
 	};
 }

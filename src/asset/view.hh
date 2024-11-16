@@ -58,6 +58,13 @@ namespace Parrot {
 			}
 		}
 
+		// *
+		T& operator*() {
+			return *_value;
+		}
+		const T& operator*() const {
+			return *_value;
+		}
 		// ->
 		T* operator->() {
 			return _value;
