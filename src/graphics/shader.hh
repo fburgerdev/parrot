@@ -1,9 +1,9 @@
 #pragma once
-#include "common.hh"
+#include "uuid.hh"
 
 namespace Parrot {
 	// Shader
-	class Shader {
+	class Shader : public UUIDObject {
 	public:
 		// Shader
 		Shader(const stdf::path& filepath);

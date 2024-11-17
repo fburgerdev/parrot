@@ -1,5 +1,5 @@
 #pragma once
-#include "common.hh"
+#include "uuid.hh"
 
 namespace Parrot {
 	// ImageFormat
@@ -8,7 +8,7 @@ namespace Parrot {
 	};
 
 	// Image
-	class Image {
+	class Image : public UUIDObject {
 	public:
 		// Image
 		Image(const stdf::path& filepath);

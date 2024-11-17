@@ -1,14 +1,14 @@
 #pragma once
-#include "common.hh"
+#include "uuid.hh"
 
 namespace Parrot {
 	// Material
-	class Material {
+	class Material : public UUIDObject {
 	public:
 		// Material
 		Material(const stdf::path& filepath);
 
-		// shader_path
-		stdf::path shader_path;
+		// shader_uuid
+		uuid shader_uuid = 0;
 	};
 }

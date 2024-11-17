@@ -4,7 +4,7 @@
 
 namespace Parrot {
 	// Entity
-	class Entity {
+	class Entity : public UUIDObject {
 	public:
 		// getUUID
 		uuid getUUID() const;

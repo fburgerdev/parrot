@@ -1,5 +1,5 @@
 #pragma once
-#include "common.hh"
+#include "uuid.hh"
 
 #if defined(PARROT_GLFW)
 #include "glfw/window_glfw.hh"
@@ -10,7 +10,7 @@ namespace Parrot {
 
 namespace Parrot {
 	// Window
-	class Window {
+	class Window : public UUIDObject {
 	public:
 		// Window
 		Window(const stdf::path& filepath);

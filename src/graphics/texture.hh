@@ -3,12 +3,12 @@
 
 namespace Parrot {
 	// Texture
-	class Texture {
+	class Texture : public UUIDObject {
 	public:
 		// Texture
 		Texture(const stdf::path& filepath);
 		
-		// image_path
-		stdf::path image_path;
+		// image_uuid
+		uuid image_uuid;
 	};
 }

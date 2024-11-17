@@ -3,7 +3,7 @@
 
 namespace Parrot {
 	// Scene
-	class Scene {
+	class Scene : public UUIDObject {
 	public:
 		// Scene
 		Scene(const stdf::path& filepath);
