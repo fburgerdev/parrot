@@ -1,5 +1,6 @@
 #include "common.hh"
 #include "entity.hh"
+#include "debug/debug.hh"
 
 namespace Parrot {
 	// Entity
@@ -34,5 +35,27 @@ namespace Parrot {
 	}
 	void Entity::destroyChild(const Entity& child) {
 		_children.erase(child.getUUID());
+	}
+	// foreachChild
+	void Entity::foreachChild(function<void(Entity&)> func) {
+		for (auto& [uuid, child] : _children) {
+			func(child);
+		}
+	}
+	void Entity::foreachChild(function<void(const Entity&)> func) const {
+		for (const auto& [uuid, child] : _children) {
+			func(child);
+		}
+	}
+
+	// update
+	void Entity::update(float32 delta_time) {
+		LOG_ECS_TRACE("entity update (tag = \"{}\")", _tag);
+		for (auto& [id, component] : _components) {
+			component.update(delta_time);
+		}
+		for (auto& [uuid, child] : _children) {
+			child.update(delta_time);
+		}
 	}
 }

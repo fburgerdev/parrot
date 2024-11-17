@@ -18,8 +18,9 @@ namespace Parrot {
 		// destroyChild
 		void destroyChild(uuid uuid);
 		void destroyChild(const Entity& child);
-		// children
-		// TODO: iterate children
+		// foreachChild
+		void foreachChild(function<void(Entity&)> func);
+		void foreachChild(function<void(const Entity&)> func) const;
 		
 		// hasComponent
 		template<class T>
@@ -46,8 +47,12 @@ namespace Parrot {
 		void removeComponent() {
 			_components.erase(getComponentID<T>());
 		}
+		
+		// friend
+		friend class Scene;
 	private:
 		Entity(uuid uuid, Entity* parent);
+		void update(float32 delta_time);
 
 		string _tag;
 		Entity* _parent = nullptr;
