@@ -9,6 +9,8 @@ namespace Parrot {
 		Scene(const stdf::path& filepath);
 		// update
 		void update(float32 delta_time);
+		// getRenderable
+		List<const Entity*> getRenderable() const;
 	private:
 		string _name;
 		UniquePtr<Entity> _root;
