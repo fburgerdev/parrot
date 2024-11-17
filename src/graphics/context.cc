@@ -21,8 +21,8 @@ namespace Parrot {
 		return _textures.at(&texture);
 	}
 
-	// bind
-	[[nodiscard]] ContextGuard GPUContext::bind() {
-		return { _bind, _unbind };
+	// draw
+	void GPUContext::draw() {
+		// TODO
 	}
 }

@@ -20,7 +20,7 @@ namespace Parrot {
 		GPUShader& getShader(const Shader& shader);
 		// getTexture
 		GPUTexture& getTexture(const Texture& texture);
-
+		void draw();
 
 		// friend
 		friend class GPU;
