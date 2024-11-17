@@ -6,9 +6,6 @@ namespace Parrot {
 	// Entity
 	class Entity : public UUIDObject {
 	public:
-		// getUUID
-		uuid getUUID() const;
-
 		// hasParent
 		bool hasParent() const;
 		// getParent
@@ -52,7 +49,7 @@ namespace Parrot {
 	private:
 		Entity(uuid uuid, Entity* parent);
 
-		uuid _uuid;
+		string _tag;
 		Entity* _parent = nullptr;
 		Map<uuid, Entity> _children;
 		Map<usize, Component> _components;
