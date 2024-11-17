@@ -39,5 +39,13 @@ namespace Parrot {
 		LOG_CORE_INFO("app '{}' terminated (gracefully)", _name);
 	}
 
+	// createBatch
+	Batch App::createBatch(const Scene& scene) {
+		Batch batch;
+		for (const Entity* entity : scene.getRenderable()) {
+			const auto& render_component = entity->getComponent<RenderComponent>();
+			//batch.add({ render_component.mesh_uuid, render_component.material_uuid });
+		}
+		return batch;
 	}
 }

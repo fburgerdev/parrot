@@ -4,6 +4,7 @@
 #include "ecs/scene.hh"
 #include "graphics/context.hh"
 #include "asset/manager.hh"
+#include "graphics/batch_renderer.hh"
 
 namespace Parrot {
 	// App
@@ -17,6 +18,9 @@ namespace Parrot {
 		void addWindow(Window&& window);
 		// run
 		void run();
+
+		// createBatch
+		Batch createBatch(const Scene& scene);
 	private:
 		string _name;
 		Window* _main_window = nullptr;
