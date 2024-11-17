@@ -3,7 +3,7 @@
 
 namespace Parrot {
 	// logger (only for engine code, not for client!)
-	static inline Logger logger = Logger("parrot");
+	inline Logger logger = Logger("parrot");
 }
 // macros
 #if !defined(PARROT_NO_LOG)

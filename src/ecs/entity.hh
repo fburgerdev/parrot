@@ -30,11 +30,11 @@ namespace Parrot {
 		// getComponent
 		template<class T>
 		T& getComponent() {
-			return dynamic_cast<T*>(_components.at(getComponentID<T>()));
+			return dynamic_cast<T&>(_components.at(getComponentID<T>()));
 		}
 		template<class T>
 		const T& getComponent() const {
-			return dynamic_cast<T*>(_components.at(getComponentID<T>()));
+			return dynamic_cast<const T&>(_components.at(getComponentID<T>()));
 		}
 		// addComponent
 		template<class T>

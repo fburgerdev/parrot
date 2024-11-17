@@ -2,7 +2,7 @@
 #include "app.hh"
 #include "debug/debug.hh"
 
-// (static)console figures
+// (static) console figures
 static std::string s_info = R""""(
 --------------------------------------------------------
 |  _____                     _                  .--,   |

@@ -13,7 +13,7 @@ namespace Parrot {
 	LogLevel Logger::getLevel(strview scope) const {
 		strview longest_scope = strview();
 		LogLevel level = LogLevel::TRACE;
-		for (auto& [other_scope, other_level] : _levels) {
+		for (const auto& [other_scope, other_level] : _levels) {
 			if (scope.starts_with(other_scope)) {
 				if (other_scope.length() == scope.length() || scope.at(other_scope.length()) == '/') {
 					if (longest_scope.length() <= other_scope.length()) {
