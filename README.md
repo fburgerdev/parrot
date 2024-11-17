@@ -6,10 +6,11 @@ Technologies used:
 - graphics-api: _opengl_ using [glad](https://github.com/Dav1dde/glad)
 - assets: [nlohmann/json](https://github.com/nlohmann/json), [nothings/stb](https://github.com/nothings/stb/blob/master/stb_image.h)
 ## Asset Formats
-### Format: ".parrot.json"
+### Format: ".app.json"
 ```jsonc
 {
     // general
+    "name": "App Name", // default: "Unnamed App"
     "main": "<window>",
     
     // assets
