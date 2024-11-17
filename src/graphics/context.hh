@@ -1,5 +1,5 @@
 #pragma once
-#include "guard.hh"
+#include "mesh.hh"
 #include "shader.hh"
 #include "texture.hh"
 
@@ -21,8 +21,6 @@ namespace Parrot {
 		// getTexture
 		GPUTexture& getTexture(const Texture& texture);
 
-		// bind
-		[[nodiscard]] ContextGuard bind();
 
 		// friend
 		friend class GPU;

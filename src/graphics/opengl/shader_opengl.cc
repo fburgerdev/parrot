@@ -3,7 +3,7 @@
 
 namespace Parrot {
 	// ShaderOpenGL
-	ShaderOpenGL::ShaderOpenGL(const Shader& shader, [[maybe_unused]] ContextGuard&& guard) {
+	ShaderOpenGL::ShaderOpenGL(const Shader& shader) {
 
 	}
 }
