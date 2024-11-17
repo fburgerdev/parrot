@@ -1,12 +1,21 @@
 #pragma once
+#include "uuid.hh"
 
 namespace Parrot {
+	// forward: Entity
+	class Entity;
+
 	// Component
 	class Component {
 	public:
+		// Component
+		Component(Entity& entity);
+		// update
+		virtual void update(float32 update);
 
+		// entity
+		Entity& entity;
 	};
-
 	// getComponentID
 	template<class T>
 	usize getComponentID() {
