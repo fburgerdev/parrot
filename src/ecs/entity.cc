@@ -4,12 +4,7 @@
 namespace Parrot {
 	// Entity
 	Entity::Entity(uuid uuid, Entity* parent)
-		: _uuid(uuid), _parent(parent) {}
-
-	// getUUID
-	uuid Entity::getUUID() const {
-		return _uuid;
-	}
+		: UUIDObject(uuid), _parent(parent) {}
 
 	// hasParent
 	bool Entity::hasParent() const {
