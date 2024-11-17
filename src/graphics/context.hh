@@ -7,9 +7,13 @@
 #if defined(PARROT_OPENGL)
 #include "opengl/shader_opengl.hh"
 #include "opengl/texture_opengl.hh"
+#include "opengl/draw_opengl.hh"
 namespace Parrot {
 	using GPUShader = ShaderOpenGL;
 	using GPUTexture = TextureOpenGL;
+	inline void drawGPU() {
+		drawOpenGL();
+	}
 }
 #endif
 
@@ -22,7 +26,7 @@ namespace Parrot {
 		void use(const Material& material);
 		// draw
 		void draw();
-
+		
 		// friend
 		friend class App;
 	private:

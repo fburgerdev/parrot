@@ -9,7 +9,7 @@ namespace Parrot {
 	// use
 	void GPUContext::use(const Mesh& mesh) {
 		// TODO
-		}
+	}
 	void GPUContext::use(const Material& material) {
 		// TODO
 	}

@@ -7,5 +7,8 @@ namespace Parrot {
 	public:
 		// ShaderOpenGL
 		TextureOpenGL(const Texture& texture);
+		// bind, unbind
+		void bind();
+		static void unbind();
 	};
 }
