@@ -1,5 +1,6 @@
 #pragma once
 #include "uuid.hh"
+#include "transform.hh"
 #include "component.hh"
 
 namespace Parrot {
@@ -21,7 +22,7 @@ namespace Parrot {
 		// foreachChild
 		void foreachChild(function<void(Entity&)> func);
 		void foreachChild(function<void(const Entity&)> func) const;
-		
+
 		// hasComponent
 		template<class T>
 		bool hasComponent() const {
@@ -37,9 +38,9 @@ namespace Parrot {
 			return dynamic_cast<const T&>(_components.at(getComponentID<T>()));
 		}
 		// addComponent
-		template<class T>
-		T& addComponent() {
-			_components.emplace(getComponentID<T>());
+		template<class T, class... TArgs>
+		T& addComponent(TArgs&&... args) {
+			_components.emplace(getComponentID<T>(), T(*this, std::forward<TArgs>(args)...));
 			return getComponent<T>();
 		}
 		// removeComponent
@@ -47,9 +48,12 @@ namespace Parrot {
 		void removeComponent() {
 			_components.erase(getComponentID<T>());
 		}
-		
+
 		// friend
 		friend class Scene;
+
+		// transform
+		Transform transform;
 	private:
 		Entity(uuid uuid, Entity* parent);
 		void update(float32 delta_time);
