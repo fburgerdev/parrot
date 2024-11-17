@@ -1,5 +1,6 @@
 #pragma once
 #include "mesh.hh"
+#include "material.hh"
 #include "shader.hh"
 #include "texture.hh"
 
@@ -16,14 +17,14 @@ namespace Parrot {
 	// GPUContext
 	class GPUContext {
 	public:
-		// getShader
-		GPUShader& getShader(const Shader& shader);
-		// getTexture
-		GPUTexture& getTexture(const Texture& texture);
+		// use
+		void use(const Mesh& mesh);
+		void use(const Material& material);
+		// draw
 		void draw();
 
 		// friend
-		friend class GPU;
+		friend class App;
 	private:
 		GPUContext(function<void()>&& bind, function<void()>&& unbind);
 

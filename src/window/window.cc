@@ -40,4 +40,8 @@ namespace Parrot {
 	void Window::unbind() {
 		_physical.unbind();
 	}
+	// getSceneUUID
+	uuid Window::getSceneUUID() const {
+		return _scene_uuid;
+	}
 }

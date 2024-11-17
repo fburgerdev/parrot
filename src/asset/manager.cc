@@ -7,6 +7,7 @@ using json = nlohmann::json;
 namespace Parrot {
 	// AssetIndex
 	AssetIndex::AssetIndex(const stdf::path& asset_dir) {
+		LOG_ASSET_TRACE("indexing asset directory {}", asset_dir);
 		for (stdf::path path : stdf::recursive_directory_iterator(asset_dir)) {
 			if (stdf::is_regular_file(path) && path.extension().string().ends_with(".json")) {
 				auto data = json::parse(ifstream(path));

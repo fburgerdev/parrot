@@ -15,10 +15,6 @@ namespace Parrot {
 		// Window
 		Window(const stdf::path& filepath);
 
-		// open
-		void open();
-		// close
-		void close();
 		// isOpen
 		bool isOpen() const;
 
@@ -28,9 +24,19 @@ namespace Parrot {
 		void bind();
 		// unbind
 		void unbind();
+
+		// getSceneUUID
+		uuid getSceneUUID() const;
+
+		// friend
+		friend class App;
 	private:
+		void open();
+		void close();
+
 		string _title;
 		uint _width, _height;
 		PhysicalWindow _physical;
+		uuid _scene_uuid = 0;
 	};
 }

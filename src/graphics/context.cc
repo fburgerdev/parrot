@@ -6,19 +6,12 @@ namespace Parrot {
 	GPUContext::GPUContext(function<void()>&& bind, function<void()>&& unbind)
 		: _bind(std::move(bind)), _unbind(std::move(unbind)) {}
 
-	// getShader
-	GPUShader& GPUContext::getShader(const Shader& shader) {
-		if (!_shaders.contains(&shader)) {
-			_shaders.emplace(&shader, GPUShader(shader, bind()));
+	// use
+	void GPUContext::use(const Mesh& mesh) {
+		// TODO
 		}
-		return _shaders.at(&shader);
-	}
-	// getTexture
-	GPUTexture& GPUContext::getTexture(const Texture& texture) {
-		if (!_textures.contains(&texture)) {
-			_textures.emplace(&texture, GPUTexture(texture, bind()));
-		}
-		return _textures.at(&texture);
+	void GPUContext::use(const Material& material) {
+		// TODO
 	}
 
 	// draw

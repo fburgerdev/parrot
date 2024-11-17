@@ -72,6 +72,13 @@ namespace Parrot {
 		const T* operator->() const {
 			return _value;
 		}
+		// get
+		T* get() {
+			return _value;
+		}
+		const T* get() const {
+			return _value;
+		}
 	private:
 		T* _value;
 		Asset::ControlBlock* _control;
