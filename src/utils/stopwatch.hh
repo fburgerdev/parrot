@@ -10,6 +10,8 @@ namespace Parrot {
 	public:
 		// Stopwatch
 		Stopwatch();
+		// elapsed
+		seconds elapsed() const;
 		// reset
 		seconds reset();
 	private:
