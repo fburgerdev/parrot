@@ -10,6 +10,8 @@ namespace Parrot {
 	public:
 		// Component
 		Component(Entity& entity);
+		// ~Component
+		virtual ~Component();
 		// update
 		virtual void update(float32 update);
 
