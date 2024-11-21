@@ -2,17 +2,9 @@
 #include "uuid.hh"
 #include "asset.hh"
 #include "view.hh"
+#include "policy.hh"
 
 namespace Parrot {
-	// LoadingPolicy
-	enum class LoadingPolicy {
-		/* PRELOAD_APP, PRELOAD_SCENE, */ LAZY_LOAD
-	};
-	// UnloadingPolicy
-	enum class UnloadingPolicy {
-		UNLOAD_APP, /* UNLOAD_SCENE, */ UNLOAD_UNUSED
-	};
-
 	// AssetIndex
 	class AssetIndex {
 	public:
