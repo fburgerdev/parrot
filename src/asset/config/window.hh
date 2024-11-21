@@ -2,6 +2,9 @@
 #include "scene.hh"
 
 namespace Parrot {
+	// None
+	struct None {};
+	
 	// WindowConfig
 	class WindowConfig {
 	public:
@@ -32,6 +35,6 @@ namespace Parrot {
 		// title, width, height, scene
 		string title = "Untitled Window";
 		uint width = 1080, height = 720;
-		Variant<uuid, stdf::path, SceneConfig> scene = 0;
+		Variant<None, uuid, stdf::path, SceneConfig> scene = None();
 	};
 }

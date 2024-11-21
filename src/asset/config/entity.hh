@@ -12,6 +12,7 @@ namespace Parrot {
 			if (json.contains("tag")) {
 				tag = string(json.at("tag"));
 			}
+			// TODO: transform
 			// children
 			if (json.contains("children")) {
 				for (const auto& child : json.at("children")) {
@@ -26,12 +27,15 @@ namespace Parrot {
 					}
 				}
 			}
+			// TODO: components
 		}
 
 		// tag, transform, children, components
 		string tag = "Entity";
-		//Transform transform;
+		// TODO: uncomment
+		// Transform transform;
 		Set<Variant<uuid, stdf::path, EntityConfig>> children;
-		//Map<usize, Component> components;
+		// TODO: uncomment
+		// Map<usize, Component> components;
 	};
 }
