@@ -9,6 +9,7 @@ namespace Parrot {
 	class AssetIndex {
 	public:
 		// AssetIndex
+		AssetIndex() = default;
 		AssetIndex(const stdf::path& asset_dir);
 		// getUUID
 		uuid getUUID(const stdf::path& path) const;
@@ -49,8 +50,8 @@ namespace Parrot {
 		}
 	private:
 		stdf::path _asset_dir;
-		LoadingPolicy _loading_policy;
-		UnloadingPolicy _unloading_policy;
+		LoadingPolicy _loading_policy = LoadingPolicy::LAZY_LOAD;
+		UnloadingPolicy _unloading_policy = UnloadingPolicy::UNLOAD_APP;
 		AssetIndex _index;
 		Map<uuid, Asset> _assets;
 	};
