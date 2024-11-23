@@ -10,7 +10,15 @@ namespace Parrot {
     static HandleGLFW* handle(void* ptr) {
         return reinterpret_cast<HandleGLFW*>(ptr);
     }
-    
+
+    // WindowGLFW
+    WindowGLFW::WindowGLFW(WindowGLFW&& other)
+        : _handle(std::exchange(other._handle, nullptr)) {}
+    // =
+    WindowGLFW& WindowGLFW::operator=(WindowGLFW&& other) {
+        _handle = std::exchange(other._handle, nullptr);
+        return *this;
+    }
     // ~WindowGLFW
     WindowGLFW::~WindowGLFW() {
         close();

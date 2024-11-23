@@ -7,9 +7,14 @@ namespace Parrot {
     public:
         // WindowGLFW
         WindowGLFW() = default;
+        WindowGLFW(const WindowGLFW&) = delete;
+        WindowGLFW(WindowGLFW&& other);
+        // =
+        WindowGLFW& operator=(const WindowGLFW&) = delete;
+        WindowGLFW& operator=(WindowGLFW&& other);
         // ~WindowGLFW
         ~WindowGLFW();
-
+        
         // open
         bool open(uint width, uint height, strview title);
         // close
