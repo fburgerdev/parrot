@@ -20,6 +20,11 @@ namespace Parrot {
 		Map<uuid, stdf::path> _paths;
 	};
 
+	//? is "handle" the right term?
+	// AssetHandle
+	template<class T>
+	using AssetHandle = Variant<uuid, stdf::path, T>;
+
 	// AssetManager
 	class AssetManager {
 	public:
@@ -47,6 +52,33 @@ namespace Parrot {
 		template<class T>
 		AssetView<T> asset(const stdf::path& filepath) {
 			return asset<T>(_index.getUUID(filepath));
+		}
+		//? is "handle" the right term?
+		// useHandle(s)
+		template<class T>
+		void useHandle(auto&& func, const AssetHandle<T>& handle) {
+			if (std::holds_alternative<uuid>(handle)) {
+				func(*asset<T>(std::get<uuid>(handle)));
+			}
+			else if (std::holds_alternative<stdf::path>(handle)) {
+				func(*asset<T>(std::get<stdf::path>(handle)));
+			}
+			else {
+				func(std::get<T>(handle));
+			}
+		}
+		template<class TFirst, class... TRest>
+		void useHandles(auto&& func, const AssetHandle<TFirst>& first, const AssetHandle<TRest>&... rest) {
+			useHandle<TFirst>([&](const TFirst& value) {
+				if constexpr (sizeof...(TRest) > 0) {
+					useHandles([=](const TRest&... rest) {
+						func(value, rest...);
+					}, rest...);
+				}
+				else {
+					func(value);
+				}
+			}, first);
 		}
 	private:
 		stdf::path _asset_dir;
