@@ -52,7 +52,7 @@ namespace Parrot {
 	void Entity::update(float32 delta_time) {
 		LOG_ECS_TRACE("entity update (tag = \"{}\")", _tag);
 		for (auto& [id, component] : _components) {
-			component.update(delta_time);
+			component->update(delta_time);
 		}
 		for (auto& [uuid, child] : _children) {
 			child.update(delta_time);
