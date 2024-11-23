@@ -4,6 +4,6 @@
 namespace Parrot {
     // setup
     stdf::path setup() {
-        return "example/demo";
+        return "example/demo/.app.json";
     }
 }

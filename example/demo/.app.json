@@ -1,6 +1,9 @@
 {
   "name": "demo",
-  "main": "windows/main.wndw.json",
+  "main": [
+    "windows/main.wndw.json",
+    "scenes/main.scn.json"
+  ],
   "loading_policy": "lazy",
   "unloading_policy": "unused"
 }

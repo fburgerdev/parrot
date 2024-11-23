@@ -1,5 +1,6 @@
 #pragma once
 #include "uuid.hh"
+#include "asset/config/window_config.hh"
 
 #if defined(PARROT_GLFW)
 #include "glfw/window_glfw.hh"
@@ -13,10 +14,12 @@ namespace Parrot {
 	class Window : public UUIDObject {
 	public:
 		// Window
-		Window(const stdf::path& filepath);
+		Window(const WindowConfig& config);
 
 		// isOpen
 		bool isOpen() const;
+		// close
+		void close();
 
 		// update
 		void update();
@@ -24,19 +27,9 @@ namespace Parrot {
 		void bind();
 		// unbind
 		void unbind();
-
-		// getSceneUUID
-		uuid getSceneUUID() const;
-
-		// friend
-		friend class App;
 	private:
-		void open();
-		void close();
-
 		string _title;
-		uint _width, _height;
+		uint _width = 0, _height = 0;
 		PhysicalWindow _physical;
-		uuid _scene_uuid = 0;
 	};
 }

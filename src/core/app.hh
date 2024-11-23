@@ -1,5 +1,4 @@
 #pragma once
-#include "uuid.hh"
 #include "window/window.hh"
 #include "ecs/scene.hh"
 #include "graphics/context.hh"
@@ -11,11 +10,10 @@ namespace Parrot {
 	class App {
 	public:
 		// App
-		App(const stdf::path& asset_dir);
+		App(const stdf::path& config_path);
 
-		// addWindow
-		void addWindow(const Window& window);
-		void addWindow(Window&& window);
+		// add
+		void add(const WindowConfig& window_config, const SceneConfig& scene_config);
 		// run
 		void run();
 
@@ -26,6 +24,7 @@ namespace Parrot {
 		Window* _main_window = nullptr;
 		Map<uuid, Window> _windows;
 		Map<uuid, Scene> _scenes;
+		Set<Pair<uuid, uuid>> _window_scene_pairs;
 		Map<Window*, GPUContext> _contexts;
 		AssetManager _asset_manager;
 	};

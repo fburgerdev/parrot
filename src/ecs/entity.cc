@@ -4,6 +4,14 @@
 
 namespace Parrot {
 	// Entity
+	Entity::Entity(const EntityConfig& config, EntityConfigLoader loader) {
+		_tag = config.tag;
+		for (const auto& child_id : config.children) {
+			Entity child(loader(child_id), loader);
+			_children.emplace(child.getUUID(), std::move(child));
+		}
+		// TODO: components
+	}
 	Entity::Entity(uuid uuid, Entity* parent)
 		: UUIDObject(uuid), _parent(parent) {}
 

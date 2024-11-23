@@ -1,12 +1,18 @@
 #pragma once
-#include "uuid.hh"
+#include "asset/config/entity_config.hh"
 #include "transform.hh"
 #include "component.hh"
 
 namespace Parrot {
+	// EntityConfigLoader
+	using EntityConfigLoader = function<EntityConfig(Variant<uuid, stdf::path, EntityConfig>)>;
+
 	// Entity
 	class Entity : public UUIDObject {
 	public:
+		// Entity
+		Entity(const EntityConfig& config, EntityConfigLoader loader);
+
 		// hasParent
 		bool hasParent() const;
 		// getParent

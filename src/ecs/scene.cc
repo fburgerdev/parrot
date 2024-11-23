@@ -7,16 +7,15 @@ using json = nlohmann::json;
 
 namespace Parrot {
 	// Scene
-	Scene::Scene(const stdf::path& filepath) {
-		if (filepath.string().ends_with(".json")) {
-			auto data = json::parse(ifstream(filepath));
-			// name
-			_name = data.contains("name") ? data.at("name") : "Unnamed Scene";
+	Scene::Scene(const SceneConfig& config, EntityConfigLoader loader) {
+		_name = config.name;
+		if (config.root) {
+			_root = std::make_unique<Entity>(loader(*config.root), loader);
 		}
 	}
 	// update
 	void Scene::update(float32 delta_time) {
-		LOG_ECS_TRACE("update scene (d = {}s)", delta_time);
+		LOG_ECS_TRACE("update scene '{}'", _name);
 		if (_root) {
 			_root->update(delta_time);
 		}
