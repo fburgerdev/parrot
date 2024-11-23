@@ -1,5 +1,5 @@
 #pragma once
-#include "scene.hh"
+#include "common.hh"
 
 namespace Parrot {
 	// None
@@ -9,8 +9,16 @@ namespace Parrot {
 	class WindowConfig {
 	public:
 		// WindowConfig
+		WindowConfig() = default;
+		WindowConfig(const stdf::path& config_path);
 		template<class JSON>
 		WindowConfig(const JSON& json) {
+			loadFromJSON(json);
+		}
+
+		// loadFromJSON
+		template<class JSON>
+		void loadFromJSON(const JSON& json) {
 			// title
 			if (json.contains("title")) {
 				title = string(json.at("title"));
@@ -20,21 +28,10 @@ namespace Parrot {
 				width = uint(json.at("size")[0]);
 				height = uint(json.at("size")[1]);
 			}
-			// scene
-			if (scene.at("scene").is_number()) {
-				scene = uuid(json.at("scene"));
-			}
-			else if (scene.at("scene").is_string()) {
-				scene = stdf::path(string(json.at("scene")));
-			}
-			else {
-				scene = SceneConfig(json.at("scene"));
-			}
 		}
 
-		// title, width, height, scene
+		// title, width, height
 		string title = "Untitled Window";
 		uint width = 1080, height = 720;
-		Variant<None, uuid, stdf::path, SceneConfig> scene = None();
 	};
 }

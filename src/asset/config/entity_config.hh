@@ -6,8 +6,16 @@ namespace Parrot {
 	class EntityConfig {
 	public:
 		// EntityConfig
+		EntityConfig() = default;
+		EntityConfig(const stdf::path& config_path);
 		template<class JSON>
 		EntityConfig(const JSON& json) {
+			loadFromJSON(json);
+		}
+
+		// loadFromJSON
+		template<class JSON>
+		void loadFromJSON(const JSON& json) {
 			// tag
 			if (json.contains("tag")) {
 				tag = string(json.at("tag"));
@@ -17,13 +25,13 @@ namespace Parrot {
 			if (json.contains("children")) {
 				for (const auto& child : json.at("children")) {
 					if (child.is_number()) {
-						children.emplace(uuid(child));
+						children.emplace_back(uuid(child));
 					}
 					else if (child.is_string()) {
-						children.emplace(string(child));
+						children.emplace_back(stdf::path(string(child)));
 					}
 					else {
-						children.emplace(EntityConfig(child));
+						children.emplace_back(EntityConfig(child));
 					}
 				}
 			}
@@ -34,7 +42,7 @@ namespace Parrot {
 		string tag = "Entity";
 		// TODO: uncomment
 		// Transform transform;
-		Set<Variant<uuid, stdf::path, EntityConfig>> children;
+		List<Variant<uuid, stdf::path, EntityConfig>> children;
 		// TODO: uncomment
 		// Map<usize, Component> components;
 	};
