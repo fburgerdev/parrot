@@ -39,7 +39,9 @@ namespace Parrot {
 				bool destroy_if_unviewed = (_unloading_policy == UnloadingPolicy::UNLOAD_UNUSED);
 				_assets.emplace(uuid, makeAsset<T>(path, destroy_if_unviewed));
 			}
-			return _assets.at(uuid);
+			return AssetView<T>(_assets.at(uuid), [&, uuid] {
+				_assets.erase(uuid);
+				});
 		}
 		template<class T>
 		AssetView<T> asset(const stdf::path& filepath) {
