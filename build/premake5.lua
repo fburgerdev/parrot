@@ -1,68 +1,89 @@
 -- premake5.lua
-ROOT = "%{wks.location}"
-WORKSPACE = "parrot"
-STARTUP_PROJECT = "demo"
+ROOT = ".."
+EXAMPLE = "example_demo"
 
 -- workspace
-workspace(WORKSPACE)
-   -- startproject
-   startproject(STARTUP_PROJECT)
-   
-   -- location
-   location ".."
+workspace "parrot"
+   -- basic
+   location (ROOT)
+   startproject (EXAMPLE)
 
-   -- cpp
+   -- c++
    language "C++"
    cppdialect "C++20"
-   debugger "GDB"
    warnings "High"
 
    -- defines
    defines {
-      "PARROT_GLFW",
-      "PARROT_OPENGL"
+      "PARROT_GLFW", -- WINDOW_API
+      "PARROT_OPENGL" -- GRAPHICS_API
    }
    
-   -- dependancies
+   -- dependencies
    -- :: directories
    libdirs {
+      ROOT .. "/bin/%{cfg.buildcfg}",
       ROOT .. "/vendor/**/lib"
-      --[[ INSERT ADDITIONAL LINKS HERE ]]
    }
-
-   -- config
-   configurations { "debug", "release" }
-   -- :: debug
-   filter "configurations:debug"
-      -- symbols / defines
-      symbols "On"
-      defines { "CONFIG_DEBUG" }
-      -- options
-      linkoptions { }
-   -- :: dist
-   filter "configurations:release"
-      -- optimize / defines
-      optimize "On"
-      defines { "CONFIG_RELEASE" }
-      -- options
-      linkoptions { "-Ofast" }
+   -- :: libraries
+   links {
+      "glfw3", -- WINDOW_API
+      "opengl32" -- GRAPHICS_API
+   }
 
    -- system
    -- :: windows
    filter "system:windows"
       defines { "SYSTEM_WINDOWS" }
+   filter {}
    -- :: linux
    filter "system:linux"
       defines { "SYSTEM_LINUX" }
+   filter {}
 
--- project lib
-project(WORKSPACE)
-   -- static lib
+   -- config
+   configurations { "debug", "release" }
+   -- :: debug
+   filter { "configurations:debug" }
+      defines { "CONFIG_DEBUG" }
+      symbols "On"
+      linkoptions {}
+   filter {}
+   -- :: release
+   filter { "configurations:release" }
+      defines { "CONFIG_RELEASE" }
+      optimize "On"
+      linkoptions { "-Ofast" }
+   filter {}
+
+   -- out
+   targetdir (ROOT .. "/bin/%{cfg.buildcfg}")
+   objdir (ROOT .. "/build/obj")
+   
+-- vendor
+project "vendor"
+   -- basic
+   location (ROOT .. "/vendor")
+   kind "StaticLib"
+
+   -- include
+   includedirs {
+      ROOT .. "/vendor/"
+   }
+   -- files
+   files {
+      ROOT .. "/vendor/**",
+   }
+
+-- parrot
+project "parrot"
+   -- basic
+   location (ROOT .. "/src")
    kind "StaticLib"
 
    -- precompiled headers
    pchheader "common.hh"
-   pchsource "common.cc"
+   pchsource (ROOT .. "src/common.cc")
    
    -- include
    includedirs {
@@ -72,16 +93,12 @@ project(WORKSPACE)
    -- files
    files {
       ROOT .. "/src/**",
-      ROOT .. "/vendor/**",
    }
 
-   -- binaries
-   targetdir(ROOT .. "/bin/%{cfg.buildcfg}")
-   objdir(ROOT .. "/bin/obj")
-
--- project demo
-project "demo"
-   -- console
+-- example_demo
+project "example_demo"
+   -- basic
+   location (ROOT .. "/example/demo")
    kind "ConsoleApp"
 
    -- include
@@ -89,24 +106,11 @@ project "demo"
       ROOT .. "/src",
       ROOT .. "/vendor/",
       ROOT .. "/example/demo/"
-      --[[ INSERT ADDITIONAL DIRECTORIES HERE ]]
    }
    -- files
    files {
       ROOT .. "/example/demo/**",
-      --[[ INSERT ADDITIONAL FILES HERE ]]
    }
 
-   -- dependancies
-   -- :: directories
-   libdirs {
-      ROOT .. "/bin/%{cfg.buildcfg}",
-      ROOT .. "/vendor/**/lib"
-      --[[ INSERT ADDITIONAL DIRECTORIES HERE ]]
-   }
-   -- :: libraries
-   links { WORKSPACE, "glfw3.lib", "opengl32.lib" --[[ INSERT ADDITIONAL LINKS HERE ]] }
-
-   -- binaries
-   targetdir(ROOT .. "/bin/%{cfg.buildcfg}")
-   objdir(ROOT .. "/bin/obj")
+   -- libraries
+   links { "parrot", "vendor" }
