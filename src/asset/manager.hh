@@ -12,7 +12,7 @@ namespace Parrot {
 		AssetIndex() = default;
 		AssetIndex(const stdf::path& asset_dir);
 		// getUUID
-		uuid getUUID(const stdf::path& path) const;
+		uuid getUUID(const stdf::path& path);
 		// getPath
 		const stdf::path& getPath(uuid uuid) const;
 	private:
@@ -47,7 +47,7 @@ namespace Parrot {
 			}
 			return AssetView<T>(_assets.at(uuid), [&, uuid] {
 				_assets.erase(uuid);
-				});
+			});
 		}
 		template<class T>
 		AssetView<T> asset(const stdf::path& filepath) {

@@ -9,14 +9,16 @@ namespace Parrot {
 	AssetIndex::AssetIndex(const stdf::path& asset_dir) {
 		LOG_ASSET_TRACE("indexing asset directory {}", asset_dir);
 		for (stdf::path path : stdf::recursive_directory_iterator(asset_dir)) {
-			if (stdf::is_regular_file(path) && path.extension().string().ends_with(".json")) {
-				auto data = json::parse(ifstream(path));
-				if (data.contains("uuid")) {
-					_uuids.emplace(stdf::relative(path, asset_dir), uuid(data.at("uuid")));
-					_paths.emplace(uuid(data.at("uuid")), stdf::relative(path, asset_dir));
-				}
-				else {
-					LOG_ASSET_WARNING("asset {} does not have a \"uuid\" property, will not be indexed", stdf::relative(path, asset_dir));
+			if (stdf::is_regular_file(path)) {
+				if (path.extension().string().ends_with(".json") && !path.string().ends_with(".app.json")) {
+					auto data = json::parse(ifstream(path));
+					if (data.contains("uuid")) {
+						_uuids.emplace(stdf::relative(path, asset_dir), uuid(data.at("uuid")));
+						_paths.emplace(uuid(data.at("uuid")), stdf::relative(path, asset_dir));
+					}
+					else {
+						LOG_ASSET_WARNING("asset {} does not have a \"uuid\" property, will not be indexed", stdf::relative(path, asset_dir));
+					}
 				}
 			}
 		}
@@ -25,7 +27,12 @@ namespace Parrot {
 		}
 	}
 	// getUUID
-	uuid AssetIndex::getUUID(const stdf::path& path) const {
+	uuid AssetIndex::getUUID(const stdf::path& path) {
+		if (!_uuids.contains(path)) {
+			uuid uuid = generateUUID();
+			_uuids.emplace(path, uuid);
+			_paths.emplace(uuid, path);
+		}
 		return _uuids.at(path);
 	}
 	// getPath
