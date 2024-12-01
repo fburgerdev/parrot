@@ -23,9 +23,13 @@ namespace Parrot {
 		_physical.setIcon(image);
 	}
 
-	// update
-	void Window::update() {
-		_physical.update();
+	// pollEvents
+	List<Event> Window::pollEvents() {
+		return _physical.pollEvents();
+	}
+	// swapBuffers
+	void Window::swapBuffers() {
+		_physical.swapBuffers();
 	}
 	// bind
 	void Window::bind() {

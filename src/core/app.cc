@@ -61,9 +61,12 @@ namespace Parrot {
 					//// draw
 					//GPUContext& context = _contexts.at(&window);
 					// BatchRenderer::draw(context, createBatch(scene));
-					window.update();
+					for (auto& e : window.pollEvents()) {
+						LOG_CORE_DEBUG("{}", e);
+					}
+					window.swapBuffers();
 				}
-				if (total_watch.elapsed() > 3) {
+				if (total_watch.elapsed() > 7) {
 					_main_window->close();
 				}
 			}

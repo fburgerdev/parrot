@@ -24,8 +24,10 @@ namespace Parrot {
 		// setIcon
 		void setIcon(const Image& image);
 
-		// update
-		void update();
+		// pollEvents
+		List<Event> pollEvents();
+		// swapBuffers
+		void swapBuffers();
 		// bind
 		void bind();
 		// unbind
