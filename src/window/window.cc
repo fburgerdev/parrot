@@ -17,6 +17,12 @@ namespace Parrot {
 	void Window::close() {
 		_physical.close();
 	}
+
+	// setIcon
+	void Window::setIcon(const Image& image) {
+		_physical.setIcon(image);
+	}
+
 	// update
 	void Window::update() {
 		_physical.update();

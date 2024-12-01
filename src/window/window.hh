@@ -21,6 +21,9 @@ namespace Parrot {
 		// close
 		void close();
 
+		// setIcon
+		void setIcon(const Image& image);
+
 		// update
 		void update();
 		// bind

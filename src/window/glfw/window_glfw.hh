@@ -1,5 +1,5 @@
 #pragma once
-#include "common.hh"
+#include "utils/image.hh"
 
 namespace Parrot {
     // WindowGLFW
@@ -21,6 +21,9 @@ namespace Parrot {
         void close();
         // isOpen
         bool isOpen() const;
+
+        // setIcon
+        void setIcon(const Image& image);
 
         // update
         void update();

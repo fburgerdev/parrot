@@ -29,6 +29,7 @@ namespace Parrot {
 	// add
 	void App::add(const WindowConfig& window_config, const SceneConfig& scene_config) {
 		Window window(window_config);
+		window.setIcon(*_asset_manager.asset<Image>("images/parrot.png"));
 		Scene scene(scene_config, [&](Variant<uuid, stdf::path, EntityConfig> entity_id) {
 			if (std::holds_alternative<uuid>(entity_id)) {
 				return *_asset_manager.asset<EntityConfig>(std::get<uuid>(entity_id));

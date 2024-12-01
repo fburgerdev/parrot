@@ -65,6 +65,15 @@ namespace Parrot {
         return _handle;
     }
 
+    // setIcon
+    void WindowGLFW::setIcon(const Image& image) {
+        GLFWimage images[1];
+        images[0].width = image.getWidth();
+        images[0].height = image.getHeight();
+        images[0].pixels = (uchar*)image.getBytes(); //! unsafe if glfw modifies bytes
+        glfwSetWindowIcon(handle(_handle), 1, images);
+    }
+
     // update
     void WindowGLFW::update() {
         glfwSwapBuffers(handle(_handle));
