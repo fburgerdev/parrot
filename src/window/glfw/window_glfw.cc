@@ -12,10 +12,10 @@ namespace Parrot {
     }
 
     // WindowGLFW
-    WindowGLFW::WindowGLFW(WindowGLFW&& other)
+    WindowGLFW::WindowGLFW(WindowGLFW&& other) noexcept
         : _handle(std::exchange(other._handle, nullptr)) {}
     // =
-    WindowGLFW& WindowGLFW::operator=(WindowGLFW&& other) {
+    WindowGLFW& WindowGLFW::operator=(WindowGLFW&& other) noexcept {
         _handle = std::exchange(other._handle, nullptr);
         return *this;
     }

@@ -8,10 +8,10 @@ namespace Parrot {
         // WindowGLFW
         WindowGLFW() = default;
         WindowGLFW(const WindowGLFW&) = delete;
-        WindowGLFW(WindowGLFW&& other);
+        WindowGLFW(WindowGLFW&& other) noexcept;
         // =
         WindowGLFW& operator=(const WindowGLFW&) = delete;
-        WindowGLFW& operator=(WindowGLFW&& other);
+        WindowGLFW& operator=(WindowGLFW&& other) noexcept;
         // ~WindowGLFW
         ~WindowGLFW();
         
