@@ -9,7 +9,7 @@ namespace Parrot {
 		: _width(0), _height(0), _format(ImageFormat::NONE), _bytes(nullptr) {
 		// supported: JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC
 		int width, height, channels;
-		uchar* img = stbi_load(filepath.string().c_str(), &width, &height, &channels, 0);
+		uchar* img = stbi_load(filepath.string().c_str(), &width, &height, &channels, 4);
 		if (!img) {
 			LOG_ASSET_ERROR("failed to load image {}", filepath);
 			LOG_ASSET_ERROR("stb-image error message:\n{}", stbi_failure_reason);
@@ -29,6 +29,8 @@ namespace Parrot {
 			LOG_ASSET_ERROR("failed to load image {} due to unsupported image format with {} channels", filepath, channels);
 			return;
 		}
+		_width = width;
+		_height = height;
 		_bytes = img;
 		LOG_ASSET_DEBUG("loaded image {} ({}px x {}px with {} channels)", filepath, width, height, channels);
 	}

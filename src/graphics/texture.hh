@@ -1,5 +1,5 @@
 #pragma once
-#include "image.hh"
+#include "utils/image.hh"
 
 namespace Parrot {
 	// Texture
