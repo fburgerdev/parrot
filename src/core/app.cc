@@ -22,53 +22,55 @@ namespace Parrot {
 		// main
 		_asset_manager.useHandles(
 			[&](const WindowConfig& window_config, const SceneConfig& scene_config) {
-				add(window_config, scene_config);
+				_main_unit = &add(window_config, scene_config);
 			}, config.main_window, config.main_scene
 		);
-		_main_window = &_windows.begin()->second;
+		
 	}
 	// add
-	void App::add(const WindowConfig& window_config, const SceneConfig& scene_config) {
+	PlayingUnit& App::add(const WindowConfig& window_config, const SceneConfig& scene_config) {
 		Window window(window_config);
-		window.setIcon(*_asset_manager.asset<Image>("images/parrot.png"));
-		Scene scene(scene_config, [&](Variant<uuid, stdf::path, EntityConfig> entity_id) {
-			if (std::holds_alternative<uuid>(entity_id)) {
-				return *_asset_manager.asset<EntityConfig>(std::get<uuid>(entity_id));
+		window.setIcon(*_asset_manager.asset<Image>("images/parrot.png")); //TODO: remove
+		Scene scene(scene_config, [&](AssetHandle<EntityConfig> handle) {
+			if (std::holds_alternative<uuid>(handle)) {
+				return *_asset_manager.asset<EntityConfig>(std::get<uuid>(handle));
 			}
-			else if (std::holds_alternative<stdf::path>(entity_id)) {
-				return *_asset_manager.asset<EntityConfig>(std::get<stdf::path>(entity_id));
+			else if (std::holds_alternative<stdf::path>(handle)) {
+				return *_asset_manager.asset<EntityConfig>(std::get<stdf::path>(handle));
 			}
-			else if (std::holds_alternative<EntityConfig>(entity_id)) {
-				return std::get<EntityConfig>(entity_id);
+			else if (std::holds_alternative<EntityConfig>(handle)) {
+				return std::get<EntityConfig>(handle);
 			}
-		});
-		_window_scene_pairs.emplace(window.getUUID(), scene.getUUID());
-		_windows.emplace(window.getUUID(), std::move(window));
-		_scenes.emplace(scene.getUUID(), std::move(scene));
+			else {
+				throw;
+			}
+		}, this);
+		PlayingUnit unit(std::move(window), std::move(scene), this);
+		auto result = _units.emplace(unit.getUUID(), std::move(unit));
+		return result.first->second;
 	}
 	// run
 	void App::run() {
-		if (_main_window) {
+		if (_main_unit) {
 			LOG_CORE_INFO("app '{}' running", _name);
 			Stopwatch total_watch, frame_watch;
-			while (_main_window->isOpen()) {
+			while (_main_unit->window.isOpen()) {
 				seconds delta_time = frame_watch.reset();
 				LOG_CORE_TRACE("update app '{}'", _name);
-				for (auto& [window_uuid, scene_uuid] : _window_scene_pairs) {
-					Window& window = _windows.at(window_uuid);
-					Scene& scene = _scenes.at(scene_uuid);
+				for (auto& [uuid, unit] : _units) {
 					// update scene
-					scene.update(delta_time);
+					unit.scene.update(delta_time);
 					//// draw
 					//GPUContext& context = _contexts.at(&window);
 					// BatchRenderer::draw(context, createBatch(scene));
-					for (auto& e : window.pollEvents()) {
-						LOG_CORE_DEBUG("{}", e);
+					unit.window.swapBuffers();
+					for (auto& e : unit.window.pollEvents()) {
+						LOG_CORE_DEBUG("polled event: {}", e);
+						raiseEvent(e);
 					}
-					window.swapBuffers();
 				}
-				if (total_watch.elapsed() > 7) {
-					_main_window->close();
+				if (total_watch.elapsed() > 10) {
+					_main_unit->window.close();
 				}
 			}
 			LOG_CORE_INFO("app '{}' terminated (gracefully)", _name);
