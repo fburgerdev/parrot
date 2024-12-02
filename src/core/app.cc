@@ -8,9 +8,21 @@
 #include "utils/stopwatch.hh"
 
 namespace Parrot {
+	// DefaultEventHandler
+	struct DefaultEventHandler : public Script {
+		virtual bool resolveEvent(const Event& e) override {
+			if (auto* wcr = e.getWindowCloseRequest()) {
+				LOG_CORE_DEBUG("unresolved window-close-request, closing window '{}'...", wcr->window->getTitle());
+				wcr->window->close();
+				return true;
+			}
+			return false;
+		}
+	};
+
 	// App
 	App::App(const stdf::path& config_path)
-		: Scriptable() {
+		: Scriptable(&_default_scriptable), _default_scriptable(makeSingleScriptable<DefaultEventHandler>()) {
 		AppConfig config(config_path);
 		// name
 		_name = config.name;

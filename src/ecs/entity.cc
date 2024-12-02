@@ -4,13 +4,24 @@
 
 namespace Parrot {
 	// Entity
-	Entity::Entity(Entity* parent)
+	Entity::Entity(Scriptable* parent)
 		: Scriptable(parent) {}
-	Entity::Entity(const EntityConfig& config, EntityConfigLoader loader)
-		: Scriptable() {
+	Entity::Entity(Entity* parent)
+		: Scriptable(parent), _parent(parent) {}
+	Entity::Entity(const EntityConfig& config, EntityConfigLoader loader, Scriptable* parent)
+		: Scriptable(parent) {
 		_tag = config.tag;
 		for (const auto& child_id : config.children) {
-			Entity child(loader(child_id), loader);
+			Entity child(loader(child_id), loader, this);
+			_children.emplace(child.getUUID(), std::move(child));
+		}
+		// TODO: components
+	}
+	Entity::Entity(const EntityConfig& config, EntityConfigLoader loader, Entity* parent)
+		: Scriptable(parent), _parent(parent) {
+		_tag = config.tag;
+		for (const auto& child_id : config.children) {
+			Entity child(loader(child_id), loader, this);
 			_children.emplace(child.getUUID(), std::move(child));
 		}
 		// TODO: components

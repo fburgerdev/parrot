@@ -37,7 +37,7 @@ namespace Parrot {
 	public:
 		// Scriptable / ~Scriptable
 		Scriptable() = default;
-		Scriptable(EventResolver capture, EventResolver bubble);
+		Scriptable(Scriptable* parent);
 		Scriptable(const Scriptable&) = delete;
 		Scriptable(Scriptable&&) = default;
 		~Scriptable();
@@ -45,46 +45,52 @@ namespace Parrot {
 		Scriptable& operator=(const Scriptable&) = delete;
 		Scriptable& operator=(Scriptable&&) = default;
 
-		// getCaptureCallback / getBubbleCallback
-		const EventResolver& getCaptureCallback();
-		const EventResolver& getBubbleCallback();
 		// raiseEvent
 		void raiseEvent(const Event& e);
 
 		// getScript
-		template<class U> requires std::is_base_of_v<Script, U>
-		U& getScript() {
-			auto it = _scripts.find(getScriptID<U>());
+		template<class T> requires std::is_base_of_v<Script, T>
+		T& getScript() {
+			auto it = _scripts.find(getScriptID<T>());
 			//TODO: assert(it != _scripts.end())
-			return reinterpret_cast<U&>(*it->second);
+			return reinterpret_cast<T&>(*it->second);
 		}
-		template<class U> requires std::is_base_of_v<Script, U>
-		const U& getScript() const {
-			auto it = _scripts.find(getScriptID<U>());
+		template<class T> requires std::is_base_of_v<Script, T>
+		const T& getScript() const {
+			auto it = _scripts.find(getScriptID<T>());
 			//TODO: assert(it != _scripts.end())
-			return reinterpret_cast<const U&>(*it->second);
+			return reinterpret_cast<const T&>(*it->second);
 		}
 		// addScript
-		template<class U, class... Args> requires std::is_base_of_v<Script, U>
-		U& addScript(Args&&... args) {
-			auto result = _scripts.emplace(getScriptID<U>(), std::make_unique<U>(std::forward<Args>(args)...));
+		template<class T, class... Args> requires std::is_base_of_v<Script, T>
+		T& addScript(Args&&... args) {
+			auto result = _scripts.emplace(getScriptID<T>(), std::make_unique<T>(std::forward<Args>(args)...));
 			auto& script = result.first->second;
 			//TODO: assert(result.second)
 			script->onAttach();
-			return reinterpret_cast<U&>(*script);
+			return reinterpret_cast<T&>(*script);
 		}
 		// removeScript
-		template<class U> requires std::is_base_of_v<Script, U>
+		template<class T> requires std::is_base_of_v<Script, T>
 		void removeScript() {
-			auto it = _scripts.find(getScriptID<U>());
+			auto it = _scripts.find(getScriptID<T>());
 			//TODO: assert(it != _scripts.end())
 			it->second.onDetach();
 			_scripts.erase(it);
 		}
 	private:
+		bool captureEvent(const Event& e);
 		bool resolveEvent(const Event& e);
+		bool bubbleEvent(const Event& e);
 
-		EventResolver _capture, _bubble;
+		Scriptable* _parent = nullptr;
 		HashMap<usize, UniquePtr<Script>> _scripts;
 	};
+	// makeSingleScriptable
+	template<class T, class... Args> requires std::is_base_of_v<Script, T>
+	Scriptable makeSingleScriptable(Args&&... args) {
+		Scriptable out;
+		out.addScript<T>(std::forward<Args>(args)...);
+		return out;
+	}
 }

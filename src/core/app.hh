@@ -22,5 +22,6 @@ namespace Parrot {
 		PlayingUnit* _main_unit = nullptr;
 		Map<uuid, PlayingUnit> _units;
 		AssetManager _asset_manager;
+		Scriptable _default_scriptable;
 	};
 }

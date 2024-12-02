@@ -7,8 +7,8 @@ using json = nlohmann::json;
 
 namespace Parrot {
 	// Scene
-	Scene::Scene(const SceneConfig& config, EntityConfigLoader loader)
-		: _name(config.name), _root(config.root ? Entity(loader(*config.root), loader) : Entity()) {}
+	Scene::Scene(const SceneConfig& config, EntityConfigLoader loader, Scriptable* parent)
+		: _name(config.name), _root(config.root ? Entity(loader(*config.root), loader, parent) : Entity(parent)) {}
 	// update
 	void Scene::update(float32 delta_time) {
 		LOG_ECS_TRACE("update scene '{}'", _name);

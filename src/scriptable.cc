@@ -20,34 +20,34 @@ namespace Parrot {
 	}
 
 	// Scriptable / ~Scriptable
-	Scriptable::Scriptable(EventResolver capture, EventResolver bubble)
-		: _capture(capture), _bubble(bubble) {}
+	Scriptable::Scriptable(Scriptable* parent)
+		: _parent(parent) {}
 	Scriptable::~Scriptable() {
 		for (auto& [id, script] : _scripts) {
 			script->onDetach();
 		}
 	}
 
-	// getCaptureCallback / getBubbleCallback
-	const EventResolver& Scriptable::getCaptureCallback() {
-		return _capture;
-	}
-	const EventResolver& Scriptable::getBubbleCallback() {
-		return _bubble;
-	}
 	// raiseEvent
 	void Scriptable::raiseEvent(const Event& e) {
-		if (_capture(e)) {
+		if (captureEvent(e)) {
 			return;
 		}
 		else if (resolveEvent(e)) {
 			return;
 		}
 		else {
-			if (!_bubble(e)) {
+			if (!bubbleEvent(e)) {
 				LOG_CORE_DEBUG("unresolved event"); //TODO: print event
 			}
 		}
+	}
+	// captureEvent
+	bool Scriptable::captureEvent(const Event& e) {
+		if (_parent == nullptr) {
+			return resolveEvent(e);
+		}
+		return _parent->captureEvent(e) || resolveEvent(e);
 	}
 	// resolveEvent
 	bool Scriptable::resolveEvent(const Event& e) {
@@ -56,5 +56,15 @@ namespace Parrot {
 			resolved |= script->resolveEvent(e);
 		}
 		return resolved;
+	}
+	// bubbleEvent
+	bool Scriptable::bubbleEvent(const Event& e) {
+		if (resolveEvent(e)) {
+			return true;
+		}
+		else if (_parent) {
+			return _parent->bubbleEvent(e);
+		}
+		return false;
 	}
 }
