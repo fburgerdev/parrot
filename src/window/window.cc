@@ -25,7 +25,26 @@ namespace Parrot {
 
 	// pollEvents
 	List<Event> Window::pollEvents() {
-		return _physical.pollEvents();
+		List<Event> events = _physical.pollEvents();
+		// TODO: make window initialization more robust
+		for (Event& e : events) {
+			if (auto* wcr = e.getWindowCloseRequest()) {
+				wcr->window = this;
+			}
+			else if (auto* kp = e.getKeyPress()) {
+				kp->window = this;
+			}
+			else if (auto* mp = e.getMousePress()) {
+				mp->window = this;
+			}
+			else if (auto* mm = e.getMouseMove()) {
+				mm->window = this;
+			}
+			else {
+				throw;
+			}
+		}
+		return events;
 	}
 	// swapBuffers
 	void Window::swapBuffers() {

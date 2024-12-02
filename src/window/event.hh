@@ -2,8 +2,14 @@
 #include "math/matrix.hh"
 
 namespace Parrot {
+    // forward: Window
+    class Window;
+
     // WindowCloseRequest
-    struct WindowCloseRequest {};
+    struct WindowCloseRequest {
+        // window
+        Window* window = nullptr;
+    };
     // <<
     ostream& operator<<(ostream& stream, const WindowCloseRequest& e);
 
@@ -147,9 +153,10 @@ namespace Parrot {
 	};
 	// :: Event
 	struct KeyPress {
-		// code, state
+		// code, state, window
 	    KeyCode code;
 		KeyState state;
+        Window* window = nullptr;
 	};
     // <<
     ostream& operator<<(ostream& stream, const KeyPress& e);
@@ -165,17 +172,19 @@ namespace Parrot {
 	};
 	// :: Event
 	struct MousePress {
-		// button, state
+		// button, state, window
 		MouseButton button;
 		MouseState state;
+        Window* window = nullptr;
 	};
     // <<
     ostream& operator<<(ostream& stream, const MousePress& e);
 
     // MouseMove
     struct MouseMove {
-        // delta
+        // delta, window
         Vec2<float32> delta;
+        Window* window = nullptr;
     };
     // <<
     ostream& operator<<(ostream& stream, const MouseMove& e);
