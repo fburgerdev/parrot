@@ -29,7 +29,7 @@ namespace Parrot {
         // shapes
         for (const auto& shape : reader.GetShapes()) {
             usize offset = 0;
-            // polygon (vertex_count = 3 since triangulate)
+            // polygon (vertex_count = 3 from triangulation)
             for (uint vertex_count : shape.mesh.num_face_vertices) {
                 // face
                 for (usize v = 0; v < vertex_count; v++) {
@@ -67,7 +67,7 @@ namespace Parrot {
                         .normal = normal,
                         .tex_coords = tex_coords,
                     });
-                    indices.push_back(indices.size());
+                    indices.push_back(uint32(indices.size())); //! narrow cast (uint64 -> uint32)
                 }
                 offset += vertex_count;
 
