@@ -12,6 +12,7 @@ namespace Parrot {
 	class Entity : public UUIDObject, public Scriptable {
 	public:
 		// Entity
+		Entity(Entity* parent = nullptr);
 		Entity(const EntityConfig& config, EntityConfigLoader loader);
 
 		// hasParent

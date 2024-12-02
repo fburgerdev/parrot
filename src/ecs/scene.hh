@@ -14,6 +14,6 @@ namespace Parrot {
 		List<const Entity*> getRenderable() const;
 	private:
 		string _name;
-		UniquePtr<Entity> _root;
+		Entity _root;
 	};
 }
