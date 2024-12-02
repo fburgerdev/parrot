@@ -1,4 +1,5 @@
 #pragma once
+#include "scriptable.hh"
 #include "asset/config/entity_config.hh"
 #include "transform.hh"
 #include "component.hh"
@@ -8,7 +9,7 @@ namespace Parrot {
 	using EntityConfigLoader = function<EntityConfig(Variant<uuid, stdf::path, EntityConfig>)>;
 
 	// Entity
-	class Entity : public UUIDObject {
+	class Entity : public UUIDObject, public Scriptable {
 	public:
 		// Entity
 		Entity(const EntityConfig& config, EntityConfigLoader loader);

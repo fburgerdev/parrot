@@ -7,7 +7,7 @@
 
 namespace Parrot {
 	// App
-	class App {
+	class App : public Scriptable {
 	public:
 		// App
 		App(const stdf::path& config_path);

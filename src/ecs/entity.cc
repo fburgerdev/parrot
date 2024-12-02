@@ -4,7 +4,8 @@
 
 namespace Parrot {
 	// Entity
-	Entity::Entity(const EntityConfig& config, EntityConfigLoader loader) {
+	Entity::Entity(const EntityConfig& config, EntityConfigLoader loader)
+		: Scriptable() {
 		_tag = config.tag;
 		for (const auto& child_id : config.children) {
 			Entity child(loader(child_id), loader);

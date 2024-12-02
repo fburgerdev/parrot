@@ -9,7 +9,8 @@
 
 namespace Parrot {
 	// App
-	App::App(const stdf::path& config_path) {
+	App::App(const stdf::path& config_path)
+		: Scriptable() {
 		AppConfig config(config_path);
 		// name
 		_name = config.name;
