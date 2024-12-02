@@ -9,6 +9,12 @@ namespace Parrot {
 		_height = config.height;
 		_physical.open(_width, _height, _title);
 	}
+
+	// getTitle
+	const string& Window::getTitle() {
+		return _title;
+	}
+
 	// isOpen
 	bool Window::isOpen() const {
 		return _physical.isOpen();

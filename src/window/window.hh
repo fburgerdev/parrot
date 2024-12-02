@@ -16,6 +16,9 @@ namespace Parrot {
 		// Window
 		Window(const WindowConfig& config);
 
+		// getTitle
+		const string& getTitle();
+
 		// isOpen
 		bool isOpen() const;
 		// close
