@@ -1,5 +1,5 @@
 #pragma once
-#include "graphics/mesh.hh"
+#include "buffer_opengl.hh"
 
 namespace Parrot {
 	// MeshOpenGL
@@ -7,8 +7,12 @@ namespace Parrot {
 	public:
 		// MeshOpenGL
 		MeshOpenGL(const Mesh& mesh);
+
 		// bind, unbind
-		void bind();
+		void bind() const;
 		static void unbind();
+	private:
+		VertexArrayOpenGL _vertex_array;
+		IndexBufferOpenGL _index_buffer;
 	};
 }
