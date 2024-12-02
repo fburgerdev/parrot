@@ -21,14 +21,17 @@ namespace Parrot {
 	// GPUContext
 	class GPUContext {
 	public:
+		// GPUContext
+		GPUContext() = default;
+
 		// use
 		void use(const Mesh& mesh);
 		void use(const Material& material);
 		// draw
 		void draw();
 		
-		// friend
-		friend class App;
+		// friend: PlayingUnit
+		friend class PlayingUnit;
 	private:
 		GPUContext(function<void()>&& bind, function<void()>&& unbind);
 
