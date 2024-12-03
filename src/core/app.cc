@@ -77,7 +77,7 @@ namespace Parrot {
 					// BatchRenderer::draw(context, createBatch(scene));
 					unit.window.swapBuffers();
 					for (auto& e : unit.window.pollEvents()) {
-						LOG_CORE_DEBUG("polled event: {}", e);
+						LOG_CORE_TRACE("polled event: {}", e);
 						raiseEvent(e);
 					}
 				}

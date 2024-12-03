@@ -58,7 +58,7 @@ namespace Parrot {
             s_event_queues.at(window).push_back(e);
             LOG_WINDOW_TRACE("detected {}", e);
         });
-        glfwSetMouseButtonCallback(handle(_handle), [](HandleGLFW* window, int glfw_button, int glfw_action, int glfw_mods) {
+        glfwSetMouseButtonCallback(handle(_handle), [](HandleGLFW* window, int glfw_button, int glfw_action, [[maybe_unused]] int glfw_mods) {
             MouseButton button = (
                 glfw_button == GLFW_MOUSE_BUTTON_LEFT ? MouseButton::LEFT : (
                     glfw_button == GLFW_MOUSE_BUTTON_MIDDLE ? MouseButton::MIDDLE : (
@@ -75,7 +75,8 @@ namespace Parrot {
             s_event_queues.at(window).push_back(e);
             LOG_WINDOW_TRACE("detected {}", e);
         });
-        glfwSetKeyCallback(handle(_handle), [](HandleGLFW* window, int glfw_key, int glfw_scancode, int glfw_action, int glfw_mods) {
+        glfwSetKeyCallback(handle(_handle), [](HandleGLFW* window,
+            int glfw_key, [[maybe_unused]] int glfw_scancode, int glfw_action, [[maybe_unused]] int glfw_mods) {
             KeyCode code = (KeyCode)glfw_key;
             KeyState state = (
                 glfw_action == GLFW_PRESS ? KeyState::PRESSED : (
@@ -116,10 +117,11 @@ namespace Parrot {
 
     // setIcon
     void WindowGLFW::setIcon(const Image& image) {
-        GLFWimage images[1];
-        images[0].width = image.getWidth();
-        images[0].height = image.getHeight();
-        images[0].pixels = (uchar*)image.getBytes(); //! unsafe if glfw modifies bytes
+        GLFWimage images[1] = { {
+            .width = int(image.getWidth()), //! narrowing conversion (uint -> int)
+            .height = int(image.getHeight()), //! narrowing conversion (uint -> int)
+            .pixels = (uchar*)image.getBytes(), //! unsafe if glfw modifies bytes
+        } };
         glfwSetWindowIcon(handle(_handle), 1, images);
     }
 

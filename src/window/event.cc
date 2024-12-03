@@ -57,7 +57,7 @@ namespace Parrot {
 	}
 
 	// <<
-	ostream& operator<<(ostream& stream, const WindowCloseRequest& e) {
+	ostream& operator<<(ostream& stream, [[maybe_unused]] const WindowCloseRequest& e) {
 		return stream << "WindowCloseRequest()";
 	}
 	ostream& operator<<(ostream& stream, const KeyPress& e) {

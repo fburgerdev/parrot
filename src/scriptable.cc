@@ -38,7 +38,7 @@ namespace Parrot {
 		}
 		else {
 			if (!bubbleEvent(e)) {
-				LOG_CORE_DEBUG("unresolved event"); //TODO: print event
+				LOG_CORE_TRACE("unresolved event"); //TODO: print event
 			}
 		}
 	}

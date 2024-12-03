@@ -51,7 +51,7 @@ namespace Parrot {
 		  _loading_policy(loading_policy),
 		  _unloading_policy(unloading_policy),
 		  _index(asset_dir) {
-		// TODO: assert loading_policy <= unloading_policy
+		// TODO: assert(int(loading_policy) <= int(unloading_policy))
 		LOG_ASSET_TRACE("asset-manager initialized with directory {}", asset_dir);
 	}
 }
