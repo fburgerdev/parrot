@@ -54,7 +54,7 @@ namespace Parrot {
 				return std::get<EntityConfig>(handle);
 			}
 			else {
-				throw;
+				throw std::logic_error("unexpected branch");
 			}
 		}, this);
 		PlayingUnit unit(std::move(window), std::move(scene), this);

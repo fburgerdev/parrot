@@ -62,13 +62,13 @@ namespace Parrot {
             MouseButton button = (
                 glfw_button == GLFW_MOUSE_BUTTON_LEFT ? MouseButton::LEFT : (
                     glfw_button == GLFW_MOUSE_BUTTON_MIDDLE ? MouseButton::MIDDLE : (
-                        glfw_button == GLFW_MOUSE_BUTTON_RIGHT ? MouseButton::RIGHT : throw
+                        glfw_button == GLFW_MOUSE_BUTTON_RIGHT ? MouseButton::RIGHT : throw std::logic_error("invalid enum value")
                     )
                 )
             );
             MouseState state = (
                 glfw_action == GLFW_PRESS ? MouseState::PRESSED : (
-                    glfw_action == GLFW_RELEASE ? MouseState::RELEASED : throw
+                    glfw_action == GLFW_RELEASE ? MouseState::RELEASED : throw std::logic_error("invalid enum value")
                 )
             );
             Event e(MousePress({ button, state }));
@@ -80,7 +80,7 @@ namespace Parrot {
             KeyState state = (
                 glfw_action == GLFW_PRESS ? KeyState::PRESSED : (
                     glfw_action == GLFW_RELEASE ? KeyState::RELEASED : (
-                        glfw_action == GLFW_REPEAT ? KeyState::REPEATED : throw
+                        glfw_action == GLFW_REPEAT ? KeyState::REPEATED : throw std::logic_error("invalid enum value")
                     )
                 )
             );

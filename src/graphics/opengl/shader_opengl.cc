@@ -110,7 +110,7 @@ namespace Parrot {
 	uint ShaderOpenGL::compileShader(const string& source, ShaderType type) {
 		uint id = glCreateShader(
 			type == ShaderType::VERTEX ? GL_VERTEX_SHADER : (
-				type == ShaderType::FRAGMENT ? GL_FRAGMENT_SHADER : throw
+				type == ShaderType::FRAGMENT ? GL_FRAGMENT_SHADER : throw std::logic_error("invalid enum value")
 			)
 		);
 		const char* source_cstr = source.c_str();

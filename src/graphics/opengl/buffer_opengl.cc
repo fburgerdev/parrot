@@ -17,7 +17,7 @@ namespace Parrot {
 			glBufferData(GL_ARRAY_BUFFER, size, buffer, GL_DYNAMIC_DRAW);
 		}
 		else {
-			throw;
+			throw std::logic_error("unexpected branch");
 		}
 	}
 	VertexBufferOpenGL::VertexBufferOpenGL(VertexBufferOpenGL&& other) noexcept
@@ -43,7 +43,7 @@ namespace Parrot {
 			glBufferSubData(GL_ARRAY_BUFFER, offset, size, buffer);
 		}
 		else {
-			throw;
+			throw std::logic_error("unexpected branch");
 		}
 	}
 	// bind / unbind
@@ -68,7 +68,7 @@ namespace Parrot {
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, count, indices, GL_DYNAMIC_DRAW);
 		}
 		else {
-			throw;
+			throw std::logic_error("unexpected branch");
 		}
 	}
 	IndexBufferOpenGL::IndexBufferOpenGL(IndexBufferOpenGL&& other) noexcept
@@ -94,7 +94,7 @@ namespace Parrot {
 			glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, index * sizeof(uint32), count * sizeof(uint32), indices);
 		}
 		else {
-			throw;
+			throw std::logic_error("unexpected branch");
 		}
 	}
 	// bind / unbind
@@ -133,7 +133,7 @@ namespace Parrot {
 				glVertexAttribPointer(index, count, GL_FLOAT, GL_FALSE, stride, (const void*)offset);
 				break;
 			default:
-				throw;
+				throw std::logic_error("unexpected branch");
 			}
 			offset += getStride(dtype, count);
 		}
@@ -161,7 +161,7 @@ namespace Parrot {
 		case DTypeGPU::FLOAT32:
 			return sizeof(float32) * count;
 		default:
-			throw;
+			throw std::logic_error("unexpected branch");
 		}
 	}
 	// bind / unbind

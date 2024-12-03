@@ -47,7 +47,7 @@ namespace Parrot {
 				mm->window = this;
 			}
 			else {
-				throw;
+				throw std::logic_error("unexpected branch");
 			}
 		}
 		return events;
