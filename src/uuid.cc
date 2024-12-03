@@ -35,10 +35,12 @@ namespace Parrot {
 			// TODO: error
 		}
 	}
-	UUIDObject::UUIDObject([[maybe_unused]] const UUIDObject& other)
-		: _uuid(generateUUID()) {}
 	UUIDObject::UUIDObject(UUIDObject&& other) noexcept
 		: _uuid(std::exchange(other._uuid, 0)) {}
+	UUIDObject& UUIDObject::operator=(UUIDObject&& other) noexcept {
+		_uuid = std::exchange(other._uuid, 0);
+		return *this;
+	}
 	// getUUID
 	uuid UUIDObject::getUUID() const {
 		return _uuid;
