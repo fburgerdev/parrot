@@ -8,13 +8,13 @@ namespace Parrot {
 		// EntityConfig
 		EntityConfig() = default;
 		EntityConfig(const stdf::path& config_path);
-		template<class JSON>
+		template<class JSON> requires(requires(JSON json) { json.at("key"); })
 		EntityConfig(const JSON& json) {
 			loadFromJSON(json);
 		}
 
 		// loadFromJSON
-		template<class JSON>
+		template<class JSON> requires(requires(JSON json) { json.at("key"); })
 		void loadFromJSON(const JSON& json) {
 			// tag
 			if (json.contains("tag")) {

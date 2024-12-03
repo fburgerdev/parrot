@@ -11,13 +11,13 @@ namespace Parrot {
 		// WindowConfig
 		WindowConfig() = default;
 		WindowConfig(const stdf::path& config_path);
-		template<class JSON>
+		template<class JSON> requires(requires(JSON json) { json.at("key"); })
 		WindowConfig(const JSON& json) {
 			loadFromJSON(json);
 		}
 
 		// loadFromJSON
-		template<class JSON>
+		template<class JSON> requires(requires(JSON json) { json.at("key"); })
 		void loadFromJSON(const JSON& json) {
 			// title
 			if (json.contains("title")) {

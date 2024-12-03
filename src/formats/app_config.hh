@@ -10,13 +10,13 @@ namespace Parrot {
 		// AppConfig
 		AppConfig() = default;
 		AppConfig(const stdf::path& config_path);
-		template<class JSON>
+		template<class JSON> requires(requires(JSON json) { json.at("key"); })
 		AppConfig(const JSON& json) {
 			loadFromJSON(json);
 		}
 
 		// loadFromJSON
-		template<class JSON>
+		template<class JSON> requires(requires(JSON json) { json.at("key"); })
 		void loadFromJSON(const JSON& json) {
 			// name
 			if (json.contains("name")) {
