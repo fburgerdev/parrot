@@ -23,8 +23,8 @@ namespace Parrot {
         }
 
         auto& attrib = reader.GetAttrib();
-        auto& shapes = reader.GetShapes();
-        auto& materials = reader.GetMaterials();
+        //auto& shapes = reader.GetShapes();
+        //auto& materials = reader.GetMaterials();
 
         // shapes
         for (const auto& shape : reader.GetShapes()) {
@@ -33,7 +33,7 @@ namespace Parrot {
             for (uint vertex_count : shape.mesh.num_face_vertices) {
                 // face
                 for (usize v = 0; v < vertex_count; v++) {
-                    auto idx = shape.mesh.indices[offset + v];
+                    auto& idx = shape.mesh.indices[offset + v];
 
                     // position
                     Vec3<float32> position(
