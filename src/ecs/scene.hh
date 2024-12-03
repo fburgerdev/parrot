@@ -1,5 +1,5 @@
 #pragma once
-#include "asset/config/scene_config.hh"
+#include "formats/scene_config.hh"
 #include "entity.hh"
 
 namespace Parrot {
