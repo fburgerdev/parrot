@@ -167,7 +167,7 @@ namespace Parrot {
     }
     // identity
     template<typename T, usize N>
-    Mat<T, N> identity(Mat<T, N>& mat) {
+    Mat<T, N> identity() {
         Mat<T, N> mat = zeros<T, N>();
         for (usize n = 0; n < N; ++n) {
             mat.at(n, n) = 1;
