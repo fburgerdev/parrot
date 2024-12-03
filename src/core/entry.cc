@@ -26,8 +26,15 @@ namespace Parrot {
     // setup (defined in client-app)
     stdf::path setup();
 
-    // launch
-    void launch() {
+    // (static) launch
+    static void launch() {
+        logger.setLevel("asset", LogLevel::DEBUG);
+        logger.setLevel("core", LogLevel::DEBUG);
+        logger.setLevel("ecs", LogLevel::DEBUG);
+        logger.setLevel("graphics", LogLevel::DEBUG);
+        logger.setLevel("math", LogLevel::DEBUG);
+        logger.setLevel("window", LogLevel::DEBUG);
+
         cout << s_info << endl;
         cout << s_debug_head << endl;
         App app(setup());
