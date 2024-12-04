@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "scene.hh"
-#include "components/render.hh"
+#include "components/render_object.hh"
 #include "debug/debug.hh"
 #include "nlohmann/json.hh"
 using json = nlohmann::json;
@@ -21,7 +21,7 @@ namespace Parrot {
 		while (!stack.empty()) {
 			const Entity* top = stack.top();
 			stack.pop();
-			if (top->hasComponent<RenderComponent>()) {
+			if (top->hasComponent<RenderObjectComponent>()) {
 				renderable.push_back(top);
 			}
 			top->foreachChild([&](const Entity& child) {
