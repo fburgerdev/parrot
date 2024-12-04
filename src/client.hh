@@ -1,2 +1,2 @@
 #pragma once
-#include "common.hh"
+#include "core/script_registry.hh"
