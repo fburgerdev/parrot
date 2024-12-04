@@ -53,19 +53,6 @@ namespace Parrot {
 			return specific_camera.calcProjectionMatrix(aspect);
 		}, value);
 	}
-	// getComponentID
-	usize Camera::getComponentID() const {
-		return typeid(Camera).hash_code();
-	}
-	// createComponent
-	UniquePtr<Component> Camera::createComponent(Entity& entity) const {
-		return std::make_unique<CameraComponent>(*this, entity);
-	}
-
-	// update
-	void CameraComponent::update([[maybe_unused]] float32 delta_time) {
-		LOG_ECS_TRACE("camera-component update: {}", *this);
-	}
 
 	// <<
 	ostream& operator<<(ostream& stream, const PerspectiveCamera& camera) {

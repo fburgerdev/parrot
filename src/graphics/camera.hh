@@ -1,5 +1,4 @@
 #pragma once
-#include "ecs/component.hh"
 #include "math/matrix.hh"
 
 namespace Parrot {
@@ -27,12 +26,12 @@ namespace Parrot {
 		Vec2<float32> z_range = DEFAULT_ZRANGE;
 	};
 	// Camera
-	struct Camera : public ComponentConfig {
+	struct Camera {
 		// Camera
 		Camera(const PerspectiveCamera& value);
 		Camera(const OrthographicCamera& value);
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-			Camera(const JSON& json) {
+		Camera(const JSON& json) {
 			loadFromJSON(json);
 		}
 		// loadFromJSON
@@ -57,28 +56,12 @@ namespace Parrot {
 				throw std::logic_error("unexpected branch");
 			}
 		}
-
 		// calcProjectionMatrix
 		Mat4x4<float32> calcProjectionMatrix(float32 aspect) const;
-
-		// getComponentID
-		virtual usize getComponentID() const override;
-		// createComponent
-		virtual UniquePtr<Component> createComponent(Entity& entity) const override;
 
 		// value
 		Variant<PerspectiveCamera, OrthographicCamera> value = PerspectiveCamera();
 	};
-
-	// CameraComponent
-	class CameraComponent : public DerivedComponent<Camera> {
-		// CameraComponent
-		using DerivedComponent<Camera>::DerivedComponent;
-
-		// update
-		virtual void update(float32 delta_time) override;
-	};
-
 	// <<
 	ostream& operator<<(ostream& stream, const OrthographicCamera& camera);
 	ostream& operator<<(ostream& stream, const PerspectiveCamera& camera);

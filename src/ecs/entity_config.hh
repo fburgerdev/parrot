@@ -1,6 +1,7 @@
 #pragma once
 #include "handle.hh"
-#include "component_registry.hh"
+#include "registry.hh"
+#include "component.hh"
 #include "math/3d.hh"
 #include "debug/debug.hh"
 
@@ -64,8 +65,8 @@ namespace Parrot {
 			// components
 			if (json.contains("components")) {
 				for (const auto& [name, data] : json.at("components").items()) {
-					if (g_component_registry<JSON>.contains(name)) {
-						components.emplace_back(g_component_registry<JSON>.at(name)(data));
+					if (g_registry<ComponentConfig, const JSON&>.contains(name)) {
+						components.emplace_back(g_registry<ComponentConfig, const JSON&>.at(name).second(data));
 					}
 					else {
 						LOG_ASSET_WARNING("unregistered component '{}' in json, will be ignored ", name);
@@ -73,7 +74,7 @@ namespace Parrot {
 				}
 			}
 		}
-
+		
 		// tag, transform, children, components
 		string tag = "Entity";
 		Transform<> transform;

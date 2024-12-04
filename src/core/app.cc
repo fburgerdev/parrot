@@ -3,7 +3,6 @@
 #include "app_config.hh"
 #include "window/window.hh"
 #include "graphics/context.hh"
-#include "ecs/components/render_object.hh"
 #include "debug/debug.hh"
 #include "utils/stopwatch.hh"
 
@@ -80,7 +79,7 @@ namespace Parrot {
 	Batch App::createBatch(const Scene& scene) {
 		Batch batch;
 		for (const Entity* entity : scene.getRenderable()) {
-			const auto& render_component = entity->getComponent<RenderObjectComponent>();
+			//const auto& render_component = entity->getComponent<DerivedComponent<RenderObject>>();
 			//batch.add({ render_component.mesh_uuid, render_component.material_uuid });
 		}
 		return batch;
