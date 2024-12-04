@@ -1,8 +1,6 @@
 #pragma once
-#include "handle.hh"
-#include "scriptable.hh"
 #include "entity_config.hh"
-#include "transform.hh"
+#include "scriptable.hh"
 #include "component.hh"
 
 namespace Parrot {
@@ -61,7 +59,7 @@ namespace Parrot {
 		friend class Scene;
 
 		// transform
-		Transform transform;
+		Transform<> transform;
 	private:
 		Entity(uuid uuid, Entity* parent);
 		void update(float32 delta_time);

@@ -1,7 +1,7 @@
 #pragma once
 #include "handle.hh"
-#include "transform.hh"
 #include "component_registry.hh"
+#include "math/3d.hh"
 #include "debug/debug.hh"
 
 namespace Parrot {
@@ -76,7 +76,7 @@ namespace Parrot {
 
 		// tag, transform, children, components
 		string tag = "Entity";
-		Transform transform;
+		Transform<> transform;
 		List<Handle<EntityConfig>> children;
 		List<UniquePtr<ComponentConfig>> components;
 	};
