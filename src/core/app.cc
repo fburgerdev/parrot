@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "app.hh"
-#include "formats/app_config.hh"
+#include "app_config.hh"
 #include "window/window.hh"
 #include "graphics/context.hh"
 #include "ecs/components/render.hh"

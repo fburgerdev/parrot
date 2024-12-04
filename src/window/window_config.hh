@@ -2,9 +2,6 @@
 #include "common.hh"
 
 namespace Parrot {
-	// None
-	struct None {};
-	
 	// WindowConfig
 	class WindowConfig {
 	public:

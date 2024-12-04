@@ -34,6 +34,6 @@ namespace Parrot {
 
 		// name, root
 		string name = "Unnamed Scene";
-		Opt<Variant<uuid, stdf::path, EntityConfig>> root;
+		Opt<Handle<EntityConfig>> root;
 	};
 }

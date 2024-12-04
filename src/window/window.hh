@@ -1,6 +1,6 @@
 #pragma once
 #include "uuid.hh"
-#include "formats/window_config.hh"
+#include "window_config.hh"
 
 #if defined(PARROT_GLFW)
 #include "glfw/window_glfw.hh"

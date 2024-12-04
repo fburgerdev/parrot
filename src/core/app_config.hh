@@ -1,6 +1,6 @@
 #pragma once
-#include "window_config.hh"
-#include "scene_config.hh"
+#include "window/window_config.hh"
+#include "ecs/scene_config.hh"
 #include "asset/policy.hh"
 
 namespace Parrot {
@@ -77,8 +77,8 @@ namespace Parrot {
 
 		// name, main(window/scene), asset_dir, (un)loading_policy
 		string name = "App";
-		Variant<uuid, stdf::path, WindowConfig> main_window = uuid(0);
-		Variant<uuid, stdf::path, SceneConfig> main_scene = uuid(0);
+		Handle<WindowConfig> main_window = uuid(0);
+		Handle<SceneConfig> main_scene = uuid(0);
 		stdf::path asset_dir = ".";
 		LoadingPolicy loading_policy = LoadingPolicy::LAZY_LOAD;
 		UnloadingPolicy unloading_policy = UnloadingPolicy::UNLOAD_APP;

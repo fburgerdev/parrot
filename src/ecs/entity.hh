@@ -1,6 +1,6 @@
 #pragma once
 #include "scriptable.hh"
-#include "formats/entity_config.hh"
+#include "entity_config.hh"
 #include "transform.hh"
 #include "component.hh"
 
