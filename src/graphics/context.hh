@@ -5,10 +5,12 @@
 #include "texture.hh"
 
 #if defined(PARROT_OPENGL)
+#include "opengl/mesh_opengl.hh"
 #include "opengl/shader_opengl.hh"
 #include "opengl/texture_opengl.hh"
 #include "opengl/draw_opengl.hh"
 namespace Parrot {
+	using GPUMesh = MeshOpenGL;
 	using GPUShader = ShaderOpenGL;
 	using GPUTexture = TextureOpenGL;
 	inline void drawGPU() {
@@ -36,8 +38,9 @@ namespace Parrot {
 		GPUContext(function<void()>&& bind, function<void()>&& unbind, HandleResolver resolver);
 
 		function<void()> _bind, _unbind;
-		HashMap<const Shader*, GPUShader> _shaders;
-		HashMap<const Texture*, GPUTexture> _textures;
+		HashMap<uuid, GPUMesh> _meshes;
+		HashMap<uuid, GPUShader> _shaders;
+		HashMap<uuid, GPUTexture> _textures;
 		HandleResolver _resolver;
 	};
 }
