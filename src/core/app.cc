@@ -32,7 +32,7 @@ namespace Parrot {
 		}
 		_asset_manager = AssetManager(config.asset_dir, config.loading_policy, config.unloading_policy);
 		// main
-		_asset_manager.useHandles(
+		_asset_manager.getHandleResolver().useHandles(
 			[&](const WindowConfig& window_config, const SceneConfig& scene_config) {
 				_main_unit = &add(window_config, scene_config);
 			}, config.main_window, config.main_scene
@@ -43,21 +43,8 @@ namespace Parrot {
 	PlayingUnit& App::add(const WindowConfig& window_config, const SceneConfig& scene_config) {
 		Window window(window_config);
 		//window.setIcon(*_asset_manager.asset<Image>("images/parrot.png")); //TODO: move
-		Scene scene(scene_config, [&](AssetHandle<EntityConfig> handle) {
-			if (std::holds_alternative<uuid>(handle)) {
-				return *_asset_manager.asset<EntityConfig>(std::get<uuid>(handle));
-			}
-			else if (std::holds_alternative<stdf::path>(handle)) {
-				return *_asset_manager.asset<EntityConfig>(std::get<stdf::path>(handle));
-			}
-			else if (std::holds_alternative<EntityConfig>(handle)) {
-				return std::get<EntityConfig>(handle);
-			}
-			else {
-				throw std::logic_error("unexpected branch");
-			}
-		}, this);
-		PlayingUnit unit(std::move(window), std::move(scene), this);
+		Scene scene(scene_config, _asset_manager.getHandleResolver(), this);
+		PlayingUnit unit(std::move(window), std::move(scene), _asset_manager.getHandleResolver(), this);
 		auto result = _units.emplace(unit.getUUID(), std::move(unit));
 		return result.first->second;
 	}

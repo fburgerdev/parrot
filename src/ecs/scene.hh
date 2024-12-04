@@ -7,7 +7,7 @@ namespace Parrot {
 	class Scene : public UUIDObject {
 	public:
 		// Scene
-		Scene(const SceneConfig& config, EntityConfigLoader loader, Scriptable* parent = nullptr);
+		Scene(const SceneConfig& config, HandleResolver resolver, Scriptable* parent = nullptr);
 		// update
 		void update(float32 delta_time);
 		// getRenderable

@@ -1,5 +1,5 @@
 #pragma once
-#include "uuid.hh"
+#include "handle.hh"
 #include "asset.hh"
 #include "view.hh"
 #include "policy.hh"
@@ -57,28 +57,29 @@ namespace Parrot {
 		// isLoaded
 		bool isLoaded(uuid uuid) const {
 			return _assets.contains(uuid);
-			}
+		}
 		bool isLoaded(const stdf::path& path) const {
 			return _assets.contains(_index.getUUID(path));
-			}
+		}
 		bool isLoaded(const Variant<uuid, stdf::path>& variant) const {
 			return std::visit([&](const auto& value) {
 				return isLoaded(value);
 			}, variant);
-			}
 		}
-		template<class TFirst, class... TRest>
-		void useHandles(auto&& func, const AssetHandle<TFirst>& first, const AssetHandle<TRest>&... rest) {
-			useHandle<TFirst>([&](const TFirst& value) {
-				if constexpr (sizeof...(TRest) > 0) {
-					useHandles([=](const TRest&... rest) {
-						func(value, rest...);
-					}, rest...);
+
+		// getHandleResolver
+		HandleResolver getHandleResolver() {
+			return HandleResolver([&](
+				const Variant<uuid, stdf::path>& variant,
+				const function<Pair<void*, function<void()>>(stdf::path)>& create,
+				const function<void(const void*)>& callback) {
+				uuid deduced_uuid = std::holds_alternative<uuid>(variant) ? std::get<uuid>(variant) : _index.getUUID(std::get<stdf::path>(variant));
+				if (!isLoaded(deduced_uuid)) {
+					auto [value, delete_func] = create(_asset_dir / _index.getPath(deduced_uuid));
+					_assets.emplace(deduced_uuid, Asset(value, (_unloading_policy == UnloadingPolicy::UNLOAD_UNUSED), delete_func));
 				}
-				else {
-					func(value);
-				}
-			}, first);
+				callback(_assets.at(deduced_uuid).get());
+			});
 		}
 	private:
 		stdf::path _asset_dir;

@@ -3,8 +3,8 @@
 
 namespace Parrot {
 	// GPUContext
-	GPUContext::GPUContext(function<void()>&& bind, function<void()>&& unbind)
-		: _bind(std::move(bind)), _unbind(std::move(unbind)) {}
+	GPUContext::GPUContext(function<void()>&& bind, function<void()>&& unbind, HandleResolver resolver)
+		: _bind(std::move(bind)), _unbind(std::move(unbind)), _resolver(resolver) {}
 
 	// use
 	void GPUContext::use(const Mesh& mesh) {

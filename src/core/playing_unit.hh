@@ -9,7 +9,7 @@ namespace Parrot {
 	class PlayingUnit : public UUIDObject, public Scriptable {
 	public:
 		// PlayingUnit
-		PlayingUnit(Window&& window, Scene&& scene, Scriptable* parent = nullptr);
+		PlayingUnit(Window&& window, Scene&& scene, HandleResolver resolver, Scriptable* parent = nullptr);
 
 		// window, scene
 		Window window;

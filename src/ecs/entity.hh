@@ -1,21 +1,19 @@
 #pragma once
+#include "handle.hh"
 #include "scriptable.hh"
 #include "entity_config.hh"
 #include "transform.hh"
 #include "component.hh"
 
 namespace Parrot {
-	// EntityConfigLoader
-	using EntityConfigLoader = function<EntityConfig(Variant<uuid, stdf::path, EntityConfig>)>;
-
 	// Entity
 	class Entity : public UUIDObject, public Scriptable {
 	public:
 		// Entity
 		Entity(Scriptable* parent = nullptr);
 		Entity(Entity* parent);
-		Entity(const EntityConfig& config, EntityConfigLoader loader, Scriptable* parent = nullptr);
-		Entity(const EntityConfig& config, EntityConfigLoader loader, Entity* parent);
+		Entity(const EntityConfig& config, HandleResolver resolver, Scriptable* parent = nullptr);
+		Entity(const EntityConfig& config, HandleResolver resolver, Entity* parent);
 
 		// hasParent
 		bool hasParent() const;

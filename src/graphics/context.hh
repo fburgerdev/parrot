@@ -33,10 +33,11 @@ namespace Parrot {
 		// friend: PlayingUnit
 		friend class PlayingUnit;
 	private:
-		GPUContext(function<void()>&& bind, function<void()>&& unbind);
+		GPUContext(function<void()>&& bind, function<void()>&& unbind, HandleResolver resolver);
 
 		function<void()> _bind, _unbind;
 		HashMap<const Shader*, GPUShader> _shaders;
 		HashMap<const Texture*, GPUTexture> _textures;
+		HandleResolver _resolver;
 	};
 }

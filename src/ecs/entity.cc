@@ -8,23 +8,39 @@ namespace Parrot {
 		: Scriptable(parent) {}
 	Entity::Entity(Entity* parent)
 		: Scriptable(parent), _parent(parent) {}
-	Entity::Entity(const EntityConfig& config, EntityConfigLoader loader, Scriptable* parent)
+	Entity::Entity(const EntityConfig& config, HandleResolver resolver, Scriptable* parent)
 		: Scriptable(parent) {
 		_tag = config.tag;
-		for (const auto& child_id : config.children) {
-			Entity child(loader(child_id), loader, this);
-			_children.emplace(child.getUUID(), std::move(child));
+		transform = config.transform;
+		for (const auto& handle : config.children) {
+			resolver.useHandle<EntityConfig>([&](const EntityConfig& config) {
+				Entity child(config, resolver, this);
+				_children.emplace(child.getUUID(), std::move(child));
+			}, handle);
 		}
-		// TODO: components
+		for (const auto& component_config : config.components) {
+			_components.emplace(
+				component_config->getComponentID(),
+				component_config->createComponent(*this)
+			);
+		}
 	}
-	Entity::Entity(const EntityConfig& config, EntityConfigLoader loader, Entity* parent)
+	Entity::Entity(const EntityConfig& config, HandleResolver resolver, Entity* parent)
 		: Scriptable(parent), _parent(parent) {
 		_tag = config.tag;
-		for (const auto& child_id : config.children) {
-			Entity child(loader(child_id), loader, this);
-			_children.emplace(child.getUUID(), std::move(child));
+		transform = config.transform;
+		for (const auto& handle : config.children) {
+			resolver.useHandle<EntityConfig>([&](const EntityConfig& config) {
+				Entity child(config, resolver, this);
+				_children.emplace(child.getUUID(), std::move(child));
+			}, handle);
 		}
-		// TODO: components
+		for (const auto& component_config : config.components) {
+			_components.emplace(
+				component_config->getComponentID(),
+				component_config->createComponent(*this)
+			);
+		}
 	}
 	Entity::Entity(uuid uuid, Entity* parent)
 		: UUIDObject(uuid), _parent(parent) {}

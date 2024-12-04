@@ -3,8 +3,8 @@
 
 namespace Parrot {
 	// PlayingUnit
-	PlayingUnit::PlayingUnit(Window&& window, Scene&& scene, Scriptable* parent)
-	  : Scriptable(), window(std::move(window)), scene(std::move(scene)) {
-		_gpu_context = GPUContext([&] { this->window.bind(); }, [&] { this->window.unbind(); });
+	PlayingUnit::PlayingUnit(Window&& window, Scene&& scene, HandleResolver resolver, Scriptable* parent)
+	  : Scriptable(parent), window(std::move(window)), scene(std::move(scene)) {
+		_gpu_context = GPUContext([&] { this->window.bind(); }, [&] { this->window.unbind(); }, resolver);
 	}
 }
