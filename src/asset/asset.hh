@@ -23,6 +23,10 @@ namespace Parrot {
 			: _value(value),
 			  _control(new ControlBlock(destroy_if_unviewed)),
 			  _destroy([=] { delete value; }) {}
+		Asset(void* value, bool destroy_if_unviewed, const auto& destroy)
+			: _value(value),
+			_control(new ControlBlock(destroy_if_unviewed)),
+			_destroy(destroy) {}
 		Asset(const Asset&) = delete;
 		Asset(Asset&& other) noexcept
 			: _value(std::exchange(other._value, nullptr)),
@@ -50,6 +54,14 @@ namespace Parrot {
 			}
 		}
 		
+		// get
+		void* get() {
+			return _value;
+		}
+		const void* get() const {
+			return _value;
+		}
+
 		// friend
 		template<class T>
 		friend class AssetView;
