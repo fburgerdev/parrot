@@ -10,7 +10,7 @@ namespace Parrot {
 	// draw
 	void BatchRenderer::draw(GPUContext& context, const Batch& batch) {
 		for (const auto& [material, meshes] : batch._batch) {
-			context.use(*material);
+			//context.use(*material);
 			for (const auto& mesh : meshes) {
 				context.use(*mesh);
 				context.draw();

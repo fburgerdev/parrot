@@ -1,5 +1,5 @@
 #pragma once
-#include "uuid.hh"
+#include "shader.hh"
 
 namespace Parrot {
 	// Material
@@ -8,7 +8,14 @@ namespace Parrot {
 		// Material
 		Material(const stdf::path& filepath);
 
-		// shader_uuid
-		uuid shader_uuid = 0;
+		// loadFromJSON
+		template<class JSON>
+		void loadFromJSON(const JSON& json) {
+			shader = parseHandleFromJSON<ShaderProgram>(json.at("shader"));
+		}
+
+		// shader
+		// TODO: values...
+		Handle<ShaderProgram> shader;
 	};
 }
