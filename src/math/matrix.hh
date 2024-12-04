@@ -336,6 +336,39 @@ namespace Parrot {
         return out;
     }
 
+    // <<
+    template<typename T, usize N, usize M = N>
+    ostream& operator<<(ostream& stream, const Mat<T, N, M>& mat) {
+        if constexpr (M == 1) {
+            stream << "{ ";
+            for (usize n = 0; n < N; ++n) {
+                stream << mat.at(n);
+                if (n + 1 < N) {
+                    stream << ", ";
+                }
+            }
+            stream << " }";
+        }
+        else {
+            stream << "{ ";
+            for (usize n = 0; n < N; ++n) {
+                stream << "{ ";
+                for (usize m = 0; m < M; ++m) {
+                    stream << mat.at(n, m);
+                    if (m + 1 < M) {
+                        stream << ", ";
+                    }
+                }
+                stream << " }";
+                if (n + 1 < N) {
+                    stream << ", ";
+                }
+            }
+            stream << " }";
+        }
+        return stream;
+    }
+
     // MatNxM
     template<typename T>
     using Mat2x2 = Mat<T, 2, 2>;
