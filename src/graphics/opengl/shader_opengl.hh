@@ -1,5 +1,5 @@
 #pragma once
-#include "common.hh"
+#include "graphics/shader.hh"
 
 namespace Parrot {
 	// ShaderType
@@ -10,7 +10,7 @@ namespace Parrot {
 	class ShaderOpenGL {
 	public:
 		// ShaderOpenGL / ~ShaderOpenGL
-		ShaderOpenGL(const string& vertex, const string& fragment);
+		ShaderOpenGL(const ShaderProgram& program, HandleResolver resolver);
 		ShaderOpenGL(const ShaderOpenGL&) = delete;
 		ShaderOpenGL(ShaderOpenGL&& other) noexcept;
 		~ShaderOpenGL();
