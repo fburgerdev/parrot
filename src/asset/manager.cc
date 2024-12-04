@@ -27,12 +27,7 @@ namespace Parrot {
 		}
 	}
 	// getUUID
-	uuid AssetIndex::getUUID(const stdf::path& path) {
-		if (!_uuids.contains(path)) {
-			uuid uuid = generateUUID();
-			_uuids.emplace(path, uuid);
-			_paths.emplace(uuid, path);
-		}
+	uuid AssetIndex::getUUID(const stdf::path& path) const{
 		return _uuids.at(path);
 	}
 	// getPath

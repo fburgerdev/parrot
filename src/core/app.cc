@@ -42,7 +42,7 @@ namespace Parrot {
 	// add
 	PlayingUnit& App::add(const WindowConfig& window_config, const SceneConfig& scene_config) {
 		Window window(window_config);
-		window.setIcon(*_asset_manager.asset<Image>("images/parrot.png")); //TODO: remove
+		//window.setIcon(*_asset_manager.asset<Image>("images/parrot.png")); //TODO: move
 		Scene scene(scene_config, [&](AssetHandle<EntityConfig> handle) {
 			if (std::holds_alternative<uuid>(handle)) {
 				return *_asset_manager.asset<EntityConfig>(std::get<uuid>(handle));

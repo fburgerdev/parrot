@@ -12,7 +12,7 @@ namespace Parrot {
 		AssetIndex() = default;
 		AssetIndex(const stdf::path& asset_dir);
 		// getUUID
-		uuid getUUID(const stdf::path& path);
+		uuid getUUID(const stdf::path& path) const;
 		// getPath
 		const stdf::path& getPath(uuid uuid) const;
 	private:
@@ -53,18 +53,18 @@ namespace Parrot {
 		AssetView<T> asset(const stdf::path& filepath) {
 			return asset<T>(_index.getUUID(filepath));
 		}
-		//? is "handle" the right term?
-		// useHandle(s)
-		template<class T>
-		void useHandle(auto&& func, const AssetHandle<T>& handle) {
-			if (std::holds_alternative<uuid>(handle)) {
-				func(*asset<T>(std::get<uuid>(handle)));
+
+		// isLoaded
+		bool isLoaded(uuid uuid) const {
+			return _assets.contains(uuid);
 			}
-			else if (std::holds_alternative<stdf::path>(handle)) {
-				func(*asset<T>(std::get<stdf::path>(handle)));
+		bool isLoaded(const stdf::path& path) const {
+			return _assets.contains(_index.getUUID(path));
 			}
-			else {
-				func(std::get<T>(handle));
+		bool isLoaded(const Variant<uuid, stdf::path>& variant) const {
+			return std::visit([&](const auto& value) {
+				return isLoaded(value);
+			}, variant);
 			}
 		}
 		template<class TFirst, class... TRest>
