@@ -1,7 +1,7 @@
 #pragma once
-#include "uuid.hh"
-#include "ecs/transform.hh"
-#include "ecs/component_registry.hh"
+#include "handle.hh"
+#include "transform.hh"
+#include "component_registry.hh"
 #include "debug/debug.hh"
 
 namespace Parrot {
@@ -77,7 +77,7 @@ namespace Parrot {
 		// tag, transform, children, components
 		string tag = "Entity";
 		Transform transform;
-		List<Variant<uuid, stdf::path, EntityConfig>> children;
+		List<Handle<EntityConfig>> children;
 		List<UniquePtr<ComponentConfig>> components;
 	};
 }
