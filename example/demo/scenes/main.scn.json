@@ -1,5 +1,32 @@
 {
   "uuid": 12303461204403500793,
   "name": "Main Scene",
-  "root": "entities/root.entt.json"
+  "root": {
+    "uuid": 1,
+    "tag": "Root",
+    "children": [
+      {
+        "tag": "TeaPot",
+        "components": {
+          "render-object": {
+            "mesh_uuid": 7378636141878824564,
+            "material_uuid": 1347639075235975932
+          }
+        },
+        "scripts": [ "Rotate" ]
+      },
+      {
+        "tag": "Player",
+        "transform": {
+          "position": [ 0, 0, -10 ]
+        },
+        "components": {
+          "camera": {
+            "type": "perspective"
+          }
+        },
+        "scripts": [ "PlayerController" ]
+      }
+    ]
+  }
 }
