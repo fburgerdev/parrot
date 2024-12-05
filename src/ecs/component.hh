@@ -60,7 +60,7 @@ namespace Parrot {
 
 		// getComponentID
 		virtual usize getComponentID() const override {
-			return typeid(DerivedComponentConfig<T>).hash_code();
+			return typeid(DerivedComponent<T>).hash_code();
 		}
 		// createComponent
 		virtual UniquePtr<Component> createComponent(Entity& entity) const override {
