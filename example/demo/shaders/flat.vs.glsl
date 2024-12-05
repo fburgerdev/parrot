@@ -8,18 +8,19 @@ out vec2 v_tex_coords;
 out float v_intensity;
 
 // uniform
-uniform mat4 u_mvp;
-uniform mat4 u_rot;
+uniform mat4 u_model;
+uniform mat4 u_proj_view;
+uniform mat4 u_model_rot;
 
 // const
-vec3 light_dir = vec3(0, -0.707, 0.707);
+vec3 light_dir = vec3(0, 0, 1);
 
 void main() {
     // position
-    gl_Position = u_mvp * vec4(a_pos, 1);
+    gl_Position = u_proj_view * u_model * vec4(a_pos, 1);
 
     // out
     v_tex_coords = a_tex_coords;
-    vec3 rot_normal = (u_rot * vec4(a_normal, 0)).xyz;
+    vec3 rot_normal = (u_model_rot * vec4(a_normal, 0)).xyz;
     v_intensity = clamp(dot(rot_normal, -light_dir), 0, 1);
 }

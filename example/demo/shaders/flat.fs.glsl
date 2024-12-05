@@ -1,14 +1,14 @@
 #version 330 core
 // out
-out vec4 frag_color; 
+out vec4 o_frag_color; 
 // in
 in vec2 v_tex_coords;
 in float v_intensity;
 
 // uniform
 uniform sampler2D u_texture;
-uniform vec3 u_tint;
+uniform vec3 u_tint = vec3(1, 1, 1);
 
 void main() {
-    frag_color = texture2D(u_texture, v_tex_coords) * vec4(vec3(u_tint * v_intensity), 1);
+    o_frag_color = vec4(1, 1, 1, 1) * v_intensity;
 }

@@ -1,5 +1,5 @@
 #include "client.hh"
-#include "scripts/player_controller.hh"
+#include "scripts/controller.hh"
 #include "scripts/rotate.hh"
 
 #define SCRIPT_ID(NAME) typeid(NAME).hash_code()
