@@ -47,6 +47,8 @@ namespace Parrot {
 
 		// raiseEvent
 		void raiseEvent(const Event& e);
+		// update
+		void update(float32 delta_time);
 
 		// getScript
 		template<class T> requires std::is_base_of_v<Script, T>
@@ -62,6 +64,9 @@ namespace Parrot {
 			return reinterpret_cast<const T&>(*it->second);
 		}
 		// addScript
+		void addScript(usize id, UniquePtr<Script>&& script) {
+			_scripts.emplace(id, std::move(script));
+		}
 		template<class T, class... Args> requires std::is_base_of_v<Script, T>
 		T& addScript(Args&&... args) {
 			auto result = _scripts.emplace(getScriptID<T>(), std::make_unique<T>(std::forward<Args>(args)...));

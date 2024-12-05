@@ -42,6 +42,12 @@ namespace Parrot {
 			}
 		}
 	}
+	// update
+	void Scriptable::update(float32 delta_time) {
+		for (auto& [id, script] : _scripts) {
+			script->onUpdate(delta_time);
+		}
+	}
 	// captureEvent
 	bool Scriptable::captureEvent(const Event& e) {
 		if (_parent == nullptr) {
