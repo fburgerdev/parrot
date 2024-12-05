@@ -18,6 +18,8 @@ namespace Parrot {
 		}, program.fragment);
 		// create + compile
 		_gpu_id = glCreateProgram();
+		LOG_GRAPHICS_TRACE("created shader");
+		bind();
 		uint32 vertex_id = compileShader(vertex, ShaderType::VERTEX);
 		uint32 fragment_id = compileShader(fragment, ShaderType::FRAGMENT);
 		//? what geometry shader
@@ -28,6 +30,7 @@ namespace Parrot {
 		// cleanup
 		glDeleteShader(vertex_id);
 		glDeleteShader(fragment_id);
+		unbind();
 	}
 	ShaderOpenGL::ShaderOpenGL(ShaderOpenGL&& other) noexcept
 		: _gpu_id(std::exchange(other._gpu_id, 0)) {}
@@ -45,9 +48,11 @@ namespace Parrot {
 	// bind, unbind
 	void ShaderOpenGL::bind() const {
 		glUseProgram(_gpu_id);
+		LOG_GRAPHICS_TRACE("bound shader with id={}", _gpu_id);
 	}
 	void ShaderOpenGL::unbind() {
 		glUseProgram(0);
+		LOG_GRAPHICS_TRACE("unbound shader");
 	}
 	// setUniform
 	// :: int32
@@ -112,7 +117,11 @@ namespace Parrot {
 	// getUniformLocation
 	int32 ShaderOpenGL::getUniformLocation(const string& name) {
 		if (!_uniform_cache.contains(name)) {
-			_uniform_cache.emplace(name, glGetUniformLocation(_gpu_id, name.c_str()));
+			int32 location = glGetUniformLocation(_gpu_id, name.c_str());
+			if (location == -1) {
+				LOG_GRAPHICS_WARNING("uniform '{}' was not found in shader", name);
+			}
+			_uniform_cache.emplace(name, location);
 		}
 		return _uniform_cache.at(name);
 	}
@@ -133,7 +142,7 @@ namespace Parrot {
 			return id;
 		}
 		else if (result == GL_FALSE) {
-			LOG_GRAPHICS_DEBUG("failed to compile opengl shader");
+			LOG_GRAPHICS_ERROR("failed to compile opengl shader");
 			//TODO: log error message + source
 		}
 		return 0;	

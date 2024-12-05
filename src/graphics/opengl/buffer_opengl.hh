@@ -11,8 +11,8 @@ namespace Parrot {
 	class VertexBufferOpenGL {
 	public:
 		// VertexBufferOpenGL / ~VertexBufferOpenGL
-		VertexBufferOpenGL(usize size, BufferTypeOpenGL type = BufferTypeOpenGL::DYNAMIC);
-		VertexBufferOpenGL(const void* buffer, usize size, BufferTypeOpenGL type = BufferTypeOpenGL::DYNAMIC);
+		VertexBufferOpenGL(usize size, BufferTypeOpenGL type = BufferTypeOpenGL::STATIC);
+		VertexBufferOpenGL(const void* buffer, usize size, BufferTypeOpenGL type = BufferTypeOpenGL::STATIC);
 		VertexBufferOpenGL(const VertexBufferOpenGL&) = delete;
 		VertexBufferOpenGL(VertexBufferOpenGL&& other) noexcept;
 		~VertexBufferOpenGL();
@@ -59,7 +59,7 @@ namespace Parrot {
 	class VertexArrayOpenGL {
 	public:
 		// VertexArrayOpenGL / ~VertexArrayOpenGL
-		VertexArrayOpenGL(VertexBufferOpenGL&& buffer, const List<AttributeGPU>& attributes);
+		VertexArrayOpenGL(VertexBufferOpenGL&& buffer, IndexBufferOpenGL&& index, const List<AttributeGPU>& attributes);
 		VertexArrayOpenGL(const VertexArrayOpenGL&) = delete;
 		VertexArrayOpenGL(VertexArrayOpenGL&& other) noexcept;
 		~VertexArrayOpenGL();
@@ -74,6 +74,7 @@ namespace Parrot {
 		static uint getStride(DTypeGPU dtype, uint count);
 
 		uint _gpu_id = 0;
-		VertexBufferOpenGL _buffer;
+		VertexBufferOpenGL _vertex;
+		IndexBufferOpenGL _index;
 	};
 }

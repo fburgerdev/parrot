@@ -13,6 +13,5 @@ namespace Parrot {
 		static void unbind();
 	private:
 		VertexArrayOpenGL _vertex_array;
-		IndexBufferOpenGL _index_buffer;
 	};
 }

@@ -4,5 +4,5 @@
 
 namespace Parrot {
 	// drawOpenGL
-	void drawOpenGL();
+	void drawOpenGL(usize count);
 }
