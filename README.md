@@ -2,7 +2,7 @@
 Parrot is a game engine written in C++ created for educational purposes.
 The engine lets you develop games using custom asset formats and C++ scripts.
 
-![image](https://github.com/user-attachments/assets/4a51845e-b58f-47e6-88fb-fd74629de8bc)
+![image](https://github.com/user-attachments/assets/998e8642-6cc0-464e-9837-f3d0b7d5a54c)
 
 technologies used:
 - window-api: [glfw](https://github.com/glfw/glfw)
