@@ -10,5 +10,5 @@ uniform sampler2D u_texture;
 uniform vec3 u_tint = vec3(1, 1, 1);
 
 void main() {
-    o_frag_color = vec4(1, 1, 1, 1) * v_intensity;
+    o_frag_color = vec4(1, 1, 1, 1) * v_intensity + vec4(0.7F, 0.7F, 0.9, 1) * (1 - v_intensity);
 }

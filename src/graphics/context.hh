@@ -37,7 +37,8 @@ namespace Parrot {
 		friend class PlayingUnit;
 	private:
 		GPUContext(HandleResolver resolver);
-		GPUContext(function<void()>&& bind, function<void()>&& unbind, HandleResolver resolver);
+		//TODO: fix access violation caused by moving window
+		//GPUContext(function<void()>&& bind, function<void()>&& unbind, HandleResolver resolver);
 
 		function<void()> _bind, _unbind;
 		GPUShader* _current_shader = nullptr;

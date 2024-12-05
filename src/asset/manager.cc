@@ -1,7 +1,7 @@
 #include "common.hh"
 #include "manager.hh"
 #include "debug/debug.hh"
-#include "nlohmann/json.hh"
+#include <nlohmann/json.hh>
 using json = nlohmann::json;
 
 namespace Parrot {
@@ -48,5 +48,33 @@ namespace Parrot {
 		  _index(asset_dir) {
 		// TODO: assert(int(loading_policy) <= int(unloading_policy))
 		LOG_ASSET_TRACE("asset-manager initialized with directory {}", asset_dir);
+	}
+
+	// isLoaded
+	bool AssetManager::isLoaded(uuid uuid) const {
+		return _assets.contains(uuid);
+	}
+	bool AssetManager::isLoaded(const stdf::path& path) const {
+		return _assets.contains(_index.getUUID(path));
+	}
+	bool AssetManager::isLoaded(const Variant<uuid, stdf::path>& variant) const {
+		return std::visit([&](const auto& value) {
+			return isLoaded(value);
+			}, variant);
+	}
+
+	// getHandleResolver
+	HandleResolver AssetManager::getHandleResolver() {
+		return HandleResolver([&](
+			const Variant<uuid, stdf::path>& variant,
+			const function<Pair<void*, function<void()>>(stdf::path)>& create,
+			const function<void(const void*)>& callback) {
+				uuid deduced_uuid = std::holds_alternative<uuid>(variant) ? std::get<uuid>(variant) : _index.getUUID(std::get<stdf::path>(variant));
+				if (!isLoaded(deduced_uuid)) {
+					auto [value, delete_func] = create(_asset_dir / _index.getPath(deduced_uuid));
+					_assets.emplace(deduced_uuid, Asset(value, (_unloading_policy == UnloadingPolicy::UNLOAD_UNUSED), delete_func));
+				}
+				callback(_assets.at(deduced_uuid).get());
+			});
 	}
 }

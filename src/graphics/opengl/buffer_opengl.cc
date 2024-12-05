@@ -1,7 +1,7 @@
 #include "common.hh"
 #include "buffer_opengl.hh"
 #include "debug/debug.hh"
-#include "glad/glad.hh"
+#include <glad/glad.hh>
 
 namespace Parrot {
 	// VertexBufferOpenGL

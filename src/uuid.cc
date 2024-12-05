@@ -1,7 +1,7 @@
 #include "common.hh"
 #include "uuid.hh"
 #include <random>
-#include "nlohmann/json.hh"
+#include <nlohmann/json.hh>
 using json = nlohmann::json;
 
 namespace Parrot {

@@ -1,9 +1,9 @@
 #include "common.hh"
 #include "mesh.hh"
 #include "debug/debug.hh"
-#include "nlohmann/json.hh"
+#include <nlohmann/json.hh>
 using json = nlohmann::json;
-#include "tinyobj/objloader.hh"
+#include <tinyobj/objloader.hh>
 using namespace tinyobj;
 
 namespace Parrot {

@@ -4,6 +4,6 @@
 namespace Parrot {
 	// TextureOpenGL
 	TextureOpenGL::TextureOpenGL(const Texture& texture) {
-
+		// TODO
 	}
 }

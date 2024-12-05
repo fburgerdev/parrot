@@ -1,6 +1,5 @@
 #include "common.hh"
 #include "component.hh"
-#include "debug/debug.hh"
 
 namespace Parrot {
 	// Component

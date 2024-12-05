@@ -4,6 +4,6 @@
 namespace Parrot {
 	// Texture
 	Texture::Texture(const stdf::path& filepath) {
-
+		// TODO
 	}
 }

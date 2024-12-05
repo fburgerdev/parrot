@@ -2,7 +2,7 @@
 #include "shader_opengl.hh"
 #include "math/matrix.hh"
 #include "debug/debug.hh"
-#include "glad/glad.hh"
+#include <glad/glad.hh>
 
 namespace Parrot {
 	// ShaderOpenGL

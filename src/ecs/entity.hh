@@ -1,6 +1,6 @@
 #pragma once
-#include "entity_config.hh"
 #include "scriptable.hh"
+#include "entity_config.hh"
 #include "component.hh"
 
 namespace Parrot {
@@ -20,8 +20,8 @@ namespace Parrot {
 		const Entity& getParent() const;
 
 		// createChild
-		Entity& createChild();
-		Entity& createChild(stdf::path& filepath);
+		//Entity& createChild();
+		//Entity& createChild(stdf::path& filepath);
 		// destroyChild
 		void destroyChild(uuid uuid);
 		void destroyChild(const Entity& child);

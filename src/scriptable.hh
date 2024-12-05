@@ -15,7 +15,6 @@ namespace Parrot {
 
 		// onUpdate
 		virtual void onUpdate(float32 delta_time);
-
 		// resolveEvent
 		virtual bool resolveEvent(const Event& e);
 

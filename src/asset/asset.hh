@@ -8,8 +8,7 @@ namespace Parrot {
 		// ControlBlock
 		struct ControlBlock {
 			// ControlBlock
-			ControlBlock(bool destroy_if_unviewed)
-				: destroy_if_unviewed(destroy_if_unviewed) {}
+			ControlBlock(bool destroy_if_unviewed);
 
 			// destroy_if_unviewed, is_valid, ref_count
 			bool destroy_if_unviewed;
@@ -23,44 +22,18 @@ namespace Parrot {
 			: _value(value),
 			  _control(new ControlBlock(destroy_if_unviewed)),
 			  _destroy([=] { delete value; }) {}
-		Asset(void* value, bool destroy_if_unviewed, const auto& destroy)
-			: _value(value),
-			_control(new ControlBlock(destroy_if_unviewed)),
-			_destroy(destroy) {}
+		Asset(void* value, bool destroy_if_unviewed, const function<void()>& destroy);
 		Asset(const Asset&) = delete;
-		Asset(Asset&& other) noexcept
-			: _value(std::exchange(other._value, nullptr)),
-			  _control(std::exchange(other._control, nullptr)),
-			  _destroy(std::move(other._destroy)) {}
+		Asset(Asset&& other) noexcept;
 		// =
 		Asset& operator=(const Asset&) = delete;
-		Asset& operator=(Asset&& other) noexcept {
-			_value = std::exchange(other._value, nullptr);
-			_control = std::exchange(other._control, nullptr);
-			_destroy = std::move(other._destroy);
-			return *this;
-		}
+		Asset& operator=(Asset&& other) noexcept;
 		// ~Asset
-		~Asset() {
-			if (_control) {
-				if (_control->ref_count == 1) {
-					delete _control;
-				}
-				else {
-					_control->is_valid = false;
-					--(_control->ref_count);
-				}
-				_destroy();
-			}
-		}
+		~Asset();
 		
 		// get
-		void* get() {
-			return _value;
-		}
-		const void* get() const {
-			return _value;
-		}
+		void* get();
+		const void* get() const;
 
 		// friend
 		template<class T>

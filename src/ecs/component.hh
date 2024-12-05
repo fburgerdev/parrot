@@ -34,7 +34,7 @@ namespace Parrot {
 			: T(value), Component(entity) {}
 
 		// update
-		virtual void update(float32 delta_time) override {
+		virtual void update([[maybe_unused]] float32 delta_time) override {
 			LOG_ECS_TRACE("update component: {}", static_cast<T&>(*this));
 		}
 	};

@@ -66,16 +66,12 @@ namespace Parrot {
 	}
 
 	// createChild
-	Entity& Entity::createChild() {
-		// TODO
-		//uuid uuid = generateUUID();
-		//_children.emplace(uuid, std::make_unique<Entity>(uuid, this));
-		return *this;
-	}
-	Entity& Entity::createChild(stdf::path& filepath) {
-		// TODO
-		return *this;
-	}
+	//Entity& Entity::createChild() {
+	//	// TODO
+	//}
+	//Entity& Entity::createChild(stdf::path& filepath) {
+	//	// TODO
+	//}
 	// destroyChild
 	void Entity::destroyChild(uuid uuid) {
 		_children.erase(uuid);

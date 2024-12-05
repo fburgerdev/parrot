@@ -1,7 +1,7 @@
 #include "common.hh"
 #include "scene.hh"
 #include "debug/debug.hh"
-#include "nlohmann/json.hh"
+#include <nlohmann/json.hh>
 using json = nlohmann::json;
 
 namespace Parrot {

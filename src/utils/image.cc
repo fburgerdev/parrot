@@ -1,7 +1,7 @@
 #include "common.hh"
 #include "image.hh"
 #include "debug/debug.hh"
-#include "stb/stb_image.hh"
+#include <stb/stb_image.hh>
 
 namespace Parrot {
 	// Image

@@ -3,9 +3,9 @@
 #include "app_config.hh"
 #include "window/window.hh"
 #include "graphics/context.hh"
-#include "debug/debug.hh"
-#include "utils/stopwatch.hh"
 #include "graphics/render_object.hh"
+#include "utils/stopwatch.hh"
+#include "debug/debug.hh"
 
 namespace Parrot {
 	// DefaultEventHandler
@@ -42,7 +42,7 @@ namespace Parrot {
 	// add
 	PlayingUnit& App::add(const WindowConfig& window_config, const SceneConfig& scene_config) {
 		Window window(window_config);
-		//window.setIcon(*_asset_manager.asset<Image>("images/parrot.png")); //TODO: move
+		window.setIcon(Image("images/parrot.png")); //TODO: move
 		Scene scene(scene_config, _asset_manager.getHandleResolver(), this);
 		PlayingUnit unit(std::move(window), std::move(scene), _asset_manager.getHandleResolver(), this);
 		auto result = _units.emplace(unit.getUUID(), std::move(unit));
@@ -68,9 +68,9 @@ namespace Parrot {
 						raiseEvent(e);
 					}
 				}
-				if (total_watch.elapsed() > 10) {
-					_main_unit->window.close();
-				}
+				//if (total_watch.elapsed() > 10) {
+				//	_main_unit->window.close();
+				//}
 			}
 			LOG_CORE_INFO("app '{}' terminated (gracefully)", _name);
 		}
@@ -79,6 +79,10 @@ namespace Parrot {
 	// draw
 	void App::draw(PlayingUnit& unit) {
 		Batch batch;
+		/*
+			note that we need to store the AssetViews,
+			so that the AssetManager garantuees that the resources are not freed
+		*/
 		List<AssetView<Mesh>> mesh_views;
 		List<AssetView<Material>> material_views;
 		for (const Entity* entity : unit.scene.queryEntitiesByComponent<DerivedComponent<RenderObject>>()) {
