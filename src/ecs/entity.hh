@@ -66,7 +66,7 @@ namespace Parrot {
 
 		string _tag;
 		Entity* _parent = nullptr;
-		Map<uuid, Entity> _children;
-		Map<usize, UniquePtr<Component>> _components;
+		Map<uuid, UniquePtr<Entity>> _children; //? think about reducing indirection
+		Map<usize, UniquePtr<Component>> _components; //? think about reducing indirection
 	};
 }

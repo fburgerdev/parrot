@@ -1,2 +1,4 @@
 #pragma once
-#include "core/script_registry.hh"
+#include "scriptable.hh"
+#include "ecs/entity.hh"
+#include "registry.hh"

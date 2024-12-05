@@ -73,6 +73,12 @@ namespace Parrot {
 					}
 				}
 			}
+			// scripts
+			if (json.contains("scripts")) {
+				for (const auto& script : json.at("scripts")) {
+					scripts.emplace_back(string(script));
+				}
+			}
 		}
 		
 		// tag, transform, children, components
@@ -80,5 +86,6 @@ namespace Parrot {
 		Transform<> transform;
 		List<Handle<EntityConfig>> children;
 		List<UniquePtr<ComponentConfig>> components;
+		List<string> scripts;
 	};
 }

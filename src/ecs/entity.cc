@@ -14,8 +14,8 @@ namespace Parrot {
 		transform = config.transform;
 		for (const auto& handle : config.children) {
 			resolver.useHandle<EntityConfig>([&](const EntityConfig& config) {
-				Entity child(config, resolver, this);
-				_children.emplace(child.getUUID(), std::move(child));
+				UniquePtr<Entity> child = std::make_unique<Entity>(config, resolver, this);
+				_children.emplace(child->getUUID(), std::move(child));
 			}, handle);
 		}
 		for (const auto& component_config : config.components) {
@@ -23,6 +23,10 @@ namespace Parrot {
 				component_config->getComponentID(),
 				component_config->createComponent(*this)
 			);
+		}
+		for (const string& script_name : config.scripts) {
+			auto [id, factory] = g_registry<Script, Entity&>.at(script_name);
+			addScript(id, factory(*this));
 		}
 	}
 	Entity::Entity(const EntityConfig& config, HandleResolver resolver, Entity* parent)
@@ -31,8 +35,8 @@ namespace Parrot {
 		transform = config.transform;
 		for (const auto& handle : config.children) {
 			resolver.useHandle<EntityConfig>([&](const EntityConfig& config) {
-				Entity child(config, resolver, this);
-				_children.emplace(child.getUUID(), std::move(child));
+				UniquePtr<Entity> child = std::make_unique<Entity>(config, resolver, this);
+				_children.emplace(child->getUUID(), std::move(child));
 			}, handle);
 		}
 		for (const auto& component_config : config.components) {
@@ -40,6 +44,10 @@ namespace Parrot {
 				component_config->getComponentID(),
 				component_config->createComponent(*this)
 			);
+		}
+		for (const string& script_name : config.scripts) {
+			auto [id, factory] = g_registry<Script, Entity&>.at(script_name);
+			addScript(id, factory(*this));
 		}
 	}
 	Entity::Entity(uuid uuid, Entity* parent)
@@ -59,9 +67,10 @@ namespace Parrot {
 
 	// createChild
 	Entity& Entity::createChild() {
-		uuid uuid = generateUUID();
-		_children.emplace(uuid, Entity(uuid, this));
-		return _children.at(uuid);
+		// TODO
+		//uuid uuid = generateUUID();
+		//_children.emplace(uuid, std::make_unique<Entity>(uuid, this));
+		return *this;
 	}
 	Entity& Entity::createChild(stdf::path& filepath) {
 		// TODO
@@ -77,12 +86,12 @@ namespace Parrot {
 	// foreachChild
 	void Entity::foreachChild(function<void(Entity&)> func) {
 		for (auto& [uuid, child] : _children) {
-			func(child);
+			func(*child);
 		}
 	}
 	void Entity::foreachChild(function<void(const Entity&)> func) const {
 		for (const auto& [uuid, child] : _children) {
-			func(child);
+			func(*child);
 		}
 	}
 
@@ -92,8 +101,9 @@ namespace Parrot {
 		for (auto& [id, component] : _components) {
 			component->update(delta_time);
 		}
+		Scriptable::update(delta_time);
 		for (auto& [uuid, child] : _children) {
-			child.update(delta_time);
+			child->update(delta_time);
 		}
 	}
 }
