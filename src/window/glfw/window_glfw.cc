@@ -135,21 +135,14 @@ namespace Parrot {
         glfwSwapBuffers(handle(_handle));
     }
     
-    // (static) bound
-    static Stack<WindowGLFW*> s_bound;
     // bind
     void WindowGLFW::bind() {
-        s_bound.push(this);
-        glfwMakeContextCurrent(handle(_handle));
+        if (_handle) {
+            glfwMakeContextCurrent(handle(_handle));
+        }
     }
     // unbind
     void WindowGLFW::unbind() {
-        s_bound.pop();
-        if (s_bound.empty()) {
-            glfwMakeContextCurrent(nullptr);
-        }
-        else {
-            glfwMakeContextCurrent(handle(s_bound.top()->_handle));
-        }
+        glfwMakeContextCurrent(nullptr);
     }
 }
