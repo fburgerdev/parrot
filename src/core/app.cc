@@ -5,6 +5,7 @@
 #include "graphics/context.hh"
 #include "debug/debug.hh"
 #include "utils/stopwatch.hh"
+#include "graphics/render_object.hh"
 
 namespace Parrot {
 	// DefaultEventHandler
@@ -58,9 +59,9 @@ namespace Parrot {
 				for (auto& [uuid, unit] : _units) {
 					// update scene
 					unit.scene.update(delta_time);
-					//// draw
-					//GPUContext& context = _contexts.at(&window);
-					// BatchRenderer::draw(context, createBatch(scene));
+					// draw
+					draw(unit);
+					// swap + update window
 					unit.window.swapBuffers();
 					for (auto& e : unit.window.pollEvents()) {
 						LOG_CORE_TRACE("polled event: {}", e);
@@ -75,13 +76,27 @@ namespace Parrot {
 		}
 	}
 
-	// createBatch
-	Batch App::createBatch(const Scene& scene) {
+	// draw
+	void App::draw(PlayingUnit& unit) {
 		Batch batch;
-		for (const Entity* entity : scene.getRenderable()) {
-			//const auto& render_component = entity->getComponent<DerivedComponent<RenderObject>>();
-			//batch.add({ render_component.mesh_uuid, render_component.material_uuid });
+		List<AssetView<Mesh>> mesh_views;
+		List<AssetView<Material>> material_views;
+		for (const Entity* entity : unit.scene.queryEntitiesByComponent<DerivedComponent<RenderObject>>()) {
+			const auto& roc = entity->getComponent<DerivedComponent<RenderObject>>();
+			auto mesh_view = _asset_manager.asset<Mesh>(roc.mesh_uuid);
+			mesh_views.push_back(mesh_view);
+			auto material_view = _asset_manager.asset<Material>(roc.material_uuid);
+			material_views.push_back(material_view);
+			batch.add(*mesh_view, *material_view, entity->transform);
 		}
-		return batch;
+		List<const Entity*> cameras = unit.scene.queryEntitiesByComponent<DerivedComponent<Camera>>();
+		unit.window.bind();
+		BatchRenderer::draw(
+			unit._gpu_context,
+			cameras.front()->getComponent<DerivedComponent<Camera>>(),
+			cameras.front()->transform,
+			batch
+		);
+		unit.window.unbind();
 	}
 }

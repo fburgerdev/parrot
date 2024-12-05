@@ -14,10 +14,9 @@ namespace Parrot {
 		PlayingUnit& add(const WindowConfig& window_config, const SceneConfig& scene_config);
 		// run
 		void run();
-
-		// createBatch
-		Batch createBatch(const Scene& scene);
 	private:
+		void draw(PlayingUnit& unit);
+
 		string _name;
 		PlayingUnit* _main_unit = nullptr;
 		Map<uuid, PlayingUnit> _units;

@@ -19,20 +19,4 @@ namespace Parrot {
 		LOG_ECS_TRACE("update scene '{}'", _name);
 		_root.update(delta_time);
 	}
-	// getRenderable
-	List<const Entity*> Scene::getRenderable() const {
-		List<const Entity*> renderable;
-		Stack<const Entity*> stack({ &_root });
-		while (!stack.empty()) {
-			const Entity* top = stack.top();
-			stack.pop();
-			//if (top->hasComponent<RenderObjectComponent>()) {
-			//	renderable.push_back(top);
-			//}
-			top->foreachChild([&](const Entity& child) {
-				stack.push(&child);
-			});
-		}
-		return renderable;
-	}
 }

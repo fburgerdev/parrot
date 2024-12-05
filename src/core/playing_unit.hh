@@ -14,6 +14,9 @@ namespace Parrot {
 		// window, scene
 		Window window;
 		Scene scene;
+
+		// friend
+		friend class App;
 	private:
 		GPUContext _gpu_context;
 	};
