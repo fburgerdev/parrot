@@ -1,16 +1,21 @@
 #include "common.hh"
 #include "mesh.hh"
 #include "debug/debug.hh"
+#include "nlohmann/json.hh"
+using json = nlohmann::json;
 #include "tinyobj/objloader.hh"
 using namespace tinyobj;
 
 namespace Parrot {
 	// Mesh
 	Mesh::Mesh(const stdf::path& filepath) {
+        json data = json::parse(ifstream(filepath));
+        stdf::path resource_path = filepath.parent_path() / string(data.at("resource"));
+
         ObjReader reader;
         ObjReaderConfig config;
         config.triangulate = true;
-        reader.ParseFromFile(filepath.string(), config);
+        reader.ParseFromFile(resource_path.string(), config);
 
         // errors / warnings
         if (!reader.Error().empty()) {
