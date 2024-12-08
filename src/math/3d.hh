@@ -2,9 +2,6 @@
 #include "matrix.hh"
 
 namespace Parrot {
-	// DefaultFloat
-	using DefaultFloat = float32;
-
 	// calcTranslationMatrix
 	template<typename T = DefaultFloat>
 	Mat4x4<T> calcTranslationMatrix(const Vec3<T>& translation) {
@@ -46,16 +43,16 @@ namespace Parrot {
 		T cosc = std::cos(euler_rotation.z);
 
 		// row 1
-		out.at(0, 0) = cosa * cosc + sina * sinc * sinb;
-		out.at(0, 1) = cosa * sinc - sina * sinb * cosc;
-		out.at(0, 2) = sina * cosb;
+		out.at(0, 0) = cosa * cosc - sina * sinc * sinb;
+		out.at(0, 1) = cosa * sinc + sina * sinb * cosc;
+		out.at(0, 2) = -sina * cosb;
 		// row 2
 		out.at(1, 0) = -sinc * cosb;
 		out.at(1, 1) = cosb * cosc;
 		out.at(1, 2) = sinb;
 		// row 3
-		out.at(2, 0) = -sina * cosc + cosa * sinc * sinb;
-		out.at(2, 1) = -sina * sinc - cosa * sinb * cosc;
+		out.at(2, 0) = sina * cosc + cosa * sinc * sinb;
+		out.at(2, 1) = sina * sinc - cosa * sinb * cosc;
 		out.at(2, 2) = cosa * cosb;
 		// row 4
 		out.at(3, 3) = 1;

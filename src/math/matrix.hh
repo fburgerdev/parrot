@@ -1,5 +1,5 @@
 #pragma once
-#include "common.hh"
+#include "basic.hh"
 
 namespace Parrot {
     // Mat
@@ -176,7 +176,7 @@ namespace Parrot {
     }
 
     // - (unary)
-    template<typename T, usize N, usize M>
+    template<typename T, usize N, usize M = N>
     Mat<T, N, M> operator-(const Mat<T, N, M>& mat) {
         Mat<T, N, M> out;
         for (usize i = 0; i < N * M; ++i) {
@@ -185,7 +185,7 @@ namespace Parrot {
         return out;
     }
     // +=
-    template<typename T, usize N, usize M>
+    template<typename T, usize N, usize M = N>
     Mat<T, N, M>& operator+=(Mat<T, N, M>& mat, const Mat<T, N, M>& other) {
         for (usize i = 0; i < N * M; ++i) {
             mat.at(i) += other.at(i);
@@ -193,7 +193,7 @@ namespace Parrot {
         return mat;
     }
     // -=
-    template<typename T, usize N, usize M>
+    template<typename T, usize N, usize M = N>
     Mat<T, N, M>& operator-=(Mat<T, N, M>& mat, const Mat<T, N, M>& other) {
         for (usize i = 0; i < N * M; ++i) {
             mat.at(i) -= other.at(i);
@@ -201,7 +201,7 @@ namespace Parrot {
         return mat;
     }
     // *=
-    template<typename T, usize N, usize M>
+    template<typename T, usize N, usize M = N>
     Mat<T, N, M>& operator*=(Mat<T, N, M>& mat, T scalar) {
         for (usize i = 0; i < N * M; ++i) {
             mat.at(i) *= scalar;
@@ -209,7 +209,7 @@ namespace Parrot {
         return mat;
     }
     // /=
-    template<typename T, usize N, usize M>
+    template<typename T, usize N, usize M = N>
     Mat<T, N, M>& operator/=(Mat<T, N, M>& mat, T scalar) {
         for (usize i = 0; i < N * M; ++i) {
             mat.at(i) /= scalar;
@@ -217,28 +217,28 @@ namespace Parrot {
         return mat;
     }
     // +
-    template<typename T, usize N, usize M>
+    template<typename T, usize N, usize M = N>
     Mat<T, N, M> operator+(const Mat<T, N, M>& mat, const Mat<T, N, M>& other) {
         Mat<T, N, M> out(mat);
         out += other;
         return out;
     }
     // -
-    template<typename T, usize N, usize M>
+    template<typename T, usize N, usize M = N>
     Mat<T, N, M> operator-(const Mat<T, N, M>& mat, const Mat<T, N, M>& other) {
         Mat<T, N, M> out(mat);
         out -= other;
         return out;
     }
     // * (scalar)
-    template<typename T, usize N, usize M>
+    template<typename T, usize N, usize M = N>
     Mat<T, N, M> operator*(const Mat<T, N, M>& mat, T scalar) {
         Mat<T, N, M> out(mat);
         out *= scalar;
         return out;
     }
     // / (scalar)
-    template<typename T, usize N, usize M>
+    template<typename T, usize N, usize M = N>
     Mat<T, N, M> operator/(const Mat<T, N, M>& mat, T scalar) {
         Mat<T, N, M> out(mat);
         out /= scalar;
@@ -264,7 +264,7 @@ namespace Parrot {
     }
 
     // dot
-    template<typename T, usize N, usize M>
+    template<typename T, usize N, usize M = N>
     T dot(const Mat<T, N, M>& mat1, const Mat<T, N, M>& mat2) {
         T out = 0;
         for (usize i = 0; i < N * M; ++i) {
@@ -273,26 +273,26 @@ namespace Parrot {
         return out;
     }
     // magnitude
-    template<typename T, usize N, usize M>
+    template<typename T, usize N, usize M = N>
     T magnitude(const Mat<T, N, M>& mat) {
         return std::sqrt(dot(mat, mat));
     }
     // length
-    template<typename T, usize N, usize M>
+    template<typename T, usize N, usize M = N>
     T length(const Mat<T, N, M>& mat) {
         return magnitude(mat);
     }
-    template<typename T, usize N, usize M>
+    template<typename T, usize N, usize M = N>
     T dist(const Mat<T, N, M>& mat1, const Mat<T, N, M>& mat2) {
         return length(mat2 - mat1);
     }
 
     // normalize(d)
-    template<typename T, usize N, usize M>
+    template<typename T, usize N, usize M = N>
     Mat<T, N, M>& normalize(Mat<T, N, M>& mat) {
         return mat /= length(mat);
     }
-    template<typename T, usize N, usize M>
+    template<typename T, usize N, usize M = N>
     Mat<T, N, M> normalized(const Mat<T, N, M>& mat) {
         return mat / length(mat);
     }
@@ -307,8 +307,8 @@ namespace Parrot {
         }
         return mat;
     }
-    template<typename T, usize N, usize M>
-    Mat<T, M, N>& transposed(const Mat<T, N, M>& mat) {
+    template<typename T, usize N, usize M = N>
+    Mat<T, M, N> transposed(const Mat<T, N, M>& mat) {
         Mat<T, M, N> out;
         for (usize n = 0; n < N; ++n) {
             for (usize m = 0; m < M; ++m) {
@@ -370,31 +370,31 @@ namespace Parrot {
     }
 
     // MatNxM
-    template<typename T>
+    template<typename T = DefaultFloat>
     using Mat2x2 = Mat<T, 2, 2>;
-    template<typename T>
+    template<typename T = DefaultFloat>
     using Mat2x3 = Mat<T, 2, 3>;
-    template<typename T>
+    template<typename T = DefaultFloat>
     using Mat2x4 = Mat<T, 2, 4>;
-    template<typename T>
+    template<typename T = DefaultFloat>
     using Mat3x2 = Mat<T, 3, 2>;
-    template<typename T>
+    template<typename T = DefaultFloat>
     using Mat3x3 = Mat<T, 3, 3>;
-    template<typename T>
+    template<typename T = DefaultFloat>
     using Mat3x4 = Mat<T, 3, 4>;
-    template<typename T>
+    template<typename T = DefaultFloat>
     using Mat4x2 = Mat<T, 4, 2>;
-    template<typename T>
+    template<typename T = DefaultFloat>
     using Mat4x3 = Mat<T, 4, 3>;
-    template<typename T>
+    template<typename T = DefaultFloat>
     using Mat4x4 = Mat<T, 4, 4>;
     // VecN
     template<typename T, usize N>
     using Vec = Mat<T, N, 1>;
-    template<typename T>
+    template<typename T = DefaultFloat>
     using Vec2 = Vec<T, 2>;
-    template<typename T>
+    template<typename T = DefaultFloat>
     using Vec3 = Vec<T, 3>;
-    template<typename T>
+    template<typename T = DefaultFloat>
     using Vec4 = Vec<T, 4>;
 }
