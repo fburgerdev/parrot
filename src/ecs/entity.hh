@@ -28,6 +28,8 @@ namespace Parrot {
 		// foreachChild
 		void foreachChild(function<void(Entity&)> func);
 		void foreachChild(function<void(const Entity&)> func) const;
+		virtual void foreachChild(function<void(Scriptable&)> func) override;
+		virtual void foreachChild(function<void(const Scriptable&)> func) const override;
 
 		// hasComponent
 		template<class T>

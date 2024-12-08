@@ -11,12 +11,16 @@ namespace Parrot {
 		// PlayingUnit
 		PlayingUnit(Window&& window, Scene&& scene, HandleResolver resolver, Scriptable* parent = nullptr);
 
-		// window, scene
-		Window window;
-		Scene scene;
+		// foreachChild
+		virtual void foreachChild(function<void(Scriptable&)> func) override;
+		virtual void foreachChild(function<void(const Scriptable&)> func) const override;
 
 		// friend
 		friend class App;
+
+		// window, scene
+		Window window;
+		Scene scene;
 	private:
 		GPUContext _gpu_context;
 	};

@@ -1,4 +1,14 @@
 #pragma once
-#include "scriptable.hh"
+// global
 #include "registry.hh"
+#include "scriptable.hh"
+// ecs
+#include "ecs/component.hh"
 #include "ecs/entity.hh"
+#include "ecs/scene.hh"
+// window
+#include "window/event.hh"
+// math
+#include "math/basic.hh"
+#include "math/matrix.hh"
+#include "math/3d.hh"

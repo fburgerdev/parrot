@@ -90,6 +90,16 @@ namespace Parrot {
 			func(*child);
 		}
 	}
+	void Entity::foreachChild(function<void(Scriptable&)> func) {
+		for (auto& [uuid, child] : _children) {
+			func(*child);
+		}
+	}
+	void Entity::foreachChild(function<void(const Scriptable&)> func) const {
+		for (const auto& [uuid, child] : _children) {
+			func(*child);
+		}
+	}
 
 	// update
 	void Entity::update(float32 delta_time) {

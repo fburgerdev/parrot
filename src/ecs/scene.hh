@@ -11,6 +11,10 @@ namespace Parrot {
 		// update
 		void update(float32 delta_time);
 
+		// getRoot
+		Entity& getRoot();
+		const Entity& getRoot() const;
+
 		// queryEntitiesByComponent
 		template<class T>
 		List<const Entity*> queryEntitiesByComponent() const {

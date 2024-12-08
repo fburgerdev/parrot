@@ -182,8 +182,8 @@ namespace Parrot {
 
     // MouseMove
     struct MouseMove {
-        // delta, window
-        Vec2<float32> delta;
+        // coords, window
+        Vec2<float32> coords;
         Window* window = nullptr;
     };
     // <<
@@ -202,6 +202,9 @@ namespace Parrot {
         Event(const MouseMove& mm)
             : _value(mm) {}
 
+        // getTargetWindow
+        Window* getTargetWindow();
+        const Window* getTargetWindow() const;
         // getWindowCloseRequest
         WindowCloseRequest* getWindowCloseRequest();
         const WindowCloseRequest* getWindowCloseRequest() const;

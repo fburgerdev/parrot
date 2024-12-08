@@ -9,21 +9,58 @@
 
 namespace Parrot {
 	// DefaultEventHandler
-	struct DefaultEventHandler : public Script {
+	class DefaultEventHandler : public Script {
+	public:
+		// DefaultEventHandler
+		DefaultEventHandler(App& app)
+			: _app(app) {}
+		// resolveEvent
 		virtual bool resolveEvent(const Event& e) override {
 			if (auto* wcr = e.getWindowCloseRequest()) {
 				LOG_CORE_DEBUG("unresolved window-close-request, closing window '{}'...", wcr->window->getTitle());
 				wcr->window->close();
 				return true;
 			}
+			else if (auto* window = e.getTargetWindow()){
+				bool success = false;
+				Queue<Scriptable*> queue({ &_app.getPlayingUnit(*window) });
+				while (!queue.empty()) {
+					Scriptable* front = queue.front();
+					queue.pop();
+					if (front->resolveEvent(e)) {
+						success = true;
+					}
+					else {
+						front->foreachChild([&](Scriptable& child) {
+							queue.push(&child);
+						});
+					}
+				}
+				return success;
+			}
 			return false;
 		}
+	private:
+		App& _app;
 	};
+	// DefaultScriptable
+	DefaultScriptable::DefaultScriptable(App& app)
+		: _app(app) {
+		addScript<DefaultEventHandler>(app);
+	}
+	// foreachChild
+	void DefaultScriptable::foreachChild(function<void(Scriptable&)> func) {
+		func(_app);
+	}
+	void DefaultScriptable::foreachChild(function<void(const Scriptable&)> func) const {
+		func(_app);
+	}
 
 	// App
 	App::App(const stdf::path& config_path)
-		: Scriptable(&_default_scriptable), _default_scriptable(makeSingleScriptable<DefaultEventHandler>()) {
+		: Scriptable(&_default_scriptable), _default_scriptable(*this) {
 		AppConfig config(config_path);
+		LOG_CORE_INFO("creating app '{}' from {}...", config.name, config_path);
 		// name
 		_name = config.name;
 		// asset-manager
@@ -46,7 +83,41 @@ namespace Parrot {
 		Scene scene(scene_config, _asset_manager.getHandleResolver(), this);
 		PlayingUnit unit(std::move(window), std::move(scene), _asset_manager.getHandleResolver(), this);
 		auto result = _units.emplace(unit.getUUID(), std::move(unit));
+		LOG_CORE_INFO("created playing-unit ('{}', '{}') in app '{}'", window_config.title, scene_config.name, _name);
 		return result.first->second;
+	}
+	// getPlayingUnit
+	PlayingUnit& App::getPlayingUnit(const Window& window) {
+		for (auto& [uuid, unit] : _units) {
+			if (&unit.window == &window) {
+				return unit;
+			}
+		}
+		throw std::runtime_error("playing-unit not found");
+	}
+	const PlayingUnit& App::getPlayingUnit(const Window& window) const {
+		for (const auto& [uuid, unit] : _units) {
+			if (&unit.window == &window) {
+				return unit;
+			}
+		}
+		throw std::runtime_error("playing-unit not found");
+	}
+	PlayingUnit& App::getPlayingUnit(const Scene& scene) {
+		for (auto& [uuid, unit] : _units) {
+			if (&unit.scene == &scene) {
+				return unit;
+			}
+		}
+		throw std::runtime_error("playing-unit not found");
+	}
+	const PlayingUnit& App::getPlayingUnit(const Scene& scene) const {
+		for (const auto& [uuid, unit] : _units) {
+			if (&unit.scene == &scene) {
+				return unit;
+			}
+		}
+		throw std::runtime_error("playing-unit not found");
 	}
 	// run
 	void App::run() {
@@ -102,5 +173,17 @@ namespace Parrot {
 			batch
 		);
 		unit.window.unbind();
+	}
+
+	// foreachChild
+	void App::foreachChild(function<void(Scriptable&)> func) {
+		for (auto& [uuid, unit] : _units) {
+			func(unit);
+		}
+	}
+	void App::foreachChild(function<void(const Scriptable&)> func) const {
+		for (const auto& [uuid, unit] : _units) {
+			func(unit);
+		}
 	}
 }

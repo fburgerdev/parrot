@@ -14,6 +14,13 @@ namespace Parrot {
 			}, *config.root);
 		}
 	}
+	// getRoot
+	Entity& Scene::getRoot() {
+		return _root;
+	}
+	const Entity& Scene::getRoot() const {
+		return _root;
+	}
 	// update
 	void Scene::update(float32 delta_time) {
 		LOG_ECS_TRACE("update scene '{}'", _name);

@@ -44,6 +44,12 @@ namespace Parrot {
 		Scriptable& operator=(const Scriptable&) = delete;
 		Scriptable& operator=(Scriptable&&) = default;
 
+		// foreachChild
+		virtual void foreachChild(function<void(Scriptable&)> func) = 0;
+		virtual void foreachChild(function<void(const Scriptable&)> func) const = 0;
+
+		// resolveEvent
+		bool resolveEvent(const Event& e);
 		// raiseEvent
 		void raiseEvent(const Event& e);
 		// update
@@ -84,7 +90,6 @@ namespace Parrot {
 		}
 	private:
 		bool captureEvent(const Event& e);
-		bool resolveEvent(const Event& e);
 		bool bubbleEvent(const Event& e);
 
 		Scriptable* _parent = nullptr;
