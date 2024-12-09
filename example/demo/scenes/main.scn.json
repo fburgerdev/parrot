@@ -18,7 +18,7 @@
       {
         "tag": "Player",
         "transform": {
-          "position": [ 0, 0, -50 ]
+          "position": [ 0, 5, -50 ]
         },
         "components": {
           "camera": {
