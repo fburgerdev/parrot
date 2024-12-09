@@ -95,6 +95,26 @@ project "parrot"
       ROOT .. "/src/**",
    }
 
+-- test
+project "test"
+   -- basic
+   location (ROOT .. "/test")
+   kind "ConsoleApp"
+
+   -- include
+   includedirs {
+      ROOT .. "/src",
+      ROOT .. "/vendor/",
+      ROOT .. "/test/"
+   }
+   -- files
+   files {
+      ROOT .. "/test/**",
+   }
+
+   -- libraries
+   links { "parrot", "vendor" }
+
 -- example_demo
 project "example_demo"
    -- basic
