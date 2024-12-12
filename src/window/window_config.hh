@@ -43,11 +43,20 @@ namespace Parrot {
 				}
 				else {
 					LOG_ASSET_WARNING("invalid window-config value {} for key 'cursor', defaults to 'normal'", json.at("cursor"));
+				}
+			}
+			// scripts
+			if (json.contains("scripts")) {
+				for (const auto& script : json.at("scripts")) {
+					scripts.emplace_back(string(script));
+				}
+			}
 		}
 
-		// title, width, height, cursor
+		// title, width, height, cursor, scripts
 		string title = "Untitled Window";
 		uint width = 1080, height = 720;
 		CursorState cursor = CursorState::NORMAL;
+		List<string> scripts;
 	};
 }

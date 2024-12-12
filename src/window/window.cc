@@ -1,5 +1,6 @@
 #include "common.hh"
 #include "window.hh"
+#include "registry.hh"
 
 namespace Parrot {
 	// Window / ~Window
@@ -10,6 +11,10 @@ namespace Parrot {
 		_height = config.height;
 		_physical.open(_width, _height, _title);
 		setCursorState(config.cursor);
+		for (const string& script_name : config.scripts) {
+			auto [id, factory] = g_registry<Script, Window&>.at(script_name);
+			addScript(id, factory(*this));
+		}
 	}
 	Window::~Window() {
 		Scriptable::removeAllScripts();
