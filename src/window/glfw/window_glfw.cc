@@ -125,6 +125,25 @@ namespace Parrot {
         glfwSetWindowIcon(handle(_handle), 1, images);
     }
 
+    // setCursorStateNormal
+    void WindowGLFW::setCursorStateNormal() {
+        if (_handle) {
+            glfwSetInputMode(handle(_handle), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        }
+    }
+    // setCursorStateHidden
+    void WindowGLFW::setCursorStateHidden() {
+        if (_handle) {
+            glfwSetInputMode(handle(_handle), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+        }
+    }
+    // setCursorStateCaptured
+    void WindowGLFW::setCursorStateCaptured() {
+        if (_handle) {
+            glfwSetInputMode(handle(_handle), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        }
+    }
+
     // pollEvents
     List<Event> WindowGLFW::pollEvents() {
         glfwPollEvents();

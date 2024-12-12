@@ -31,6 +31,8 @@ namespace Parrot {
 
 		// setIcon
 		void setIcon(const Image& image);
+		// setCursorState
+		void setCursorState(CursorState state);
 
 		// foreachChild
 		virtual void foreachChild(function<void(Scriptable&)> func) override;
@@ -47,6 +49,7 @@ namespace Parrot {
 	private:
 		string _title;
 		uint _width = 0, _height = 0;
+		CursorState _cursor = CursorState::NORMAL;
 		PhysicalWindow _physical;
 	};
 }

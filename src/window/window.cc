@@ -9,7 +9,7 @@ namespace Parrot {
 		_width = config.width;
 		_height = config.height;
 		_physical.open(_width, _height, _title);
-	}
+		setCursorState(config.cursor);
 	}
 	Window::~Window() {
 		Scriptable::removeAllScripts();
@@ -33,6 +33,26 @@ namespace Parrot {
 	void Window::setIcon(const Image& image) {
 		_physical.setIcon(image);
 	}
+	// setCursorState
+	void Window::setCursorState(CursorState state) {
+		if (state != _cursor) {
+			switch (state) {
+			case Parrot::CursorState::NORMAL:
+				_physical.setCursorStateNormal();
+				break;
+			case Parrot::CursorState::HIDDEN:
+				_physical.setCursorStateHidden();
+				break;
+			case Parrot::CursorState::CAPTURED:
+				_physical.setCursorStateCaptured();
+				break;
+			default:
+				break;
+			}
+			_cursor = state;
+		}
+	}
+
 	// foreachChild
 	void Window::foreachChild(function<void(Scriptable&)> func) {
 		// do nothing
