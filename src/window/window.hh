@@ -1,5 +1,6 @@
 #pragma once
 #include "uuid.hh"
+#include "scriptable.hh"
 #include "window_config.hh"
 
 #if defined(PARROT_GLFW)
@@ -11,10 +12,14 @@ namespace Parrot {
 
 namespace Parrot {
 	// Window
-	class Window : public UUIDObject {
+	class Window : public UUIDObject, public Scriptable {
 	public:
-		// Window
-		Window(const WindowConfig& config);
+		// Window / ~Window
+		Window(const WindowConfig& config, Scriptable* parent = nullptr);
+		Window(Window&&) = default;
+		~Window();
+		// =
+		Window& operator=(Window&&) = default;
 
 		// getTitle
 		const string& getTitle();
@@ -26,6 +31,10 @@ namespace Parrot {
 
 		// setIcon
 		void setIcon(const Image& image);
+
+		// foreachChild
+		virtual void foreachChild(function<void(Scriptable&)> func) override;
+		virtual void foreachChild(function<void(const Scriptable&)> func) const override;
 
 		// pollEvents
 		List<Event> pollEvents();

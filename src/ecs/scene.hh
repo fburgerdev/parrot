@@ -4,12 +4,21 @@
 
 namespace Parrot {
 	// Scene
-	class Scene : public UUIDObject {
+	class Scene : public UUIDObject, public Scriptable {
 	public:
-		// Scene
+		// Scene / ~Scene
 		Scene(const SceneConfig& config, HandleResolver resolver, Scriptable* parent = nullptr);
+		Scene(Scene&&) = default;
+		~Scene();
+		// =
+		Scene& operator=(Scene&&) = default;
+
 		// update
 		void update(float32 delta_time);
+
+		// foreachChild
+		virtual void foreachChild(function<void(Scriptable&)> func) override;
+		virtual void foreachChild(function<void(const Scriptable&)> func) const override;
 
 		// getRoot
 		Entity& getRoot();

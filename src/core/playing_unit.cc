@@ -3,14 +3,6 @@
 
 namespace Parrot {
 	// PlayingUnit
-	PlayingUnit::PlayingUnit(Window&& window, Scene&& scene, HandleResolver resolver, Scriptable* parent)
-	  : Scriptable(parent), window(std::move(window)), scene(std::move(scene)), _gpu_context(resolver) {}
-	
-	// foreachChild
-	void PlayingUnit::foreachChild(function<void(Scriptable&)> func) {
-		func(scene.getRoot());
-	}
-	void PlayingUnit::foreachChild(function<void(const Scriptable&)> func) const {
-		func(scene.getRoot());
-	}
+	PlayingUnit::PlayingUnit(const WindowConfig& window_config, const SceneConfig& scene_config, HandleResolver resolver, Scriptable* parent)
+	  : window(window_config, parent), scene(scene_config, resolver, parent), _gpu_context(resolver) {}
 }

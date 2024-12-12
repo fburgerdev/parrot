@@ -6,14 +6,10 @@
 namespace Parrot {
 	//? reconsider name
 	// PlayingUnit
-	class PlayingUnit : public UUIDObject, public Scriptable {
+	class PlayingUnit : public UUIDObject {
 	public:
 		// PlayingUnit
-		PlayingUnit(Window&& window, Scene&& scene, HandleResolver resolver, Scriptable* parent = nullptr);
-
-		// foreachChild
-		virtual void foreachChild(function<void(Scriptable&)> func) override;
-		virtual void foreachChild(function<void(const Scriptable&)> func) const override;
+		PlayingUnit(const WindowConfig& window_config, const SceneConfig& scene_config, HandleResolver resolver, Scriptable* parent = nullptr);
 
 		// friend
 		friend class App;

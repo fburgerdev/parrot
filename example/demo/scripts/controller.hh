@@ -3,11 +3,11 @@
 
 namespace Parrot {
 	// PlayerController
-	class PlayerController : public Script {
+	class PlayerController : public EntityScript {
 	public:
 		// PlayerController
 		PlayerController(Entity& entity)
-			: entity(entity) {}
+			: EntityScript(entity) {}
 
 		// resolveEvent
 		virtual bool resolveEvent(const Event& e) override {
@@ -37,10 +37,10 @@ namespace Parrot {
 			if (auto* mm = e.getMouseMove()) {
 				if (_mouse_pos) {
 					Vec2<> delta = (mm->coords - *_mouse_pos);
-					entity.transform.rotation.y -= _mouse_speed * delta.x;
-					entity.transform.rotation.x -= _mouse_speed * delta.y;
-					entity.transform.rotation.y = clamp(
-						entity.transform.rotation.y, -PI<> / 2, +PI<> / 2
+					entity->transform.rotation.y -= _mouse_speed * delta.x;
+					entity->transform.rotation.x -= _mouse_speed * delta.y;
+					entity->transform.rotation.x = clamp(
+						entity->transform.rotation.x, -PI<> / 2, +PI<> / 2
 					);
 				}
 				_mouse_pos = mm->coords;
@@ -49,32 +49,29 @@ namespace Parrot {
 		}
 		// onUpdate
 		virtual void onUpdate(float32 delta_time) override {
-			auto rotation_matrix = calcRotationMatrix(entity.transform.rotation);
+			auto rotation_matrix = calcRotationMatrix(entity->transform.rotation);
 			auto forward = Vec3<>(rotation_matrix * Vec4<>(0, 0, 1, 0));
 			auto up = Vec3<>(rotation_matrix * Vec4<>(0, 1, 0, 0));
 			auto right = Vec3<>(rotation_matrix * Vec4<>(1, 0, 0, 0));
 			if (_w) {
-				entity.transform.position += forward * _move_speed * delta_time;
+				entity->transform.position += forward * _move_speed * delta_time;
 			}
 			if (_a) {
-				entity.transform.position -= right * _move_speed * delta_time;
+				entity->transform.position -= right * _move_speed * delta_time;
 			}
 			if (_s) {
-				entity.transform.position -= forward * _move_speed * delta_time;
+				entity->transform.position -= forward * _move_speed * delta_time;
 			}
 			if (_d) {
-				entity.transform.position += right * _move_speed * delta_time;
+				entity->transform.position += right * _move_speed * delta_time;
 			}
 			if (_space) {
-				entity.transform.position += up * _move_speed * delta_time;
+				entity->transform.position += up * _move_speed * delta_time;
 			}
 			if (_ctrl) {
-				entity.transform.position -= up * _move_speed * delta_time;
+				entity->transform.position -= up * _move_speed * delta_time;
 			}
 		}
-
-		// entity
-		Entity& entity;
 	private:
 		DefaultFloat _move_speed = 10.0, _mouse_speed = 0.001;
 		Opt<Vec2<>> _mouse_pos;

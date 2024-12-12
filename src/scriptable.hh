@@ -20,6 +20,9 @@ namespace Parrot {
 
 		// friend: Scriptable
 		friend class Scriptable;
+	protected:
+		// setScriptOwner
+		virtual void setScriptOwner(Scriptable* owner) = 0;
 	private:
 		// onAttach / onDetach
 		virtual void onAttach();
@@ -38,11 +41,11 @@ namespace Parrot {
 		Scriptable() = default;
 		Scriptable(Scriptable* parent);
 		Scriptable(const Scriptable&) = delete;
-		Scriptable(Scriptable&&) = default;
-		~Scriptable();
+		Scriptable(Scriptable&&) noexcept;
+		virtual ~Scriptable();
 		// =
 		Scriptable& operator=(const Scriptable&) = delete;
-		Scriptable& operator=(Scriptable&&) = default;
+		Scriptable& operator=(Scriptable&& other) noexcept;
 
 		// foreachChild
 		virtual void foreachChild(function<void(Scriptable&)> func) = 0;
@@ -70,7 +73,7 @@ namespace Parrot {
 		}
 		// addScript
 		void addScript(usize id, UniquePtr<Script>&& script) {
-			_scripts.emplace(id, std::move(script));
+			_scripts.emplace(id, std::move(script)).first->second->onAttach();
 		}
 		template<class T, class... Args> requires std::is_base_of_v<Script, T>
 		T& addScript(Args&&... args) {
@@ -88,6 +91,8 @@ namespace Parrot {
 			it->second.onDetach();
 			_scripts.erase(it);
 		}
+	protected:
+		void removeAllScripts();
 	private:
 		bool captureEvent(const Event& e);
 		bool bubbleEvent(const Event& e);

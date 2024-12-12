@@ -5,14 +5,25 @@
 using json = nlohmann::json;
 
 namespace Parrot {
-	// Scene
+	// Scene / ~Scene
 	Scene::Scene(const SceneConfig& config, HandleResolver resolver, Scriptable* parent)
-		: _name(config.name), _root(parent) {
+		: _name(config.name), _root(this) {
 		if (config.root) {
 			resolver.useHandle<EntityConfig>([&](const EntityConfig& config) {
-				_root = Entity(config, resolver, parent);
+				_root = Entity(config, resolver, this);
 			}, *config.root);
 		}
+	}
+	Scene::~Scene() {
+		Scriptable::removeAllScripts();
+	}
+
+	// foreachChild
+	void Scene::foreachChild(function<void(Scriptable&)> func) {
+		func(_root);
+	}
+	void Scene::foreachChild(function<void(const Scriptable&)> func) const {
+		func(_root);
 	}
 	// getRoot
 	Entity& Scene::getRoot() {

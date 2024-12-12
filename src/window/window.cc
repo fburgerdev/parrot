@@ -2,12 +2,17 @@
 #include "window.hh"
 
 namespace Parrot {
-	// Window
-	Window::Window(const WindowConfig& config) {
+	// Window / ~Window
+	Window::Window(const WindowConfig& config, Scriptable* parent)
+		: Scriptable(parent) {
 		_title = config.title;
 		_width = config.width;
 		_height = config.height;
 		_physical.open(_width, _height, _title);
+	}
+	}
+	Window::~Window() {
+		Scriptable::removeAllScripts();
 	}
 
 	// getTitle
@@ -27,6 +32,13 @@ namespace Parrot {
 	// setIcon
 	void Window::setIcon(const Image& image) {
 		_physical.setIcon(image);
+	}
+	// foreachChild
+	void Window::foreachChild(function<void(Scriptable&)> func) {
+		// do nothing
+	}
+	void Window::foreachChild(function<void(const Scriptable&)> func) const {
+		// do nothing
 	}
 
 	// pollEvents

@@ -22,10 +22,24 @@ namespace Parrot {
 	// Scriptable / ~Scriptable
 	Scriptable::Scriptable(Scriptable* parent)
 		: _parent(parent) {}
-	Scriptable::~Scriptable() {
+	Scriptable::Scriptable(Scriptable&& other) noexcept
+		: _parent(std::exchange(other._parent, nullptr)),
+		  _scripts(std::move(other._scripts)) {
 		for (auto& [id, script] : _scripts) {
-			script->onDetach();
+			script->setScriptOwner(this);
 		}
+	}
+	Scriptable::~Scriptable() {
+		//TODO: assert all detached
+	}
+	// =
+	Scriptable& Scriptable::operator=(Scriptable&& other) noexcept {
+		_parent = std::exchange(other._parent, nullptr);
+		_scripts = std::move(other._scripts);
+		for (auto& [id, script] : _scripts) {
+			script->setScriptOwner(this);
+		}
+		return *this;
 	}
 
 	// raiseEvent
@@ -72,5 +86,12 @@ namespace Parrot {
 			return _parent->bubbleEvent(e);
 		}
 		return false;
+	}
+	// removeAllScripts
+	void Scriptable::removeAllScripts() {
+		for (auto& [id, script] : _scripts) {
+			script->onDetach();
+		}
+		_scripts.clear();
 	}
 }

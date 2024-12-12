@@ -13,7 +13,8 @@ namespace Parrot {
 	public:
 		// DefaultEventHandler
 		DefaultEventHandler(App& app)
-			: _app(app) {}
+			: _app(&app) {}
+
 		// resolveEvent
 		virtual bool resolveEvent(const Event& e) override {
 			if (auto* wcr = e.getWindowCloseRequest()) {
@@ -23,7 +24,8 @@ namespace Parrot {
 			}
 			else if (auto* window = e.getTargetWindow()){
 				bool success = false;
-				Queue<Scriptable*> queue({ &_app.getPlayingUnit(*window) });
+				PlayingUnit& unit = _app->getPlayingUnit(*window);
+				Queue<Scriptable*> queue({ &unit.window, &unit.scene });
 				while (!queue.empty()) {
 					Scriptable* front = queue.front();
 					queue.pop();
@@ -40,13 +42,20 @@ namespace Parrot {
 			}
 			return false;
 		}
+		// setScriptOwner
+		virtual void setScriptOwner(Scriptable* owner) override {
+			_app = (App*)owner; //TODO: use c++ style cast
+		}
 	private:
-		App& _app;
+		App* _app;
 	};
-	// DefaultScriptable
+	// DefaultScriptable / ~DefaultScriptable
 	DefaultScriptable::DefaultScriptable(App& app)
 		: _app(app) {
 		addScript<DefaultEventHandler>(app);
+	}
+	DefaultScriptable::~DefaultScriptable() {
+		Scriptable::removeAllScripts();
 	}
 	// foreachChild
 	void DefaultScriptable::foreachChild(function<void(Scriptable&)> func) {
@@ -56,7 +65,7 @@ namespace Parrot {
 		func(_app);
 	}
 
-	// App
+	// App / ~App
 	App::App(const stdf::path& config_path)
 		: Scriptable(&_default_scriptable), _default_scriptable(*this) {
 		AppConfig config(config_path);
@@ -76,12 +85,13 @@ namespace Parrot {
 		);
 		
 	}
+	App::~App() {
+		Scriptable::removeAllScripts();
+	}
 	// add
 	PlayingUnit& App::add(const WindowConfig& window_config, const SceneConfig& scene_config) {
-		Window window(window_config);
-		window.setIcon(Image("images/parrot.png")); //TODO: move
-		Scene scene(scene_config, _asset_manager.getHandleResolver(), this);
-		PlayingUnit unit(std::move(window), std::move(scene), _asset_manager.getHandleResolver(), this);
+		PlayingUnit unit(window_config, scene_config, _asset_manager.getHandleResolver(), this);
+		unit.window.setIcon(Image("images/parrot.png")); //TODO: move
 		auto result = _units.emplace(unit.getUUID(), std::move(unit));
 		LOG_CORE_INFO("created playing-unit ('{}', '{}') in app '{}'", window_config.title, scene_config.name, _name);
 		return result.first->second;
@@ -136,7 +146,7 @@ namespace Parrot {
 					unit.window.swapBuffers();
 					for (auto& e : unit.window.pollEvents()) {
 						LOG_CORE_TRACE("polled event: {}", e);
-						raiseEvent(e);
+						unit.window.raiseEvent(e);
 					}
 				}
 				//if (total_watch.elapsed() > 10) {
@@ -178,12 +188,14 @@ namespace Parrot {
 	// foreachChild
 	void App::foreachChild(function<void(Scriptable&)> func) {
 		for (auto& [uuid, unit] : _units) {
-			func(unit);
+			func(unit.window);
+			func(unit.scene);
 		}
 	}
 	void App::foreachChild(function<void(const Scriptable&)> func) const {
 		for (const auto& [uuid, unit] : _units) {
-			func(unit);
+			func(unit.window);
+			func(unit.scene);
 		}
 	}
 }

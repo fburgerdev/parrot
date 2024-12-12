@@ -3,7 +3,7 @@
 #include "debug/debug.hh"
 
 namespace Parrot {
-	// Entity
+	// Entity / ~Entity
 	Entity::Entity(Scriptable* parent)
 		: Scriptable(parent) {}
 	Entity::Entity(Entity* parent)
@@ -52,6 +52,9 @@ namespace Parrot {
 	}
 	Entity::Entity(uuid uuid, Entity* parent)
 		: UUIDObject(uuid), _parent(parent) {}
+	Entity::~Entity() {
+		Scriptable::removeAllScripts();
+	}
 
 	// hasParent
 	bool Entity::hasParent() const {
