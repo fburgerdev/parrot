@@ -1,7 +1,7 @@
 #pragma once
 #include "uuid.hh"
-#include "scriptable.hh"
 #include "window_config.hh"
+#include "window_event.hh"
 
 #if defined(PARROT_GLFW)
 #include "glfw/window_glfw.hh"
@@ -39,7 +39,7 @@ namespace Parrot {
 		virtual void foreachChild(function<void(const Scriptable&)> func) const override;
 
 		// pollEvents
-		List<Event> pollEvents();
+		List<WindowEvent> pollEvents();
 		// swapBuffers
 		void swapBuffers();
 		// bind

@@ -1,5 +1,5 @@
 #pragma once
-#include "window/event.hh"
+#include "window/window_event.hh"
 #include "utils/image.hh"
 
 namespace Parrot {
@@ -34,7 +34,7 @@ namespace Parrot {
         void setCursorStateCaptured();
 
         // pollEvents
-        List<Event> pollEvents();
+        List<WindowEvent> pollEvents();
         // swapBuffers
         void swapBuffers();
         // bind

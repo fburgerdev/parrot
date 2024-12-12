@@ -1,86 +1,59 @@
 #include "common.hh"
-#include "event.hh"
+#include "window_event.hh"
 
 namespace Parrot {
 	// getTargetWindow
-	Window* Event::getTargetWindow() {
-		if (auto* wcr = getWindowCloseRequest()) {
-			return wcr->window;
-		}
-		else if (auto* kp = getKeyPress()) {
-			return kp->window;
-		}
-		else if (auto* mp = getMousePress()) {
-			return mp->window;
-		}
-		else if (auto* mm = getMouseMove()) {
-			return mm->window;
-		}
-		return nullptr;
-	}
-	const Window* Event::getTargetWindow() const {
-		if (const auto* wcr = getWindowCloseRequest()) {
-			return wcr->window;
-		}
-		else if (const auto* kp = getKeyPress()) {
-			return kp->window;
-		}
-		else if (const auto* mp = getMousePress()) {
-			return mp->window;
-		}
-		else if (const auto* mm = getMouseMove()) {
-			return mm->window;
-		}
-		return nullptr;
+	Window* WindowEvent::getTargetWindow() const {
+		return (Window*)target;
 	}
 	// getWindowCloseRequest
-	WindowCloseRequest* Event::getWindowCloseRequest() {
+	WindowCloseRequest* WindowEvent::getWindowCloseRequest() {
 		if (std::holds_alternative<WindowCloseRequest>(_value)) {
 			return &std::get<WindowCloseRequest>(_value);
 		}
 		return nullptr;
 	}
-	const WindowCloseRequest* Event::getWindowCloseRequest() const {
+	const WindowCloseRequest* WindowEvent::getWindowCloseRequest() const {
 		if (std::holds_alternative<WindowCloseRequest>(_value)) {
 			return &std::get<WindowCloseRequest>(_value);
 		}
 		return nullptr;
 	}
 	// getKeyPress
-	KeyPress* Event::getKeyPress() {
+	KeyPress* WindowEvent::getKeyPress() {
 		if (std::holds_alternative<KeyPress>(_value)) {
 			return &std::get<KeyPress>(_value);
 		}
 		return nullptr;
 	}
-	const KeyPress* Event::getKeyPress() const {
+	const KeyPress* WindowEvent::getKeyPress() const {
 		if (std::holds_alternative<KeyPress>(_value)) {
 			return &std::get<KeyPress>(_value);
 		}
 		return nullptr;
 	}
 	// getMousePress
-	MousePress* Event::getMousePress() {
+	MousePress* WindowEvent::getMousePress() {
 		if (std::holds_alternative<MousePress>(_value)) {
 			return &std::get<MousePress>(_value);
 		}
 		return nullptr;
 	}
-	const MousePress* Event::getMousePress() const {
+	const MousePress* WindowEvent::getMousePress() const {
 		if (std::holds_alternative<MousePress>(_value)) {
 			return &std::get<MousePress>(_value);
 		}
 		return nullptr;
 	}
 	// getMouseMove
-	MouseMove* Event::getMouseMove() {
+	MouseMove* WindowEvent::getMouseMove() {
 		if (std::holds_alternative<MouseMove>(_value)) {
 			return &std::get<MouseMove>(_value);
 		}
 		return nullptr;
 
 	}
-	const MouseMove* Event::getMouseMove() const {
+	const MouseMove* WindowEvent::getMouseMove() const {
 		if (std::holds_alternative<MouseMove>(_value)) {
 			return &std::get<MouseMove>(_value);
 		}
@@ -100,7 +73,7 @@ namespace Parrot {
 	ostream& operator<<(ostream& stream, const MouseMove& e) {
 		return stream << "MouseMove(x=" << e.coords.x << ",y=" << e.coords.y << ')';
 	}
-	ostream& operator<<(ostream& stream, const Event& e) {
+	ostream& operator<<(ostream& stream, const WindowEvent& e) {
 		if (std::holds_alternative<WindowCloseRequest>(e._value)) {
 			return stream << std::get<WindowCloseRequest>(e._value);
 		}
@@ -114,7 +87,7 @@ namespace Parrot {
 			return stream << std::get<MouseMove>(e._value);
 		}
 		else {
-			return stream << "InvalidEvent()";
+			return stream << "InvalidWindowEvent()";
 		}
 	}
 }

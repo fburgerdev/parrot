@@ -2,8 +2,24 @@
 #include "common.hh"
 
 namespace Parrot {
-	// forward: Event
-	class Event;
+	// forward: Scriptable
+	class Scriptable;
+	// Event
+	class Event {
+	public:
+		// Event
+		Event() = default;
+		Event(Scriptable* target)
+			: target(target) {}
+
+		// getDebugType
+		virtual strview getDebugType() const {
+			return "Event";
+		}
+
+		// target
+		Scriptable* target = nullptr;
+	};
 	// EventResolver
 	using EventResolver = function<bool(const Event&)>;
 

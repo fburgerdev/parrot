@@ -1,4 +1,5 @@
 #pragma once
+#include "scriptable.hh"
 #include "math/matrix.hh"
 
 namespace Parrot {
@@ -6,10 +7,7 @@ namespace Parrot {
     class Window;
 
     // WindowCloseRequest
-    struct WindowCloseRequest {
-        // window
-        Window* window = nullptr;
-    };
+    struct WindowCloseRequest {};
     // <<
     ostream& operator<<(ostream& stream, const WindowCloseRequest& e);
 
@@ -153,10 +151,9 @@ namespace Parrot {
 	};
 	// :: Event
 	struct KeyPress {
-		// code, state, window
+		// code, state
 	    KeyCode code;
 		KeyState state;
-        Window* window = nullptr;
 	};
     // <<
     ostream& operator<<(ostream& stream, const KeyPress& e);
@@ -172,39 +169,36 @@ namespace Parrot {
 	};
 	// :: Event
 	struct MousePress {
-		// button, state, window
+		// button, state
 		MouseButton button;
 		MouseState state;
-        Window* window = nullptr;
 	};
     // <<
     ostream& operator<<(ostream& stream, const MousePress& e);
 
     // MouseMove
     struct MouseMove {
-        // coords, window
+        // coords
         Vec2<float32> coords;
-        Window* window = nullptr;
     };
     // <<
     ostream& operator<<(ostream& stream, const MouseMove& e);
 
-	// Event
-	class Event {
+	// WindowEvent
+	class WindowEvent : public Event {
 	public:
-        // Event
-        Event(const WindowCloseRequest& wqr)
+        // WindowEvent
+        WindowEvent(const WindowCloseRequest& wqr)
             : _value(wqr) {}
-        Event(const KeyPress& kp)
+        WindowEvent(const KeyPress& kp)
             : _value(kp) {}
-        Event(const MousePress& mp)
+        WindowEvent(const MousePress& mp)
             : _value(mp) {}
-        Event(const MouseMove& mm)
+        WindowEvent(const MouseMove& mm)
             : _value(mm) {}
 
         // getTargetWindow
-        Window* getTargetWindow();
-        const Window* getTargetWindow() const;
+        Window* getTargetWindow() const;
         // getWindowCloseRequest
         WindowCloseRequest* getWindowCloseRequest();
         const WindowCloseRequest* getWindowCloseRequest() const;
@@ -218,8 +212,13 @@ namespace Parrot {
         MouseMove* getMouseMove();
         const MouseMove* getMouseMove() const;
 
+        // getDebugType
+        virtual strview getDebugType() const override {
+            return "WindowEvent";
+        }
+
         // <<
-        friend ostream& operator<<(ostream& stream, const Event& e);
+        friend ostream& operator<<(ostream& stream, const WindowEvent& e);
 	private:
 		Variant<
 			WindowCloseRequest,

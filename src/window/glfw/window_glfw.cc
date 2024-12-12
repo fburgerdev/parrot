@@ -9,7 +9,7 @@ namespace Parrot {
     using HandleGLFW = GLFWwindow;
     
     // (static) event_queues
-    static Map<HandleGLFW*, List<Event>> s_event_queues;
+    static Map<HandleGLFW*, List<WindowEvent>> s_event_queues;
 
     // (static) handle
     static HandleGLFW* handle(void* ptr) {
@@ -48,14 +48,14 @@ namespace Parrot {
             glfwTerminate();
             return false;
         }
-        s_event_queues.emplace(handle(_handle), List<Event>());
+        s_event_queues.emplace(handle(_handle), List<WindowEvent>());
         bind();
         glfwSwapInterval(1);
 
         // add callbacks
         glfwSetWindowCloseCallback(handle(_handle), [](HandleGLFW* window) {
-            Event e(WindowCloseRequest({}));
-            s_event_queues.at(window).push_back(e);
+            WindowEvent e(WindowCloseRequest({}));
+            s_event_queues.at(window).emplace_back(e);
             LOG_WINDOW_TRACE("detected {}", e);
         });
         glfwSetMouseButtonCallback(handle(_handle), [](HandleGLFW* window, int glfw_button, int glfw_action, [[maybe_unused]] int glfw_mods) {
@@ -71,8 +71,8 @@ namespace Parrot {
                     glfw_action == GLFW_RELEASE ? MouseState::RELEASED : throw std::logic_error("invalid enum value")
                 )
             );
-            Event e(MousePress({ button, state }));
-            s_event_queues.at(window).push_back(e);
+            WindowEvent e(MousePress({ button, state }));
+            s_event_queues.at(window).emplace_back(e);
             LOG_WINDOW_TRACE("detected {}", e);
         });
         glfwSetKeyCallback(handle(_handle), [](HandleGLFW* window,
@@ -85,13 +85,13 @@ namespace Parrot {
                     )
                 )
             );
-            Event e(KeyPress({ code, state }));
-            s_event_queues.at(window).push_back(e);
+            WindowEvent e(KeyPress({ code, state }));
+            s_event_queues.at(window).emplace_back(e);
             LOG_WINDOW_TRACE("detected {}", e);
         });
         glfwSetCursorPosCallback(handle(_handle), [](HandleGLFW* window, double glfw_x, double glfw_y) {
-            Event e(MouseMove({ Vec2<float32>(float32(glfw_x), float32(glfw_y)) }));
-            s_event_queues.at(window).push_back(e);
+            WindowEvent e(MouseMove({ Vec2<float32>(float32(glfw_x), float32(glfw_y)) }));
+            s_event_queues.at(window).emplace_back(e);
             LOG_WINDOW_TRACE("detected {}", e);
         });
 
@@ -145,7 +145,7 @@ namespace Parrot {
     }
 
     // pollEvents
-    List<Event> WindowGLFW::pollEvents() {
+    List<WindowEvent> WindowGLFW::pollEvents() {
         glfwPollEvents();
         return std::exchange(s_event_queues.at(handle(_handle)), {});
     }
