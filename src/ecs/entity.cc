@@ -14,8 +14,8 @@ namespace Parrot {
 		transform = config.transform;
 		for (const auto& handle : config.children) {
 			resolver.useHandle<EntityConfig>([&](const EntityConfig& config) {
-				UniquePtr<Entity> child = std::make_unique<Entity>(config, resolver, this);
-				_children.emplace(child->getUUID(), std::move(child));
+				Entity child = Entity(config, resolver, this);
+				_children.emplace(child.getUUID(), std::move(child));
 			}, handle);
 		}
 		for (const auto& component_config : config.components) {
@@ -35,8 +35,8 @@ namespace Parrot {
 		transform = config.transform;
 		for (const auto& handle : config.children) {
 			resolver.useHandle<EntityConfig>([&](const EntityConfig& config) {
-				UniquePtr<Entity> child = std::make_unique<Entity>(config, resolver, this);
-				_children.emplace(child->getUUID(), std::move(child));
+				Entity child = Entity(config, resolver, this);
+				_children.emplace(child.getUUID(), std::move(child));
 			}, handle);
 		}
 		for (const auto& component_config : config.components) {
@@ -85,22 +85,22 @@ namespace Parrot {
 	// foreachChild
 	void Entity::foreachChild(function<void(Entity&)> func) {
 		for (auto& [uuid, child] : _children) {
-			func(*child);
+			func(child);
 		}
 	}
 	void Entity::foreachChild(function<void(const Entity&)> func) const {
 		for (const auto& [uuid, child] : _children) {
-			func(*child);
+			func(child);
 		}
 	}
 	void Entity::foreachChild(function<void(Scriptable&)> func) {
 		for (auto& [uuid, child] : _children) {
-			func(*child);
+			func(child);
 		}
 	}
 	void Entity::foreachChild(function<void(const Scriptable&)> func) const {
 		for (const auto& [uuid, child] : _children) {
-			func(*child);
+			func(child);
 		}
 	}
 
@@ -112,7 +112,7 @@ namespace Parrot {
 		}
 		Scriptable::update(delta_time);
 		for (auto& [uuid, child] : _children) {
-			child->update(delta_time);
+			child.update(delta_time);
 		}
 	}
 }
