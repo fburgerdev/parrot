@@ -34,8 +34,11 @@ namespace Parrot {
 		// resolveEvent
 		virtual bool resolveEvent(const Event& e);
 
+		// raiseEvent
+		virtual void raiseEvent(const Event& e) = 0;
+
 		// friend: Scriptable
-		friend class Scriptable;
+		friend Scriptable;
 	protected:
 		// setScriptOwner
 		virtual void setScriptOwner(Scriptable* owner) = 0;
@@ -107,7 +110,7 @@ namespace Parrot {
 			it->second.onDetach();
 			_scripts.erase(it);
 		}
-	protected:
+		// removeAllScripts
 		void removeAllScripts();
 	private:
 		bool captureEvent(const Event& e);

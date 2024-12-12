@@ -17,15 +17,16 @@ namespace Parrot {
 
 		// resolveEvent
 		virtual bool resolveEvent(const Event& e) override {
-			if (auto* wcr = e.getWindowCloseRequest()) {
-				LOG_CORE_DEBUG("unresolved window-close-request, closing window '{}'...", wcr->window->getTitle());
-				wcr->window->close();
-				return true;
+			bool success = false;
+			Queue<Scriptable*> queue({ _app });
+			if (const WindowEvent* we = dynamic_cast<const WindowEvent*>(&e)) {
+				if (auto* wcr = we->getWindowCloseRequest()) {
+					LOG_CORE_DEBUG("unresolved window-close-request, closing window '{}'...", we->getTargetWindow()->getTitle());
+					we->getTargetWindow()->close();
+					return true;
+				}
 			}
-			else if (auto* window = e.getTargetWindow()){
-				bool success = false;
-				PlayingUnit& unit = _app->getPlayingUnit(*window);
-				Queue<Scriptable*> queue({ &unit.window, &unit.scene });
+			{
 				while (!queue.empty()) {
 					Scriptable* front = queue.front();
 					queue.pop();
@@ -45,6 +46,10 @@ namespace Parrot {
 		// setScriptOwner
 		virtual void setScriptOwner(Scriptable* owner) override {
 			_app = (App*)owner; //TODO: use c++ style cast
+		}
+		// raiseEvent
+		virtual void raiseEvent(const Event& e) override {
+			_app->raiseEvent(e);
 		}
 	private:
 		App* _app;
@@ -86,6 +91,10 @@ namespace Parrot {
 		
 	}
 	App::~App() {
+		for (auto& [id, unit] : _units) {
+			unit.scene.removeAllScripts();
+			unit.window.removeAllScripts();
+		}
 		Scriptable::removeAllScripts();
 	}
 	// add

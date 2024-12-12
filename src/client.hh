@@ -11,7 +11,7 @@
 #include "ecs/scene.hh"
 // window
 #include "window/window.hh"
-#include "window/event.hh"
+#include "window/window_event.hh"
 // math
 #include "math/basic.hh"
 #include "math/matrix.hh"
@@ -24,6 +24,11 @@ namespace Parrot {
 		// EntityScript
 		EntityScript(Entity& entity)
 			: entity(&entity) {}
+
+		// raiseEvent
+		virtual void raiseEvent(const Event& e) override {
+			entity->raiseEvent(e);
+		}
 
 		// Entity
 		Entity* entity;
@@ -40,6 +45,11 @@ namespace Parrot {
 		SceneScript(Scene& scene)
 			: scene(&scene) {}
 
+		// raiseEvent
+		virtual void raiseEvent(const Event& e) override {
+			scene->raiseEvent(e);
+		}
+
 		// Scene
 		Scene* scene;
 	private:
@@ -55,6 +65,11 @@ namespace Parrot {
 		WindowScript(Window& window)
 			: window(&window) {}
 
+		// raiseEvent
+		virtual void raiseEvent(const Event& e) override {
+			window->raiseEvent(e);
+		}
+
 		// Window
 		Window* window;
 	private:
@@ -69,6 +84,11 @@ namespace Parrot {
 		// AppScript
 		AppScript(App& app)
 			: app(&app) {}
+
+		// raiseEvent
+		virtual void raiseEvent(const Event& e) override {
+			app->raiseEvent(e);
+		}
 
 		// App
 		App* app;

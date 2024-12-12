@@ -53,6 +53,9 @@ namespace Parrot {
 	Entity::Entity(uuid uuid, Entity* parent)
 		: UUIDObject(uuid), _parent(parent) {}
 	Entity::~Entity() {
+		for (auto& [id, child] : _children) {
+			child.removeAllScripts();
+		}
 		Scriptable::removeAllScripts();
 	}
 

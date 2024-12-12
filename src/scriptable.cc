@@ -47,9 +47,6 @@ namespace Parrot {
 		if (captureEvent(e)) {
 			return;
 		}
-		else if (resolveEvent(e)) {
-			return;
-		}
 		else {
 			if (!bubbleEvent(e)) {
 				LOG_CORE_TRACE("unresolved event"); //TODO: print event
