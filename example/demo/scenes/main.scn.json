@@ -6,14 +6,26 @@
     "tag": "Root",
     "children": [
       {
-        "tag": "TeaPot",
+        "tag": "Dice",
         "components": {
           "render-object": {
-            "mesh_uuid": 7378636141878824564,
-            "material_uuid": 1347639075235975932
+            "mesh_uuid": 231241215542553,
+            "material_uuid": 1384839189235975932
           }
         },
         "scripts": [ "Rotate" ]
+      },
+      {
+        "tag": "Parrot",
+        "transform": {
+          "position": [ 10, 0, 0 ]
+        },
+        "components": {
+          "render-object": {
+            "mesh_uuid": 231891215542553,
+            "material_uuid": 1384839075235975932
+          }
+        }
       },
       {
         "tag": "Player",

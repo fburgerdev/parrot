@@ -1,12 +1,12 @@
 {
-  "uuid": 1347639075235975932,
+  "uuid": 1384839189235975932,
   "shader": "shaders/flat.shader.json",
   "uniforms": {
     "texture": [
       "texture",
       {
         "image": {
-          "resource": "images/flat.png"
+          "resource": "images/dice.png"
         }
       }
     ]

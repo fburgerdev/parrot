@@ -21,9 +21,9 @@ namespace Parrot {
 		
 		// onAttach / onDetach
 		virtual void onAttach() override {
-			_captured = true;
-			window->setCursorState(CursorState::CAPTURED);
-			raiseEvent(FPSEvent(true, window));
+			//_captured = true;
+			//window->setCursorState(CursorState::CAPTURED);
+			//raiseEvent(FPSEvent(true, window));
 		}
 		virtual void onDetach() override {
 			_captured = false;
