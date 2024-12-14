@@ -55,6 +55,7 @@ namespace Parrot {
 		LOG_GRAPHICS_TRACE("unbound shader");
 	}
 	// setUniform
+	// note that we need to transpose the matrix since opengl is column-major!
 	// :: int32
 	template<>
 	void ShaderOpenGL::setUniform<int32>(const string& name, const int32& value) {
@@ -71,6 +72,23 @@ namespace Parrot {
 	template<>
 	void ShaderOpenGL::setUniform<Vec4<int32>>(const string& name, const Vec4<int32>& value) {
 		glUniform4i(getUniformLocation(name), value.x, value.y, value.z, value.w);
+	}
+	// :: uint32
+	template<>
+	void ShaderOpenGL::setUniform<uint32>(const string& name, const uint32& value) {
+		glUniform1ui(getUniformLocation(name), value);
+	}
+	template<>
+	void ShaderOpenGL::setUniform<Vec2<uint32>>(const string& name, const Vec2<uint32>& value) {
+		glUniform2ui(getUniformLocation(name), value.x, value.y);
+	}
+	template<>
+	void ShaderOpenGL::setUniform<Vec3<uint32>>(const string& name, const Vec3<uint32>& value) {
+		glUniform3ui(getUniformLocation(name), value.x, value.y, value.z);
+	}
+	template<>
+	void ShaderOpenGL::setUniform<Vec4<uint32>>(const string& name, const Vec4<uint32>& value) {
+		glUniform4ui(getUniformLocation(name), value.x, value.y, value.z, value.w);
 	}
 	// :: float32
 	template<>
@@ -89,26 +107,42 @@ namespace Parrot {
 	void ShaderOpenGL::setUniform<Vec4<float32>>(const string& name, const Vec4<float32>& value) {
 		glUniform4f(getUniformLocation(name), value.x, value.y, value.z, value.w);
 	}
-	// :: matrix (note that we need to transpose the matrix since opengl is column-major!)
 	template<>
 	void ShaderOpenGL::setUniform<Mat<float32, 2>>(const string& name, const Mat<float32, 2>& value) {
 		glUniformMatrix2fv(getUniformLocation(name), 1, GL_TRUE, value.data());
-	}
-	template<>
-	void ShaderOpenGL::setUniform<Mat<float64, 2>>(const string& name, const Mat<float64, 2>& value) {
-		glUniformMatrix2dv(getUniformLocation(name), 1, GL_TRUE, value.data());
 	}
 	template<>
 	void ShaderOpenGL::setUniform<Mat<float32, 3>>(const string& name, const Mat<float32, 3>& value) {
 		glUniformMatrix3fv(getUniformLocation(name), 1, GL_TRUE, value.data());
 	}
 	template<>
-	void ShaderOpenGL::setUniform<Mat<float64, 3>>(const string& name, const Mat<float64, 3>& value) {
-		glUniformMatrix3dv(getUniformLocation(name), 1, GL_TRUE, value.data());
-	}
-	template<>
 	void ShaderOpenGL::setUniform<Mat<float32, 4>>(const string& name, const Mat<float32, 4>& value) {
 		glUniformMatrix4fv(getUniformLocation(name), 1, GL_TRUE, value.data());
+	}
+	// :: float64
+	template<>
+	void ShaderOpenGL::setUniform<float64>(const string& name, const float64& value) {
+		glUniform1d(getUniformLocation(name), value);
+	}
+	template<>
+	void ShaderOpenGL::setUniform<Vec2<float64>>(const string& name, const Vec2<float64>& value) {
+		glUniform2d(getUniformLocation(name), value.x, value.y);
+	}
+	template<>
+	void ShaderOpenGL::setUniform<Vec3<float64>>(const string& name, const Vec3<float64>& value) {
+		glUniform3d(getUniformLocation(name), value.x, value.y, value.z);
+	}
+	template<>
+	void ShaderOpenGL::setUniform<Vec4<float64>>(const string& name, const Vec4<float64>& value) {
+		glUniform4d(getUniformLocation(name), value.x, value.y, value.z, value.w);
+	}
+	template<>
+	void ShaderOpenGL::setUniform<Mat<float64, 2>>(const string& name, const Mat<float64, 2>& value) {
+		glUniformMatrix2dv(getUniformLocation(name), 1, GL_TRUE, value.data());
+	}
+	template<>
+	void ShaderOpenGL::setUniform<Mat<float64, 3>>(const string& name, const Mat<float64, 3>& value) {
+		glUniformMatrix3dv(getUniformLocation(name), 1, GL_TRUE, value.data());
 	}
 	template<>
 	void ShaderOpenGL::setUniform<Mat<float64, 4>>(const string& name, const Mat<float64, 4>& value) {
