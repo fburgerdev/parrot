@@ -5,7 +5,8 @@ using json = nlohmann::json;
 
 namespace Parrot {
 	// Texture
-	Texture::Texture(const stdf::path& filepath) {
+	Texture::Texture(const stdf::path& filepath)
+		: UUIDObject(filepath) {
 		loadFromJSON(json::parse(ifstream(filepath)));
 	}
 }

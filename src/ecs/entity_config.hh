@@ -7,7 +7,7 @@
 
 namespace Parrot {
 	// EntityConfig
-	class EntityConfig {
+	class EntityConfig : public UUIDObject {
 	public:
 		// EntityConfig
 		EntityConfig() = default;

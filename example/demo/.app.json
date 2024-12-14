@@ -1,8 +1,8 @@
 {
+  "uuid": 3677601194714616601,
   "name": "demo",
   "main": [
     {
-      "uuid": 3677601792814616601,
       "title": "Main Window",
       "size": [ 1080, 720 ],
       "scripts": [ "FPS" ]

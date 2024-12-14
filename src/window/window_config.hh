@@ -1,4 +1,5 @@
 #pragma once
+#include "uuid.hh"
 #include "debug/debug.hh"
 
 namespace Parrot {
@@ -8,7 +9,7 @@ namespace Parrot {
 	};
 
 	// WindowConfig
-	class WindowConfig {
+	class WindowConfig : public UUIDObject {
 	public:
 		// WindowConfig
 		WindowConfig() = default;

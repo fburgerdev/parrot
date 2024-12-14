@@ -57,7 +57,7 @@ namespace Parrot {
 		void useHandles(const auto& func, const Handle<TFirst>& first, const Handle<TRest>&... rest) const {
 			useHandle<TFirst>([&](const TFirst& value) {
 				if constexpr (sizeof...(TRest) > 0) {
-					useHandles([=](const TRest&... rest) {
+					useHandles([&](const TRest&... rest) {
 						func(value, rest...);
 					}, rest...);
 				}

@@ -7,11 +7,11 @@ namespace Parrot {
 
 	// Resource
 	template<class T>
-	class Resource {
+	class Resource : public UUIDObject {
 	public:
 		// Resource
 		Resource(const stdf::path& filepath)
-			: path(extractResourcePath(filepath)), value(path) {}
+			: UUIDObject(filepath), path(extractResourcePath(filepath)), value(path) {}
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
 		Resource(const JSON& json)
 			: path(string(json.at("resource"))), value(path) {}

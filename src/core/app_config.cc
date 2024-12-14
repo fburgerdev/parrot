@@ -5,7 +5,8 @@ using json = nlohmann::json;
 
 namespace Parrot {
 	// AppConfig
-	AppConfig::AppConfig(const stdf::path& config_path) {
+	AppConfig::AppConfig(const stdf::path& config_path)
+		: UUIDObject(config_path) {
 		loadFromJSON(json::parse(ifstream(config_path)));
 	}
 }

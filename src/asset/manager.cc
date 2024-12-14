@@ -10,7 +10,7 @@ namespace Parrot {
 		LOG_ASSET_TRACE("indexing asset directory {}", asset_dir);
 		for (stdf::path path : stdf::recursive_directory_iterator(asset_dir)) {
 			if (stdf::is_regular_file(path)) {
-				if (path.extension().string().ends_with(".json") && !path.string().ends_with(".app.json")) {
+				if (path.extension().string().ends_with(".json")) {
 					auto data = json::parse(ifstream(path));
 					if (data.contains("uuid")) {
 						_uuids.emplace(stdf::relative(path, asset_dir), uuid(data.at("uuid")));

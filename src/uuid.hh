@@ -13,7 +13,7 @@ namespace Parrot {
 		// UUIDObject
 		UUIDObject();
 		UUIDObject(uuid uuid);
-		UUIDObject(const stdf::path& asset_path);
+		UUIDObject(const stdf::path& filepath);
 		UUIDObject(const UUIDObject&) = delete;
 		UUIDObject(UUIDObject&& other) noexcept;
 		// =

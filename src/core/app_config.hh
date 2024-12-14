@@ -5,7 +5,7 @@
 
 namespace Parrot {
 	// AppConfig
-	class AppConfig {
+	class AppConfig : public UUIDObject {
 	public:
 		// AppConfig
 		AppConfig() = default;

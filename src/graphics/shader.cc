@@ -9,7 +9,8 @@ namespace Parrot {
 		: source((strstream() << ifstream(filepath).rdbuf()).str()) {}
 
 	// ShaderProgram
-	ShaderProgram::ShaderProgram(const stdf::path& filepath) {
+	ShaderProgram::ShaderProgram(const stdf::path& filepath)
+		: UUIDObject(filepath) {
 		loadFromJSON(json::parse(ifstream(filepath)));
 	}
 }

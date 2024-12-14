@@ -1,5 +1,6 @@
 #include "common.hh"
 #include "uuid.hh"
+#include "debug/debug.hh"
 #include <random>
 #include <nlohmann/json.hh>
 using json = nlohmann::json;
@@ -20,19 +21,19 @@ namespace Parrot {
 		: _uuid(generateUUID()) {}
 	UUIDObject::UUIDObject(uuid uuid)
 		: _uuid(uuid) {}
-	UUIDObject::UUIDObject(const stdf::path& asset_path)
+	UUIDObject::UUIDObject(const stdf::path& filepath)
 		: _uuid(0) {
-		if (asset_path.string().ends_with(".json")) {
-			auto data = json::parse(ifstream(asset_path));
+		if (filepath.string().ends_with(".json")) {
+			auto data = json::parse(ifstream(filepath));
 			if (data.contains("uuid")) {
 				_uuid = data.at("uuid");
 			}
 			else {
-				// TODO: error
+				LOG_ASSET_ERROR("asset file {} does not have a 'uuid' property", filepath);
 			}
 		}
 		else {
-			// TODO: error
+			LOG_ASSET_ERROR("unsupported asset file extension in {}", filepath);
 		}
 	}
 	UUIDObject::UUIDObject(UUIDObject&& other) noexcept

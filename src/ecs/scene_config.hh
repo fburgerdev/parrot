@@ -3,7 +3,7 @@
 
 namespace Parrot {
 	// SceneConfig
-	class SceneConfig {
+	class SceneConfig : public UUIDObject {
 	public:
 		// SceneConfig
 		SceneConfig() = default;
