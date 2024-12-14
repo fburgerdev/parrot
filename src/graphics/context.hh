@@ -39,6 +39,8 @@ namespace Parrot {
 		GPUContext(HandleResolver resolver);
 		//TODO: fix access violation caused by moving window
 		//GPUContext(function<void()>&& bind, function<void()>&& unbind, HandleResolver resolver);
+		// applyMaterial
+		void applyMaterial(GPUShader& shader, const MaterialNode& node, const string& prefix = "");
 
 		function<void()> _bind, _unbind;
 		GPUShader* _current_shader = nullptr;
