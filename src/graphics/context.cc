@@ -17,10 +17,10 @@ namespace Parrot {
 		}
 		auto it = _meshes.find(mesh.getUUID());
 		if (it == _meshes.end()) {
-			_meshes.emplace(mesh.getUUID(), mesh).first->second.bind();
+			_current_mesh = &_meshes.emplace(mesh.getUUID(), mesh).first->second;
 		}
 		else {
-			it->second.bind();
+			_current_mesh = &it->second;
 		}
 	}
 	void GPUContext::use(const Material& material, const Camera& camera, const Transform<>& camera_transform) {
@@ -86,8 +86,14 @@ namespace Parrot {
 		}
 	}
 
+	// prepareDraw
+	void GPUContext::prepareDraw() {
+		prepareDrawGPU();
+	}
 	// draw
 	void GPUContext::draw(usize count) {
+		_current_mesh->bind();
 		drawGPU(count);
+		_current_mesh->unbind();
 	}
 }

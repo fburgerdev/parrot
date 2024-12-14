@@ -14,6 +14,9 @@ namespace Parrot {
 	using GPUMesh = MeshOpenGL;
 	using GPUShader = ShaderOpenGL;
 	using GPUTexture = TextureOpenGL;
+	inline void prepareDrawGPU() {
+		prepareDrawOpenGL();
+	}
 	inline void drawGPU(usize count) {
 		drawOpenGL(count);
 	}
@@ -30,6 +33,8 @@ namespace Parrot {
 		// use
 		void use(const Mesh& mesh, const Transform<>& transform);
 		void use(const Material& material, const Camera& camera, const Transform<>& camera_transform);
+		// prepareDraw
+		void prepareDraw();
 		// draw
 		void draw(usize count);
 		
@@ -43,6 +48,7 @@ namespace Parrot {
 		void applyMaterial(GPUShader& shader, const MaterialNode& node, const string& prefix = "");
 
 		function<void()> _bind, _unbind;
+		GPUMesh* _current_mesh = nullptr;
 		GPUShader* _current_shader = nullptr;
 		HashMap<uuid, GPUMesh> _meshes;
 		HashMap<uuid, GPUShader> _shaders;
