@@ -12,9 +12,12 @@ namespace Parrot {
 	public:
 		// Image
 		Image(const stdf::path& filepath);
+		Image(Image&& other) noexcept;
 		// ~Image
 		~Image();
-		
+		// =
+		Image& operator=(Image&& other) noexcept;
+
 		// getWidth
 		uint getWidth() const;
 		// getHeight

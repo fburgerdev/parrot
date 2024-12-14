@@ -12,7 +12,7 @@ namespace Parrot {
 		uchar* img = stbi_load(filepath.string().c_str(), &width, &height, &channels, 4);
 		if (!img) {
 			LOG_ASSET_ERROR("failed to load image {}", filepath);
-			LOG_ASSET_ERROR("stb-image error message:\n{}", stbi_failure_reason);
+			LOG_ASSET_ERROR("stb-image error message:\n{}", stbi_failure_reason());
 			return;
 		}
 		switch (channels) {
@@ -34,9 +34,22 @@ namespace Parrot {
 		_bytes = img;
 		LOG_ASSET_DEBUG("loaded image {} ({}px x {}px with {} channels)", filepath, width, height, channels);
 	}
+	Image::Image(Image&& other) noexcept
+		: _width(std::exchange(other._width, 0)),
+		  _height(std::exchange(other._height, 0)),
+		  _format(std::exchange(other._format, ImageFormat::NONE)),
+		  _bytes(std::exchange(other._bytes, nullptr)) {}
 	// ~Image
 	Image::~Image() {
 		stbi_image_free(_bytes);
+	}
+	// =
+	Image& Image::operator=(Image&& other) noexcept {
+		_width = std::exchange(other._width, 0);
+		_height = std::exchange(other._height, 0);
+		_format = std::exchange(other._format, ImageFormat::NONE);
+		_bytes = std::exchange(other._bytes, nullptr);
+		return *this;
 	}
 
 	// getWidth
