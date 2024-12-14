@@ -5,10 +5,19 @@ namespace Parrot {
 	// TextureOpenGL
 	class TextureOpenGL {
 	public:
-		// ShaderOpenGL
-		TextureOpenGL(const Texture& texture);
+		// TextureOpenGL / ~TextureOpenGL
+		TextureOpenGL(const Texture& texture, HandleResolver resolver);
+		TextureOpenGL(const TextureOpenGL&) = delete;
+		TextureOpenGL(TextureOpenGL&& other) noexcept;
+		~TextureOpenGL();
+		// =
+		TextureOpenGL& operator=(const TextureOpenGL&) = delete;
+		TextureOpenGL& operator=(TextureOpenGL&& other) noexcept;
+
 		// bind, unbind
-		void bind();
-		static void unbind();
+		void bind(uint slot) const;
+		static void unbind(uint slot);
+	private:
+		uint _gpu_id = 0;
 	};
 }
