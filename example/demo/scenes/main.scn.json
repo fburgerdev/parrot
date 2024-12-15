@@ -32,6 +32,20 @@
         }
       },
       {
+        "tag": "Light",
+        "transform": {
+          "position": [ 0, 10, 0 ]
+        },
+        "components": {
+          "light-source": {
+            "type": "directional",
+            "direction": [ 0, -1, 0 ],
+            "intensity": 1,
+            "color": [ 255, 150, 150 ]
+          }
+        }
+      },
+      {
         "tag": "Player",
         "transform": {
           "position": [ 0, 5, -50 ]
