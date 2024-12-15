@@ -1,11 +1,12 @@
 #pragma once
-#include "uuid.hh"
+#include "mesh.hh"
+#include "material.hh"
 
 namespace Parrot {
 	// RenderObject
 	struct RenderObject {
 		// RenderObject
-		RenderObject(uuid mesh_uuid, uuid material_uuid);
+		RenderObject() = default;
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
 		RenderObject(const JSON& json, const stdf::path& filepath) {
 			loadFromJSON(json, filepath);
@@ -14,12 +15,13 @@ namespace Parrot {
 		// loadFromJSON
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
 		void loadFromJSON(const JSON& json, const stdf::path& filepath) {
-			mesh_uuid = json.at("mesh_uuid");
-			material_uuid = json.at("material_uuid");
+			mesh = parseHandleFromJSON<Sidecar<Mesh>>(json.at("mesh"), filepath);
+			material = parseHandleFromJSON<Material>(json.at("material"), filepath);
 		}
 
-		// mesh_uuid, material_uuid
-		uuid mesh_uuid = 0, material_uuid = 0;
+		// mesh, material
+		Handle<Sidecar<Mesh>> mesh;
+		Handle<Material> material;
 	};
 	// <<
 	ostream& operator<<(ostream& stream, const RenderObject& render_object);

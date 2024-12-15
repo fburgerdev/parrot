@@ -8,15 +8,11 @@ using namespace tinyobj;
 
 namespace Parrot {
 	// Mesh
-	Mesh::Mesh(const stdf::path& filepath)
-        : UUIDObject(filepath) {
-        json data = json::parse(ifstream(filepath));
-        stdf::path resource_path = filepath.parent_path() / string(data.at("resource"));
-
+	Mesh::Mesh(const stdf::path& filepath) {
         ObjReader reader;
         ObjReaderConfig config;
         config.triangulate = true;
-        reader.ParseFromFile(resource_path.string(), config);
+        reader.ParseFromFile(filepath.string(), config);
 
         // errors / warnings
         if (!reader.Error().empty()) {

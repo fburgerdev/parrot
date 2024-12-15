@@ -31,7 +31,7 @@ namespace Parrot {
 		GPUContext() = default;
 
 		// use
-		void use(const Mesh& mesh, const Transform<>& transform);
+		void use(const Sidecar<Mesh>& mesh, const Transform<>& transform);
 		void use(const Material& material, const Camera& camera, const Transform<>& camera_transform);
 		// prepareDraw
 		void prepareDraw();

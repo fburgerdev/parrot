@@ -28,7 +28,7 @@ namespace Parrot {
 	};
 
 	// Mesh
-	class Mesh : public UUIDObject {
+	class Mesh {
 	public:
 		// Mesh
 		Mesh(const stdf::path& filepath);

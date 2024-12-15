@@ -9,7 +9,7 @@ namespace Parrot {
 	//	: _bind(std::move(bind)), _unbind(std::move(unbind)), _resolver(resolver) {}
 
 	// use
-	void GPUContext::use(const Mesh& mesh, const Transform<>& transform) {
+	void GPUContext::use(const Sidecar<Mesh>& mesh, const Transform<>& transform) {
 		//_bind();
 		if (_current_shader) {
 			_current_shader->setUniform("u_model", transform.calcModelMatrix());
@@ -17,7 +17,7 @@ namespace Parrot {
 		}
 		auto it = _meshes.find(mesh.getUUID());
 		if (it == _meshes.end()) {
-			_current_mesh = &_meshes.emplace(mesh.getUUID(), mesh).first->second;
+			_current_mesh = &_meshes.emplace(mesh.getUUID(), mesh.value).first->second;
 		}
 		else {
 			_current_mesh = &it->second;

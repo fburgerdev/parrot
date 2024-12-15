@@ -4,7 +4,7 @@
 
 namespace Parrot {
 	// add
-	void Batch::add(const Mesh& mesh, const Material& material, const Transform<>& transform) {
+	void Batch::add(const Sidecar<Mesh>& mesh, const Material& material, const Transform<>& transform) {
 		_batch[&material].emplace_back(&mesh, &transform);
 	}
 
@@ -16,7 +16,7 @@ namespace Parrot {
 			context.use(*material, camera, camera_transform);
 			for (const auto [mesh, transform] : pairs) {
 				context.use(*mesh, *transform);
-				context.draw(mesh->indices.size());
+				context.draw(mesh->value.indices.size());
 			}
 		}
 		LOG_GRAPHICS_TRACE("batch renderer end");

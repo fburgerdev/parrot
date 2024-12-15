@@ -173,15 +173,18 @@ namespace Parrot {
 			note that we need to store the AssetViews,
 			so that the AssetManager garantuees that the resources are not freed
 		*/
-		List<AssetView<Mesh>> mesh_views;
+		List<AssetView<Sidecar<Mesh>>> mesh_views;
 		List<AssetView<Material>> material_views;
 		for (const Entity* entity : unit.scene.queryEntitiesByComponent<DerivedComponent<RenderObject>>()) {
 			const auto& roc = entity->getComponent<DerivedComponent<RenderObject>>();
-			auto mesh_view = _asset_manager.asset<Mesh>(roc.mesh_uuid);
+			auto mesh_view = _asset_manager.asset<Sidecar<Mesh>>(roc.mesh);
 			mesh_views.push_back(mesh_view);
-			auto material_view = _asset_manager.asset<Material>(roc.material_uuid);
+			auto material_view = _asset_manager.asset<Material>(roc.material);
 			material_views.push_back(material_view);
-			batch.add(*mesh_view, *material_view, entity->transform);
+			_asset_manager.getHandleResolver().useHandles(
+				[&](const Sidecar<Mesh>& mesh, const Material& material) {
+					batch.add(mesh, material, entity->transform);
+			}, roc.mesh, roc.material);
 		}
 		List<const Entity*> cameras = unit.scene.queryEntitiesByComponent<DerivedComponent<Camera>>();
 		unit.window.bind();

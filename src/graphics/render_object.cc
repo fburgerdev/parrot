@@ -3,11 +3,9 @@
 #include "debug/debug.hh"
 
 namespace Parrot {
-	// RenderObject
-	RenderObject::RenderObject(uuid mesh_uuid, uuid material_uuid)
-		: mesh_uuid(mesh_uuid), material_uuid(material_uuid) {}
+	//TODO: make << overload more verbose
 	// <<
 	ostream& operator<<(ostream& stream, const RenderObject& render_object) {
-		return stream << "RenderObject(mesh_uuid=" << render_object.mesh_uuid << ",material_uuid=" << render_object.material_uuid << ')';
+		return stream << "RenderObject()";
 	}
 }

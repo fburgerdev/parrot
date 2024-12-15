@@ -9,8 +9,10 @@
         "tag": "Dice",
         "components": {
           "render-object": {
-            "mesh_uuid": 231241215542553,
-            "material_uuid": 1384839189235975932
+            "mesh": {
+              "resource": "../meshes/cube.obj"
+            },
+            "material": "materials/dice.mat.json"
           }
         },
         "scripts": [ "Rotate" ]
@@ -22,8 +24,10 @@
         },
         "components": {
           "render-object": {
-            "mesh_uuid": 231891215542553,
-            "material_uuid": 1384839075235975932
+            "mesh": {
+              "resource": "../meshes/plane.obj"
+            },
+            "material": "materials/parrot.mat.json"
           }
         }
       },
