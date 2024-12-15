@@ -1,3 +1,4 @@
+![parrot-title](https://github.com/user-attachments/assets/fec7fd83-f8b3-4cee-80c9-f19e265fca0c)
 # Parrot
 Parrot is a game engine written in C++ created for educational purposes.
 The engine lets you develop games using custom asset formats and C++ scripts.
