@@ -11,38 +11,20 @@ namespace Parrot {
 		AppConfig() = default;
 		AppConfig(const stdf::path& config_path);
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		AppConfig(const JSON& json) {
-			loadFromJSON(json);
+		AppConfig(const JSON& json, const stdf::path& filepath) {
+			loadFromJSON(json, filepath);
 		}
 
 		// loadFromJSON
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		void loadFromJSON(const JSON& json) {
+		void loadFromJSON(const JSON& json, [[maybe_unused]] const stdf::path& filepath) {
 			// name
 			if (json.contains("name")) {
 				name = string(json.at("name"));
 			}
 			// main
-			const auto& window = json.at("main")[0];
-			if (window.is_number()) {
-				main_window.emplace<uuid>(window);
-			}
-			else if (window.is_string()) {
-				main_window.emplace<stdf::path>(string(window));
-			}
-			else {
-				main_window.emplace<WindowConfig>(window);
-			}
-			const auto& scene = json.at("main")[1];
-			if (scene.is_number()) {
-				main_scene.emplace<uuid>(scene);
-			}
-			else if (scene.is_string()) {
-				main_scene.emplace<stdf::path>(string(scene));
-			}
-			else {
-				main_scene.emplace<SceneConfig>(scene);
-			}
+			main_window = parseHandleFromJSON<WindowConfig>(json.at("main")[0], filepath);
+			main_scene = parseHandleFromJSON<SceneConfig>(json.at("main")[1], filepath);
 			// asset_dir
 			if (json.contains("asset_dir")) {
 				asset_dir = stdf::path(string(json.at("asset_dir")));
@@ -77,8 +59,8 @@ namespace Parrot {
 
 		// name, main(window/scene), asset_dir, (un)loading_policy
 		string name = "App";
-		Handle<WindowConfig> main_window = uuid(0);
-		Handle<SceneConfig> main_scene = uuid(0);
+		Handle<WindowConfig> main_window;
+		Handle<SceneConfig> main_scene;
 		stdf::path asset_dir = ".";
 		LoadingPolicy loading_policy = LoadingPolicy::LAZY_LOAD;
 		UnloadingPolicy unloading_policy = UnloadingPolicy::UNLOAD_APP;

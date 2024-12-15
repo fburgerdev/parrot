@@ -9,31 +9,23 @@ namespace Parrot {
 		SceneConfig() = default;
 		SceneConfig(const stdf::path& config_path);
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		SceneConfig(const JSON& json) {
-			loadFromJSON(json);
+		SceneConfig(const JSON& json, const stdf::path& filepath) {
+			loadFromJSON(json, filepath);
 		}
 
 		// loadFromJSON
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		void loadFromJSON(const JSON& json) {
+		void loadFromJSON(const JSON& json, const stdf::path& filepath) {
 			// name
 			if (json.contains("name")) {
 				name = string(json.at("name"));
 			}
 			// root
-			if (json.at("root").is_number()) {
-				root.emplace(uuid(json.at("root")));
-			}
-			else if (json.at("root").is_string()) {
-				root.emplace(stdf::path(string(json.at("root"))));
-			}
-			else {
-				root.emplace(EntityConfig(json.at("root")));
-			}
+			root = parseHandleFromJSON<EntityConfig>(json.at("root"), filepath);
 		}
 
 		// name, root
 		string name = "Unnamed Scene";
-		Opt<Handle<EntityConfig>> root;
+		Handle<EntityConfig> root;
 	};
 }

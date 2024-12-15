@@ -7,12 +7,13 @@ namespace Parrot {
 		// RenderObject
 		RenderObject(uuid mesh_uuid, uuid material_uuid);
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		RenderObject(const JSON& json) {
-			loadFromJSON(json);
+		RenderObject(const JSON& json, const stdf::path& filepath) {
+			loadFromJSON(json, filepath);
 		}
+
 		// loadFromJSON
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		void loadFromJSON(const JSON& json) {
+		void loadFromJSON(const JSON& json, const stdf::path& filepath) {
 			mesh_uuid = json.at("mesh_uuid");
 			material_uuid = json.at("material_uuid");
 		}

@@ -31,12 +31,12 @@ namespace Parrot {
 		Camera(const PerspectiveCamera& value);
 		Camera(const OrthographicCamera& value);
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		Camera(const JSON& json) {
-			loadFromJSON(json);
+		Camera(const JSON& json, const stdf::path& filepath) {
+			loadFromJSON(json, filepath);
 		}
 		// loadFromJSON
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-			void loadFromJSON(const JSON& json) {
+			void loadFromJSON(const JSON& json, [[maybe_unused]] const stdf::path& filepath) {
 			Vec2<float32> z_range = json.contains("z_range") ?
 				Vec2<float32>(json.at("z_range")[0], json.at("z_range")[1]) : DEFAULT_ZRANGE;
 			if (!json.contains("type") && json.contains("fov") && json.contains("scale")) {

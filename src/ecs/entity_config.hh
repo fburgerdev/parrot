@@ -13,13 +13,13 @@ namespace Parrot {
 		EntityConfig() = default;
 		EntityConfig(const stdf::path& config_path);
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		EntityConfig(const JSON& json) {
-			loadFromJSON(json);
+		EntityConfig(const JSON& json, const stdf::path& filepath) {
+			loadFromJSON(json, filepath);
 		}
 
 		// loadFromJSON
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		void loadFromJSON(const JSON& json) {
+		void loadFromJSON(const JSON& json, const stdf::path& filepath) {
 			// tag
 			if (json.contains("tag")) {
 				tag = string(json.at("tag"));
@@ -51,22 +51,16 @@ namespace Parrot {
 			// children
 			if (json.contains("children")) {
 				for (const auto& child : json.at("children")) {
-					if (child.is_number()) {
-						children.emplace_back(uuid(child));
-					}
-					else if (child.is_string()) {
-						children.emplace_back(stdf::path(string(child)));
-					}
-					else {
-						children.emplace_back(EntityConfig(child));
-					}
+					children.emplace_back(parseHandleFromJSON<EntityConfig>(child, filepath));
 				}
 			}
 			// components
 			if (json.contains("components")) {
 				for (const auto& [name, data] : json.at("components").items()) {
-					if (g_registry<ComponentConfig, const JSON&>.contains(name)) {
-						components.emplace_back(g_registry<ComponentConfig, const JSON&>.at(name).second(data));
+					if (g_registry<ComponentConfig, const JSON&, const stdf::path&>.contains(name)) {
+						components.emplace_back(
+							g_registry<ComponentConfig, const JSON&, const stdf::path&>.at(name).second(data, filepath)
+						);
 					}
 					else {
 						LOG_ASSET_WARNING("unregistered component '{}' in json, will be ignored ", name);

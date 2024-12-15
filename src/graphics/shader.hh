@@ -1,6 +1,6 @@
 #pragma once
 #include "handle.hh"
-#include "resource.hh"
+#include "sidecar.hh"
 
 namespace Parrot {
 	// Shader
@@ -18,18 +18,18 @@ namespace Parrot {
 		// Shader
 		ShaderProgram(const stdf::path& filepath);
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		ShaderProgram(const JSON& json) {
-			loadFromJSON(json);
+		ShaderProgram(const JSON& json, const stdf::path& filepath) {
+			loadFromJSON(json, filepath);
 		}
 
 		// loadFromJSON
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		void loadFromJSON(const JSON& json) {
-			vertex = parseHandleFromJSON<Resource<Shader>>(json.at("vertex"));
-			fragment = parseHandleFromJSON<Resource<Shader>>(json.at("fragment"));
+		void loadFromJSON(const JSON& json, const stdf::path& filepath) {
+			vertex = parseHandleFromJSON<Sidecar<Shader>>(json.at("vertex"), filepath);
+			fragment = parseHandleFromJSON<Sidecar<Shader>>(json.at("fragment"), filepath);
 		}
 
 		// vertex, fragment
-		Handle<Resource<Shader>> vertex, fragment;
+		Handle<Sidecar<Shader>> vertex, fragment;
 	};
 }

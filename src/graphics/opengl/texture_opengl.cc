@@ -18,7 +18,7 @@ namespace Parrot {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
         // load image
-        resolver.useHandle<Resource<Image>>([&](const Resource<Image>& resource) {
+        resolver.useHandle<Sidecar<Image>>([&](const Sidecar<Image>& resource) {
             glTexImage2D(
                 GL_TEXTURE_2D, 0, GL_RGBA,
                 resource.value.getWidth(), resource.value.getHeight(), 0,

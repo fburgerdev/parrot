@@ -8,11 +8,9 @@ namespace Parrot {
 	// Scene / ~Scene
 	Scene::Scene(const SceneConfig& config, HandleResolver resolver, Scriptable* parent)
 		: _name(config.name), _root(this) {
-		if (config.root) {
-			resolver.useHandle<EntityConfig>([&](const EntityConfig& config) {
-				_root = Entity(config, resolver, this);
-			}, *config.root);
-		}
+		resolver.useHandle<EntityConfig>([&](const EntityConfig& config) {
+			_root = Entity(config, resolver, this);
+		}, config.root);
 	}
 	Scene::~Scene() {
 		Scriptable::removeAllScripts();

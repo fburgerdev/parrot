@@ -27,18 +27,18 @@ namespace Parrot {
 		// MaterialNode
 		MaterialNode() = default;
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		MaterialNode(const JSON& json) {
-			loadFromJSON(json);
+		MaterialNode(const JSON& json, const stdf::path& filepath) {
+			loadFromJSON(json, filepath);
 		}
 
 		// loadFromJSON
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		void loadFromJSON(const JSON& json) {
+		void loadFromJSON(const JSON& json, const stdf::path& filepath) {
 			// object
 			if (json.is_object()) {
 				Map<string, MaterialNode> map;
 				for (const auto& [key, value] : json.items()) {
-					map.emplace(key, value);
+					map.try_emplace(key, value, filepath);
 				}
 				value = std::move(map);
 			}
@@ -107,14 +107,14 @@ namespace Parrot {
 					}
 					// texture
 					else if (dtype == "texture") {
-						value = MaterialLeaf(parseHandleFromJSON<Texture>(array.at(1)));
+						value = MaterialLeaf(parseHandleFromJSON<Texture>(array.at(1), filepath));
 					}
 				}
 				// list
 				else {
 					List<MaterialNode> list;
-					for (const auto& value : array) {
-						list.emplace_back(value);
+					for (const auto& el : array) {
+						list.emplace_back(el, filepath);
 					}
 					value = std::move(list);
 				}
@@ -161,19 +161,19 @@ namespace Parrot {
 		// Material
 		Material(const stdf::path& filepath);
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		Material(const JSON& json) {
-			loadFromJSON(json);
+		Material(const JSON& json, const stdf::path& filepath) {
+			loadFromJSON(json, filepath);
 		}
 
 		// loadFromJSON
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		void loadFromJSON(const JSON& json) {
+		void loadFromJSON(const JSON& json, const stdf::path& filepath) {
 			// root
 			if (json.contains("uniforms")) {
-				root.loadFromJSON(json.at("uniforms"));
+				root.loadFromJSON(json.at("uniforms"), filepath);
 			}
 			// shader
-			shader = parseHandleFromJSON<ShaderProgram>(json.at("shader"));
+			shader = parseHandleFromJSON<ShaderProgram>(json.at("shader"), filepath);
 		}
 
 		// root, shader

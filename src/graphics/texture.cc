@@ -7,6 +7,6 @@ namespace Parrot {
 	// Texture
 	Texture::Texture(const stdf::path& filepath)
 		: UUIDObject(filepath) {
-		loadFromJSON(json::parse(ifstream(filepath)));
+		loadFromJSON(json::parse(ifstream(filepath)), filepath);
 	}
 }

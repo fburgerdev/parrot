@@ -11,6 +11,6 @@ namespace Parrot {
 	// ShaderProgram
 	ShaderProgram::ShaderProgram(const stdf::path& filepath)
 		: UUIDObject(filepath) {
-		loadFromJSON(json::parse(ifstream(filepath)));
+		loadFromJSON(json::parse(ifstream(filepath)), filepath);
 	}
 }

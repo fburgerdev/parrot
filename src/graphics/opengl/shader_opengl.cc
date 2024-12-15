@@ -9,11 +9,11 @@ namespace Parrot {
 	ShaderOpenGL::ShaderOpenGL(const ShaderProgram& program, HandleResolver resolver) {
 		// source
 		string vertex;
-		resolver.useHandle<Resource<Shader>>([&](const Resource<Shader>& shader) {
+		resolver.useHandle<Sidecar<Shader>>([&](const Sidecar<Shader>& shader) {
 			vertex = shader.value.source;
 		}, program.vertex);
 		string fragment;
-		resolver.useHandle<Resource<Shader>>([&](const Resource<Shader>& shader) {
+		resolver.useHandle<Sidecar<Shader>>([&](const Sidecar<Shader>& shader) {
 			fragment = shader.value.source;
 		}, program.fragment);
 		// create + compile

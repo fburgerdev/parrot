@@ -5,16 +5,16 @@ namespace Parrot {
 	// extractResourcePath
 	stdf::path extractResourcePath(const stdf::path& filepath);
 
-	// Resource
+	// Sidecar
 	template<class T>
-	class Resource : public UUIDObject {
+	class Sidecar : public UUIDObject {
 	public:
-		// Resource
-		Resource(const stdf::path& filepath)
+		// Sidecar
+		Sidecar(const stdf::path& filepath)
 			: UUIDObject(filepath), path(extractResourcePath(filepath)), value(path) {}
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		Resource(const JSON& json)
-			: path(string(json.at("resource"))), value(path) {}
+		Sidecar(const JSON& json, const stdf::path& filepath)
+			: path(filepath.parent_path() / string(json.at("resource"))), value(path) {}
 
 		// path, value
 		stdf::path path;

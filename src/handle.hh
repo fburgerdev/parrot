@@ -8,7 +8,7 @@ namespace Parrot {
 
 	// parseHandleFromJSON
 	template<class T, class JSON>
-	inline Handle<T> parseHandleFromJSON(const JSON& json) {
+	inline Handle<T> parseHandleFromJSON(const JSON& json, const stdf::path& filepath) {
 		if (json.is_number()) {
 			return uuid(json);
 		}
@@ -16,7 +16,7 @@ namespace Parrot {
 			return stdf::path(string(json));
 		}
 		else {
-			return T(json);
+			return T(json, filepath);
 		}
 	}
 
