@@ -6,7 +6,8 @@ namespace Parrot {
 	template<class T>
 	class AssetView {
 	public:
-		// Asset
+		// AssetView / ~AssetView
+		AssetView() = default;
 		AssetView(Asset& asset, function<void()>&& destroy)
 			: _value(reinterpret_cast<T*>(asset._value)),
 			  _control(asset._control),
@@ -25,22 +26,6 @@ namespace Parrot {
 			: _value(std::exchange(other._value, nullptr)),
 			  _control(std::exchange(other._control, nullptr)),
 			  _destroy(std::move(other._destroy)) {}
-		// =
-		AssetView<T>& operator=(const AssetView<T>& other) {
-			_value = other._value;
-			_control = other._control;
-			_destroy = other._destroy;
-			if (_control) {
-				++(_control->ref_count);
-			}
-		}
-		AssetView<T>& operator=(AssetView<T>&& other) noexcept {
-			_value = std::exchange(other._value, nullptr);
-			_control = std::exchange(other._control, nullptr);
-			_destroy = std::move(other._destroy);
-			return *this;
-		}
-		// ~AssetView
 		~AssetView() {
 			if (_control) {
 				if (_control->is_valid) {
@@ -56,6 +41,21 @@ namespace Parrot {
 					--(_control->ref_count);
 				}
 			}
+		}
+		// =
+		AssetView<T>& operator=(const AssetView<T>& other) {
+			_value = other._value;
+			_control = other._control;
+			_destroy = other._destroy;
+			if (_control) {
+				++(_control->ref_count);
+			}
+		}
+		AssetView<T>& operator=(AssetView<T>&& other) noexcept {
+			_value = std::exchange(other._value, nullptr);
+			_control = std::exchange(other._control, nullptr);
+			_destroy = std::move(other._destroy);
+			return *this;
 		}
 
 		// *

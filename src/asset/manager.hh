@@ -53,6 +53,18 @@ namespace Parrot {
 		AssetView<T> asset(const stdf::path& filepath) {
 			return asset<T>(_index.getUUID(filepath));
 		}
+		template<class T>
+		AssetView<T> asset(const Handle<T>& handle) {
+			if (std::holds_alternative<uuid>(handle)) {
+				return asset<T>(std::get<uuid>(handle));
+			}
+			else if (std::holds_alternative<stdf::path>(handle)) {
+				return asset<T>(std::get<stdf::path>(handle));
+			}
+			else {
+				return {};
+			}
+		}
 
 		// isLoaded
 		bool isLoaded(uuid uuid) const;
