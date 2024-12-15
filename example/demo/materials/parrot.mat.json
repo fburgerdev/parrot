@@ -6,7 +6,7 @@
       "texture",
       {
         "image": {
-          "resource": "images/parrot.png"
+          "resource": "../images/parrot.png"
         }
       }
     ]

@@ -1,9 +1,9 @@
 {
   "uuid": 113934623902040123793,
   "vertex": {
-    "resource": "shaders/flat.vs.glsl"
+    "resource": "flat.vs.glsl"
   },
   "fragment": {
-    "resource": "shaders/flat.fs.glsl"
+    "resource": "flat.fs.glsl"
   }
 }

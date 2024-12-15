@@ -6,7 +6,7 @@
       "texture",
       {
         "image": {
-          "resource": "images/dice.png"
+          "resource": "../images/dice.png"
         }
       }
     ]

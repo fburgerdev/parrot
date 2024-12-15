@@ -6,7 +6,7 @@
       "texture",
       {
         "image": {
-          "resource": "images/flat.png"
+          "resource": "../images/flat.png"
         }
       }
     ]
