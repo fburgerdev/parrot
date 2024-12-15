@@ -159,6 +159,51 @@ namespace Parrot {
 		}
 		return _uniform_cache.at(name);
 	}
+
+	// (static) emphasize
+	static string s_emphasize = "\033[91m";
+	static string s_no_emphasize = "\033[0m";
+	// split
+	static List<string> split(strview str, strview delim) {
+		List<string> list;
+		usize offset = 0;
+		while (true) {
+			usize found = str.find(delim, offset);
+			if (found == string::npos) {
+				break;
+			}
+			list.emplace_back(str.substr(offset, found - offset));
+			offset = found + delim.size();
+		}
+		return list;
+	}
+	// prependLineNumbers
+	static string prependLineNumbers(strview str, const Set<uint>& error_lines) {
+		string out;
+		usize line = 1, offset = 0;
+		while (str.find('\n', offset) != string::npos) {
+			usize newline = str.find('\n', offset);
+			if (line < 10) {
+				out += "  ";
+			}
+			else if (line < 100) {
+				out += " ";
+			}
+			if (error_lines.contains(line)) {
+				out += s_emphasize;
+			}
+			out += std::to_string(line);
+			out += "| ";
+			if (error_lines.contains(line)) {
+				out += s_no_emphasize;
+			}
+			out += str.substr(offset, newline - offset + 1);
+			line += 1;
+			offset = newline + 1;
+		}
+		return out;
+	}
+
 	// compileShader
 	uint ShaderOpenGL::compileShader(const string& source, ShaderType type) {
 		uint id = glCreateShader(
@@ -169,16 +214,30 @@ namespace Parrot {
 		const char* source_cstr = source.c_str();
 		glShaderSource(id, 1, &source_cstr, nullptr);
 		glCompileShader(id);
-		int32 result;
+		int32 result = 0;
 		glGetShaderiv(id, GL_COMPILE_STATUS, &result);
 		if (result == GL_TRUE) {
 			LOG_GRAPHICS_DEBUG("successfully compiled opengl shader");
 			return id;
 		}
-		else if (result == GL_FALSE) {
+		else {
 			LOG_GRAPHICS_ERROR("failed to compile opengl shader");
-			//TODO: log error message + source
+			int32 length = 0;
+			glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+			char* message = new char[length];
+			glGetShaderInfoLog(id, length, &length, message);
+			Set<uint> error_lines;
+			for (const string& line : split(message, "\n")) {
+				List<string> splitted = split(line, ":");
+				if (splitted.size() > 2) {
+					error_lines.insert(std::stoul(splitted.at(2)));
+				}
+			}
+			string extended_source = prependLineNumbers(source, error_lines);
+			LOG_GRAPHICS_ERROR("error message:\n{}shader source code:\n{}", message, extended_source);
+			delete[] message;
+			glDeleteShader(id);
+			return 0;
 		}
-		return 0;	
 	}
 }
