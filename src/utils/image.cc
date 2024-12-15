@@ -34,6 +34,24 @@ namespace Parrot {
 		_bytes = img;
 		LOG_ASSET_DEBUG("loaded image {} ({}px x {}px with {} channels)", filepath, width, height, channels);
 	}
+	Image::Image(const Image& other)
+		: _width(other._width), _height(other._height), _format(other._format) {
+		usize size = _width * _height;
+		switch (_format) {
+		case Parrot::ImageFormat::GRAY:
+			size *= 1;
+			break;
+		case Parrot::ImageFormat::RGB:
+			size *= 3;
+			break;
+		case Parrot::ImageFormat::RGBA:
+			size *= 4;
+			break;
+		default:
+			break;
+		}
+		_bytes = (uchar*)memcpy(new uchar[size], other._bytes, size);
+	}
 	Image::Image(Image&& other) noexcept
 		: _width(std::exchange(other._width, 0)),
 		  _height(std::exchange(other._height, 0)),
@@ -44,6 +62,28 @@ namespace Parrot {
 		stbi_image_free(_bytes);
 	}
 	// =
+	Image& Image::operator=(const Image& other) {
+		_width = other._width;
+		_height = other._height;
+		_format = other._format;
+		usize size = _width * _height;
+		switch (_format) {
+		case Parrot::ImageFormat::GRAY:
+			size *= 1;
+			break;
+		case Parrot::ImageFormat::RGB:
+			size *= 3;
+			break;
+		case Parrot::ImageFormat::RGBA:
+			size *= 4;
+			break;
+		default:
+			break;
+		}
+		stbi_image_free(_bytes);
+		_bytes = (uchar*)memcpy(new uchar[size], other._bytes, size);
+		return *this;
+	}
 	Image& Image::operator=(Image&& other) noexcept {
 		_width = std::exchange(other._width, 0);
 		_height = std::exchange(other._height, 0);
