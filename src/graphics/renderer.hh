@@ -5,6 +5,6 @@
 #if defined(PARROT_OPENGL)
 #include "opengl/renderer_opengl.hh"
 namespace Parrot {
-	using Renderer = RendererOpenGL;
+	using Renderer = OpenGL::Renderer;
 }
 #endif

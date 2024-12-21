@@ -1,23 +1,25 @@
 #pragma once
-#include "graphics/texture.hh"
+#include "graphics/texture_config.hh"
 
 namespace Parrot {
-	// TextureOpenGL
-	class TextureOpenGL {
-	public:
-		// TextureOpenGL / ~TextureOpenGL
-		TextureOpenGL(const Texture& texture, HandleResolver resolver);
-		TextureOpenGL(const TextureOpenGL&) = delete;
-		TextureOpenGL(TextureOpenGL&& other) noexcept;
-		~TextureOpenGL();
-		// =
-		TextureOpenGL& operator=(const TextureOpenGL&) = delete;
-		TextureOpenGL& operator=(TextureOpenGL&& other) noexcept;
+	namespace OpenGL {
+		// Texture
+		class Texture {
+		public:
+			// Texture / ~Texture
+			Texture(const TextureConfig& config, HandleResolver resolver);
+			Texture(const Texture&) = delete;
+			Texture(Texture&& other) noexcept;
+			~Texture();
+			// =
+			Texture& operator=(const Texture&) = delete;
+			Texture& operator=(Texture&& other) noexcept;
 
-		// bind, unbind
-		void bind(uint slot) const;
-		static void unbind(uint slot);
-	private:
-		uint _gpu_id = 0;
-	};
+			// bind, unbind
+			void bind(uint slot) const;
+			static void unbind(uint slot);
+		private:
+			uint _gpu_id = 0;
+		};
+	}
 }

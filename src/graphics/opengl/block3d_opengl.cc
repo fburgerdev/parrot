@@ -2,6 +2,7 @@
 #include "block3d_opengl.hh"
 
 namespace Parrot {
+    namespace OpenGL {
     // (global) block3d_snippet
     std::string g_block3d_snippet = R""""(
 // light
@@ -46,4 +47,5 @@ vec3 applyLighting(vec3 in_color, vec3 position, vec3 normal) {
     return out_color;
 }
 )"""";
+    }
 }

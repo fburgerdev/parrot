@@ -17,13 +17,13 @@ namespace Parrot {
 		NONE, LINEAR, NEAREST
 	};
 
-	// Texture
-	class Texture : public UUIDObject {
+	// TextureConfig
+	class TextureConfig : public UUIDObject {
 	public:
-		// Texture
-		Texture(const stdf::path& filepath);
+		// TextureConfig
+		TextureConfig(const stdf::path& filepath);
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		Texture(const JSON& json, const stdf::path& filepath) {
+		TextureConfig(const JSON& json, const stdf::path& filepath) {
 			loadFromJSON(json, filepath);
 		}
 

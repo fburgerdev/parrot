@@ -1,6 +1,6 @@
 #pragma once
 #include "shader.hh"
-#include "texture.hh"
+#include "texture_config.hh"
 #include "math/matrix.hh"
 
 namespace Parrot {
@@ -20,7 +20,7 @@ namespace Parrot {
 		// numeric
 		NumericMaterialLeaf,
 		// texture
-		Handle<Texture>
+		Handle<TextureConfig>
 	>;
 	// MaterialNode
 	struct MaterialNode {
@@ -107,7 +107,7 @@ namespace Parrot {
 					}
 					// texture
 					else if (dtype == "texture") {
-						value = MaterialLeaf(parseHandleFromJSON<Texture>(array.at(1), filepath));
+						value = MaterialLeaf(parseHandleFromJSON<TextureConfig>(array.at(1), filepath));
 					}
 				}
 				// list
