@@ -22,10 +22,10 @@ namespace Parrot {
 			}
 		}
 		// getShader
-		ShaderOpenGL& Context::getShader(const ShaderProgram& shader) {
+		Shader& Context::getShader(const ShaderSource& shader) {
 			auto it = _shaders.find(shader.getUUID());
 			if (it == _shaders.end()) {
-				return _shaders.emplace(shader.getUUID(), ShaderOpenGL(shader, _resolver)).first->second;
+				return _shaders.emplace(shader.getUUID(), Shader(shader, _resolver)).first->second;
 			}
 			else {
 				return it->second;
@@ -43,7 +43,7 @@ namespace Parrot {
 		}
 
 		// applyMaterial
-		void Context::applyMaterial(ShaderOpenGL& shader, const MaterialNode& node, const string& prefix) {
+		void Context::applyMaterial(Shader& shader, const MaterialNode& node, const string& prefix) {
 			if (std::holds_alternative<Map<string, MaterialNode>>(node.value)) {
 				const auto& object = std::get<Map<string, MaterialNode>>(node.value);
 				for (const auto& [child_name, child_node] : object) {

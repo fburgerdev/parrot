@@ -1,5 +1,5 @@
 #pragma once
-#include "graphics/shader.hh"
+#include "graphics/shader_source.hh"
 #include "uniform_buffer_opengl.hh"
 
 namespace Parrot {
@@ -8,17 +8,17 @@ namespace Parrot {
 		enum class ShaderType {
 			VERTEX, FRAGMENT
 		};
-		// ShaderOpenGL
-		class ShaderOpenGL {
+		// Shader
+		class Shader {
 		public:
-			// ShaderOpenGL / ~ShaderOpenGL
-			ShaderOpenGL(const ShaderProgram& program, HandleResolver resolver);
-			ShaderOpenGL(const ShaderOpenGL&) = delete;
-			ShaderOpenGL(ShaderOpenGL&& other) noexcept;
-			~ShaderOpenGL();
+			// Shader / ~Shader
+			Shader(const ShaderSource& source, HandleResolver resolver);
+			Shader(const Shader&) = delete;
+			Shader(Shader&& other) noexcept;
+			~Shader();
 			// =
-			ShaderOpenGL& operator=(const ShaderOpenGL&) = delete;
-			ShaderOpenGL& operator=(ShaderOpenGL&& other) noexcept;
+			Shader& operator=(const Shader&) = delete;
+			Shader& operator=(Shader&& other) noexcept;
 
 			// setUniform
 			template<class T>

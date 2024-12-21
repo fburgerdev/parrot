@@ -19,7 +19,7 @@ namespace Parrot {
 			// getVertexArray
 			VertexArray& getVertexArray(const Sidecar<Mesh>& mesh);
 			// getShader
-			ShaderOpenGL& getShader(const ShaderProgram& shader);
+			Shader& getShader(const ShaderSource& shader);
 			// getTexture
 			Texture& getTexture(const TextureConfig& texture);
 
@@ -45,9 +45,9 @@ namespace Parrot {
 			}
 
 			// applyMaterial
-			void applyMaterial(ShaderOpenGL& shader, const MaterialNode& node, const string& prefix = "");
+			void applyMaterial(Shader& shader, const MaterialNode& node, const string& prefix = "");
 		private:
-			HashMap<uuid, ShaderOpenGL> _shaders;
+			HashMap<uuid, Shader> _shaders;
 			HashMap<uuid, Texture> _textures;
 			HashMap<uuid, VertexBuffer> _vertex_buffers;
 			HashMap<uuid, IndexBuffer> _index_buffers;

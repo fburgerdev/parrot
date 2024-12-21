@@ -1,15 +1,15 @@
 #include "common.hh"
-#include "shader.hh"
+#include "shader_source.hh"
 #include <nlohmann/json.hh>
 using json = nlohmann::json;
 
 namespace Parrot {
-	// Shader
-	Shader::Shader(const stdf::path& filepath)
+	// ShaderStage
+	ShaderStage::ShaderStage(const stdf::path& filepath)
 		: source((strstream() << ifstream(filepath).rdbuf()).str()) {}
 
-	// ShaderProgram
-	ShaderProgram::ShaderProgram(const stdf::path& filepath)
+	// ShaderSource
+	ShaderSource::ShaderSource(const stdf::path& filepath)
 		: UUIDObject(filepath) {
 		loadFromJSON(json::parse(ifstream(filepath)), filepath);
 	}
