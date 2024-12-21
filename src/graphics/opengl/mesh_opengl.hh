@@ -1,5 +1,5 @@
 #pragma once
-#include "buffer_opengl.hh"
+#include "vertex_array_opengl.hh"
 
 namespace Parrot {
 	// MeshOpenGL
