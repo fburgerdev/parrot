@@ -7,9 +7,9 @@ using json = nlohmann::json;
 namespace Parrot {
 	// Scene / ~Scene
 	Scene::Scene(const SceneConfig& config, HandleResolver resolver, Scriptable* parent)
-		: _name(config.name), _root(this) {
+		: name(config.name), root(this) {
 		resolver.useHandle<EntityConfig>([&](const EntityConfig& config) {
-			_root = Entity(config, resolver, this);
+			root = Entity(config, resolver, this);
 		}, config.root);
 	}
 	Scene::~Scene() {
@@ -18,21 +18,14 @@ namespace Parrot {
 
 	// foreachChild
 	void Scene::foreachChild(function<void(Scriptable&)> func) {
-		func(_root);
+		func(root);
 	}
 	void Scene::foreachChild(function<void(const Scriptable&)> func) const {
-		func(_root);
-	}
-	// getRoot
-	Entity& Scene::getRoot() {
-		return _root;
-	}
-	const Entity& Scene::getRoot() const {
-		return _root;
+		func(root);
 	}
 	// update
 	void Scene::update(float32 delta_time) {
-		LOG_ECS_TRACE("update scene '{}'", _name);
-		_root.update(delta_time);
+		LOG_ECS_TRACE("update scene '{}'", name);
+		root.update(delta_time);
 	}
 }
