@@ -148,6 +148,12 @@ namespace Parrot {
 	void ShaderOpenGL::setUniform<Mat<float64, 4>>(const string& name, const Mat<float64, 4>& value) {
 		glUniformMatrix4dv(getUniformLocation(name), 1, GL_TRUE, value.data());
 	}
+	// bindUniformBuffer
+	void ShaderOpenGL::bindUniformBuffer(const string& name, const UniformBufferOpenGL& buffer) {
+		//? warn if name not found
+		uint block_index = glGetUniformBlockIndex(_gpu_id, name.c_str());
+		glUniformBlockBinding(_gpu_id, block_index, buffer.getBindingPoint());
+	}
 	// getUniformLocation
 	int32 ShaderOpenGL::getUniformLocation(const string& name) {
 		if (!_uniform_cache.contains(name)) {
@@ -203,7 +209,6 @@ namespace Parrot {
 		}
 		return out;
 	}
-
 	// compileShader
 	uint ShaderOpenGL::compileShader(const string& source, ShaderType type) {
 		uint id = glCreateShader(

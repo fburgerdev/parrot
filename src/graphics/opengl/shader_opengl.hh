@@ -1,5 +1,6 @@
 #pragma once
 #include "graphics/shader.hh"
+#include "uniform_buffer_opengl.hh"
 
 namespace Parrot {
 	// ShaderType
@@ -21,6 +22,8 @@ namespace Parrot {
 		// setUniform
 		template<class T>
 		void setUniform(const string& name, const T& value);
+		// bindUniformBuffer
+		void bindUniformBuffer(const string& name, const UniformBufferOpenGL& buffer);
 
 		// bind, unbind
 		void bind() const;
