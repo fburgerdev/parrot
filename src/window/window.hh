@@ -4,9 +4,9 @@
 #include "window_event.hh"
 
 #if defined(PARROT_GLFW)
-#include "glfw/window_glfw.hh"
+#include "glfw/physical_window_glfw.hh"
 namespace Parrot {
-	using PhysicalWindow = WindowGLFW;
+	using PhysicalWindow = GLFW::PhysicalWindow;
 }
 #endif
 
