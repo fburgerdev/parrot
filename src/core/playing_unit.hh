@@ -1,7 +1,7 @@
 #pragma once
 #include "window/window.hh"
 #include "ecs/scene.hh"
-#include "graphics/context.hh"
+#include "graphics/renderer.hh"
 
 namespace Parrot {
 	//? reconsider name
@@ -10,6 +10,12 @@ namespace Parrot {
 	public:
 		// PlayingUnit
 		PlayingUnit(const WindowConfig& window_config, const SceneConfig& scene_config, HandleResolver resolver, Scriptable* parent = nullptr);
+		PlayingUnit(PlayingUnit&& other) noexcept;
+		// =
+		PlayingUnit& operator=(PlayingUnit&& other) noexcept;
+
+		// draw
+		void draw(HandleResolver resolver);
 
 		// friend
 		friend class App;
@@ -18,6 +24,7 @@ namespace Parrot {
 		Window window;
 		Scene scene;
 	private:
+		Renderer _renderer;
 		GPUContext _gpu_context;
 	};
 }

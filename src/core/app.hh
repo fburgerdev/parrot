@@ -1,7 +1,6 @@
 #pragma once
 #include "playing_unit.hh"
 #include "asset/manager.hh"
-#include "graphics/batch_renderer.hh"
 
 namespace Parrot {
 	// forward: App
@@ -44,8 +43,6 @@ namespace Parrot {
 		virtual void foreachChild(function<void(Scriptable&)> func) override;
 		virtual void foreachChild(function<void(const Scriptable&)> func) const override;
 	private:
-		void draw(PlayingUnit& unit);
-
 		string _name;
 		PlayingUnit* _main_unit = nullptr;
 		Map<uuid, PlayingUnit> _units;

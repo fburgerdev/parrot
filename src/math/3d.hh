@@ -63,15 +63,15 @@ namespace Parrot {
 	template<class T = DefaultFloat>
 	class Transform {
 	public:
-		// calcModelMatrix
-		Mat4x4<T> calcModelMatrix() const {
+		// calcLocalModelMatrix
+		Mat4x4<T> calcLocalModelMatrix() const {
 			Mat4x4<T> translation_matrix = calcTranslationMatrix(position);
 			Mat4x4<T> rotation_matrix = calcRotationMatrix(rotation);
 			Mat4x4<T> scale_matrix = calcScaleMatrix(scale);
 			return translation_matrix * rotation_matrix * scale_matrix;
 		}
-		// calcViewMatrix
-		Mat4x4<T> calcViewMatrix() const {
+		// calcLocalViewMatrix
+		Mat4x4<T> calcLocalViewMatrix() const {
 			Mat4x4<T> translation_matrix = calcTranslationMatrix(-position);
 			Mat4x4<T> rotation_matrix = transposed(calcRotationMatrix(rotation));
 			return rotation_matrix * translation_matrix;

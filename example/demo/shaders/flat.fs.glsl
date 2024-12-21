@@ -2,16 +2,15 @@
 // out
 out vec4 o_frag_color; 
 // in
+in vec3 v_position;
+in vec3 v_normal;
 in vec2 v_tex_coords;
-in float v_intensity;
-
-// constants
-const vec3 background_color = vec3(0.7, 0.7, 0.9);
 
 // uniform
 uniform sampler2D u_texture;
 uniform vec3 u_tint = vec3(1, 1, 1);
 
 void main() {
-    o_frag_color = texture(u_texture, v_tex_coords) * v_intensity + vec4(background_color, 1) * (1 - v_intensity);
+    vec3 color = applyLighting(texture(u_texture, v_tex_coords).rgb, v_position, v_normal);
+    o_frag_color = vec4(color, 1);
 }

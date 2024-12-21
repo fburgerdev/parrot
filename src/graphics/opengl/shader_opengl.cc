@@ -1,5 +1,6 @@
 #include "common.hh"
 #include "shader_opengl.hh"
+#include "block3d_opengl.hh"
 #include "math/matrix.hh"
 #include "debug/debug.hh"
 #include <glad/glad.hh>
@@ -10,11 +11,17 @@ namespace Parrot {
 		// source
 		string vertex;
 		resolver.useHandle<Sidecar<Shader>>([&](const Sidecar<Shader>& shader) {
-			vertex = shader.value.source;
+			const string& source = shader.value.source;
+			vertex += source.substr(0, source.find('\n'));
+			vertex += g_block3d_snippet;
+			vertex += source.substr(source.find('\n'));
 		}, program.vertex);
 		string fragment;
 		resolver.useHandle<Sidecar<Shader>>([&](const Sidecar<Shader>& shader) {
-			fragment = shader.value.source;
+			const string& source = shader.value.source;
+			fragment += source.substr(0, source.find('\n'));
+			fragment += g_block3d_snippet;
+			fragment += source.substr(source.find('\n'));
 		}, program.fragment);
 		// create + compile
 		_gpu_id = glCreateProgram();
