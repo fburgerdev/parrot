@@ -1,6 +1,7 @@
 #include "client.hh"
 #include "scripts/fps.hh"
 #include "scripts/controller.hh"
+#include "scripts/sun.hh"
 #include "scripts/rotate.hh"
 
 namespace Parrot {
@@ -18,10 +19,19 @@ namespace Parrot {
             }
         },
         {
+            "Sun",
+            {
+                typeid(Sun).hash_code(),
+                [] (Entity& entity) {
+                    return std::make_unique<Sun>(entity);
+                }
+            }
+        },
+        {
             "Rotate",
             {
                 typeid(Rotate).hash_code(),
-                [] (Entity& entity) {
+                [](Entity& entity) {
                     return std::make_unique<Rotate>(entity);
                 }
             }

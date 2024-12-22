@@ -9,9 +9,7 @@
         "tag": "Dice",
         "components": {
           "render-object": {
-            "mesh": {
-              "resource": "../meshes/cube.obj"
-            },
+            "mesh": 231241215542553,
             "material": "materials/dice.mat.json"
           }
         },
@@ -24,9 +22,7 @@
         },
         "components": {
           "render-object": {
-            "mesh": {
-              "resource": "../meshes/plane.obj"
-            },
+            "mesh": 231891215542553,
             "material": "materials/parrot.mat.json"
           }
         }
@@ -34,16 +30,22 @@
       {
         "tag": "Sun",
         "transform": {
-          "position": [ 0, 10, 0 ]
+          "position": [ 15, 30, 0 ],
+          "scale": [ 0.5, 0.5, 0.5 ]
         },
         "components": {
+          "render-object": {
+            "mesh": 7927489141878824564,
+            "material": "materials/flat.mat.json"
+          },
           "light-source": {
             "type": "directional",
             "direction": [ 0, -1, 0 ],
             "intensity": 0.8,
             "color": [ 255, 255, 175 ]
           }
-        }
+        },
+        "scripts": [ "Sun" ]
       },
       {
         "tag": "Ambient",
