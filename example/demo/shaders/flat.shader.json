@@ -1,9 +1,0 @@
-{
-  "uuid": 113934623902040123793,
-  "vertex": {
-    "resource": "flat.vs.glsl"
-  },
-  "fragment": {
-    "resource": "flat.fs.glsl"
-  }
-}

@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "shader_opengl.hh"
-#include "block3d_opengl.hh"
+#include "surface_opengl.hh"
 #include "math/matrix.hh"
 #include "debug/debug.hh"
 #include <glad/glad.hh>
@@ -8,22 +8,10 @@
 namespace Parrot {
 	namespace OpenGL {
 		// Shader
-		Shader::Shader(const ShaderSource& source, HandleResolver resolver) {
+		Shader::Shader(const ShaderBuilder& source) {
 			// source
-			string vertex;
-			resolver.useHandle<Sidecar<ShaderStage>>([&](const Sidecar<ShaderStage>& stage) {
-				const string& source = stage.value.source;
-				vertex += source.substr(0, source.find('\n'));
-				vertex += g_block3d_snippet;
-				vertex += source.substr(source.find('\n'));
-				}, source.vertex);
-			string fragment;
-			resolver.useHandle<Sidecar<ShaderStage>>([&](const Sidecar<ShaderStage>& stage) {
-				const string& source = stage.value.source;
-				fragment += source.substr(0, source.find('\n'));
-				fragment += g_block3d_snippet;
-				fragment += source.substr(source.find('\n'));
-				}, source.fragment);
+			string vertex = source.createVertexSource();
+			string fragment = source.createFragmentSource();
 			// create + compile
 			_gpu_id = glCreateProgram();
 			LOG_GRAPHICS_TRACE("created shader");

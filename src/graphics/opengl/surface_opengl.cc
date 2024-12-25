@@ -1,10 +1,11 @@
 #include "common.hh"
-#include "block3d_opengl.hh"
+#include "surface_opengl.hh"
 
 namespace Parrot {
     namespace OpenGL {
-    // (global) block3d_snippet
-    std::string g_block3d_snippet = R""""(
+        // (global) surface_snippet
+        const ShaderBuilder g_surface_snippet = string(R""""(
+[[snippet "surface"]]
 // light
 const uint MAX_LIGHT_COUNT = uint(50); 
 // :: ambient
@@ -19,8 +20,8 @@ struct DirectionalLight {
     vec3 color;
 };
 
-// block 3d
-layout (std140) uniform u_block_3d {
+// std
+layout (std140) uniform u_std {
     // world_to_clip
     mat4 u_world_to_clip;
 
@@ -32,6 +33,7 @@ layout (std140) uniform u_block_3d {
     uint u_directional_count;
     DirectionalLight u_directional_lights[MAX_LIGHT_COUNT];
 };
+
 // applyLighting
 vec3 applyLighting(vec3 in_color, vec3 position, vec3 normal) {
     vec3 out_color = vec3(0);
@@ -46,6 +48,7 @@ vec3 applyLighting(vec3 in_color, vec3 position, vec3 normal) {
     }
     return out_color;
 }
-)"""";
+[[end]]
+)"""");
     }
 }

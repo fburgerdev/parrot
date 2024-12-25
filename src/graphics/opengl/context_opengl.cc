@@ -1,5 +1,6 @@
 #include "common.hh"
 #include "context_opengl.hh"
+#include "surface_opengl.hh"
 
 namespace Parrot {
 	namespace OpenGL {
@@ -22,10 +23,13 @@ namespace Parrot {
 			}
 		}
 		// getShader
-		Shader& Context::getShader(const ShaderSource& shader) {
+		Shader& Context::getShader(const Sidecar<ShaderBuilder>& shader) {
 			auto it = _shaders.find(shader.getUUID());
 			if (it == _shaders.end()) {
-				return _shaders.emplace(shader.getUUID(), Shader(shader, _resolver)).first->second;
+				ShaderBuilder builder = shader.value;
+				List<ShaderBuilder> snippets = { g_surface_snippet };
+				builder.resolve(snippets);
+				return _shaders.emplace(shader.getUUID(), Shader(builder)).first->second;
 			}
 			else {
 				return it->second;

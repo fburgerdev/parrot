@@ -1,6 +1,6 @@
 {
   "uuid": 1384839189235975932,
-  "shader": "shaders/flat.shader.json",
+  "shader": 113934623902895323793,
   "uniforms": {
     "texture": [
       "texture",

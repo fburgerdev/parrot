@@ -15,7 +15,7 @@ namespace Parrot {
 	// ShaderSource
 	class ShaderSource : public UUIDObject {
 	public:
-		// ShaderStage
+		// ShaderSource
 		ShaderSource(const stdf::path& filepath);
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
 		ShaderSource(const JSON& json, const stdf::path& filepath) {

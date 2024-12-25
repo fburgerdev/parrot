@@ -1,5 +1,6 @@
 #pragma once
 #include "graphics/shader_source.hh"
+#include "graphics/shader_builder.hh"
 #include "uniform_buffer_opengl.hh"
 
 namespace Parrot {
@@ -12,7 +13,7 @@ namespace Parrot {
 		class Shader {
 		public:
 			// Shader / ~Shader
-			Shader(const ShaderSource& source, HandleResolver resolver);
+			Shader(const ShaderBuilder& source);
 			Shader(const Shader&) = delete;
 			Shader(Shader&& other) noexcept;
 			~Shader();
