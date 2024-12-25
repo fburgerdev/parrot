@@ -1,7 +1,6 @@
 #pragma once
 #include "shader_source.hh"
 #include "texture_config.hh"
-#include "shader_builder.hh"
 #include "math/matrix.hh"
 
 namespace Parrot {
@@ -174,11 +173,11 @@ namespace Parrot {
 				root.loadFromJSON(json.at("uniforms"), filepath);
 			}
 			// shader
-			shader = parseHandleFromJSON<Sidecar<ShaderBuilder>>(json.at("shader"), filepath);
+			shader = parseHandleFromJSON<Sidecar<ShaderSource>>(json.at("shader"), filepath);
 		}
 
 		// root, shader
 		MaterialNode root;
-		Handle<Sidecar<ShaderBuilder>> shader;
+		Handle<Sidecar<ShaderSource>> shader;
 	};
 }

@@ -22,7 +22,7 @@ namespace Parrot {
 			for (auto [transform, render_object] : scene_data.render_objects) {
 				resolver.useHandles([&](const Sidecar<Mesh>& mesh, const Material& material) {
 					auto& vertex_array = _context->getVertexArray(mesh);
-					resolver.useHandles([&](const Sidecar<ShaderBuilder>& shader) {
+					resolver.useHandles([&](const Sidecar<ShaderSource>& shader) {
 						auto& shader_opengl = _context->getShader(shader);
 						shader_opengl.bind();
 						shader_opengl.bindUniformBuffer("u_std", *_3d_buffer);

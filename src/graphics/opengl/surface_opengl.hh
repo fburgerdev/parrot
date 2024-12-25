@@ -1,6 +1,6 @@
 #pragma once
 #include "graphics/scene_data.hh"
-#include "graphics/shader_builder.hh"
+#include "graphics/shader_source.hh"
 #include "std140_opengl.hh"
 
 namespace Parrot {
@@ -8,7 +8,7 @@ namespace Parrot {
 		// MAX_LIGHT_COUNT
 		constexpr uint MAX_LIGHT_COUNT = 50; // needs to match with shader snippet!
 		// (global) surface_snippet
-		extern const ShaderBuilder g_surface_snippet;
+		extern const ShaderSource g_surface_snippet;
 
 		// SurfaceBlock
 		struct SurfaceBlock {

@@ -19,7 +19,7 @@ namespace Parrot {
 			// getVertexArray
 			VertexArray& getVertexArray(const Sidecar<Mesh>& mesh);
 			// getShader
-			Shader& getShader(const Sidecar<ShaderBuilder>& shader);
+			Shader& getShader(const Sidecar<ShaderSource>& shader);
 			// getTexture
 			Texture& getTexture(const TextureConfig& texture);
 

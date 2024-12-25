@@ -4,7 +4,7 @@
 namespace Parrot {
     namespace OpenGL {
         // (global) surface_snippet
-        const ShaderBuilder g_surface_snippet = string(R""""(
+        const ShaderSource g_surface_snippet = string(R""""(
 [[snippet "surface"]]
 // light
 const uint MAX_LIGHT_COUNT = uint(50); 
