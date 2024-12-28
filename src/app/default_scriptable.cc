@@ -16,7 +16,7 @@ namespace Parrot {
 			Queue<Scriptable*> queue({ _app });
 			if (const WindowEvent* we = dynamic_cast<const WindowEvent*>(&e)) {
 				if (auto* wcr = we->getWindowCloseRequest()) {
-					LOG_CORE_DEBUG("unresolved window-close-request, closing window '{}'...", we->getTargetWindow()->getTitle());
+					LOG_APP_DEBUG("unresolved window-close-request, closing window '{}'...", we->getTargetWindow()->getTitle());
 					we->getTargetWindow()->close();
 					return true;
 				}

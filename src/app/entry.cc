@@ -28,8 +28,9 @@ namespace Parrot {
 
     // (static) launch
     static void launch() {
-        engine_logger.setLevel("asset", LogLevel::DEBUG);
+        engine_logger.setLevel("app", LogLevel::DEBUG);
         engine_logger.setLevel("core", LogLevel::DEBUG);
+        engine_logger.setLevel("asset", LogLevel::DEBUG);
         engine_logger.setLevel("ecs", LogLevel::DEBUG);
         engine_logger.setLevel("graphics", LogLevel::DEBUG);
         engine_logger.setLevel("math", LogLevel::DEBUG);

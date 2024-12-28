@@ -1,5 +1,5 @@
 #pragma once
-#include "uuid.hh"
+#include "core/uuid.hh"
 #include "window_config.hh"
 #include "window_event.hh"
 

@@ -11,7 +11,7 @@ namespace Parrot {
 	App::App(const stdf::path& config_path)
 		: Scriptable(&_default_scriptable), _default_scriptable(*this) {
 		AppConfig config(config_path);
-		LOG_CORE_INFO("creating app '{}' from {}...", config.name, config_path);
+		LOG_APP_INFO("creating app '{}' from {}...", config.name, config_path);
 		// name
 		_name = config.name;
 		// asset-manager
@@ -39,7 +39,7 @@ namespace Parrot {
 		PlayingUnit unit(window_config, scene_config, _asset_manager.getHandleResolver(), this);
 		unit.window.setIcon(Image("images/parrot.png")); //TODO: move
 		auto result = _units.emplace(unit.getUUID(), std::move(unit));
-		LOG_CORE_INFO("created playing-unit ('{}', '{}') in app '{}'", window_config.title, scene_config.name, _name);
+		LOG_APP_INFO("created playing-unit ('{}', '{}') in app '{}'", window_config.title, scene_config.name, _name);
 		return result.first->second;
 	}
 	// getPlayingUnit
@@ -78,11 +78,11 @@ namespace Parrot {
 	// run
 	void App::run() {
 		if (_main_unit) {
-			LOG_CORE_INFO("app '{}' running", _name);
+			LOG_APP_INFO("app '{}' running", _name);
 			Stopwatch total_watch, frame_watch;
 			while (_main_unit->window.isOpen()) {
 				seconds delta_time = frame_watch.reset();
-				LOG_CORE_TRACE("update app '{}'", _name);
+				LOG_APP_TRACE("update app '{}'", _name);
 				for (auto& [id, unit] : _units) {
 					// update scene
 					unit.scene.update(delta_time);
@@ -91,7 +91,7 @@ namespace Parrot {
 					// swap + update window
 					unit.window.swapBuffers();
 					for (auto& e : unit.window.pollEvents()) {
-						LOG_CORE_TRACE("polled event: {}", e);
+						LOG_APP_TRACE("polled event: {}", e);
 						unit.window.raiseEvent(e);
 					}
 				}
@@ -99,7 +99,7 @@ namespace Parrot {
 				//	_main_unit->window.close();
 				//}
 			}
-			LOG_CORE_INFO("app '{}' terminated (gracefully)", _name);
+			LOG_APP_INFO("app '{}' terminated (gracefully)", _name);
 		}
 	}
 

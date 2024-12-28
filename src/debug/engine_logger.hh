@@ -20,6 +20,12 @@ namespace Parrot {
 #define LOG_CORE_INFO(fmt, ...) LOGGER.logInfo("core", fmt, __VA_ARGS__)
 #define LOG_CORE_WARNING(fmt, ...) LOGGER.logWarning("core", fmt, __VA_ARGS__)
 #define LOG_CORE_ERROR(fmt, ...) LOGGER.logError("core", fmt, __VA_ARGS__)
+// :: app
+#define LOG_APP_TRACE(fmt, ...) LOGGER.logTrace("app", fmt, __VA_ARGS__)
+#define LOG_APP_DEBUG(fmt, ...) LOGGER.logDebug("app", fmt, __VA_ARGS__)
+#define LOG_APP_INFO(fmt, ...) LOGGER.logInfo("app", fmt, __VA_ARGS__)
+#define LOG_APP_WARNING(fmt, ...) LOGGER.logWarning("app", fmt, __VA_ARGS__)
+#define LOG_APP_ERROR(fmt, ...) LOGGER.logError("app", fmt, __VA_ARGS__)
 // :: asset
 #define LOG_ASSET_TRACE(fmt, ...) LOGGER.logTrace("asset", fmt, __VA_ARGS__)
 #define LOG_ASSET_DEBUG(fmt, ...) LOGGER.logDebug("asset", fmt, __VA_ARGS__)

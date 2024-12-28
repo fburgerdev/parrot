@@ -1,5 +1,5 @@
 #pragma once
-#include "asset_handle.hh"
+#include "core/asset_handle.hh"
 #include "utils/image.hh"
 
 namespace Parrot {

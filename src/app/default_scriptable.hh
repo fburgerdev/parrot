@@ -1,5 +1,5 @@
 #pragma once
-#include "scriptable.hh"
+#include "core/scriptable.hh"
 
 namespace Parrot {
 	// forward: App

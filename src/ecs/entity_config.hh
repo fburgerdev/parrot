@@ -1,6 +1,6 @@
 #pragma once
-#include "asset_handle.hh"
-#include "registry.hh"
+#include "core/asset_handle.hh"
+#include "core/registry.hh"
 #include "component.hh"
 #include "math/math3d.hh"
 #include "debug/engine_logger.hh"

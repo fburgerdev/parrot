@@ -1,10 +1,10 @@
 #pragma once
-// global
-#include "registry.hh"
-#include "scriptable.hh"
 // core
-#include "core/app.hh"
-#include "core/playing_unit.hh"
+#include "core/registry.hh"
+#include "core/scriptable.hh"
+// app
+#include "app/app.hh"
+#include "app/playing_unit.hh"
 // ecs
 #include "ecs/component.hh"
 #include "ecs/entity.hh"

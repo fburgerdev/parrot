@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "window.hh"
-#include "registry.hh"
+#include "core/registry.hh"
 
 namespace Parrot {
 	// Window / ~Window

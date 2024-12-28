@@ -1,5 +1,5 @@
 #pragma once
-#include "scriptable.hh"
+#include "core/scriptable.hh"
 #include "math/matrix.hh"
 
 namespace Parrot {

@@ -1,5 +1,5 @@
 #include "common.hh"
-#include "registry.hh"
+#include "core/registry.hh"
 #include "ecs/component.hh"
 #include "graphics/camera.hh"
 #include "graphics/light_source.hh"

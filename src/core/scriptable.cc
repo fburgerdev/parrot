@@ -1,20 +1,20 @@
 #include "common.hh"
-#include "scriptable.hh"
+#include "core/scriptable.hh"
 #include "debug/engine_logger.hh"
 
 namespace Parrot {
 	//* Script
 	// onAttach / onDetach
 	void Script::onAttach() {
-		LOG_CORE_TRACE("Script::onAttach");
+		LOG_APP_TRACE("Script::onAttach");
 	}
 	void Script::onDetach() {
-		LOG_CORE_TRACE("Script::onDetach");
+		LOG_APP_TRACE("Script::onDetach");
 	}
 	
 	// onUpdate
 	void Script::onUpdate([[maybe_unused]] float32 delta_time) {
-		LOG_CORE_TRACE("Script::onUpdate(delta_time={})", delta_time);
+		LOG_APP_TRACE("Script::onUpdate(delta_time={})", delta_time);
 	}
 
 	// resolveEvent
