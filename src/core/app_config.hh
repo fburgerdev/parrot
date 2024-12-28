@@ -23,8 +23,8 @@ namespace Parrot {
 				name = string(json.at("name"));
 			}
 			// main
-			main_window = parseHandleFromJSON<WindowConfig>(json.at("main")[0], filepath);
-			main_scene = parseHandleFromJSON<SceneConfig>(json.at("main")[1], filepath);
+			main_window = parseAssetHandle<WindowConfig>(json.at("main")[0], filepath);
+			main_scene = parseAssetHandle<SceneConfig>(json.at("main")[1], filepath);
 			// asset_dir
 			if (json.contains("asset_dir")) {
 				asset_dir = stdf::path(string(json.at("asset_dir")));
@@ -59,8 +59,8 @@ namespace Parrot {
 
 		// name, main(window/scene), asset_dir, (un)loading_policy
 		string name = "App";
-		Handle<WindowConfig> main_window;
-		Handle<SceneConfig> main_scene;
+		AssetHandle<WindowConfig> main_window;
+		AssetHandle<SceneConfig> main_scene;
 		stdf::path asset_dir = ".";
 		LoadingPolicy loading_policy = LoadingPolicy::LAZY_LOAD;
 		UnloadingPolicy unloading_policy = UnloadingPolicy::UNLOAD_APP;

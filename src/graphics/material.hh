@@ -20,7 +20,7 @@ namespace Parrot {
 		// numeric
 		NumericMaterialLeaf,
 		// texture
-		Handle<TextureConfig>
+		AssetHandle<TextureConfig>
 	>;
 	// MaterialNode
 	struct MaterialNode {
@@ -107,7 +107,7 @@ namespace Parrot {
 					}
 					// texture
 					else if (dtype == "texture") {
-						value = MaterialLeaf(parseHandleFromJSON<TextureConfig>(array.at(1), filepath));
+						value = MaterialLeaf(parseAssetHandle<TextureConfig>(array.at(1), filepath));
 					}
 				}
 				// list
@@ -173,11 +173,11 @@ namespace Parrot {
 				root.loadFromJSON(json.at("uniforms"), filepath);
 			}
 			// shader
-			shader = parseHandleFromJSON<ShaderSource>(json.at("shader"), filepath);
+			shader = parseAssetHandle<ShaderSource>(json.at("shader"), filepath);
 		}
 
 		// root, shader
 		MaterialNode root;
-		Handle<ShaderSource> shader;
+		AssetHandle<ShaderSource> shader;
 	};
 }

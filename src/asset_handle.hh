@@ -2,13 +2,13 @@
 #include "uuid.hh"
 
 namespace Parrot {
-	// Handle
+	// AssetHandle
 	template<class T>
-	using Handle = Variant<uuid, stdf::path, T>;
+	using AssetHandle = Variant<uuid, stdf::path, T>;
 
-	// parseHandleFromJSON
-	template<class T, class JSON>
-	inline Handle<T> parseHandleFromJSON(const JSON& json, const stdf::path& filepath) {
+	// parseAssetHandle
+	template<class T, class JSON> requires(requires(JSON json) { json.at("key"); })
+	inline AssetHandle<T> parseAssetHandle(const JSON& json, const stdf::path& filepath) {
 		if (json.is_number()) {
 			return uuid(json);
 		}
@@ -20,22 +20,22 @@ namespace Parrot {
 		}
 	}
 
-	// HandlerResolver
-	class HandleResolver {
+	// AssetHandleResolver
+	class AssetHandleResolver {
 	public:
 		// ResourceFactory
 		using ResourceFactory = function<Pair<void*, function<void()>>(const stdf::path&)>;
 		// ReferenceResolver
 		using ReferenceResolver = function<void(const Variant<uuid, stdf::path>&, const ResourceFactory&, const function<void(const void*)>&)>;
 
-		// HandleResolver
-		HandleResolver() = default;
-		HandleResolver(const ReferenceResolver& resolver)
+		// AssetHandleResolver
+		AssetHandleResolver() = default;
+		AssetHandleResolver(const ReferenceResolver& resolver)
 			: _resolver(resolver) {}
 
 		// useHandle
 		template<class T>
-		void useHandle(const function<void(const T&)>& func, const Handle<T>& handle) const {
+		void useHandle(const function<void(const T&)>& func, const AssetHandle<T>& handle) const {
 			if (std::holds_alternative<uuid>(handle)) {
 				_resolver(std::get<uuid>(handle), [](const stdf::path& path) {
 					T* value = new T(path);
@@ -54,7 +54,7 @@ namespace Parrot {
 		}
 		// useHandles
 		template<class TFirst, class... TRest>
-		void useHandles(const auto& func, const Handle<TFirst>& first, const Handle<TRest>&... rest) const {
+		void useHandles(const auto& func, const AssetHandle<TFirst>& first, const AssetHandle<TRest>&... rest) const {
 			useHandle<TFirst>([&](const TFirst& value) {
 				if constexpr (sizeof...(TRest) > 0) {
 					useHandles([&](const TRest&... rest) {

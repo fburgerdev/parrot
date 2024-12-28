@@ -11,7 +11,7 @@ namespace Parrot {
 			_3d_buffer = &_context->createUniformBuffer(_surface.getSize());
 		}
 		// drawScene
-		void Renderer::drawScene(const SceneData& scene_data, HandleResolver resolver) {
+		void Renderer::drawScene(const SceneData& scene_data, AssetHandleResolver resolver) {
 			if (!_context) {
 				LOG_GRAPHICS_ERROR("no gpu-context specified for renderer, can't draw");
 				return;

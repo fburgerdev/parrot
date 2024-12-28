@@ -1,5 +1,5 @@
 #pragma once
-#include "handle.hh"
+#include "asset_handle.hh"
 #include "asset_resource.hh"
 #include "asset_view.hh"
 #include "asset_index.hh"
@@ -48,7 +48,7 @@ namespace Parrot {
 			}
 		}
 		template<class T>
-		AssetView<T> asset(const Handle<T>& handle) {
+		AssetView<T> asset(const AssetHandle<T>& handle) {
 			if (std::holds_alternative<uuid>(handle)) {
 				return asset<T>(std::get<uuid>(handle));
 			}
@@ -66,7 +66,7 @@ namespace Parrot {
 		bool isLoaded(const Variant<uuid, stdf::path>& variant) const;
 
 		// getHandleResolver
-		HandleResolver getHandleResolver();
+		AssetHandleResolver getHandleResolver();
 	private:
 		stdf::path _asset_dir;
 		LoadingPolicy _loading_policy = LoadingPolicy::LAZY_LOAD;

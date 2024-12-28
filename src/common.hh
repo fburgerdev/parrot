@@ -102,10 +102,6 @@ namespace Parrot {
     // filesystem
     namespace stdf = std::filesystem;
 
-    // move semantics
-    using std::forward;
-    using std::move;
-
     // smart pointers
     template<typename T>
     using UniquePtr = std::unique_ptr<T>;

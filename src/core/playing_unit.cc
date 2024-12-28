@@ -3,7 +3,7 @@
 
 namespace Parrot {
 	// PlayingUnit
-	PlayingUnit::PlayingUnit(const WindowConfig& window_config, const SceneConfig& scene_config, HandleResolver resolver, Scriptable* parent)
+	PlayingUnit::PlayingUnit(const WindowConfig& window_config, const SceneConfig& scene_config, AssetHandleResolver resolver, Scriptable* parent)
 	  : window(window_config, parent), scene(scene_config, resolver, parent), _gpu_context(resolver) {
 		_renderer = Renderer(_gpu_context);
 	}
@@ -23,7 +23,7 @@ namespace Parrot {
 	}
 
 	// draw
-	void PlayingUnit::draw(HandleResolver resolver) {
+	void PlayingUnit::draw(AssetHandleResolver resolver) {
 		SceneData scene_data;
 		// camera
 		auto camera_entities = scene.queryEntities<DerivedComponent<Camera>>();

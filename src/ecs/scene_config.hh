@@ -21,11 +21,11 @@ namespace Parrot {
 				name = string(json.at("name"));
 			}
 			// root
-			root = parseHandleFromJSON<EntityConfig>(json.at("root"), filepath);
+			root = parseAssetHandle<EntityConfig>(json.at("root"), filepath);
 		}
 
 		// name, root
 		string name = "Unnamed Scene";
-		Handle<EntityConfig> root;
+		AssetHandle<EntityConfig> root;
 	};
 }

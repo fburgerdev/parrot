@@ -5,7 +5,7 @@
 namespace Parrot {
     namespace OpenGL {
         // Texture / ~Texture
-        Texture::Texture(const TextureConfig& config, HandleResolver resolver) {
+        Texture::Texture(const TextureConfig& config, AssetHandleResolver resolver) {
             // generate
             glGenTextures(1, &_gpu_id);
             glBindTexture(GL_TEXTURE_2D, _gpu_id);

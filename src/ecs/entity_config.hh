@@ -1,5 +1,5 @@
 #pragma once
-#include "handle.hh"
+#include "asset_handle.hh"
 #include "registry.hh"
 #include "component.hh"
 #include "math/math3d.hh"
@@ -51,7 +51,7 @@ namespace Parrot {
 			// children
 			if (json.contains("children")) {
 				for (const auto& child : json.at("children")) {
-					children.emplace_back(parseHandleFromJSON<EntityConfig>(child, filepath));
+					children.emplace_back(parseAssetHandle<EntityConfig>(child, filepath));
 				}
 			}
 			// components
@@ -78,7 +78,7 @@ namespace Parrot {
 		// tag, transform, children, components, scripts
 		string tag = "Entity";
 		Transform<> transform;
-		List<Handle<EntityConfig>> children;
+		List<AssetHandle<EntityConfig>> children;
 		List<UniquePtr<ComponentConfig>> components;
 		List<string> scripts;
 	};

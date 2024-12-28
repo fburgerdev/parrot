@@ -18,6 +18,6 @@ namespace Parrot {
 		uint64 _begin = 0;
 	};
 
-	// (global) global_time
-	inline const Stopwatch g_global_time;
+	// (global) global_watch
+	inline const Stopwatch g_global_watch;
 }

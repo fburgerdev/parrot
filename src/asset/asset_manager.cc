@@ -32,8 +32,8 @@ namespace Parrot {
 	}
 
 	// getHandleResolver
-	HandleResolver AssetManager::getHandleResolver() {
-		return HandleResolver([&](
+	AssetHandleResolver AssetManager::getHandleResolver() {
+		return AssetHandleResolver([&](
 			const Variant<uuid, stdf::path>& variant,
 			const function<Pair<void*, function<void()>>(stdf::path)>& create,
 			const function<void(const void*)>& callback) {

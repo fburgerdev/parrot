@@ -8,7 +8,7 @@ namespace Parrot {
 		: Scriptable(parent) {}
 	Entity::Entity(Entity* parent)
 		: Scriptable(parent), _parent(parent) {}
-	Entity::Entity(const EntityConfig& config, HandleResolver resolver, Scriptable* parent)
+	Entity::Entity(const EntityConfig& config, AssetHandleResolver resolver, Scriptable* parent)
 		: Scriptable(parent) {
 		_tag = config.tag;
 		transform = config.transform;
@@ -29,7 +29,7 @@ namespace Parrot {
 			addScript(id, factory(*this));
 		}
 	}
-	Entity::Entity(const EntityConfig& config, HandleResolver resolver, Entity* parent)
+	Entity::Entity(const EntityConfig& config, AssetHandleResolver resolver, Entity* parent)
 		: Scriptable(parent), _parent(parent) {
 		_tag = config.tag;
 		transform = config.transform;

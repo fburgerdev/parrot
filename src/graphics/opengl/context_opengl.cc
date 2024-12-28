@@ -5,7 +5,7 @@
 namespace Parrot {
 	namespace OpenGL {
 		// Context
-		Context::Context(HandleResolver resolver)
+		Context::Context(AssetHandleResolver resolver)
 			: _resolver(resolver) {}
 
 		// getVertexArray
@@ -72,10 +72,10 @@ namespace Parrot {
 						shader.setUniform(prefix, x);
 						}, std::get<NumericMaterialLeaf>(leaf));
 				}
-				else if (std::holds_alternative<Handle<TextureConfig>>(leaf)) {
+				else if (std::holds_alternative<AssetHandle<TextureConfig>>(leaf)) {
 					_resolver.useHandles([&](const TextureConfig& texture) {
 						getTexture(texture).bind(0);
-						}, std::get<Handle<TextureConfig>>(leaf));
+						}, std::get<AssetHandle<TextureConfig>>(leaf));
 					shader.setUniform(prefix, 0);
 				}
 			}
