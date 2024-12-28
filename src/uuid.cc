@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "uuid.hh"
-#include "debug/debug.hh"
+#include "debug/engine_logger.hh"
 #include <random>
 #include <nlohmann/json.hh>
 using json = nlohmann::json;

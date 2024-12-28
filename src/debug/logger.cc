@@ -2,45 +2,6 @@
 #include "logger.hh"
 
 namespace Parrot {
-	// Logger
-	Logger::Logger(strview name)
-		: _name(name) {}
-
-	// getLevel
-	LogLevel Logger::getLevel() const {
-		return getLevel(strview());
-	}
-	LogLevel Logger::getLevel(strview scope) const {
-		strview longest_scope = strview();
-		LogLevel level = LogLevel::TRACE;
-		for (const auto& [other_scope, other_level] : _levels) {
-			if (scope.starts_with(other_scope)) {
-				if (other_scope.empty() || other_scope.length() == scope.length() || scope.at(other_scope.length()) == '/') {
-					if (longest_scope.length() <= other_scope.length()) {
-						longest_scope = other_scope;
-						level = other_level;
-					}
-				}
-			}
-		}
-		return level;
-	}
-	// setLevel
-	void Logger::setLevel(LogLevel level) {
-		setLevel(strview(), level);
-	}
-	void Logger::setLevel(strview scope, LogLevel level) {
-		for (auto it = _levels.begin(); it != _levels.end();) {
-			if (it->first.starts_with(scope)) {
-				it = _levels.erase(it);
-			}
-			else {
-				++it;
-			}
-		}
-		_levels.emplace(scope, level);
-	}
-
 	// (static) color codes
 	static string s_white_code = "\033[0m";
 	static string s_blue_code = "\033[34m";
@@ -62,7 +23,49 @@ namespace Parrot {
 		{ LogLevel::WARNING, "Warning" },
 		{ LogLevel::ERROR, "Error" }
 	};
-	// logHead
+
+	// Logger
+	Logger::Logger(strview name)
+		: _name(name) {}
+
+	// level
+	// :: get
+	LogLevel Logger::getLevel() const {
+		return getLevel(strview());
+	}
+	LogLevel Logger::getLevel(strview scope) const {
+		strview longest_scope = strview();
+		LogLevel level = LogLevel::TRACE;
+		for (const auto& [other_scope, other_level] : _levels) {
+			if (scope.starts_with(other_scope)) {
+				if (other_scope.empty() || other_scope.length() == scope.length() || scope.at(other_scope.length()) == '/') {
+					if (longest_scope.length() <= other_scope.length()) {
+						longest_scope = other_scope;
+						level = other_level;
+					}
+				}
+			}
+		}
+		return level;
+	}
+	// :: set
+	void Logger::setLevel(LogLevel level) {
+		setLevel(strview(), level);
+	}
+	void Logger::setLevel(strview scope, LogLevel level) {
+		for (auto it = _levels.begin(); it != _levels.end();) {
+			if (it->first.starts_with(scope)) {
+				it = _levels.erase(it);
+			}
+			else {
+				++it;
+			}
+		}
+		_levels.emplace(scope, level);
+	}
+
+	// log
+	// :: head
 	void Logger::logHead(strview scope, LogLevel level) {
 		cout << s_color_map.at(level);
 		cout << '[' << s_tag_map.at(level) << ']';
@@ -75,8 +78,8 @@ namespace Parrot {
 		}
 		cout << s_white_code << "\n";
 	}
-	// log
-	void Logger::log(strview format) {
+	// :: body
+	void Logger::logBody(strview format) {
 		cout << format << endl;
 	}
 }

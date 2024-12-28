@@ -1,22 +1,20 @@
 #pragma once
-#include "registry.hh"
-#include "debug/debug.hh"
+#include "debug/engine_logger.hh"
 
 namespace Parrot {
-	// forward: Entity
-	class Entity;
-
 	// getComponentID
 	template<class T>
 	usize getComponentID() {
 		return typeid(T).hash_code();
 	}
+
+	// forward: Entity
+	class Entity;
 	// Component
 	class Component {
 	public:
-		// Component
+		// Component / ~Component
 		Component(Entity& entity);
-		// ~Component
 		virtual ~Component() = default;
 		// update
 		virtual void update(float32 update);
@@ -32,7 +30,6 @@ namespace Parrot {
 		// DerivedComponent / ~DerivedComponent
 		DerivedComponent(const T& value, Entity& entity)
 			: T(value), Component(entity) {}
-
 		// update
 		virtual void update([[maybe_unused]] float32 delta_time) override {
 			LOG_ECS_TRACE("update component: {}", static_cast<T&>(*this));
@@ -44,7 +41,6 @@ namespace Parrot {
 	public:
 		// ~ComponentConfig
 		virtual ~ComponentConfig() = default;
-
 		// getComponentID
 		virtual usize getComponentID() const = 0;
 		// createComponent
@@ -57,10 +53,9 @@ namespace Parrot {
 	public:
 		// DerivedComponentConfig
 		using T::T;
-
 		// getComponentID
 		virtual usize getComponentID() const override {
-			return typeid(DerivedComponent<T>).hash_code();
+			return Parrot::getComponentID<DerivedComponent<T>>();
 		}
 		// createComponent
 		virtual UniquePtr<Component> createComponent(Entity& entity) const override {

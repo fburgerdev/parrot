@@ -13,9 +13,9 @@
 #include "window/window.hh"
 #include "window/window_event.hh"
 // math
-#include "math/basic.hh"
+#include "math/basic_math.hh"
 #include "math/matrix.hh"
-#include "math/3d.hh"
+#include "math/math3d.hh"
 
 namespace Parrot {
 	// EntityScript

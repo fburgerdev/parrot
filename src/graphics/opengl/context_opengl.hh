@@ -6,7 +6,7 @@
 #include "vertex_array_opengl.hh"
 #include "shader_opengl.hh"
 #include "texture_opengl.hh"
-#include "math/3d.hh"
+#include "math/math3d.hh"
 
 namespace Parrot {
 	namespace OpenGL {

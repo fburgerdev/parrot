@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "mesh.hh"
-#include "debug/debug.hh"
+#include "debug/engine_logger.hh"
 #include <nlohmann/json.hh>
 using json = nlohmann::json;
 #include <tinyobj/objloader.hh>

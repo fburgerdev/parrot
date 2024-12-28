@@ -12,63 +12,57 @@ namespace Parrot {
 		// Logger
 		Logger(strview name);
 
-		// logTrace
+		// log
+		template<LogLevel Level, class... TArgs>
+		void log(strview scope, strview format, const TArgs&... args) {
+			if (uint(Level) >= uint(getLevel(scope))) {
+				logHead(scope, Level);
+				logBody(format, args...);
+			}
+		}
+		// :: trace
 		template<class... TArgs>
 		void logTrace(strview scope, strview format, const TArgs&... args) {
-			if (uint(LogLevel::TRACE) >= uint(getLevel(scope))) {
-				logHead(scope, LogLevel::TRACE);
-				log(format, args...);
-			}
+			log<LogLevel::TRACE>(scope, format, args...);
 		}
-		// logDebug
+		// :: debug
 		template<class... TArgs>
 		void logDebug(strview scope, strview format, const TArgs&... args) {
-			if (uint(LogLevel::DEBUG) >= uint(getLevel(scope))) {
-				logHead(scope, LogLevel::DEBUG);
-				log(format, args...);
-			}
+			log<LogLevel::DEBUG>(scope, format, args...);
 		}
-		// logInfo
+		// :: info
 		template<class... TArgs>
 		void logInfo(strview scope, strview format, const TArgs&... args) {
-			if (uint(LogLevel::INFO) >= uint(getLevel(scope))) {
-				logHead(scope, LogLevel::INFO);
-				log(format, args...);
-			}
+			log<LogLevel::INFO>(scope, format, args...);
 		}
-		// logWarning
+		// :: warning
 		template<class... TArgs>
 		void logWarning(strview scope, strview format, const TArgs&... args) {
-			if (uint(LogLevel::WARNING) >= uint(getLevel(scope))) {
-				logHead(scope, LogLevel::WARNING);
-				log(format, args...);
-			}
+			log<LogLevel::WARNING>(scope, format, args...);
 		}
-		// logError
+		// :: error
 		template<class... TArgs>
 		void logError(strview scope, strview format, const TArgs&... args) {
-			if (uint(LogLevel::ERROR) >= uint(getLevel(scope))) {
-				logHead(scope, LogLevel::ERROR);
-				log(format, args...);
-			}
+			log<LogLevel::ERROR>(scope, format, args...);
 		}
 
-		// getLevel
+		// level
+		// :: get
 		LogLevel getLevel() const;
 		LogLevel getLevel(strview scope) const;
-		// setLevel
+		// :: set
 		void setLevel(LogLevel level);
 		void setLevel(strview scope, LogLevel level);
 	private:
 		void logHead(strview scope, LogLevel level);
-		void log(strview format);
+		void logBody(strview format);
 		template<class TFirst, class... TRest>
-		void log(strview format, const TFirst& first, const TRest&... rest) {
+		void logBody(strview format, const TFirst& first, const TRest&... rest) {
 			for (auto it = format.begin(); it != format.end(); ++it) {
 				if (std::next(it) != format.end()) {
 					if (*it == '{' && *std::next(it) == '}') {
 						cout << first;
-						return log(strview(std::next(it, 2), format.end()), rest...);
+						return logBody(strview(std::next(it, 2), format.end()), rest...);
 					}
 				}
 				cout << *it;

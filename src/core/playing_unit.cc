@@ -26,7 +26,7 @@ namespace Parrot {
 	void PlayingUnit::draw(HandleResolver resolver) {
 		SceneData scene_data;
 		// camera
-		auto camera_entities = scene.queryEntitiesByComponent<DerivedComponent<Camera>>();
+		auto camera_entities = scene.queryEntities<DerivedComponent<Camera>>();
 		if (camera_entities.size() != 1) {
 			LOG_ECS_ERROR("scene '{}' has unexpected amount of camera-components {}, expected 1", scene.name, camera_entities.size());
 			LOG_ECS_ERROR("cancel draw");
@@ -37,14 +37,14 @@ namespace Parrot {
 			&camera_entities.front()->getComponent<DerivedComponent<Camera>>()
 		};
 		// lights
-		for (const Entity* light_entity : scene.queryEntitiesByComponent<DerivedComponent<LightSource>>()) {
+		for (const Entity* light_entity : scene.queryEntities<DerivedComponent<LightSource>>()) {
 			scene_data.lights.emplace(
 				&light_entity->transform,
 				&light_entity->getComponent<DerivedComponent<LightSource>>()
 			);
 		}
 		// render-objects
-		for (const Entity* render_object_entity : scene.queryEntitiesByComponent<DerivedComponent<RenderObject>>()) {
+		for (const Entity* render_object_entity : scene.queryEntities<DerivedComponent<RenderObject>>()) {
 			scene_data.render_objects.emplace(
 				&render_object_entity->transform,
 				&render_object_entity->getComponent<DerivedComponent<RenderObject>>()

@@ -1,7 +1,7 @@
 #pragma once
 #include "window/window_config.hh"
 #include "ecs/scene_config.hh"
-#include "asset/policy.hh"
+#include "asset/asset_policy.hh"
 
 namespace Parrot {
 	// AppConfig

@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "index_buffer_opengl.hh"
-#include "debug/debug.hh"
+#include "debug/engine_logger.hh"
 #include <glad/glad.hh>
 
 namespace Parrot {

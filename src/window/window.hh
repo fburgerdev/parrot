@@ -34,7 +34,7 @@ namespace Parrot {
 		// setCursorState
 		void setCursorState(CursorState state);
 
-		// foreachChild
+		// foreachChild (scriptable)
 		virtual void foreachChild(function<void(Scriptable&)> func) override;
 		virtual void foreachChild(function<void(const Scriptable&)> func) const override;
 

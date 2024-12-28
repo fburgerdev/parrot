@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "entity.hh"
-#include "debug/debug.hh"
+#include "debug/engine_logger.hh"
 
 namespace Parrot {
 	// Entity / ~Entity
@@ -59,11 +59,12 @@ namespace Parrot {
 		Scriptable::removeAllScripts();
 	}
 
-	// hasParent
+	// parent
+	// :: has
 	bool Entity::hasParent() const {
 		return _parent;
 	}
-	// getParent
+	// :: get
 	Entity& Entity::getParent() {
 		return *_parent;
 	}
@@ -71,21 +72,20 @@ namespace Parrot {
 		return *_parent;
 	}
 
-	// createChild
-	//Entity& Entity::createChild() {
-	//	// TODO
-	//}
-	//Entity& Entity::createChild(stdf::path& filepath) {
-	//	// TODO
-	//}
-	// destroyChild
+	// child
+	// :: create
+	Entity& Entity::createChild() {
+		Entity child(this);
+		return _children.emplace(child.getUUID(), std::move(child)).first->second;
+	}
+	// :: destroy
 	void Entity::destroyChild(uuid uuid) {
 		_children.erase(uuid);
 	}
 	void Entity::destroyChild(const Entity& child) {
 		_children.erase(child.getUUID());
 	}
-	// foreachChild
+	// :: foreach
 	void Entity::foreachChild(function<void(Entity&)> func) {
 		for (auto& [uuid, child] : _children) {
 			func(child);
@@ -96,6 +96,7 @@ namespace Parrot {
 			func(child);
 		}
 	}
+	// :: foreach (scriptable)
 	void Entity::foreachChild(function<void(Scriptable&)> func) {
 		for (auto& [uuid, child] : _children) {
 			func(child);

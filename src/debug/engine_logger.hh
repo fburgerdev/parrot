@@ -2,30 +2,30 @@
 #include "logger.hh"
 
 namespace Parrot {
-	// logger (only for engine code, not for client!)
-	inline Logger logger = Logger("parrot");
+	// (global) engine_logger
+	inline Logger engine_logger = Logger("parrot");
 }
 // macros
 #if !defined(PARROT_NO_LOG)
-#define LOGGER ::Parrot::logger
+#define LOGGER ::Parrot::engine_logger
 // :: global
 #define LOG_GLOBAL_TRACE(fmt,...) LOGGER.logTrace(strview(), fmt, __VA_ARGS__)
 #define LOG_GLOBAL_DEBUG(fmt,...) LOGGER.logDebug(strview(), fmt, __VA_ARGS__)
 #define LOG_GLOBAL_INFO(fmt,...) LOGGER.logInfo(strview(), fmt, __VA_ARGS__)
 #define LOG_GLOBAL_WARNING(fmt,...) LOGGER.logWarning(strview(), fmt, __VA_ARGS__)
 #define LOG_GLOBAL_ERROR(fmt,...) LOGGER.logError(strview(), fmt, __VA_ARGS__)
-// :: asset
-#define LOG_ASSET_TRACE(fmt, ...) LOGGER.logTrace("asset", fmt, __VA_ARGS__)
-#define LOG_ASSET_DEBUG(fmt, ...) LOGGER.logDebug("asset", fmt, __VA_ARGS__)
-#define LOG_ASSET_INFO(fmt, ...) LOGGER.logInfo("asset", fmt, __VA_ARGS__)
-#define LOG_ASSET_WARNING(fmt, ...) LOGGER.logWarning("asset", fmt, __VA_ARGS__)
-#define LOG_ASSET_ERROR(fmt, ...) LOGGER.logError("asset", fmt, __VA_ARGS__)
 // :: core
 #define LOG_CORE_TRACE(fmt, ...) LOGGER.logTrace("core", fmt, __VA_ARGS__)
 #define LOG_CORE_DEBUG(fmt, ...) LOGGER.logDebug("core", fmt, __VA_ARGS__)
 #define LOG_CORE_INFO(fmt, ...) LOGGER.logInfo("core", fmt, __VA_ARGS__)
 #define LOG_CORE_WARNING(fmt, ...) LOGGER.logWarning("core", fmt, __VA_ARGS__)
 #define LOG_CORE_ERROR(fmt, ...) LOGGER.logError("core", fmt, __VA_ARGS__)
+// :: asset
+#define LOG_ASSET_TRACE(fmt, ...) LOGGER.logTrace("asset", fmt, __VA_ARGS__)
+#define LOG_ASSET_DEBUG(fmt, ...) LOGGER.logDebug("asset", fmt, __VA_ARGS__)
+#define LOG_ASSET_INFO(fmt, ...) LOGGER.logInfo("asset", fmt, __VA_ARGS__)
+#define LOG_ASSET_WARNING(fmt, ...) LOGGER.logWarning("asset", fmt, __VA_ARGS__)
+#define LOG_ASSET_ERROR(fmt, ...) LOGGER.logError("asset", fmt, __VA_ARGS__)
 // :: ecs
 #define LOG_ECS_TRACE(fmt, ...) LOGGER.logTrace("ecs", fmt, __VA_ARGS__)
 #define LOG_ECS_DEBUG(fmt, ...) LOGGER.logDebug("ecs", fmt, __VA_ARGS__)

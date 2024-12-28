@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "scene.hh"
-#include "debug/debug.hh"
+#include "debug/engine_logger.hh"
 #include <nlohmann/json.hh>
 using json = nlohmann::json;
 
@@ -16,13 +16,14 @@ namespace Parrot {
 		Scriptable::removeAllScripts();
 	}
 
-	// foreachChild
+	// foreachChild (scriptable)
 	void Scene::foreachChild(function<void(Scriptable&)> func) {
 		func(root);
 	}
 	void Scene::foreachChild(function<void(const Scriptable&)> func) const {
 		func(root);
 	}
+	
 	// update
 	void Scene::update(float32 delta_time) {
 		LOG_ECS_TRACE("update scene '{}'", name);

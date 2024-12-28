@@ -1,7 +1,7 @@
 #include "common.hh"
 #include "renderer_opengl.hh"
 #include "draw_opengl.hh"
-#include "debug/debug.hh"
+#include "debug/engine_logger.hh"
 
 namespace Parrot {
 	namespace OpenGL {

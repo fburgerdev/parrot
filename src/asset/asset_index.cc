@@ -1,0 +1,37 @@
+#include "common.hh"
+#include "asset_index.hh"
+#include "debug/engine_logger.hh"
+#include <nlohmann/json.hh>
+using json = nlohmann::json;
+
+namespace Parrot {
+	// AssetIndex
+	AssetIndex::AssetIndex(const stdf::path& asset_dir) {
+		LOG_ASSET_TRACE("indexing asset directory {}", asset_dir);
+		for (stdf::path path : stdf::recursive_directory_iterator(asset_dir)) {
+			if (stdf::is_regular_file(path)) {
+				if (path.extension().string().ends_with(".json")) {
+					auto data = json::parse(ifstream(path));
+					if (data.contains("uuid")) {
+						_uuids.emplace(stdf::relative(path, asset_dir), uuid(data.at("uuid")));
+						_paths.emplace(uuid(data.at("uuid")), stdf::relative(path, asset_dir));
+					}
+					else {
+						LOG_ASSET_WARNING("asset {} does not have a \"uuid\" property, will not be indexed", stdf::relative(path, asset_dir));
+					}
+				}
+			}
+		}
+		for (auto& [uuid, path] : _paths) {
+			LOG_ASSET_TRACE("indexed {}", path);
+		}
+	}
+	// getUUID
+	uuid AssetIndex::getUUID(const stdf::path& path) const {
+		return _uuids.at(path);
+	}
+	// getPath
+	const stdf::path& AssetIndex::getPath(uuid uuid) const {
+		return _paths.at(uuid);
+	}
+}

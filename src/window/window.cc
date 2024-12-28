@@ -58,11 +58,11 @@ namespace Parrot {
 		}
 	}
 
-	// foreachChild
-	void Window::foreachChild(function<void(Scriptable&)> func) {
+	// foreachChild (scriptable)
+	void Window::foreachChild([[maybe_unused]] function<void(Scriptable&)> func) {
 		// do nothing
 	}
-	void Window::foreachChild(function<void(const Scriptable&)> func) const {
+	void Window::foreachChild([[maybe_unused]] function<void(const Scriptable&)> func) const {
 		// do nothing
 	}
 

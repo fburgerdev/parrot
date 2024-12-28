@@ -2,8 +2,8 @@
 #include "handle.hh"
 #include "registry.hh"
 #include "component.hh"
-#include "math/3d.hh"
-#include "debug/debug.hh"
+#include "math/math3d.hh"
+#include "debug/engine_logger.hh"
 
 namespace Parrot {
 	// EntityConfig
@@ -75,7 +75,7 @@ namespace Parrot {
 			}
 		}
 		
-		// tag, transform, children, components
+		// tag, transform, children, components, scripts
 		string tag = "Entity";
 		Transform<> transform;
 		List<Handle<EntityConfig>> children;

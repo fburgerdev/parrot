@@ -13,16 +13,16 @@ namespace Parrot {
 		// =
 		Scene& operator=(Scene&&) = default;
 
-		// update
-		void update(float32 delta_time);
-
-		// foreachChild
+		// foreachChild (scriptable)
 		virtual void foreachChild(function<void(Scriptable&)> func) override;
 		virtual void foreachChild(function<void(const Scriptable&)> func) const override;
 
-		// queryEntitiesByComponent
+		// update
+		void update(float32 delta_time);
+
+		// queryEntities
 		template<class T>
-		List<const Entity*> queryEntitiesByComponent() const {
+		List<const Entity*> queryEntities() const {
 			List<const Entity*> found;
 			Stack<const Entity*> stack({ &root });
 			while (!stack.empty()) {

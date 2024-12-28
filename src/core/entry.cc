@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "app.hh"
-#include "debug/debug.hh"
+#include "debug/engine_logger.hh"
 
 // (static) console figures
 static std::string s_info = R""""(
@@ -28,12 +28,12 @@ namespace Parrot {
 
     // (static) launch
     static void launch() {
-        logger.setLevel("asset", LogLevel::DEBUG);
-        logger.setLevel("core", LogLevel::DEBUG);
-        logger.setLevel("ecs", LogLevel::DEBUG);
-        logger.setLevel("graphics", LogLevel::DEBUG);
-        logger.setLevel("math", LogLevel::DEBUG);
-        logger.setLevel("window", LogLevel::DEBUG);
+        engine_logger.setLevel("asset", LogLevel::DEBUG);
+        engine_logger.setLevel("core", LogLevel::DEBUG);
+        engine_logger.setLevel("ecs", LogLevel::DEBUG);
+        engine_logger.setLevel("graphics", LogLevel::DEBUG);
+        engine_logger.setLevel("math", LogLevel::DEBUG);
+        engine_logger.setLevel("window", LogLevel::DEBUG);
 
         cout << s_info << endl;
         cout << s_debug_head << endl;

@@ -2,8 +2,8 @@
 #include "common.hh"
 
 namespace Parrot {
-	// Asset
-	class Asset {
+	// AssetResource
+	class AssetResource {
 	public:
 		// ControlBlock
 		struct ControlBlock {
@@ -16,20 +16,20 @@ namespace Parrot {
 			usize ref_count = 1;
 		};
 		
-		// Asset
+		// AssetResource
 		template<class T>
-		Asset(T* value, bool destroy_if_unviewed)
+		AssetResource(T* value, bool destroy_if_unviewed)
 			: _value(value),
 			  _control(new ControlBlock(destroy_if_unviewed)),
 			  _destroy([=] { delete value; }) {}
-		Asset(void* value, bool destroy_if_unviewed, const function<void()>& destroy);
-		Asset(const Asset&) = delete;
-		Asset(Asset&& other) noexcept;
+		AssetResource(void* value, bool destroy_if_unviewed, const function<void()>& destroy);
+		AssetResource(const AssetResource&) = delete;
+		AssetResource(AssetResource&& other) noexcept;
 		// =
-		Asset& operator=(const Asset&) = delete;
-		Asset& operator=(Asset&& other) noexcept;
-		// ~Asset
-		~Asset();
+		AssetResource& operator=(const AssetResource&) = delete;
+		AssetResource& operator=(AssetResource&& other) noexcept;
+		// ~AssetResource
+		~AssetResource();
 		
 		// get
 		void* get();
@@ -45,7 +45,7 @@ namespace Parrot {
 	};
 	// makeAsset
 	template<class T>
-	Asset makeAsset(const stdf::path& filepath, bool destroy_if_unviewed) {
-		return Asset(new T(filepath), destroy_if_unviewed);
+	AssetResource makeAsset(const stdf::path& filepath, bool destroy_if_unviewed) {
+		return AssetResource(new T(filepath), destroy_if_unviewed);
 	}
 }

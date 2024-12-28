@@ -1,30 +1,11 @@
 #pragma once
 #include "handle.hh"
-#include "asset.hh"
-#include "view.hh"
-#include "policy.hh"
+#include "asset_resource.hh"
+#include "asset_view.hh"
+#include "asset_index.hh"
+#include "asset_policy.hh"
 
 namespace Parrot {
-	// AssetIndex
-	class AssetIndex {
-	public:
-		// AssetIndex
-		AssetIndex() = default;
-		AssetIndex(const stdf::path& asset_dir);
-		// getUUID
-		uuid getUUID(const stdf::path& path) const;
-		// getPath
-		const stdf::path& getPath(uuid uuid) const;
-	private:
-		Map<stdf::path, uuid> _uuids;
-		Map<uuid, stdf::path> _paths;
-	};
-
-	//? is "handle" the right term?
-	// AssetHandle
-	template<class T>
-	using AssetHandle = Variant<uuid, stdf::path, T>;
-
 	// AssetManager
 	class AssetManager {
 	public:
@@ -78,6 +59,6 @@ namespace Parrot {
 		LoadingPolicy _loading_policy = LoadingPolicy::LAZY_LOAD;
 		UnloadingPolicy _unloading_policy = UnloadingPolicy::UNLOAD_APP;
 		AssetIndex _index;
-		Map<uuid, Asset> _assets;
+		Map<uuid, AssetResource> _assets;
 	};
 }

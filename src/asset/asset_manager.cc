@@ -1,40 +1,8 @@
 #include "common.hh"
-#include "manager.hh"
-#include "debug/debug.hh"
-#include <nlohmann/json.hh>
-using json = nlohmann::json;
+#include "asset_manager.hh"
+#include "debug/engine_logger.hh"
 
 namespace Parrot {
-	// AssetIndex
-	AssetIndex::AssetIndex(const stdf::path& asset_dir) {
-		LOG_ASSET_TRACE("indexing asset directory {}", asset_dir);
-		for (stdf::path path : stdf::recursive_directory_iterator(asset_dir)) {
-			if (stdf::is_regular_file(path)) {
-				if (path.extension().string().ends_with(".json")) {
-					auto data = json::parse(ifstream(path));
-					if (data.contains("uuid")) {
-						_uuids.emplace(stdf::relative(path, asset_dir), uuid(data.at("uuid")));
-						_paths.emplace(uuid(data.at("uuid")), stdf::relative(path, asset_dir));
-					}
-					else {
-						LOG_ASSET_WARNING("asset {} does not have a \"uuid\" property, will not be indexed", stdf::relative(path, asset_dir));
-					}
-				}
-			}
-		}
-		for (auto& [uuid, path] : _paths) {
-			LOG_ASSET_TRACE("indexed {}", path);
-		}
-	}
-	// getUUID
-	uuid AssetIndex::getUUID(const stdf::path& path) const{
-		return _uuids.at(path);
-	}
-	// getPath
-	const stdf::path& AssetIndex::getPath(uuid uuid) const {
-		return _paths.at(uuid);
-	}
-
 	// AssetManager
 	AssetManager::AssetManager(const stdf::path& asset_dir)
 		: AssetManager(asset_dir, LoadingPolicy::LAZY_LOAD, UnloadingPolicy::UNLOAD_APP) {}
@@ -72,7 +40,7 @@ namespace Parrot {
 				uuid deduced_uuid = std::holds_alternative<uuid>(variant) ? std::get<uuid>(variant) : _index.getUUID(std::get<stdf::path>(variant));
 				if (!isLoaded(deduced_uuid)) {
 					auto [value, delete_func] = create(_asset_dir / _index.getPath(deduced_uuid));
-					_assets.emplace(deduced_uuid, Asset(value, (_unloading_policy == UnloadingPolicy::UNLOAD_UNUSED), delete_func));
+					_assets.emplace(deduced_uuid, AssetResource(value, (_unloading_policy == UnloadingPolicy::UNLOAD_UNUSED), delete_func));
 				}
 				callback(_assets.at(deduced_uuid).get());
 			});

@@ -1,7 +1,6 @@
 #pragma once
 #include "scriptable.hh"
 #include "entity_config.hh"
-#include "component.hh"
 
 namespace Parrot {
 	// Entity
@@ -17,30 +16,33 @@ namespace Parrot {
 		// =
 		Entity& operator=(Entity&&) = default;
 
-		// hasParent
+		// parent
+		// :: has
 		bool hasParent() const;
-		// getParent
+		// :: get
 		Entity& getParent();
 		const Entity& getParent() const;
 
-		// createChild
-		//Entity& createChild();
-		//Entity& createChild(stdf::path& filepath);
-		// destroyChild
+		// child
+		// :: create
+		Entity& createChild();
+		// :: destroy
 		void destroyChild(uuid uuid);
 		void destroyChild(const Entity& child);
-		// foreachChild
+		// :: foreach
 		void foreachChild(function<void(Entity&)> func);
 		void foreachChild(function<void(const Entity&)> func) const;
+		// :: foreach (scriptable)
 		virtual void foreachChild(function<void(Scriptable&)> func) override;
 		virtual void foreachChild(function<void(const Scriptable&)> func) const override;
 
-		// hasComponent
+		// component
+		// :: has
 		template<class T>
 		bool hasComponent() const {
 			return _components.contains(getComponentID<T>());
 		}
-		// getComponent
+		// :: get
 		template<class T>
 		T& getComponent() {
 			return dynamic_cast<T&>(*_components.at(getComponentID<T>()));
@@ -49,26 +51,25 @@ namespace Parrot {
 		const T& getComponent() const {
 			return dynamic_cast<const T&>(*_components.at(getComponentID<T>()));
 		}
-		// addComponent
+		// :: add
 		template<class T, class... TArgs>
 		T& addComponent(TArgs&&... args) {
 			_components.emplace(getComponentID<T>(), std::make_unique<T>(*this, std::forward<TArgs>(args)...));
 			return getComponent<T>();
 		}
-		// removeComponent
+		// :: remove
 		template<class T>
 		void removeComponent() {
 			_components.erase(getComponentID<T>());
 		}
 
-		// friend
-		friend class Scene;
+		// update
+		void update(float32 delta_time);
 
 		// transform
 		Transform<> transform;
 	private:
 		Entity(uuid uuid, Entity* parent);
-		void update(float32 delta_time);
 
 		string _tag;
 		Entity* _parent = nullptr;
