@@ -15,12 +15,12 @@ namespace Parrot {
 		// loadFromJSON
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
 		void loadFromJSON(const JSON& json, const stdf::path& filepath) {
-			mesh = parseHandleFromJSON<Sidecar<Mesh>>(json.at("mesh"), filepath);
+			mesh = parseHandleFromJSON<Mesh>(json.at("mesh"), filepath);
 			material = parseHandleFromJSON<Material>(json.at("material"), filepath);
 		}
 
 		// mesh, material
-		Handle<Sidecar<Mesh>> mesh;
+		Handle<Mesh> mesh;
 		Handle<Material> material;
 	};
 	// <<

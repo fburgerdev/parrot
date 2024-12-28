@@ -1,13 +1,11 @@
 {
   "uuid": 1384839189235975932,
-  "shader": 113934623902895323793,
+  "shader": "shaders/model.glsl.macro",
   "uniforms": {
     "texture": [
       "texture",
       {
-        "image": {
-          "resource": "../images/dice.png"
-        }
+        "image": "images/dice.png"
       }
     ]
   }

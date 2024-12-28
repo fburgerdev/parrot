@@ -9,7 +9,7 @@
         "tag": "Dice",
         "components": {
           "render-object": {
-            "mesh": 231241215542553,
+            "mesh": "meshes/cube.obj",
             "material": "materials/dice.mat.json"
           }
         },
@@ -22,7 +22,7 @@
         },
         "components": {
           "render-object": {
-            "mesh": 231891215542553,
+            "mesh": "meshes/plane.obj",
             "material": "materials/parrot.mat.json"
           }
         }
@@ -35,7 +35,7 @@
         },
         "components": {
           "render-object": {
-            "mesh": 7927489141878824564,
+            "mesh": "meshes/sphere.obj",
             "material": "materials/flat.mat.json"
           },
           "light-source": {

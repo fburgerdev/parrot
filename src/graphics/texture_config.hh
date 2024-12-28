@@ -1,6 +1,5 @@
 #pragma once
 #include "handle.hh"
-#include "sidecar.hh"
 #include "utils/image.hh"
 
 namespace Parrot {
@@ -31,13 +30,13 @@ namespace Parrot {
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
 		void loadFromJSON(const JSON& json, const stdf::path& filepath) {
 			//TODO: properties...
-			image = parseHandleFromJSON<Sidecar<Image>>(json.at("image"), filepath);
+			image = parseHandleFromJSON<Image>(json.at("image"), filepath);
 		}
 		
 		// hor_wrap, ver_wrap, mag_filter, min_filter, mipmap, image
 		TextureWrap hor_wrap = TextureWrap::CLAMP_TO_EDGE, ver_wrap = TextureWrap::CLAMP_TO_EDGE;
 		TextureFilter mag_filter = TextureFilter::LINEAR, min_filter = TextureFilter::LINEAR;
 		Mipmap mipmap = Mipmap::NONE;
-		Handle<Sidecar<Image>> image;
+		Handle<Image> image;
 	};
 }

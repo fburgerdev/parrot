@@ -33,6 +33,21 @@ namespace Parrot {
 			LOG_ASSET_TRACE("indexed {} with {}", path, id);
 		}
 	}
+
+	// index
+	void AssetIndex::index(const stdf::path& path, uuid id) {
+		stdf::path relative = stdf::relative(stdf::canonical(_asset_dir / path));
+		_uuids.emplace(relative, id);
+		_paths.emplace(id, relative);
+	}
+	// isIndexed
+	bool AssetIndex::isIndexed(const stdf::path& path) const {
+		return _uuids.contains(stdf::relative(stdf::canonical(_asset_dir / path), _asset_dir));
+	}
+	bool AssetIndex::isIndexed(uuid id) const {
+		return _paths.contains(id);
+	}
+
 	// getUUID
 	uuid AssetIndex::getUUID(const stdf::path& path) const {
 		return _uuids.at(stdf::relative(stdf::canonical(_asset_dir / path), _asset_dir));

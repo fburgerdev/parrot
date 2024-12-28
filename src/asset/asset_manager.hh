@@ -32,7 +32,20 @@ namespace Parrot {
 		}
 		template<class T>
 		AssetView<T> asset(const stdf::path& filepath) {
-			return asset<T>(_index.getUUID(filepath));
+			if (_index.isIndexed(filepath)) {
+				return asset<T>(_index.getUUID(filepath));
+			}
+			else {
+				stdf::path path = _asset_dir / filepath;
+				bool destroy_if_unviewed = (_unloading_policy == UnloadingPolicy::UNLOAD_UNUSED);
+				auto asset = makeAsset<T>(path, destroy_if_unviewed);
+				uuid id = ((T*)asset.get())->getUUID();
+				_index.index(filepath, id);
+				_assets.emplace(id, std::move(asset));
+				return AssetView<T>(_assets.at(id), [&, id] {
+					_assets.erase(id);
+				});
+			}
 		}
 		template<class T>
 		AssetView<T> asset(const Handle<T>& handle) {

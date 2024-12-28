@@ -17,9 +17,9 @@ namespace Parrot {
 			Context(HandleResolver resolver);
 
 			// getVertexArray
-			VertexArray& getVertexArray(const Sidecar<Mesh>& mesh);
+			VertexArray& getVertexArray(const Mesh& mesh);
 			// getShader
-			Shader& getShader(const Sidecar<ShaderSource>& shader);
+			Shader& getShader(const ShaderSource& shader);
 			// getTexture
 			Texture& getTexture(const TextureConfig& texture);
 

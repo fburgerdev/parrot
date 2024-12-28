@@ -11,9 +11,12 @@ namespace Parrot {
 	class Image : public UUIDObject {
 	public:
 		// Image
+		Image() = default;
 		Image(const stdf::path& filepath);
 		Image(const Image& other);
 		Image(Image&& other) noexcept;
+		template<class JSON> requires(requires(JSON json) { json.at("key"); })
+		Image(const JSON& json, const stdf::path& filepath) {}
 		// ~Image
 		~Image();
 		// =
@@ -29,8 +32,8 @@ namespace Parrot {
 		// getBytes
 		const uchar* getBytes() const;
 	private:
-		uint _width, _height;
-		ImageFormat _format;
-		uchar* _bytes;
+		uint _width = 0, _height = 0;
+		ImageFormat _format = ImageFormat::NONE;
+		uchar* _bytes = nullptr;
 	};
 }

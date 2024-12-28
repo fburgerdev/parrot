@@ -28,10 +28,13 @@ namespace Parrot {
 	};
 
 	// Mesh
-	class Mesh {
+	class Mesh : public UUIDObject {
 	public:
 		// Mesh
+		Mesh() = default;
 		Mesh(const stdf::path& filepath);
+		template<class JSON> requires(requires(JSON json) { json.at("key"); })
+		Mesh(const JSON& json, const stdf::path& filepath) {}
 
 		// vertices, indices
 		List<Vertex> vertices;

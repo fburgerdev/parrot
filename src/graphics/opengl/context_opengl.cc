@@ -9,12 +9,12 @@ namespace Parrot {
 			: _resolver(resolver) {}
 
 		// getVertexArray
-		VertexArray& Context::getVertexArray(const Sidecar<Mesh>& mesh) {
+		VertexArray& Context::getVertexArray(const Mesh& mesh) {
 			auto it = _vertex_arrays.find(mesh.getUUID());
 			if (it == _vertex_arrays.end()) {
 				return _vertex_arrays.try_emplace(mesh.getUUID(), 
-					VertexBuffer(mesh.value.vertices.data(), mesh.value.vertices.size() * sizeof(Vertex)),
-					IndexBuffer(mesh.value.indices.data(), mesh.value.indices.size()),
+					VertexBuffer(mesh.vertices.data(), mesh.vertices.size() * sizeof(Vertex)),
+					IndexBuffer(mesh.indices.data(), mesh.indices.size()),
 					Vertex::attributes()
 				).first->second;
 			}
@@ -23,10 +23,10 @@ namespace Parrot {
 			}
 		}
 		// getShader
-		Shader& Context::getShader(const Sidecar<ShaderSource>& shader) {
+		Shader& Context::getShader(const ShaderSource& shader) {
 			auto it = _shaders.find(shader.getUUID());
 			if (it == _shaders.end()) {
-				ShaderSource source = shader.value;
+				ShaderSource source = shader;
 				List<ShaderSource> snippets = { g_surface_snippet };
 				source.resolve(snippets);
 				return _shaders.emplace(shader.getUUID(), Shader(source)).first->second;

@@ -20,9 +20,9 @@ namespace Parrot {
 			_3d_buffer->overwriteData(_surface.getBuffer(), _surface.getSize());
 			prepareDraw();
 			for (auto [transform, render_object] : scene_data.render_objects) {
-				resolver.useHandles([&](const Sidecar<Mesh>& mesh, const Material& material) {
+				resolver.useHandles([&](const Mesh& mesh, const Material& material) {
 					auto& vertex_array = _context->getVertexArray(mesh);
-					resolver.useHandles([&](const Sidecar<ShaderSource>& shader) {
+					resolver.useHandles([&](const ShaderSource& shader) {
 						auto& shader_opengl = _context->getShader(shader);
 						shader_opengl.bind();
 						shader_opengl.bindUniformBuffer("u_std", *_3d_buffer);
@@ -32,7 +32,7 @@ namespace Parrot {
 						shader_opengl.setUniform("u_local_to_world", transform->calcLocalModelMatrix());
 						shader_opengl.setUniform("u_local_to_world_normal", calcRotationMatrix(transform->rotation));
 						vertex_array.bind();
-						draw(mesh.value.indices.size());
+						draw(mesh.indices.size());
 						vertex_array.unbind();
 					}, material.shader);
 				}, render_object->mesh, render_object->material);

@@ -1,13 +1,16 @@
 #pragma once
-#include "common.hh"
+#include "uuid.hh"
 
 namespace Parrot {
 	// ShaderSource
-	class ShaderSource {
+	class ShaderSource : public UUIDObject {
 	public:
 		// ShaderSource
+		ShaderSource() = default;
 		ShaderSource(const stdf::path& filepath);
 		ShaderSource(const string& source);
+		template<class JSON> requires(requires(JSON json) { json.at("key"); })
+		ShaderSource(const JSON& json, const stdf::path& filepath) {}
 
 		// SnippetInclude
 		struct SnippetInclude {

@@ -173,11 +173,11 @@ namespace Parrot {
 				root.loadFromJSON(json.at("uniforms"), filepath);
 			}
 			// shader
-			shader = parseHandleFromJSON<Sidecar<ShaderSource>>(json.at("shader"), filepath);
+			shader = parseHandleFromJSON<ShaderSource>(json.at("shader"), filepath);
 		}
 
 		// root, shader
 		MaterialNode root;
-		Handle<Sidecar<ShaderSource>> shader;
+		Handle<ShaderSource> shader;
 	};
 }
