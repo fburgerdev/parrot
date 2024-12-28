@@ -6,32 +6,39 @@ using json = nlohmann::json;
 
 namespace Parrot {
 	// AssetIndex
-	AssetIndex::AssetIndex(const stdf::path& asset_dir) {
+	AssetIndex::AssetIndex(const stdf::path& asset_dir)
+		: _asset_dir(asset_dir) {
 		LOG_ASSET_TRACE("indexing asset directory {}", asset_dir);
 		for (stdf::path path : stdf::recursive_directory_iterator(asset_dir)) {
 			if (stdf::is_regular_file(path)) {
+				path = stdf::relative(stdf::canonical(path), asset_dir);
+				uuid id = 0;
 				if (path.extension().string().ends_with(".json")) {
 					auto data = json::parse(ifstream(path));
 					if (data.contains("uuid")) {
-						_uuids.emplace(stdf::relative(path, asset_dir), uuid(data.at("uuid")));
-						_paths.emplace(uuid(data.at("uuid")), stdf::relative(path, asset_dir));
+						id = data.at("uuid");
 					}
 					else {
-						LOG_ASSET_WARNING("asset {} does not have a \"uuid\" property, will not be indexed", stdf::relative(path, asset_dir));
+						id = generateUUID();
 					}
 				}
+				else {
+					id = generateUUID();
+				}
+				_uuids.emplace(path, id);
+				_paths.emplace(id, path);
 			}
 		}
-		for (auto& [uuid, path] : _paths) {
-			LOG_ASSET_TRACE("indexed {}", path);
+		for (auto& [path, id] : _uuids) {
+			LOG_ASSET_TRACE("indexed {} with {}", path, id);
 		}
 	}
 	// getUUID
 	uuid AssetIndex::getUUID(const stdf::path& path) const {
-		return _uuids.at(path);
+		return _uuids.at(stdf::relative(stdf::canonical(_asset_dir / path), _asset_dir));
 	}
 	// getPath
-	const stdf::path& AssetIndex::getPath(uuid uuid) const {
-		return _paths.at(uuid);
+	const stdf::path& AssetIndex::getPath(uuid id) const {
+		return _paths.at(id);
 	}
 }

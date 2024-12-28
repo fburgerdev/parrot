@@ -20,14 +20,14 @@ namespace Parrot {
 		
 		// asset
 		template<class T>
-		AssetView<T> asset(uuid uuid) {
-			if (!_assets.contains(uuid)) {
-				stdf::path path = _asset_dir / _index.getPath(uuid);
+		AssetView<T> asset(uuid id) {
+			if (!_assets.contains(id)) {
+				stdf::path path = _asset_dir / _index.getPath(id);
 				bool destroy_if_unviewed = (_unloading_policy == UnloadingPolicy::UNLOAD_UNUSED);
-				_assets.emplace(uuid, makeAsset<T>(path, destroy_if_unviewed));
+				_assets.emplace(id, makeAsset<T>(path, destroy_if_unviewed));
 			}
-			return AssetView<T>(_assets.at(uuid), [&, uuid] {
-				_assets.erase(uuid);
+			return AssetView<T>(_assets.at(id), [&, id] {
+				_assets.erase(id);
 			});
 		}
 		template<class T>
@@ -48,7 +48,7 @@ namespace Parrot {
 		}
 
 		// isLoaded
-		bool isLoaded(uuid uuid) const;
+		bool isLoaded(uuid id) const;
 		bool isLoaded(const stdf::path& path) const;
 		bool isLoaded(const Variant<uuid, stdf::path>& variant) const;
 

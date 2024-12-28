@@ -27,7 +27,7 @@ namespace Parrot {
 		// :: create
 		Entity& createChild();
 		// :: destroy
-		void destroyChild(uuid uuid);
+		void destroyChild(uuid id);
 		void destroyChild(const Entity& child);
 		// :: foreach
 		void foreachChild(function<void(Entity&)> func);
@@ -69,7 +69,7 @@ namespace Parrot {
 		// transform
 		Transform<> transform;
 	private:
-		Entity(uuid uuid, Entity* parent);
+		Entity(uuid id, Entity* parent);
 
 		string _tag;
 		Entity* _parent = nullptr;

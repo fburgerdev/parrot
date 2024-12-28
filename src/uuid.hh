@@ -12,7 +12,7 @@ namespace Parrot {
 	public:
 		// UUIDObject
 		UUIDObject();
-		UUIDObject(uuid uuid);
+		UUIDObject(uuid id);
 		UUIDObject(const stdf::path& filepath);
 		UUIDObject(const UUIDObject& other);
 		UUIDObject(UUIDObject&& other) noexcept;
@@ -22,6 +22,6 @@ namespace Parrot {
 		// getUUID
 		uuid getUUID() const;
 	private:
-		uuid _uuid;
+		uuid _id;
 	};
 }

@@ -18,15 +18,15 @@ namespace Parrot {
 
 	// UUIDObject
 	UUIDObject::UUIDObject()
-		: _uuid(generateUUID()) {}
-	UUIDObject::UUIDObject(uuid uuid)
-		: _uuid(uuid) {}
+		: _id(generateUUID()) {}
+	UUIDObject::UUIDObject(uuid id)
+		: _id(id) {}
 	UUIDObject::UUIDObject(const stdf::path& filepath)
-		: _uuid(0) {
+		: _id(0) {
 		if (filepath.string().ends_with(".json")) {
 			auto data = json::parse(ifstream(filepath));
 			if (data.contains("uuid")) {
-				_uuid = data.at("uuid");
+				_id = data.at("uuid");
 			}
 			else {
 				LOG_ASSET_ERROR("asset file {} does not have a 'uuid' property", filepath);
@@ -37,20 +37,20 @@ namespace Parrot {
 		}
 	}
 	UUIDObject::UUIDObject([[maybe_unused]] const UUIDObject& other)
-		: _uuid(generateUUID()) {}
+		: _id(generateUUID()) {}
 	UUIDObject::UUIDObject(UUIDObject&& other) noexcept
-		: _uuid(std::exchange(other._uuid, 0)) {}
+		: _id(std::exchange(other._id, 0)) {}
 	// =
 	UUIDObject& UUIDObject::operator=([[maybe_unused]] const UUIDObject& other) {
-		_uuid = generateUUID();
+		_id = generateUUID();
 		return *this;
 	}
 	UUIDObject& UUIDObject::operator=(UUIDObject&& other) noexcept {
-		_uuid = std::exchange(other._uuid, 0);
+		_id = std::exchange(other._id, 0);
 		return *this;
 	}
 	// getUUID
 	uuid UUIDObject::getUUID() const {
-		return _uuid;
+		return _id;
 	}
 }

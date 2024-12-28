@@ -50,8 +50,8 @@ namespace Parrot {
 			addScript(id, factory(*this));
 		}
 	}
-	Entity::Entity(uuid uuid, Entity* parent)
-		: UUIDObject(uuid), _parent(parent) {}
+	Entity::Entity(uuid id, Entity* parent)
+		: UUIDObject(id), _parent(parent) {}
 	Entity::~Entity() {
 		for (auto& [id, child] : _children) {
 			child.removeAllScripts();
@@ -79,31 +79,31 @@ namespace Parrot {
 		return _children.emplace(child.getUUID(), std::move(child)).first->second;
 	}
 	// :: destroy
-	void Entity::destroyChild(uuid uuid) {
-		_children.erase(uuid);
+	void Entity::destroyChild(uuid id) {
+		_children.erase(id);
 	}
 	void Entity::destroyChild(const Entity& child) {
 		_children.erase(child.getUUID());
 	}
 	// :: foreach
 	void Entity::foreachChild(function<void(Entity&)> func) {
-		for (auto& [uuid, child] : _children) {
+		for (auto& [id, child] : _children) {
 			func(child);
 		}
 	}
 	void Entity::foreachChild(function<void(const Entity&)> func) const {
-		for (const auto& [uuid, child] : _children) {
+		for (const auto& [id, child] : _children) {
 			func(child);
 		}
 	}
 	// :: foreach (scriptable)
 	void Entity::foreachChild(function<void(Scriptable&)> func) {
-		for (auto& [uuid, child] : _children) {
+		for (auto& [id, child] : _children) {
 			func(child);
 		}
 	}
 	void Entity::foreachChild(function<void(const Scriptable&)> func) const {
-		for (const auto& [uuid, child] : _children) {
+		for (const auto& [id, child] : _children) {
 			func(child);
 		}
 	}
@@ -115,7 +115,7 @@ namespace Parrot {
 			component->update(delta_time);
 		}
 		Scriptable::update(delta_time);
-		for (auto& [uuid, child] : _children) {
+		for (auto& [id, child] : _children) {
 			child.update(delta_time);
 		}
 	}
