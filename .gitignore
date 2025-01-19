@@ -8,3 +8,6 @@ build
 **.vcxproj
 **.vcxproj.user
 **.vcxproj.filters
+
+# visual studio code
+.vscode
