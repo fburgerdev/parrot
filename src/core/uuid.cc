@@ -2,7 +2,7 @@
 #include "core/uuid.hh"
 #include "debug/engine_logger.hh"
 #include <random>
-#include <nlohmann/json.hh>
+#include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
 namespace Parrot {

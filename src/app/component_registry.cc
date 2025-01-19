@@ -4,7 +4,7 @@
 #include "graphics/camera.hh"
 #include "graphics/light_source.hh"
 #include "graphics/render_object.hh"
-#include <nlohmann/json.hh>
+#include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
 namespace Parrot {

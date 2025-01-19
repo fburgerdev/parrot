@@ -2,7 +2,7 @@
 #include "physical_window_glfw.hh"
 #include "debug/engine_logger.hh"
 #include <glad/glad.hh>
-#include <glfw/glfw3.hh>
+#include <GLFW/glfw3.h>
 
 namespace Parrot {
     namespace GLFW {

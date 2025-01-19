@@ -1,5 +1,5 @@
 #pragma once
-#include "mesh.hh"
+#include "model.hh"
 #include "material.hh"
 
 namespace Parrot {
@@ -15,12 +15,12 @@ namespace Parrot {
 		// loadFromJSON
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
 		void loadFromJSON(const JSON& json, const stdf::path& filepath) {
-			mesh = parseAssetHandle<Mesh>(json.at("mesh"), filepath);
+			model = parseAssetHandle<Model>(json.at("model"), filepath);
 			material = parseAssetHandle<Material>(json.at("material"), filepath);
 		}
 
-		// mesh, material
-		AssetHandle<Mesh> mesh;
+		// model, material
+		AssetHandle<Model> model;
 		AssetHandle<Material> material;
 	};
 	// <<

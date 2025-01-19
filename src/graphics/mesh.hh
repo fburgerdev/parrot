@@ -12,19 +12,13 @@ namespace Parrot {
 
 	// Vertex
 	struct Vertex {
-		// attributes
-		static List<AttributeGPU> attributes() {
-			return {
-				{ DTypeGPU::FLOAT32, 3 },
-				{ DTypeGPU::FLOAT32, 3 },
-				{ DTypeGPU::FLOAT32, 2 }
-			};
-		}
+		// attributes (static)
+		static List<AttributeGPU> attributes();
 
 		// position, normal, tex_coords
-		Vec3<float32> position = Vec3<float32>(0, 0, 0);
-		Vec3<float32> normal = Vec3<float32>(0, 0, -1);
-		Vec2<float32> tex_coords = Vec2<float32>(0, 0);
+		Vec3<float32> position = { 0, 0, 0 };
+		Vec3<float32> normal = { 0, 0, -1 };
+		Vec2<float32> tex_coords = { 0, 0 };
 	};
 
 	// Mesh
@@ -32,9 +26,7 @@ namespace Parrot {
 	public:
 		// Mesh
 		Mesh() = default;
-		Mesh(const stdf::path& filepath);
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		Mesh(const JSON& json, const stdf::path& filepath) {}
+		Mesh(List<Vertex>&& vertices, List<uint32>&& indices);
 
 		// vertices, indices
 		List<Vertex> vertices;
