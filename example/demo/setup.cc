@@ -53,6 +53,6 @@ namespace Parrot {
 
     // setup
     stdf::path setup() {
-        return ".app.json";
+        return stdf::path(__FILE__).parent_path() / ".app.json";
     }
 }
