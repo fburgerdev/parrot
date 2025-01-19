@@ -59,10 +59,10 @@ namespace Parrot {
 
 						// light
 						// :: ambient
-						ambient_lights.size(), // u_ambient_count
+						uint32(ambient_lights.size()), // u_ambient_count
 						embedList<MAX_LIGHT_COUNT>(ambient_lights), // u_ambient_lights
 						// :: directional
-						directional_lights.size(), // u_directional_count
+						uint32(directional_lights.size()), // u_directional_count
 						embedList<MAX_LIGHT_COUNT>(directional_lights) // u_directional_lights
 					)
 				);

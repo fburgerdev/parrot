@@ -14,7 +14,7 @@ namespace Parrot {
 				path = stdf::relative(stdf::canonical(path), asset_dir);
 				uuid id = 0;
 				if (path.extension().string().ends_with(".json")) {
-					auto data = json::parse(ifstream(path));
+					auto data = json::parse(ifstream(asset_dir / path));
 					if (data.contains("uuid")) {
 						id = data.at("uuid");
 					}

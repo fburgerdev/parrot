@@ -5,7 +5,7 @@ namespace Parrot {
 	namespace OpenGL {
 		// roundToBaseAlign
 		constexpr usize roundToBaseAlign(usize offset, usize base_align = 16) {
-			if (offset % base_align) {
+			if (base_align > 0 && offset % base_align) {
 				return (offset / base_align + 1) * base_align;
 			}
 			return offset;
