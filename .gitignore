@@ -1,7 +1,6 @@
 # general
 bin
-build/**
-!build/premake5.lua
+build
 
 # visual studio
 .vs
