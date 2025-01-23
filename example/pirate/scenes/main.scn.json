@@ -1,0 +1,57 @@
+{
+  "uuid": 12303461204403500793,
+  "name": "Main Scene",
+  "root": {
+    "uuid": 1,
+    "tag": "Root",
+    "children": [
+      {
+        "tag": "Pirate",
+        "components": {
+          "render-object": {
+            "model": "models/characters/anne.fbx",
+            "material": "materials/flat.mat.json"
+          }
+        },
+        "scripts": [ "Rotate" ]
+      },
+      {
+        "tag": "Ship",
+        "transform": {
+          "position": [ 10, 0, 0 ]
+        },
+        "components": {
+          "render-object": {
+            "model": "models/ships/large.fbx",
+            "material": "materials/flat.mat.json"
+          }
+        }
+      },
+      {
+        "tag": "Ambient",
+        "transform": {
+          "position": [ 0, 10, 0 ]
+        },
+        "components": {
+          "light-source": {
+            "type": "ambient",
+            "intensity": 0.2,
+            "color": [ 255, 255, 255 ]
+          }
+        }
+      },
+      {
+        "tag": "Player",
+        "transform": {
+          "position": [ 0, 5, -50 ]
+        },
+        "components": {
+          "camera": {
+            "type": "perspective"
+          }
+        },
+        "scripts": [ "PlayerController" ]
+      }
+    ]
+  }
+}

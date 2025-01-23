@@ -55,6 +55,20 @@ target_link_libraries(example_demo PRIVATE assimp glad glfw stb)
 # :: macros
 target_compile_definitions(example_demo PRIVATE PARROT_GLFW PARROT_OPENGL)
 
+# example_pirate (target)
+add_executable(example_pirate)
+# :: files
+file(GLOB_RECURSE EXAMPLE_DEMO_SOURCES example/pirate/*.hh)
+file(GLOB_RECURSE EXAMPLE_DEMO_SOURCES example/pirate/*.cc)
+target_sources(example_pirate PRIVATE ${EXAMPLE_DEMO_SOURCES})
+# :: include directories
+target_include_directories(example_pirate PUBLIC src vendor example/pirate)
+# :: links
+target_link_libraries(example_pirate PRIVATE parrot)
+target_link_libraries(example_pirate PRIVATE assimp glad glfw stb)
+# :: macros
+target_compile_definitions(example_pirate PRIVATE PARROT_GLFW PARROT_OPENGL)
+
 # Optional: Group projects in an IDE
 # set_target_properties(parrot PROPERTIES FOLDER Libraries)
 # set_target_properties(example_demo PROPERTIES FOLDER Executables)

@@ -1,0 +1,14 @@
+{
+  "uuid": 3677601194714616601,
+  "name": "demo",
+  "main": [
+    {
+      "title": "Main Window",
+      "size": [ 1080, 720 ],
+      "scripts": [ "FPS" ]
+    },
+    "scenes/main.scn.json"
+  ],
+  "loading_policy": "lazy",
+  "unloading_policy": "unused"
+}
