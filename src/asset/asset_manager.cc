@@ -18,6 +18,11 @@ namespace Parrot {
 		LOG_ASSET_TRACE("asset-manager initialized with directory {}", asset_dir);
 	}
 
+	// getAssetDirectory
+	const stdf::path AssetManager::getAssetDirectory() const {
+		return _asset_dir;
+	}
+
 	// isLoaded
 	bool AssetManager::isLoaded(uuid id) const {
 		return _assets.contains(id);

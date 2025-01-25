@@ -18,6 +18,9 @@ namespace Parrot {
 			UnloadingPolicy unloading_policy
 		);
 		
+		// getAssetDirectory
+		const stdf::path getAssetDirectory() const;
+
 		// asset
 		template<class T>
 		AssetView<T> asset(uuid id) {
