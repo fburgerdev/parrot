@@ -59,10 +59,10 @@ namespace Parrot {
 		Scriptable::removeAllScripts();
 	}
 	// foreachChild
-	void DefaultScriptable::foreachChild(function<void(Scriptable&)> func) {
+	void DefaultScriptable::foreachChild(Func<void(Scriptable&)> func) {
 		func(_app);
 	}
-	void DefaultScriptable::foreachChild(function<void(const Scriptable&)> func) const {
+	void DefaultScriptable::foreachChild(Func<void(const Scriptable&)> func) const {
 		func(_app);
 	}
 }

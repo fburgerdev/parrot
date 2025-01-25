@@ -28,7 +28,7 @@ namespace Parrot {
 		
 	}
 	App::~App() {
-		for (auto& [id, unit] : _units) {
+		for (auto& [uuid, unit] : _units) {
 			unit.scene.removeAllScripts();
 			unit.window.removeAllScripts();
 		}
@@ -44,7 +44,7 @@ namespace Parrot {
 	}
 	// getPlayingUnit
 	PlayingUnit& App::getPlayingUnit(const Window& window) {
-		for (auto& [id, unit] : _units) {
+		for (auto& [uuid, unit] : _units) {
 			if (&unit.window == &window) {
 				return unit;
 			}
@@ -52,7 +52,7 @@ namespace Parrot {
 		throw std::runtime_error("playing-unit not found");
 	}
 	const PlayingUnit& App::getPlayingUnit(const Window& window) const {
-		for (const auto& [id, unit] : _units) {
+		for (const auto& [uuid, unit] : _units) {
 			if (&unit.window == &window) {
 				return unit;
 			}
@@ -60,7 +60,7 @@ namespace Parrot {
 		throw std::runtime_error("playing-unit not found");
 	}
 	PlayingUnit& App::getPlayingUnit(const Scene& scene) {
-		for (auto& [id, unit] : _units) {
+		for (auto& [uuid, unit] : _units) {
 			if (&unit.scene == &scene) {
 				return unit;
 			}
@@ -68,7 +68,7 @@ namespace Parrot {
 		throw std::runtime_error("playing-unit not found");
 	}
 	const PlayingUnit& App::getPlayingUnit(const Scene& scene) const {
-		for (const auto& [id, unit] : _units) {
+		for (const auto& [uuid, unit] : _units) {
 			if (&unit.scene == &scene) {
 				return unit;
 			}
@@ -83,7 +83,7 @@ namespace Parrot {
 			while (_main_unit->window.isOpen()) {
 				seconds delta_time = frame_watch.reset();
 				LOG_APP_TRACE("update app '{}'", _name);
-				for (auto& [id, unit] : _units) {
+				for (auto& [uuid, unit] : _units) {
 					// update scene
 					unit.scene.update(delta_time);
 					// draw
@@ -104,14 +104,14 @@ namespace Parrot {
 	}
 
 	// foreachChild
-	void App::foreachChild(function<void(Scriptable&)> func) {
-		for (auto& [id, unit] : _units) {
+	void App::foreachChild(Func<void(Scriptable&)> func) {
+		for (auto& [uuid, unit] : _units) {
 			func(unit.window);
 			func(unit.scene);
 		}
 	}
-	void App::foreachChild(function<void(const Scriptable&)> func) const {
-		for (const auto& [id, unit] : _units) {
+	void App::foreachChild(Func<void(const Scriptable&)> func) const {
+		for (const auto& [uuid, unit] : _units) {
 			func(unit.window);
 			func(unit.scene);
 		}

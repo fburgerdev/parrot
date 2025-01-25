@@ -8,7 +8,7 @@ namespace Parrot {
 	public:
 		// AssetView / ~AssetView
 		AssetView() = default;
-		AssetView(AssetResource& asset, function<void()>&& destroy)
+		AssetView(AssetResource& asset, Func<void()>&& destroy)
 			: _value(reinterpret_cast<T*>(asset._value)),
 			  _control(asset._control),
 			  _destroy(std::move(destroy)) {
@@ -82,6 +82,6 @@ namespace Parrot {
 	private:
 		T* _value;
 		AssetResource::ControlBlock* _control;
-		function<void()> _destroy;
+		Func<void()> _destroy;
 	};
 }

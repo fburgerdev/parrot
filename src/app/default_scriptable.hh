@@ -12,8 +12,8 @@ namespace Parrot {
 		~DefaultScriptable();
 
 		// foreachChild
-		virtual void foreachChild(function<void(Scriptable&)> func) override;
-		virtual void foreachChild(function<void(const Scriptable&)> func) const override;
+		virtual void foreachChild(Func<void(Scriptable&)> func) override;
+		virtual void foreachChild(Func<void(const Scriptable&)> func) const override;
 	private:
 		App& _app;
 	};

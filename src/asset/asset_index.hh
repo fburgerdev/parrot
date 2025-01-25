@@ -10,19 +10,19 @@ namespace Parrot {
 		AssetIndex(const stdf::path& asset_dir);
 
 		// index
-		void index(const stdf::path& path, uuid id);
+		void index(const stdf::path& path, UUID uuid);
 		// isIndexed
 		bool isIndexed(const stdf::path& path) const;
-		bool isIndexed(uuid id) const;
+		bool isIndexed(UUID uuid) const;
 
 		// get
 		// :: uuid
-		uuid getUUID(const stdf::path& path) const;
+		UUID getUUID(const stdf::path& path) const;
 		// :: path
-		const stdf::path& getPath(uuid id) const;
+		const stdf::path& getPath(UUID uuid) const;
 	private:
 		stdf::path _asset_dir;
-		Map<stdf::path, uuid> _uuids;
-		Map<uuid, stdf::path> _paths;
+		Map<stdf::path, UUID> _uuids;
+		Map<UUID, stdf::path> _paths;
 	};
 }

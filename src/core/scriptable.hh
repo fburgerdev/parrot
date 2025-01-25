@@ -21,7 +21,7 @@ namespace Parrot {
 		Scriptable* target = nullptr;
 	};
 	// EventResolver
-	using EventResolver = function<bool(const Event&)>;
+	using EventResolver = Func<bool(const Event&)>;
 
 	// Script
 	class Script {
@@ -73,8 +73,8 @@ namespace Parrot {
 		Scriptable& operator=(Scriptable&& other) noexcept;
 
 		// foreachChild
-		virtual void foreachChild(function<void(Scriptable&)> func) = 0;
-		virtual void foreachChild(function<void(const Scriptable&)> func) const = 0;
+		virtual void foreachChild(Func<void(Scriptable&)> func) = 0;
+		virtual void foreachChild(Func<void(const Scriptable&)> func) const = 0;
 
 		// update
 		void update(float32 delta_time);
@@ -105,7 +105,7 @@ namespace Parrot {
 			return reinterpret_cast<const T&>(*it->second);
 		}
 		// addScript
-		void addScript(usize id, UniquePtr<Script>&& script);
+		void addScript(usize uuid, UniquePtr<Script>&& script);
 		template<class T, class... Args> requires std::is_base_of_v<Script, T>
 		T& addScript(Args&&... args) {
 			auto result = _scripts.emplace(getScriptID<T>(), std::make_unique<T>(std::forward<Args>(args)...));

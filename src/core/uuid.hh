@@ -2,17 +2,17 @@
 #include "common.hh"
 
 namespace Parrot {
-	// uuid
-	using uuid = uint64;
+	// UUID
+	using UUID = uint64;
 	// generateUUID
-	uuid generateUUID();
+	UUID generateUUID();
 
 	// UUIDObject
 	class UUIDObject {
 	public:
 		// UUIDObject
 		UUIDObject();
-		UUIDObject(uuid id);
+		UUIDObject(UUID uuid);
 		UUIDObject(const stdf::path& filepath);
 		UUIDObject(const UUIDObject& other);
 		UUIDObject(UUIDObject&& other) noexcept;
@@ -20,8 +20,8 @@ namespace Parrot {
 		UUIDObject& operator=(const UUIDObject& other);
 		UUIDObject& operator=(UUIDObject&& other) noexcept;
 		// getUUID
-		uuid getUUID() const;
+		UUID getUUID() const;
 	private:
-		uuid _id;
+		UUID _uuid;
 	};
 }

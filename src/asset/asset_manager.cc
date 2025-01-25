@@ -24,13 +24,13 @@ namespace Parrot {
 	}
 
 	// isLoaded
-	bool AssetManager::isLoaded(uuid id) const {
-		return _assets.contains(id);
+	bool AssetManager::isLoaded(UUID uuid) const {
+		return _assets.contains(uuid);
 	}
 	bool AssetManager::isLoaded(const stdf::path& path) const {
 		return _assets.contains(_index.getUUID(path));
 	}
-	bool AssetManager::isLoaded(const Variant<uuid, stdf::path>& variant) const {
+	bool AssetManager::isLoaded(const Variant<UUID, stdf::path>& variant) const {
 		return std::visit([&](const auto& value) {
 			return isLoaded(value);
 			}, variant);
@@ -39,15 +39,15 @@ namespace Parrot {
 	// getHandleResolver
 	AssetHandleResolver AssetManager::getHandleResolver() {
 		return AssetHandleResolver([&](
-			const Variant<uuid, stdf::path>& variant,
-			const function<Pair<void*, function<void()>>(stdf::path)>& create,
-			const function<void(const void*)>& callback) {
-				uuid id = std::holds_alternative<uuid>(variant) ? std::get<uuid>(variant) : _index.getUUID(std::get<stdf::path>(variant));
-				if (!isLoaded(id)) {
-					auto [value, delete_func] = create(_asset_dir / _index.getPath(id));
-					_assets.emplace(id, AssetResource(value, (_unloading_policy == UnloadingPolicy::UNLOAD_UNUSED), delete_func));
+			const Variant<UUID, stdf::path>& variant,
+			const Func<Pair<void*, Func<void()>>(stdf::path)>& create,
+			const Func<void(const void*)>& callback) {
+				UUID uuid = std::holds_alternative<UUID>(variant) ? std::get<UUID>(variant) : _index.getUUID(std::get<stdf::path>(variant));
+				if (!isLoaded(uuid)) {
+					auto [value, delete_func] = create(_asset_dir / _index.getPath(uuid));
+					_assets.emplace(uuid, AssetResource(value, (_unloading_policy == UnloadingPolicy::UNLOAD_UNUSED), delete_func));
 				}
-				callback(_assets.at(id).get());
+				callback(_assets.at(uuid).get());
 			});
 	}
 }

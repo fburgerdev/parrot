@@ -1,8 +1,9 @@
 #pragma once
 // ranges
 #include <ranges> // stdr
+// filesystem
+#include <filesystem> // stdf
 // types
-#include <memory> // int, uint
 #include <string> // string
 #include <string_view> // strview
 // containers
@@ -11,16 +12,16 @@
 #include <stack> // Stack
 #include <queue> // Queue
 #include <deque> // Deque
-#include <forward_list> // ForwardList
-#include <list> // LinkedList
+#include <forward_list> // LinkedList
+#include <list> // DLinkedList
 #include <unordered_set> // Set
 #include <map> // Map
 #include <set> // HashSet
 #include <unordered_map> // HashMap
-// filesystem
-#include <filesystem> // stdf
+// smart pointers
+#include <memory> // UniquePtr, SharedPtr, WeakPtr
 // function
-#include <functional> // function
+#include <functional> // Func
 // utility
 #include <optional> // Opt
 #include <variant> // Variant
@@ -28,14 +29,16 @@
 // stream
 #include <iostream> // cout, cerr, endl
 #include <fstream> // fstream, ifstream, ofstream
-#include <sstream> // strstream
+#include <sstream> // istrstream, ostrstream, strstream
 // thread
-#include <mutex> // mutex, recursive_mutex, unique_lock
-#include <shared_mutex> // shared_mutex, shared_lock
+#include <mutex> // mutex, recursive_mutex, UniqueLock
+#include <shared_mutex> // shared_mutex, SharedLock
 
 namespace Parrot {
     // ranges
     namespace stdr = std::ranges;
+    // filesystem
+    namespace stdf = std::filesystem;
 
     // types
     // :: usize
@@ -99,9 +102,6 @@ namespace Parrot {
     template<typename Key, typename Value>
     using HashMap = std::unordered_map<Key, Value>;
 
-    // filesystem
-    namespace stdf = std::filesystem;
-
     // smart pointers
     template<typename T>
     using UniquePtr = std::unique_ptr<T>;
@@ -110,8 +110,9 @@ namespace Parrot {
     template<typename T>
     using WeakPtr = std::weak_ptr<T>;
 
-    // function
-    using std::function;
+    // Function
+    template<class T>
+    using Func = std::function<T>;
 
     // stream
     // :: iostream

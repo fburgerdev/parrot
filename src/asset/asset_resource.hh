@@ -22,7 +22,7 @@ namespace Parrot {
 			: _value(value),
 			  _control(new ControlBlock(destroy_if_unviewed)),
 			  _destroy([=] { delete value; }) {}
-		AssetResource(void* value, bool destroy_if_unviewed, const function<void()>& destroy);
+		AssetResource(void* value, bool destroy_if_unviewed, const Func<void()>& destroy);
 		AssetResource(const AssetResource&) = delete;
 		AssetResource(AssetResource&& other) noexcept;
 		// =
@@ -41,7 +41,7 @@ namespace Parrot {
 	private:
 		void* _value;
 		ControlBlock* _control;
-		function<void()> _destroy;
+		Func<void()> _destroy;
 	};
 	// makeAsset
 	template<class T>

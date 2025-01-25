@@ -7,7 +7,7 @@ namespace Parrot {
 		: destroy_if_unviewed(destroy_if_unviewed) {}
 
 	// AssetResource
-	AssetResource::AssetResource(void* value, bool destroy_if_unviewed, const function<void()>& destroy)
+	AssetResource::AssetResource(void* value, bool destroy_if_unviewed, const Func<void()>& destroy)
 		: _value(value),
 		 _control(new ControlBlock(destroy_if_unviewed)),
 		 _destroy(destroy) {}

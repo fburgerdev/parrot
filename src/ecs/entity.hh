@@ -27,14 +27,14 @@ namespace Parrot {
 		// :: create
 		Entity& createChild();
 		// :: destroy
-		void destroyChild(uuid id);
+		void destroyChild(UUID uuid);
 		void destroyChild(const Entity& child);
 		// :: foreach
-		void foreachChild(function<void(Entity&)> func);
-		void foreachChild(function<void(const Entity&)> func) const;
+		void foreachChild(Func<void(Entity&)> func);
+		void foreachChild(Func<void(const Entity&)> func) const;
 		// :: foreach (scriptable)
-		virtual void foreachChild(function<void(Scriptable&)> func) override;
-		virtual void foreachChild(function<void(const Scriptable&)> func) const override;
+		virtual void foreachChild(Func<void(Scriptable&)> func) override;
+		virtual void foreachChild(Func<void(const Scriptable&)> func) const override;
 
 		// component
 		// :: has
@@ -69,11 +69,11 @@ namespace Parrot {
 		// transform
 		Transform<> transform;
 	private:
-		Entity(uuid id, Entity* parent);
+		Entity(UUID uuid, Entity* parent);
 
 		string _tag;
 		Entity* _parent = nullptr;
-		Map<uuid, Entity> _children;
+		Map<UUID, Entity> _children;
 		Map<usize, UniquePtr<Component>> _components; //? think about reducing indirection
 	};
 }

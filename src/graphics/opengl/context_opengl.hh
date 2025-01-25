@@ -47,12 +47,12 @@ namespace Parrot {
 			// applyMaterial
 			void applyMaterial(Shader& shader, const MaterialNode& node, const string& prefix = "");
 		private:
-			HashMap<uuid, Shader> _shaders;
-			HashMap<uuid, Texture> _textures;
-			HashMap<uuid, VertexBuffer> _vertex_buffers;
-			HashMap<uuid, IndexBuffer> _index_buffers;
-			HashMap<uuid, UniformBuffer> _uniform_buffers;
-			HashMap<uuid, VertexArray> _vertex_arrays;
+			HashMap<UUID, Shader> _shaders;
+			HashMap<UUID, Texture> _textures;
+			HashMap<UUID, VertexBuffer> _vertex_buffers;
+			HashMap<UUID, IndexBuffer> _index_buffers;
+			HashMap<UUID, UniformBuffer> _uniform_buffers;
+			HashMap<UUID, VertexArray> _vertex_arrays;
 			AssetHandleResolver _resolver;
 		};
 	}

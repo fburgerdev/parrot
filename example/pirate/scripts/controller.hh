@@ -83,7 +83,7 @@ namespace Parrot {
 					entity->transform.position -= up * _move_speed * delta_time;
 				}
 			}
-		}
+		}	
 	private:
 		bool _is_captured = false;
 		DefaultFloat _move_speed = 10.0, _mouse_speed = 0.001;

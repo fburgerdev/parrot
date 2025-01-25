@@ -17,10 +17,10 @@ namespace Parrot {
 	}
 
 	// foreachChild (scriptable)
-	void Scene::foreachChild(function<void(Scriptable&)> func) {
+	void Scene::foreachChild(Func<void(Scriptable&)> func) {
 		func(root);
 	}
-	void Scene::foreachChild(function<void(const Scriptable&)> func) const {
+	void Scene::foreachChild(Func<void(const Scriptable&)> func) const {
 		func(root);
 	}
 	
