@@ -6,14 +6,16 @@
     "tag": "Root",
     "children": [
       {
-        "tag": "Pirate",
+        "tag": "Palm",
+        "transform": {
+          "position": [ 0, 0, -5 ]
+        },
         "components": {
           "render-object": {
-            "model": "models/characters/anne.fbx",
+            "model": "models/environment/palm_tree1.fbx",
             "material": "materials/flat.mat.json"
           }
-        },
-        "scripts": [ "Rotate" ]
+        }
       },
       {
         "tag": "Ship",
@@ -28,15 +30,11 @@
         }
       },
       {
-        "tag": "Ambient",
-        "transform": {
-          "position": [ 0, 10, 0 ]
-        },
+        "tag": "Directional",
         "components": {
           "light-source": {
-            "type": "ambient",
-            "intensity": 0.2,
-            "color": [ 255, 255, 255 ]
+            "type": "directional",
+            "direction": [0, -0.707, 0.707]
           }
         }
       },
