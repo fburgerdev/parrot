@@ -3,8 +3,12 @@
 #include "material.hh"
 
 namespace Parrot {
+    // ModelMaterial
+    struct ModelMaterial {
+        usize tex_index = 0xFFFFFF;
+    };
     // SubModel
-    using SubModel = Pair<Mesh, MaterialNode>;
+    using SubModel = Pair<Mesh, usize>;
     // Model
     class Model : public UUIDObject {
     public:
@@ -14,7 +18,9 @@ namespace Parrot {
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
 		Model(const JSON& json, const stdf::path& filepath) {}
 
-        // submodels
+        // submodels, model_materials, textures
         List<SubModel> submodels;
+        List<ModelMaterial> model_materials;
+        List<TextureConfig> textures;
     };
 }

@@ -21,14 +21,17 @@ namespace Parrot {
 			prepareDraw();
 			for (auto [transform, render_object] : scene_data.render_objects) {
 				resolver.useHandles([&](const Model& model, const Material& material) {
-					for (const auto& [mesh, material_node] : model.submodels) {
+					for (const auto& [mesh, material_index] : model.submodels) {
 						auto& vertex_array = _context->getVertexArray(mesh);
 						resolver.useHandles([&](const ShaderSource& shader) {
 							auto& shader_opengl = _context->getShader(shader);
 							shader_opengl.bind();
 							shader_opengl.bindUniformBuffer("u_std", *_3d_buffer);
 							_context->applyMaterial(shader_opengl, material.root);
-							// _context->applyMaterial(shader_opengl, material_node);
+							auto& model_material = model.model_materials.at(material_index);
+							if (model_material.tex_index != 0xFFFFFF) {
+								_context->getTexture(model.textures.at(model_material.tex_index)).bind(0);
+							}
 							auto proj = scene_data.camera.second->calcProjectionMatrix(1080.0F / 720.0F);
 							auto view = scene_data.camera.first->calcLocalViewMatrix();
 							shader_opengl.setUniform("u_local_to_world", transform->calcLocalModelMatrix());

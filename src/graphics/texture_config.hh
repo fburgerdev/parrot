@@ -21,6 +21,7 @@ namespace Parrot {
 	public:
 		// TextureConfig
 		TextureConfig(const stdf::path& filepath);
+		TextureConfig(AssetHandle<Image> image);
 		template<class JSON> requires(requires(JSON json) { json.at("key"); })
 		TextureConfig(const JSON& json, const stdf::path& filepath) {
 			loadFromJSON(json, filepath);

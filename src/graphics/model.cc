@@ -39,7 +39,7 @@ namespace Parrot {
             }
         }  
         // TODO: MaterialNode
-        return { { std::move(vertices), std::move(indices) }, {} };
+        return { { std::move(vertices), std::move(indices) }, mesh->mMaterialIndex };
     }
     // processNode (static)
     static void processNode(aiNode* node, const aiScene* scene, List<SubModel>& submodels) {
@@ -55,12 +55,31 @@ namespace Parrot {
     // Model
     Model::Model(const stdf::path& filepath) {
         Assimp::Importer importer;
-        const aiScene* scene = importer.ReadFile(filepath.string(), aiProcess_Triangulate);
+        uint flags = 0;
+        flags |= aiProcess_Triangulate;
+        flags |= aiProcess_FlipUVs;
+        flags |= aiProcess_FlipWindingOrder;
+        const aiScene* scene = importer.ReadFile(filepath.string(), flags);
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
             cout << "ERROR::ASSIMP::" << importer.GetErrorString() << endl;
             return;
         }
         processNode(scene->mRootNode, scene, submodels);
-        LOG_ASSET_DEBUG("loaded model {} with {} submodel(s)", filepath, submodels.size());
+        for (uint i = 0; i < scene->mNumMaterials; ++i) {
+            auto& model_material = model_materials.emplace_back();
+            auto& material = *scene->mMaterials[i];
+            // diffuse
+            uint diffuse_count = material.GetTextureCount(aiTextureType_DIFFUSE);
+            for (uint j = 0; j < diffuse_count; ++j) {
+                aiString name;
+                material.GetTexture(aiTextureType_DIFFUSE, j, &name);
+                const auto* texture = scene->GetEmbeddedTexture(name.C_Str());
+                if (texture->mHeight == 0) {
+                    model_material.tex_index = textures.size();
+                    textures.emplace_back(Image(name.C_Str(), (const uchar*)texture->pcData, texture->mWidth));
+                }
+            }
+        }
+        LOG_ASSET_DEBUG("loaded model {} with {} submodel(s) and {}", filepath, submodels.size(), textures.size());
     }
 }

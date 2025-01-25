@@ -9,4 +9,6 @@ namespace Parrot {
 		: UUIDObject(filepath) {
 		loadFromJSON(json::parse(ifstream(filepath)), filepath);
 	}
+	TextureConfig::TextureConfig(AssetHandle<Image> image)
+		: image(std::move(image)) {}
 }

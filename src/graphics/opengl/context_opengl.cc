@@ -75,7 +75,7 @@ namespace Parrot {
 				else if (std::holds_alternative<AssetHandle<TextureConfig>>(leaf)) {
 					_resolver.useHandles([&](const TextureConfig& texture) {
 						getTexture(texture).bind(0);
-						}, std::get<AssetHandle<TextureConfig>>(leaf));
+					}, std::get<AssetHandle<TextureConfig>>(leaf));
 					shader.setUniform(prefix, 0);
 				}
 			}
