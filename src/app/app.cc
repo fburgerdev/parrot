@@ -38,7 +38,9 @@ namespace Parrot {
 	// add
 	PlayingUnit& App::add(const WindowConfig& window_config, const SceneConfig& scene_config) {
 		PlayingUnit unit(window_config, scene_config, this);
-		unit.window.setIcon(Image(_asset_manager.getAssetDirectory() / "default/parrot.png")); //TODO: move
+		unit.window.setIcon(Image(
+      _asset_manager.getDirectory() / "default/parrot.png")
+    ); //TODO: move
 		auto result = _units.emplace(unit.getUUID(), std::move(unit));
 		LOG_APP_INFO("created playing-unit ('{}', '{}') in app '{}'", window_config.title, scene_config.name, _name);
 		return result.first->second;

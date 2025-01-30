@@ -10,7 +10,7 @@ namespace Parrot {
 		const stdf::path& asset_dir,
 		LoadingPolicy loading_policy,
 		UnloadingPolicy unloading_policy)
-		: _asset_dir(asset_dir),
+		: _directory(asset_dir),
       _registry(asset_dir),
 		  _loading_policy(loading_policy),
 		  _unloading_policy(unloading_policy) {
@@ -18,48 +18,43 @@ namespace Parrot {
 		LOG_ASSET_TRACE("asset-manager initialized with directory {}", asset_dir);
 	}
 
-	// getAssetDirectory
-	const stdf::path AssetManager::getAssetDirectory() const {
-		return _asset_dir;
+	// getDirectory
+	const stdf::path AssetManager::getDirectory() const {
+		return _directory;
 	}
 
-	// // isLoaded
-	// bool AssetManager::isLoaded(UUID uuid) const {
-	// 	return _assets.contains(uuid);
-	// }
-	// bool AssetManager::isLoaded(const stdf::path& path) const {
-	// 	return _assets.contains(_index.getUUID(path));
-	// }
-	// bool AssetManager::isLoaded(const Variant<UUID, stdf::path>& variant) const {
-	// 	return std::visit([&](const auto& value) {
-	// 		return isLoaded(value);
-	// 		}, variant);
-	// }
-
-	// // getHandleResolver
-	// AssetHandleResolver AssetManager::getHandleResolver() {
-	// 	return AssetHandleResolver([&](
-	// 		const Variant<UUID, stdf::path>& variant,
-	// 		const Func<Pair<void*, Func<void()>>(stdf::path)>& create,
-	// 		const Func<void(const void*)>& callback) {
-	// 			UUID uuid = std::holds_alternative<UUID>(variant) ? std::get<UUID>(variant) : _index.getUUID(std::get<stdf::path>(variant));
-	// 			if (!isLoaded(uuid)) {
-	// 				auto [value, delete_func] = create(_asset_dir / _index.getPath(uuid));
-	// 				_assets.emplace(uuid, AssetResource(value, (_unloading_policy == UnloadingPolicy::UNLOAD_UNUSED), delete_func));
-	// 			}
-	// 			callback(_assets.at(uuid).get());
-	// 		});
-	// }
-	// // createAssetResolver
-	// AssetResolver AssetManager::createAssetResolver() {
-	// 	return [&] (const AssetKey& key) {
-  //     if (loadedAsset(key)) {
-  //       return getAsset(key);
-  //     }
-  //     else {
-        
-  //     }
-  //     return lockAsset<Asset>(key);
-	// 	};
-	// }
+  // lockAsset
+  SharedPtr<Asset> AssetManager::lockAsset(
+    const AssetKey& key, AssetFactory factory
+  ) {
+    UUID uuid = _registry.getUUID(key);
+    AssetPath asset_path = _registry.getAssetPath(key);
+    asset_path.filepath = _directory / asset_path.filepath;
+    auto it = _loaded.find(uuid);
+    if (it == _loaded.end()) {
+      auto asset = factory(asset_path);
+      _loaded.emplace(uuid, SharedPtr<Asset>(asset));
+      return asset;
+    }
+    else {
+      if (std::holds_alternative<SharedPtr<Asset>>(it->second)) {
+        return std::get<SharedPtr<Asset>>(it->second);
+      }
+      else if (!std::get<WeakPtr<Asset>>(it->second).expired()) {
+        return std::get<WeakPtr<Asset>>(it->second).lock();
+      }
+      else {
+        auto asset = factory(asset_path);
+        it->second = SharedPtr<Asset>(asset);
+        return asset;
+      }
+    }
+  }
+  // addAsset
+  UUID AssetManager::addAsset(SharedPtr<Asset> asset) {
+    UUID uuid = generateUUID();
+    _registry.add(uuid, asset->asset_path);
+    _loaded.emplace(uuid, asset);
+    return uuid;
+  }
 }

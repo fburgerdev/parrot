@@ -1,5 +1,5 @@
 #pragma once
-#include "common.hh"
+#include "uuid.hh"
 
 namespace Parrot {
   // JsonType
@@ -32,11 +32,13 @@ namespace Parrot {
       }
       return *value;
     }
-    // <=>
+    // <=> (compare)
     auto operator<=>(const AssetPath&) const = default;
 
     // filepath, subpath
 		stdf::path filepath;
 		string subpath;
 	};
+  // AssetKey
+  using AssetKey = Variant<UUID, AssetPath>;
 }
