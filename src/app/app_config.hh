@@ -9,24 +9,24 @@ namespace Parrot {
 	public:
 		// (constructor) for Asset
 		AppConfig() = default;
-		AppConfig(const AssetPath& asset_path, AssetLocker& locker);
+		AppConfig(const AssetPath& asset_path, AssetAPI& asset_api);
 		template<JsonType JSON>
 		AppConfig(
-			const JSON& json, const AssetPath& asset_path, AssetLocker& locker
+			const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
 		) : Asset(asset_path) {
-			loadFromJSON(json, locker);
+			loadFromJSON(json, asset_api);
 		}
 
 		// loadFromJSON
 		template<JsonType JSON>
-		void loadFromJSON(const JSON& json, AssetLocker& locker) {
+		void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
 			// name
 			if (json.contains("name")) {
 				name = string(json.at("name"));
 			}
 			// main
-			main_window = AssetHandle<WindowConfig>(json.at("main")[0], locker);
-			main_scene = AssetHandle<SceneConfig>(json.at("main")[1], locker);
+			main_window = AssetHandle<WindowConfig>(json.at("main")[0], asset_api);
+			main_scene = AssetHandle<SceneConfig>(json.at("main")[1], asset_api);
 			// asset_dir
 			if (json.contains("asset_dir")) {
 				asset_dir = stdf::path(string(json.at("asset_dir")));

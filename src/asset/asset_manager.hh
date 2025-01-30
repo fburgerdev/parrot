@@ -8,7 +8,7 @@
 
 namespace Parrot {
 	// AssetManager
-	class AssetManager : public AssetLocker {
+	class AssetManager : public AssetAPI {
 	public:
 		// AssetManager
 		AssetManager() = default;

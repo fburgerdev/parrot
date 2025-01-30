@@ -35,7 +35,7 @@ namespace Parrot {
 		Camera(
 			const JSON& json,
 			const AssetPath& asset_path,
-			[[maybe_unused]] AssetLocker& locker
+			[[maybe_unused]] AssetAPI& asset_api
 		) : Asset(asset_path) {
 			loadFromJSON(json);
 		}

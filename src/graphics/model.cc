@@ -53,7 +53,7 @@ namespace Parrot {
     }
 
     // Model
-    Model::Model(const AssetPath& asset_path, AssetLocker& locker)
+    Model::Model(const AssetPath& asset_path, AssetAPI& asset_api)
 		: Asset(asset_path) {
         Assimp::Importer importer;
         uint flags = 0;
@@ -78,9 +78,9 @@ namespace Parrot {
                 if (texture->mHeight == 0) {
                     model_material.tex_index = textures.size();
                     UUID uuid = generateUUID();
-                    locker.add(uuid, stdf::path(name.C_Str()),
+                    asset_api.add(uuid, stdf::path(name.C_Str()),
                     std::make_shared<Image>(name.C_Str(), (const uchar*)texture->pcData, texture->mWidth));
-                    textures.emplace_back(AssetHandle<Image>(uuid, locker));
+                    textures.emplace_back(AssetHandle<Image>(uuid, asset_api));
                 }
             }
         }

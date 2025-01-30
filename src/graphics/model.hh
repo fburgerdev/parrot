@@ -14,10 +14,10 @@ namespace Parrot {
 	public:
 		// Model
 		Model() = default;
-		Model(const AssetPath& asset_path, AssetLocker& locker);
+		Model(const AssetPath& asset_path, AssetAPI& asset_api);
 		template<JsonType JSON>
 		Model(
-			const JSON& json, const AssetPath& asset_path, AssetLocker& locker
+			const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
 		) : Asset(asset_path) {}
 
 		// submodels, model_materials, textures

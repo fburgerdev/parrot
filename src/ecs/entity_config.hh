@@ -11,17 +11,17 @@ namespace Parrot {
 	public:
 		// (constructor) for Asset
 		EntityConfig() = default;
-		EntityConfig(const AssetPath& asset_path, AssetLocker& locker);
+		EntityConfig(const AssetPath& asset_path, AssetAPI& asset_api);
 		template<JsonType JSON>
 		EntityConfig(
-			const JSON& json, const AssetPath& asset_path, AssetLocker& locker
+			const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
 		) : Asset(asset_path) {
-			loadFromJSON(json, locker);
+			loadFromJSON(json, asset_api);
 		}
 
 		// loadFromJSON
 		template<JsonType JSON>
-		void loadFromJSON(const JSON& json, AssetLocker& locker) {
+		void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
 			// tag
 			if (json.contains("tag")) {
 				tag = string(json.at("tag"));
@@ -53,15 +53,15 @@ namespace Parrot {
 			// children
 			if (json.contains("children")) {
 				for (const auto& child : json.at("children")) {
-					children.emplace_back(child, locker);
+					children.emplace_back(child, asset_api);
 				}
 			}
 			// components
 			if (json.contains("components")) {
 				for (const auto& [name, data] : json.at("components").items()) {
-					if (g_registry<ComponentConfig, const JSON&, const AssetPath&, AssetLocker&>.contains(name)) {
+					if (g_registry<ComponentConfig, const JSON&, const AssetPath&, AssetAPI&>.contains(name)) {
 						components.emplace_back(
-							g_registry<ComponentConfig, const JSON&, const AssetPath&, AssetLocker&>.at(name).second(data, asset_path, locker)
+							g_registry<ComponentConfig, const JSON&, const AssetPath&, AssetAPI&>.at(name).second(data, asset_path, asset_api)
 						);
 					}
 					else {

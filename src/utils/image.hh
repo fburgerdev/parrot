@@ -19,9 +19,9 @@ namespace Parrot {
 		Image(strview name, const uchar* buffer, usize size);
 		Image(const Image& other);
 		Image(Image&& other) noexcept;
-		Image(const AssetPath& asset_path, AssetLocker& locker);
+		Image(const AssetPath& asset_path, AssetAPI& asset_api);
 		template<JsonType JSON>
-		Image(const JSON& json, const AssetPath& asset_path, AssetLocker& locker)
+		Image(const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api)
       : Asset(asset_path) {}
 		// ~Image
 		~Image();

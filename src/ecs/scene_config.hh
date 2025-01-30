@@ -7,23 +7,23 @@ namespace Parrot {
 	public:
 		// (constructor) for Asset
 		SceneConfig() = default;
-		SceneConfig(const AssetPath& asset_path, AssetLocker& locker);
+		SceneConfig(const AssetPath& asset_path, AssetAPI& asset_api);
 		template<JsonType JSON>
 		SceneConfig(
-			const JSON& json, const AssetPath& asset_path, AssetLocker& locker
+			const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
 		) : Asset(asset_path) {
-			loadFromJSON(json, locker);
+			loadFromJSON(json, asset_api);
 		}
 
 		// loadFromJSON
 		template<JsonType JSON>
-		void loadFromJSON(const JSON& json, AssetLocker& locker) {
+		void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
 			// name
 			if (json.contains("name")) {
 				name = string(json.at("name"));
 			}
 			// root
-			root = AssetHandle<EntityConfig>(json.at("root"), locker);
+			root = AssetHandle<EntityConfig>(json.at("root"), asset_api);
 		}
 
 		// name, root

@@ -5,10 +5,15 @@
 namespace Parrot {
   // AssetKey
   using AssetKey = Variant<UUID, AssetPath>;
-  class AssetLocker {
+  // AssetAPI
+  class AssetAPI {
   public:
-    virtual SharedPtr<Asset> lock(const AssetKey& key, Func<SharedPtr<Asset>(const AssetPath&)> func) = 0;
-    virtual void add(UUID uuid, const AssetPath& asset_path, SharedPtr<Asset>) = 0;
+    // add
+    virtual void add(UUID, const AssetPath&, SharedPtr<Asset>) = 0;
+    // lock
+    virtual SharedPtr<Asset> lock(
+      const AssetKey&, Func<SharedPtr<Asset>(const AssetPath&)>
+    ) = 0;
   };
   // AssetResolver
   using AssetResolver = Func<SharedPtr<Asset>(const AssetKey&)>;
@@ -18,15 +23,15 @@ namespace Parrot {
   public:
     // (constructor)
     AssetHandle() = default;
-    AssetHandle(UUID uuid, AssetLocker& locker)
-      : _key(uuid), _locker(&locker) {}
-    AssetHandle(const AssetPath& path, AssetLocker& locker)
-      : _key(path), _locker(&locker) {}
-    AssetHandle(const AssetKey& key, AssetLocker& locker)
-      : _key(key), _locker(&locker) {}
+    AssetHandle(UUID uuid, AssetAPI& asset_api)
+      : _key(uuid), _locker(&asset_api) {}
+    AssetHandle(const AssetPath& path, AssetAPI& asset_api)
+      : _key(path), _locker(&asset_api) {}
+    AssetHandle(const AssetKey& key, AssetAPI& asset_api)
+      : _key(key), _locker(&asset_api) {}
     template<JsonType JSON>
-    AssetHandle(const JSON& json, AssetLocker& locker)
-      : _locker(&locker) {
+    AssetHandle(const JSON& json, AssetAPI& asset_api)
+      : _locker(&asset_api) {
       if (json.is_number()) {
         _key = UUID(json);
       }
@@ -51,6 +56,6 @@ namespace Parrot {
     }
   private:
     AssetKey _key;
-    AssetLocker* _locker = nullptr;
+    AssetAPI* _locker = nullptr;
   };
 }

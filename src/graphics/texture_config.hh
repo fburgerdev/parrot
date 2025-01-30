@@ -20,20 +20,20 @@ namespace Parrot {
 	class TextureConfig : public Asset {
 	public:
 		// (constructor) for Asset
-		TextureConfig(const AssetPath& asset_path, AssetLocker& locker);
+		TextureConfig(const AssetPath& asset_path, AssetAPI& asset_api);
 		TextureConfig(AssetHandle<Image> image);
 		template<JsonType JSON>
 		TextureConfig(
-			const JSON& json, const AssetPath& asset_path, AssetLocker& locker
+			const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
 		) : Asset(asset_path) {
-			loadFromJSON(json, locker);
+			loadFromJSON(json, asset_api);
 		}
 
 		// loadFromJSON
 		template<JsonType JSON>
-		void loadFromJSON(const JSON& json, AssetLocker& locker) {
+		void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
 			//TODO: properties...
-			image = AssetHandle<Image>(json.at("image"), locker);
+			image = AssetHandle<Image>(json.at("image"), asset_api);
 		}
 		
 		// hor_wrap, ver_wrap, mag_filter, min_filter, mipmap, image

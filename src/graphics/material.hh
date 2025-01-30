@@ -27,18 +27,18 @@ namespace Parrot {
 		// MaterialNode
 		MaterialNode() = default;
 		template<JsonType JSON>
-		MaterialNode(const JSON& json, AssetLocker& locker) {
-			loadFromJSON(json, locker);
+		MaterialNode(const JSON& json, AssetAPI& asset_api) {
+			loadFromJSON(json, asset_api);
 		}
 
 		// loadFromJSON
 		template<JsonType JSON>
-		void loadFromJSON(const JSON& json, AssetLocker& locker) {
+		void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
 			// object
 			if (json.is_object()) {
 				Map<string, MaterialNode> map;
 				for (const auto& [key, value] : json.items()) {
-					map.try_emplace(key, value, locker);
+					map.try_emplace(key, value, asset_api);
 				}
 				value = std::move(map);
 			}
@@ -108,7 +108,7 @@ namespace Parrot {
 					// texture
 					else if (dtype == "texture") {
 						value = MaterialLeaf(
-							AssetHandle<TextureConfig>(array.at(1), locker)
+							AssetHandle<TextureConfig>(array.at(1), asset_api)
 						);
 					}
 				}
@@ -116,7 +116,7 @@ namespace Parrot {
 				else {
 					List<MaterialNode> list;
 					for (const auto& el : array) {
-						list.emplace_back(el, locker);
+						list.emplace_back(el, asset_api);
 					}
 					value = std::move(list);
 				}
@@ -161,23 +161,23 @@ namespace Parrot {
 	class Material : public Asset {
 	public:
 		// (constructor) for Asset
-		Material(const AssetPath& asset_path, AssetLocker& locker);
+		Material(const AssetPath& asset_path, AssetAPI& asset_api);
 		template<JsonType JSON>
 		Material(
-			const JSON& json, const AssetPath& asset_path, AssetLocker& locker
+			const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
 		) : Asset(asset_path) {
-			loadFromJSON(json, locker);
+			loadFromJSON(json, asset_api);
 		}
 
 		// loadFromJSON
 		template<JsonType JSON>
-		void loadFromJSON(const JSON& json, AssetLocker& locker) {
+		void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
 			// root
 			if (json.contains("uniforms")) {
-				root.loadFromJSON(json.at("uniforms"), locker);
+				root.loadFromJSON(json.at("uniforms"), asset_api);
 			}
 			// shader
-			shader = AssetHandle<ShaderSource>(json.at("shader"), locker);
+			shader = AssetHandle<ShaderSource>(json.at("shader"), asset_api);
 		}
 
 		// root, shader

@@ -13,17 +13,17 @@ namespace Parrot {
 	public:
 		// (constructor) for Asset
 		WindowConfig() = default;
-		WindowConfig(const AssetPath& asset_path, AssetLocker& locker);
+		WindowConfig(const AssetPath& asset_path, AssetAPI& asset_api);
 		template<JsonType JSON>
 		WindowConfig(
-			const JSON& json, const AssetPath& asset_path, AssetLocker& locker
+			const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
 		) : Asset(asset_path) {
-			loadFromJSON(json, locker);
+			loadFromJSON(json, asset_api);
 		}
 
 		// loadFromJSON
 		template<JsonType JSON>
-		void loadFromJSON(const JSON& json, AssetLocker& locker) {
+		void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
 			// title
 			if (json.contains("title")) {
 				title = string(json.at("title"));

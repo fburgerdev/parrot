@@ -7,11 +7,11 @@ namespace Parrot {
 	public:
 		// (constructor) for Asset
 		ShaderSource() = default;
-		ShaderSource(const AssetPath& asset_path, AssetLocker& locker);
+		ShaderSource(const AssetPath& asset_path, AssetAPI& asset_api);
 		ShaderSource(const string& source);
 		template<JsonType JSON>
 		ShaderSource(
-			const JSON& json, const AssetPath& asset_path, AssetLocker& locker
+			const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
 		) : Asset(asset_path) {}
 
 		// SnippetInclude

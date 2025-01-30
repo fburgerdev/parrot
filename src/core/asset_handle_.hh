@@ -31,8 +31,8 @@ namespace Parrot {
 
 		// AssetHandleResolver
 		AssetHandleResolver() = default;
-		AssetHandleResolver(const ReferenceResolver& locker)
-			: _resolver(locker) {}
+		AssetHandleResolver(const ReferenceResolver& asset_api)
+			: _resolver(asset_api) {}
 
 		// useHandle
 		template<class T>
