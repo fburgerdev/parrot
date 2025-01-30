@@ -1,4 +1,5 @@
 #pragma once
+#include "core/asset_handle.hh"
 #include "math/matrix.hh"
 
 namespace Parrot {
@@ -26,17 +27,21 @@ namespace Parrot {
 		Vec2<float32> z_range = DEFAULT_ZRANGE;
 	};
 	// Camera
-	struct Camera {
-		// Camera
+	struct Camera : public Asset {
+		// (constructor) for Asset
 		Camera(const PerspectiveCamera& value);
 		Camera(const OrthographicCamera& value);
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		Camera(const JSON& json, const stdf::path& filepath) {
-			loadFromJSON(json, filepath);
+		template<JsonType JSON>
+		Camera(
+			const JSON& json,
+			const AssetPath& asset_path,
+			[[maybe_unused]] AssetLocker& locker
+		) : Asset(asset_path) {
+			loadFromJSON(json);
 		}
 		// loadFromJSON
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-			void loadFromJSON(const JSON& json, [[maybe_unused]] const stdf::path& filepath) {
+		template<JsonType JSON>
+			void loadFromJSON(const JSON& json) {
 			Vec2<float32> z_range = json.contains("z_range") ?
 				Vec2<float32>(json.at("z_range")[0], json.at("z_range")[1]) : DEFAULT_ZRANGE;
 			if (!json.contains("type") && json.contains("fov") && json.contains("scale")) {

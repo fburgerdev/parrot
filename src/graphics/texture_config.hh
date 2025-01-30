@@ -16,22 +16,24 @@ namespace Parrot {
 		NONE, LINEAR, NEAREST
 	};
 
-	// TextureConfig
-	class TextureConfig : public UUIDObject {
+	// TextureConfig (Asset)
+	class TextureConfig : public Asset {
 	public:
-		// TextureConfig
-		TextureConfig(const stdf::path& filepath);
+		// (constructor) for Asset
+		TextureConfig(const AssetPath& asset_path, AssetLocker& locker);
 		TextureConfig(AssetHandle<Image> image);
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		TextureConfig(const JSON& json, const stdf::path& filepath) {
-			loadFromJSON(json, filepath);
+		template<JsonType JSON>
+		TextureConfig(
+			const JSON& json, const AssetPath& asset_path, AssetLocker& locker
+		) : Asset(asset_path) {
+			loadFromJSON(json, locker);
 		}
 
 		// loadFromJSON
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		void loadFromJSON(const JSON& json, const stdf::path& filepath) {
+		template<JsonType JSON>
+		void loadFromJSON(const JSON& json, AssetLocker& locker) {
 			//TODO: properties...
-			image = parseAssetHandle<Image>(json.at("image"), filepath);
+			image = AssetHandle<Image>(json.at("image"), locker);
 		}
 		
 		// hor_wrap, ver_wrap, mag_filter, min_filter, mipmap, image

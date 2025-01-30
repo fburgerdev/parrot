@@ -33,8 +33,8 @@ namespace Parrot {
 	}
 
 	// ShaderSource
-	ShaderSource::ShaderSource(const stdf::path& filepath)
-		: ShaderSource((ostrstream() << ifstream(filepath).rdbuf()).str()) {}
+	ShaderSource::ShaderSource(const AssetPath& asset_path, AssetLocker& locker)
+		: ShaderSource((ostrstream() << ifstream(asset_path.filepath).rdbuf()).str()) {}
 	ShaderSource::ShaderSource(const string& source) {
 		usize offset = 0;
 		Opt<Variant<ShaderStage, Snippet>> current;

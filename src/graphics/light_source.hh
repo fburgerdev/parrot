@@ -1,4 +1,5 @@
 #pragma once
+#include "core/asset_handle.hh"
 #include "math/matrix.hh"
 
 namespace Parrot {
@@ -31,16 +32,21 @@ namespace Parrot {
 	};
 
 	// LightSource
-	class LightSource {
+	class LightSource : public Asset {
 	public:
-		// LightSource
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		LightSource(const JSON& json, const stdf::path& filepath) {
-			loadFromJSON(json, filepath);
+		// (constructor) for SubAsset
+		template<JsonType JSON>
+		LightSource(
+			const JSON& json,
+			const AssetPath& asset_path,
+			[[maybe_unused]] AssetLocker& locker
+		) : Asset(asset_path) {
+			loadFromJSON(json);
 		}
+
 		// loadFromJSON
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		void loadFromJSON(const JSON& json, [[maybe_unused]] const stdf::path& filepath) {
+		template<JsonType JSON>
+		void loadFromJSON(const JSON& json) {
 			if (json.at("type") == "ambient") {
 				AmbientLight light;
 				// intensity

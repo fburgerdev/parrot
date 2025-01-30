@@ -8,44 +8,40 @@ namespace Parrot {
 		: Scriptable(parent) {}
 	Entity::Entity(Entity* parent)
 		: Scriptable(parent), _parent(parent) {}
-	Entity::Entity(const EntityConfig& config, AssetHandleResolver resolver, Scriptable* parent)
+	Entity::Entity(const SharedPtr<EntityConfig>& config, Scriptable* parent)
 		: Scriptable(parent) {
-		_tag = config.tag;
-		transform = config.transform;
-		for (const auto& handle : config.children) {
-			resolver.useHandle<EntityConfig>([&](const EntityConfig& config) {
-				Entity child = Entity(config, resolver, this);
-				_children.emplace(child.getUUID(), std::move(child));
-			}, handle);
+		_tag = config->tag;
+		transform = config->transform;
+		for (const auto& handle : config->children) {
+			Entity child = Entity(handle.lock(), this);
+			_children.emplace(child.getUUID(), std::move(child));
 		}
-		for (const auto& component_config : config.components) {
+		for (const auto& component_config : config->components) {
 			_components.emplace(
 				component_config->getComponentID(),
 				component_config->createComponent(*this)
 			);
 		}
-		for (const string& script_name : config.scripts) {
+		for (const string& script_name : config->scripts) {
 			auto [uuid, factory] = g_registry<Script, Entity&>.at(script_name);
 			addScript(uuid, factory(*this));
 		}
 	}
-	Entity::Entity(const EntityConfig& config, AssetHandleResolver resolver, Entity* parent)
+	Entity::Entity(const SharedPtr<EntityConfig>& config, Entity* parent)
 		: Scriptable(parent), _parent(parent) {
-		_tag = config.tag;
-		transform = config.transform;
-		for (const auto& handle : config.children) {
-			resolver.useHandle<EntityConfig>([&](const EntityConfig& config) {
-				Entity child = Entity(config, resolver, this);
-				_children.emplace(child.getUUID(), std::move(child));
-			}, handle);
+		_tag = config->tag;
+		transform = config->transform;
+		for (const auto& handle : config->children) {
+			Entity child = Entity(handle.lock(), this);
+			_children.emplace(child.getUUID(), std::move(child));
 		}
-		for (const auto& component_config : config.components) {
+		for (const auto& component_config : config->components) {
 			_components.emplace(
 				component_config->getComponentID(),
 				component_config->createComponent(*this)
 			);
 		}
-		for (const string& script_name : config.scripts) {
+		for (const string& script_name : config->scripts) {
 			auto [uuid, factory] = g_registry<Script, Entity&>.at(script_name);
 			addScript(uuid, factory(*this));
 		}

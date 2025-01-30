@@ -1,5 +1,5 @@
 #pragma once
-#include "core/uuid.hh"
+#include "core/asset_handle.hh"
 
 namespace Parrot {
 	// ImageFormat
@@ -11,7 +11,7 @@ namespace Parrot {
 		Image
 		supported formats: JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC
 	*/
-	class Image : public UUIDObject {
+	class Image : public Asset {
 	public:
 		// Image
 		Image() = default;
@@ -19,8 +19,10 @@ namespace Parrot {
 		Image(strview name, const uchar* buffer, usize size);
 		Image(const Image& other);
 		Image(Image&& other) noexcept;
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		Image(const JSON& json, const stdf::path& filepath) {}
+		Image(const AssetPath& asset_path, AssetLocker& locker);
+		template<JsonType JSON>
+		Image(const JSON& json, const AssetPath& asset_path, AssetLocker& locker)
+      : Asset(asset_path) {}
 		// ~Image
 		~Image();
 		// =

@@ -4,27 +4,29 @@
 #include "asset/asset_policy.hh"
 
 namespace Parrot {
-	// AppConfig
-	class AppConfig : public UUIDObject {
+	// AppConfig (Asset)
+	class AppConfig : public Asset {
 	public:
-		// AppConfig
+		// (constructor) for Asset
 		AppConfig() = default;
-		AppConfig(const stdf::path& config_path);
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		AppConfig(const JSON& json, const stdf::path& filepath) {
-			loadFromJSON(json, filepath);
+		AppConfig(const AssetPath& asset_path, AssetLocker& locker);
+		template<JsonType JSON>
+		AppConfig(
+			const JSON& json, const AssetPath& asset_path, AssetLocker& locker
+		) : Asset(asset_path) {
+			loadFromJSON(json, locker);
 		}
 
 		// loadFromJSON
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		void loadFromJSON(const JSON& json, [[maybe_unused]] const stdf::path& filepath) {
+		template<JsonType JSON>
+		void loadFromJSON(const JSON& json, AssetLocker& locker) {
 			// name
 			if (json.contains("name")) {
 				name = string(json.at("name"));
 			}
 			// main
-			main_window = parseAssetHandle<WindowConfig>(json.at("main")[0], filepath);
-			main_scene = parseAssetHandle<SceneConfig>(json.at("main")[1], filepath);
+			main_window = AssetHandle<WindowConfig>(json.at("main")[0], locker);
+			main_scene = AssetHandle<SceneConfig>(json.at("main")[1], locker);
 			// asset_dir
 			if (json.contains("asset_dir")) {
 				asset_dir = stdf::path(string(json.at("asset_dir")));

@@ -5,8 +5,11 @@ using json = nlohmann::json;
 
 namespace Parrot {
 	// WindowConfig
-	WindowConfig::WindowConfig(const stdf::path& config_path)
-		: UUIDObject(config_path) {
-		loadFromJSON(json::parse(ifstream(config_path)), config_path);
+	WindowConfig::WindowConfig(const AssetPath& asset_path, AssetLocker& locker)
+		: Asset(asset_path) {
+		auto json = asset_path.applySubpathToJSON(
+			json::parse(ifstream(asset_path.filepath))
+		);
+		loadFromJSON(json, locker);
 	}
 }

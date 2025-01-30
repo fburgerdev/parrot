@@ -12,7 +12,7 @@ namespace Parrot {
 			Renderer(Context& _context);
 
 			// drawScene
-			void drawScene(const SceneData& scene_data, AssetHandleResolver resolver);
+			void drawScene(const SceneData& scene_data);
 		private:
 			UniformBuffer* _3d_buffer = nullptr;
 			SurfaceBlock _surface;

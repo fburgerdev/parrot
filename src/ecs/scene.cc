@@ -6,11 +6,9 @@ using json = nlohmann::json;
 
 namespace Parrot {
 	// Scene / ~Scene
-	Scene::Scene(const SceneConfig& config, AssetHandleResolver resolver, Scriptable* parent)
+	Scene::Scene(const SceneConfig& config, Scriptable* parent)
 		: name(config.name), root(this) {
-		resolver.useHandle<EntityConfig>([&](const EntityConfig& config) {
-			root = Entity(config, resolver, this);
-		}, config.root);
+		root = Entity(config.root.lock(), this);
 	}
 	Scene::~Scene() {
 		Scriptable::removeAllScripts();

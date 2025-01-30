@@ -7,7 +7,7 @@ namespace Parrot {
 		class Texture {
 		public:
 			// Texture / ~Texture
-			Texture(const TextureConfig& config, AssetHandleResolver resolver);
+			Texture(const TextureConfig& config);
 			Texture(const Texture&) = delete;
 			Texture(Texture&& other) noexcept;
 			~Texture();

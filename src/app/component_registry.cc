@@ -8,16 +8,22 @@
 using json = nlohmann::json;
 
 namespace Parrot {
-	// (global) registry
+	using ComponentRegistryEntry = RegistryEntry<
+		ComponentConfig, const json&, const AssetPath&, AssetLocker&
+	>;
+	// (global) g_registry
 	template<>
-	Map<string, RegistryEntry<ComponentConfig, const json&, const stdf::path&>>
-		g_registry<ComponentConfig, const json&, const stdf::path&> = {
+	Map<string, ComponentRegistryEntry> g_registry<
+		ComponentConfig, const json&, const AssetPath&, AssetLocker&
+	> = {
 		{
 			"camera",
 			{
 				typeid(DerivedComponentConfig<Camera>).hash_code(),
-				[](const json& json, const stdf::path& filepath) {
-					return std::make_unique<DerivedComponentConfig<Camera>>(json, filepath);
+				[](const json& json, const AssetPath& asset_path, AssetLocker& locker) {
+					return std::make_unique<DerivedComponentConfig<Camera>>(
+						json, asset_path, locker
+					);
 				}
 			},
 		},
@@ -25,8 +31,10 @@ namespace Parrot {
 			"light-source",
 			{
 				typeid(DerivedComponentConfig<LightSource>).hash_code(),
-				[](const json& json, const stdf::path& filepath) {
-					return std::make_unique<DerivedComponentConfig<LightSource>>(json, filepath);
+				[](const json& json, const AssetPath& asset_path, AssetLocker& locker) {
+					return std::make_unique<DerivedComponentConfig<LightSource>>(
+						json, asset_path, locker
+					);
 				}
 			},
 		},
@@ -34,8 +42,10 @@ namespace Parrot {
 			"render-object",
 			{
 				typeid(DerivedComponentConfig<RenderObject>).hash_code(),
-				[](const json& json, const stdf::path& filepath) {
-					return std::make_unique<DerivedComponentConfig<RenderObject>>(json, filepath);
+				[](const json& json, const AssetPath& asset_path, AssetLocker& locker) {
+					return std::make_unique<DerivedComponentConfig<RenderObject>>(
+						json, asset_path, locker
+					);
 				}
 			},
 		},

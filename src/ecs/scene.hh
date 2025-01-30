@@ -7,7 +7,7 @@ namespace Parrot {
 	class Scene : public UUIDObject, public Scriptable {
 	public:
 		// Scene / ~Scene
-		Scene(const SceneConfig& config, AssetHandleResolver resolver, Scriptable* parent = nullptr);
+		Scene(const SceneConfig& config, Scriptable* parent = nullptr);
 		Scene(Scene&&) = default;
 		~Scene();
 		// =

@@ -1,16 +1,18 @@
 #pragma once
-#include "core/uuid.hh"
+#include "core/asset_handle.hh"
 
 namespace Parrot {
-	// ShaderSource
-	class ShaderSource : public UUIDObject {
+	// ShaderSource (Asset)
+	class ShaderSource : public Asset {
 	public:
-		// ShaderSource
+		// (constructor) for Asset
 		ShaderSource() = default;
-		ShaderSource(const stdf::path& filepath);
+		ShaderSource(const AssetPath& asset_path, AssetLocker& locker);
 		ShaderSource(const string& source);
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		ShaderSource(const JSON& json, const stdf::path& filepath) {}
+		template<JsonType JSON>
+		ShaderSource(
+			const JSON& json, const AssetPath& asset_path, AssetLocker& locker
+		) : Asset(asset_path) {}
 
 		// SnippetInclude
 		struct SnippetInclude {

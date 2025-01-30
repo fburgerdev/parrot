@@ -3,24 +3,26 @@
 #include "material.hh"
 
 namespace Parrot {
-    // ModelMaterial
-    struct ModelMaterial {
-        usize tex_index = 0xFFFFFF;
-    };
-    // SubModel
-    using SubModel = Pair<Mesh, usize>;
-    // Model
-    class Model : public UUIDObject {
-    public:
-        // Model
+	// ModelMaterial
+	struct ModelMaterial {
+		usize tex_index = 0xFFFFFF;
+	};
+	// SubModel
+	using SubModel = Pair<Mesh, usize>;
+	// Model (Asset)
+	class Model : public Asset {
+	public:
+		// Model
 		Model() = default;
-        Model(const stdf::path& filepath);
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		Model(const JSON& json, const stdf::path& filepath) {}
+		Model(const AssetPath& asset_path, AssetLocker& locker);
+		template<JsonType JSON>
+		Model(
+			const JSON& json, const AssetPath& asset_path, AssetLocker& locker
+		) : Asset(asset_path) {}
 
-        // submodels, model_materials, textures
-        List<SubModel> submodels;
-        List<ModelMaterial> model_materials;
-        List<TextureConfig> textures;
-    };
+		// submodels, model_materials, textures
+		List<SubModel> submodels;
+		List<ModelMaterial> model_materials;
+		List<TextureConfig> textures;
+	};
 }

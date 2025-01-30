@@ -5,7 +5,7 @@
 namespace Parrot {
     namespace OpenGL {
         // Texture / ~Texture
-        Texture::Texture(const TextureConfig& config, AssetHandleResolver resolver) {
+        Texture::Texture(const TextureConfig& config) {
             // generate
             glGenTextures(1, &_gpu_id);
             glBindTexture(GL_TEXTURE_2D, _gpu_id);
@@ -19,14 +19,13 @@ namespace Parrot {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
             // load image
-            resolver.useHandle<Image>([&](const Image& image) {
-                glTexImage2D(
-                    GL_TEXTURE_2D, 0, GL_RGBA,
-                    image.getWidth(), image.getHeight(), 0,
-                    GL_RGBA, GL_UNSIGNED_BYTE,
-                    image.getBytes()
-                );
-            }, config.image);
+            auto image = config.image.lock();
+            glTexImage2D(
+                GL_TEXTURE_2D, 0, GL_RGBA,
+                image->getWidth(), image->getHeight(), 0,
+                GL_RGBA, GL_UNSIGNED_BYTE,
+                image->getBytes()
+            );
         }
         Texture::Texture(Texture&& other) noexcept
             : _gpu_id(std::exchange(other._gpu_id, 0)) {}

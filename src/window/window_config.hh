@@ -1,5 +1,5 @@
 #pragma once
-#include "core/uuid.hh"
+#include "core/asset_handle.hh"
 #include "debug/engine_logger.hh"
 
 namespace Parrot {
@@ -8,20 +8,22 @@ namespace Parrot {
 		NORMAL, HIDDEN, CAPTURED
 	};
 
-	// WindowConfig
-	class WindowConfig : public UUIDObject {
+	// WindowConfig (Asset)
+	class WindowConfig : public Asset {
 	public:
-		// WindowConfig
+		// (constructor) for Asset
 		WindowConfig() = default;
-		WindowConfig(const stdf::path& config_path);
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		WindowConfig(const JSON& json, const stdf::path& filepath) {
-			loadFromJSON(json, filepath);
+		WindowConfig(const AssetPath& asset_path, AssetLocker& locker);
+		template<JsonType JSON>
+		WindowConfig(
+			const JSON& json, const AssetPath& asset_path, AssetLocker& locker
+		) : Asset(asset_path) {
+			loadFromJSON(json, locker);
 		}
 
 		// loadFromJSON
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		void loadFromJSON(const JSON& json, [[maybe_unused]] const stdf::path& filepath) {
+		template<JsonType JSON>
+		void loadFromJSON(const JSON& json, AssetLocker& locker) {
 			// title
 			if (json.contains("title")) {
 				title = string(json.at("title"));

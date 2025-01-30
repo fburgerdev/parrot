@@ -53,13 +53,14 @@ namespace Parrot {
     }
 
     // Model
-    Model::Model(const stdf::path& filepath) {
+    Model::Model(const AssetPath& asset_path, AssetLocker& locker)
+		: Asset(asset_path) {
         Assimp::Importer importer;
         uint flags = 0;
         flags |= aiProcess_Triangulate;
         flags |= aiProcess_FlipUVs;
         flags |= aiProcess_FlipWindingOrder;
-        const aiScene* scene = importer.ReadFile(filepath.string(), flags);
+        const aiScene* scene = importer.ReadFile(asset_path.filepath.string(), flags);
         if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
             cout << "ERROR::ASSIMP::" << importer.GetErrorString() << endl;
             return;
@@ -76,10 +77,13 @@ namespace Parrot {
                 const auto* texture = scene->GetEmbeddedTexture(name.C_Str());
                 if (texture->mHeight == 0) {
                     model_material.tex_index = textures.size();
-                    textures.emplace_back(Image(name.C_Str(), (const uchar*)texture->pcData, texture->mWidth));
+                    UUID uuid = generateUUID();
+                    locker.add(uuid, stdf::path(name.C_Str()),
+                    std::make_shared<Image>(name.C_Str(), (const uchar*)texture->pcData, texture->mWidth));
+                    textures.emplace_back(AssetHandle<Image>(uuid, locker));
                 }
             }
         }
-        LOG_ASSET_DEBUG("loaded model {} with {} submodel(s) and {}", filepath, submodels.size(), textures.size());
+        LOG_ASSET_DEBUG("loaded model {} with {} submodel(s) and {}", asset_path.filepath, submodels.size(), textures.size());
     }
 }

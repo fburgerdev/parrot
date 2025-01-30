@@ -9,8 +9,8 @@ namespace Parrot {
 		// Entity / ~Entity
 		Entity(Scriptable* parent = nullptr);
 		Entity(Entity* parent);
-		Entity(const EntityConfig& config, AssetHandleResolver resolver, Scriptable* parent = nullptr);
-		Entity(const EntityConfig& config, AssetHandleResolver resolver, Entity* parent);
+		Entity(const SharedPtr<EntityConfig>& config, Scriptable* parent = nullptr);
+		Entity(const SharedPtr<EntityConfig>& config, Entity* parent);
 		Entity(Entity&&) = default;
 		~Entity();
 		// =

@@ -5,9 +5,12 @@ using json = nlohmann::json;
 
 namespace Parrot {
 	// TextureConfig
-	TextureConfig::TextureConfig(const stdf::path& filepath)
-		: UUIDObject(filepath) {
-		loadFromJSON(json::parse(ifstream(filepath)), filepath);
+	TextureConfig::TextureConfig(const AssetPath& asset_path, AssetLocker& locker)
+		: Asset(asset_path) {
+		auto json = asset_path.applySubpathToJSON(
+			json::parse(ifstream(asset_path.filepath))
+		);
+		loadFromJSON(json, locker);
 	}
 	TextureConfig::TextureConfig(AssetHandle<Image> image)
 		: image(std::move(image)) {}

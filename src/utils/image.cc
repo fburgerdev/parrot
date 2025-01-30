@@ -34,6 +34,8 @@ namespace Parrot {
 		_bytes = img;
 		LOG_ASSET_DEBUG("loaded image {}, {}px x {}px with {} channels", filepath, width, height, channels);
 	}
+  Image::Image(const AssetPath& asset_path, AssetLocker& locker)
+    : Image(asset_path.filepath) {}
 	Image::Image(strview name, const uchar* buffer, usize size)
 			: _name(name), _width(0), _height(0), _format(ImageFormat::NONE), _bytes(nullptr) {
 		int width, height, channels;

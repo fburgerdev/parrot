@@ -13,9 +13,6 @@ namespace Parrot {
 		// Context
 		class Context {
 		public:
-			// Context
-			Context(AssetHandleResolver resolver);
-
 			// getVertexArray
 			VertexArray& getVertexArray(const Mesh& mesh);
 			// getShader
@@ -53,7 +50,6 @@ namespace Parrot {
 			HashMap<UUID, IndexBuffer> _index_buffers;
 			HashMap<UUID, UniformBuffer> _uniform_buffers;
 			HashMap<UUID, VertexArray> _vertex_arrays;
-			AssetHandleResolver _resolver;
 		};
 	}
 }

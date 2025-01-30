@@ -5,8 +5,11 @@ using json = nlohmann::json;
 
 namespace Parrot {
 	// Material
-	Material::Material(const stdf::path& filepath)
-		: UUIDObject(filepath) {
-		loadFromJSON(json::parse(ifstream(filepath)), filepath);
+	Material::Material(const AssetPath& asset_path, AssetLocker& locker)
+		: Asset(asset_path) {
+		auto json = asset_path.applySubpathToJSON(
+			json::parse(ifstream(asset_path.filepath))
+		);
+		loadFromJSON(json, locker);
 	}
 }

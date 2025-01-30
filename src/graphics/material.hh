@@ -26,19 +26,19 @@ namespace Parrot {
 	struct MaterialNode {
 		// MaterialNode
 		MaterialNode() = default;
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		MaterialNode(const JSON& json, const stdf::path& filepath) {
-			loadFromJSON(json, filepath);
+		template<JsonType JSON>
+		MaterialNode(const JSON& json, AssetLocker& locker) {
+			loadFromJSON(json, locker);
 		}
 
 		// loadFromJSON
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		void loadFromJSON(const JSON& json, const stdf::path& filepath) {
+		template<JsonType JSON>
+		void loadFromJSON(const JSON& json, AssetLocker& locker) {
 			// object
 			if (json.is_object()) {
 				Map<string, MaterialNode> map;
 				for (const auto& [key, value] : json.items()) {
-					map.try_emplace(key, value, filepath);
+					map.try_emplace(key, value, locker);
 				}
 				value = std::move(map);
 			}
@@ -107,14 +107,16 @@ namespace Parrot {
 					}
 					// texture
 					else if (dtype == "texture") {
-						value = MaterialLeaf(parseAssetHandle<TextureConfig>(array.at(1), filepath));
+						value = MaterialLeaf(
+							AssetHandle<TextureConfig>(array.at(1), locker)
+						);
 					}
 				}
 				// list
 				else {
 					List<MaterialNode> list;
 					for (const auto& el : array) {
-						list.emplace_back(el, filepath);
+						list.emplace_back(el, locker);
 					}
 					value = std::move(list);
 				}
@@ -155,25 +157,27 @@ namespace Parrot {
 		}
 	};
 
-	// Material
-	class Material : public UUIDObject {
+	// Material (Asset)
+	class Material : public Asset {
 	public:
-		// Material
-		Material(const stdf::path& filepath);
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		Material(const JSON& json, const stdf::path& filepath) {
-			loadFromJSON(json, filepath);
+		// (constructor) for Asset
+		Material(const AssetPath& asset_path, AssetLocker& locker);
+		template<JsonType JSON>
+		Material(
+			const JSON& json, const AssetPath& asset_path, AssetLocker& locker
+		) : Asset(asset_path) {
+			loadFromJSON(json, locker);
 		}
 
 		// loadFromJSON
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		void loadFromJSON(const JSON& json, const stdf::path& filepath) {
+		template<JsonType JSON>
+		void loadFromJSON(const JSON& json, AssetLocker& locker) {
 			// root
 			if (json.contains("uniforms")) {
-				root.loadFromJSON(json.at("uniforms"), filepath);
+				root.loadFromJSON(json.at("uniforms"), locker);
 			}
 			// shader
-			shader = parseAssetHandle<ShaderSource>(json.at("shader"), filepath);
+			shader = AssetHandle<ShaderSource>(json.at("shader"), locker);
 		}
 
 		// root, shader

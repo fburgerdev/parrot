@@ -2,26 +2,28 @@
 #include "entity_config.hh"
 
 namespace Parrot {
-	// SceneConfig
-	class SceneConfig : public UUIDObject {
+	// SceneConfig (Asset)
+	class SceneConfig : public Asset {
 	public:
-		// SceneConfig
+		// (constructor) for Asset
 		SceneConfig() = default;
-		SceneConfig(const stdf::path& config_path);
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		SceneConfig(const JSON& json, const stdf::path& filepath) {
-			loadFromJSON(json, filepath);
+		SceneConfig(const AssetPath& asset_path, AssetLocker& locker);
+		template<JsonType JSON>
+		SceneConfig(
+			const JSON& json, const AssetPath& asset_path, AssetLocker& locker
+		) : Asset(asset_path) {
+			loadFromJSON(json, locker);
 		}
 
 		// loadFromJSON
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		void loadFromJSON(const JSON& json, const stdf::path& filepath) {
+		template<JsonType JSON>
+		void loadFromJSON(const JSON& json, AssetLocker& locker) {
 			// name
 			if (json.contains("name")) {
 				name = string(json.at("name"));
 			}
 			// root
-			root = parseAssetHandle<EntityConfig>(json.at("root"), filepath);
+			root = AssetHandle<EntityConfig>(json.at("root"), locker);
 		}
 
 		// name, root

@@ -4,10 +4,6 @@
 
 namespace Parrot {
 	namespace OpenGL {
-		// Context
-		Context::Context(AssetHandleResolver resolver)
-			: _resolver(resolver) {}
-
 		// getVertexArray
 		VertexArray& Context::getVertexArray(const Mesh& mesh) {
 			auto it = _vertex_arrays.find(mesh.getUUID());
@@ -39,7 +35,7 @@ namespace Parrot {
 		Texture& Context::getTexture(const TextureConfig& texture) {
 			auto it = _textures.find(texture.getUUID());
 			if (it == _textures.end()) {
-				return _textures.emplace(texture.getUUID(), Texture(texture, _resolver)).first->second;
+				return _textures.emplace(texture.getUUID(), Texture(texture)).first->second;
 			}
 			else {
 				return it->second;
@@ -73,9 +69,8 @@ namespace Parrot {
 						}, std::get<NumericMaterialLeaf>(leaf));
 				}
 				else if (std::holds_alternative<AssetHandle<TextureConfig>>(leaf)) {
-					_resolver.useHandles([&](const TextureConfig& texture) {
-						getTexture(texture).bind(0);
-					}, std::get<AssetHandle<TextureConfig>>(leaf));
+					auto texture = std::get<AssetHandle<TextureConfig>>(leaf).lock();
+					getTexture(*texture).bind(0);
 					shader.setUniform(prefix, 0);
 				}
 			}

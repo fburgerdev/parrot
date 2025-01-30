@@ -9,13 +9,13 @@ namespace Parrot {
 	class PlayingUnit : public UUIDObject {
 	public:
 		// PlayingUnit
-		PlayingUnit(const WindowConfig& window_config, const SceneConfig& scene_config, AssetHandleResolver resolver, Scriptable* parent = nullptr);
+		PlayingUnit(const WindowConfig& window_config, const SceneConfig& scene_config, Scriptable* parent = nullptr);
 		PlayingUnit(PlayingUnit&& other) noexcept;
 		// =
 		PlayingUnit& operator=(PlayingUnit&& other) noexcept;
 
 		// draw
-		void draw(AssetHandleResolver resolver);
+		void draw();
 
 		// friend
 		friend class App;

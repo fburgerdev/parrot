@@ -6,20 +6,22 @@
 #include "debug/engine_logger.hh"
 
 namespace Parrot {
-	// EntityConfig
-	class EntityConfig : public UUIDObject {
+	// EntityConfig (Asset)
+	class EntityConfig : public Asset {
 	public:
-		// EntityConfig
+		// (constructor) for Asset
 		EntityConfig() = default;
-		EntityConfig(const stdf::path& config_path);
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		EntityConfig(const JSON& json, const stdf::path& filepath) {
-			loadFromJSON(json, filepath);
+		EntityConfig(const AssetPath& asset_path, AssetLocker& locker);
+		template<JsonType JSON>
+		EntityConfig(
+			const JSON& json, const AssetPath& asset_path, AssetLocker& locker
+		) : Asset(asset_path) {
+			loadFromJSON(json, locker);
 		}
 
 		// loadFromJSON
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		void loadFromJSON(const JSON& json, const stdf::path& filepath) {
+		template<JsonType JSON>
+		void loadFromJSON(const JSON& json, AssetLocker& locker) {
 			// tag
 			if (json.contains("tag")) {
 				tag = string(json.at("tag"));
@@ -51,15 +53,15 @@ namespace Parrot {
 			// children
 			if (json.contains("children")) {
 				for (const auto& child : json.at("children")) {
-					children.emplace_back(parseAssetHandle<EntityConfig>(child, filepath));
+					children.emplace_back(child, locker);
 				}
 			}
 			// components
 			if (json.contains("components")) {
 				for (const auto& [name, data] : json.at("components").items()) {
-					if (g_registry<ComponentConfig, const JSON&, const stdf::path&>.contains(name)) {
+					if (g_registry<ComponentConfig, const JSON&, const AssetPath&, AssetLocker&>.contains(name)) {
 						components.emplace_back(
-							g_registry<ComponentConfig, const JSON&, const stdf::path&>.at(name).second(data, filepath)
+							g_registry<ComponentConfig, const JSON&, const AssetPath&, AssetLocker&>.at(name).second(data, asset_path, locker)
 						);
 					}
 					else {

@@ -3,20 +3,22 @@
 #include "material.hh"
 
 namespace Parrot {
-	// RenderObject
-	struct RenderObject {
-		// RenderObject
+	// RenderObject (SubAsset)
+	struct RenderObject : public Asset {
+		// (constructor) for SubAsset
 		RenderObject() = default;
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		RenderObject(const JSON& json, const stdf::path& filepath) {
-			loadFromJSON(json, filepath);
+		template<JsonType JSON>
+		RenderObject(
+			const JSON& json, const AssetPath& asset_path, AssetLocker& locker
+		) : Asset(asset_path) {
+			loadFromJSON(json, locker);
 		}
 
 		// loadFromJSON
-		template<class JSON> requires(requires(JSON json) { json.at("key"); })
-		void loadFromJSON(const JSON& json, const stdf::path& filepath) {
-			model = parseAssetHandle<Model>(json.at("model"), filepath);
-			material = parseAssetHandle<Material>(json.at("material"), filepath);
+		template<JsonType JSON>
+		void loadFromJSON(const JSON& json, AssetLocker& locker) {
+			model = AssetHandle<Model>(json.at("model"), locker);
+			material = AssetHandle<Material>(json.at("material"), locker);
 		}
 
 		// model, material
