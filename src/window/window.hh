@@ -34,6 +34,8 @@ namespace Parrot {
     void setIcon(const Image& image);
     // setCursorState
     void setCursorState(CursorState state);
+    // getCursorCoords
+    Vec2<> getCursorCoords() const;
 
     // foreachChild (scriptable)
     virtual void foreachChild(

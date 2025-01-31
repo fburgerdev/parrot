@@ -161,6 +161,12 @@ namespace Parrot {
         glfwSetInputMode(handle(_handle), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
       }
     }
+    // getCursorCoords
+    Vec2<> PhysicalWindow::getCursorCoords() const {
+      double x, y;
+      glfwGetCursorPos(handle(_handle), &x, &y);
+      return { DefaultFloat(x), DefaultFloat(y) }; //! narrowing cast
+    }
 
     // pollEvents
     List<WindowEvent> PhysicalWindow::pollEvents() {

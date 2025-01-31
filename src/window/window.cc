@@ -58,6 +58,10 @@ namespace Parrot {
       _cursor = state;
     }
   }
+  // getCursorCoords
+  Vec2<> Window::getCursorCoords() const {
+    return _physical.getCursorCoords();
+  }
 
   // foreachChild (scriptable)
   void Window::foreachChild(

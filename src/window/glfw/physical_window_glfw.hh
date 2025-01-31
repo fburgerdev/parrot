@@ -1,6 +1,7 @@
 #pragma once
 #include "window/window_event.hh"
 #include "utils/image.hh"
+#include "math/matrix.hh"
 
 namespace Parrot {
   namespace GLFW {
@@ -33,6 +34,8 @@ namespace Parrot {
       void setCursorStateHidden();
       // setCursorStateCaptured
       void setCursorStateCaptured();
+      // getCursorCoords
+      Vec2<> getCursorCoords() const;
 
       // pollEvents
       List<WindowEvent> pollEvents();
