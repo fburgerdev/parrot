@@ -8,18 +8,18 @@ namespace Parrot {
     { json.at("key") };
   };
   // AssetPath
-	struct AssetPath {
-		// (constructor)
-		AssetPath() = default;
+  struct AssetPath {
+    // (constructor)
+    AssetPath() = default;
     AssetPath(const stdf::path& filepath)
       : filepath(filepath) {}
-		AssetPath(const stdf::path& filepath, strview subpath);
-		AssetPath(strview path);
+    AssetPath(const stdf::path& filepath, strview subpath);
+    AssetPath(strview path);
 
     // splitSubpath
     List<string> splitSubpath() const;
     // applySubpathToJSON
-		template<JsonType JSON>
+    template<JsonType JSON>
     auto applySubpathToJSON(const JSON& root) const {
       const JSON* value = &root;
       for (const string& token : splitSubpath()) {
@@ -36,9 +36,9 @@ namespace Parrot {
     auto operator<=>(const AssetPath&) const = default;
 
     // filepath, subpath
-		stdf::path filepath;
-		string subpath;
-	};
+    stdf::path filepath;
+    string subpath;
+  };
   // AssetKey
   using AssetKey = Variant<UUID, AssetPath>;
 }

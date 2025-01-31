@@ -50,7 +50,7 @@ namespace Parrot {
   ) {
     for (uint i = 0; i < node->mNumMeshes; ++i) {
       aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-      submodels.emplace_back(processSubModel(mesh, scene));			
+      submodels.emplace_back(processSubModel(mesh, scene));      
     }
     for (uint i = 0; i < node->mNumChildren; ++i) {
       processNode(node->mChildren[i], scene, submodels);

@@ -4,27 +4,27 @@
 #include "graphics/renderer.hh"
 
 namespace Parrot {
-	//? reconsider name
-	// PlayingUnit
-	class PlayingUnit : public UUIDObject {
-	public:
-		// (constructor)
-		PlayingUnit(const WindowConfig& window_config, const SceneConfig& scene_config, Scriptable* parent = nullptr);
-		PlayingUnit(PlayingUnit&& other) noexcept;
-		// (assignment)
-		PlayingUnit& operator=(PlayingUnit&& other) noexcept;
+  //? reconsider name
+  // PlayingUnit
+  class PlayingUnit : public UUIDObject {
+  public:
+    // (constructor)
+    PlayingUnit(const WindowConfig& window_config, const SceneConfig& scene_config, Scriptable* parent = nullptr);
+    PlayingUnit(PlayingUnit&& other) noexcept;
+    // (assignment)
+    PlayingUnit& operator=(PlayingUnit&& other) noexcept;
 
-		// draw
-		void draw();
+    // draw
+    void draw();
 
-		// friend
-		friend class App;
+    // friend
+    friend class App;
 
-		// window, scene
-		Window window;
-		Scene scene;
-	private:
-		Renderer _renderer;
-		GPUContext _gpu_context;
-	};
+    // window, scene
+    Window window;
+    Scene scene;
+  private:
+    Renderer _renderer;
+    GPUContext _gpu_context;
+  };
 }

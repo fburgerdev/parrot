@@ -2,8 +2,8 @@
 #include "logger.hh"
 
 namespace Parrot {
-	// (global) engine_logger
-	inline Logger engine_logger = Logger("parrot");
+  // (global) engine_logger
+  inline Logger engine_logger = Logger("parrot");
 }
 // macros
 #if !defined(PARROT_NO_LOG)

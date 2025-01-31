@@ -4,20 +4,20 @@
 #include "asset_policy.hh"
 
 namespace Parrot {
-	// AssetManager
-	class AssetManager : public AssetAPI {
-	public:
-		// (constructor)
-		AssetManager() = default;
-		AssetManager(const stdf::path& directory);
-		AssetManager(
-			const stdf::path& directory,
-			LoadingPolicy loading_policy,
-			UnloadingPolicy unloading_policy
-		);
-		
-		// getDirectory
-		const stdf::path getDirectory() const;
+  // AssetManager
+  class AssetManager : public AssetAPI {
+  public:
+    // (constructor)
+    AssetManager() = default;
+    AssetManager(const stdf::path& directory);
+    AssetManager(
+      const stdf::path& directory,
+      LoadingPolicy loading_policy,
+      UnloadingPolicy unloading_policy
+    );
+    
+    // getDirectory
+    const stdf::path getDirectory() const;
 
     // lockAsset
     virtual SharedPtr<Asset> lockAsset(
@@ -25,11 +25,11 @@ namespace Parrot {
     ) override;
     // addAsset
     virtual UUID addAsset(SharedPtr<Asset> asset) override;
-	private:
-		stdf::path _directory;
-		LoadingPolicy _loading_policy = LoadingPolicy::LAZY_LOAD;
-		UnloadingPolicy _unloading_policy = UnloadingPolicy::UNLOAD_APP;
+  private:
+    stdf::path _directory;
+    LoadingPolicy _loading_policy = LoadingPolicy::LAZY_LOAD;
+    UnloadingPolicy _unloading_policy = UnloadingPolicy::UNLOAD_APP;
     AssetRegistry _registry;
     Map<UUID, Variant<SharedPtr<Asset>, WeakPtr<Asset>>> _loaded;
-	};
+  };
 }

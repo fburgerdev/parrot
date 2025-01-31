@@ -11,9 +11,9 @@ namespace Parrot {
   // <<
   ostream& operator<<(ostream& stream, const WindowCloseRequest& e);
 
-	// KeyPress
-	// :: Code
-	enum class KeyCode {
+  // KeyPress
+  // :: Code
+  enum class KeyCode {
     // GERMAN layout
     KEY_GER_ESZETT = 1000,
     KEY_GER_UMLAUT_U = 1001,
@@ -144,35 +144,35 @@ namespace Parrot {
     KEY_RIGHT_ALT = 346,
     KEY_RIGHT_SUPER = 347,
     KEY_MENU = 348
-	};
-	// :: State
-	enum class KeyState {
-		PRESSED, RELEASED, REPEATED
-	};
-	// :: Event
-	struct KeyPress {
-		// code, state
+  };
+  // :: State
+  enum class KeyState {
+    PRESSED, RELEASED, REPEATED
+  };
+  // :: Event
+  struct KeyPress {
+    // code, state
     KeyCode code;
-		KeyState state;
-	};
+    KeyState state;
+  };
   // <<
   ostream& operator<<(ostream& stream, const KeyPress& e);
 
-	// MousePress
-	// :: Button
-	enum class MouseButton {
-		LEFT, MIDDLE, RIGHT
-	};
-	// :: State
-	enum class MouseState {
-		PRESSED, RELEASED
-	};
-	// :: Event
-	struct MousePress {
-		// button, state
-		MouseButton button;
-		MouseState state;
-	};
+  // MousePress
+  // :: Button
+  enum class MouseButton {
+    LEFT, MIDDLE, RIGHT
+  };
+  // :: State
+  enum class MouseState {
+    PRESSED, RELEASED
+  };
+  // :: Event
+  struct MousePress {
+    // button, state
+    MouseButton button;
+    MouseState state;
+  };
   // <<
   ostream& operator<<(ostream& stream, const MousePress& e);
 
@@ -184,9 +184,9 @@ namespace Parrot {
   // <<
   ostream& operator<<(ostream& stream, const MouseMove& e);
 
-	// WindowEvent
-	class WindowEvent : public Event {
-	public:
+  // WindowEvent
+  class WindowEvent : public Event {
+  public:
     // WindowEvent
     WindowEvent(const WindowCloseRequest& wqr)
       : _value(wqr) {}
@@ -202,12 +202,12 @@ namespace Parrot {
     // getWindowCloseRequest
     WindowCloseRequest* getWindowCloseRequest();
     const WindowCloseRequest* getWindowCloseRequest() const;
-		// getKeyPress
-		KeyPress* getKeyPress();
-		const KeyPress* getKeyPress() const;
-		// getMousePress
-		MousePress* getMousePress();
-		const MousePress* getMousePress() const;
+    // getKeyPress
+    KeyPress* getKeyPress();
+    const KeyPress* getKeyPress() const;
+    // getMousePress
+    MousePress* getMousePress();
+    const MousePress* getMousePress() const;
     // getMouseMove
     MouseMove* getMouseMove();
     const MouseMove* getMouseMove() const;
@@ -219,11 +219,11 @@ namespace Parrot {
 
     // <<
     friend ostream& operator<<(ostream& stream, const WindowEvent& e);
-	private:
-		Variant<
-			WindowCloseRequest,
+  private:
+    Variant<
+      WindowCloseRequest,
       KeyPress, MousePress,
       MouseMove
-		> _value;
-	};
+    > _value;
+  };
 }

@@ -3,25 +3,25 @@
 #include "debug/engine_logger.hh"
 
 namespace Parrot {
-	// (constructor)
-	AssetManager::AssetManager(const stdf::path& asset_dir)
-		: AssetManager(asset_dir, LoadingPolicy::LAZY_LOAD, UnloadingPolicy::UNLOAD_APP) {}
-	AssetManager::AssetManager(
-		const stdf::path& asset_dir,
-		LoadingPolicy loading_policy,
-		UnloadingPolicy unloading_policy)
-		: _directory(asset_dir),
+  // (constructor)
+  AssetManager::AssetManager(const stdf::path& asset_dir)
+    : AssetManager(asset_dir, LoadingPolicy::LAZY_LOAD, UnloadingPolicy::UNLOAD_APP) {}
+  AssetManager::AssetManager(
+    const stdf::path& asset_dir,
+    LoadingPolicy loading_policy,
+    UnloadingPolicy unloading_policy)
+    : _directory(asset_dir),
       _registry(asset_dir),
-		  _loading_policy(loading_policy),
-		  _unloading_policy(unloading_policy) {
-		// TODO: assert(int(loading_policy) <= int(unloading_policy))
-		LOG_ASSET_TRACE("asset-manager initialized with directory {}", asset_dir);
-	}
+      _loading_policy(loading_policy),
+      _unloading_policy(unloading_policy) {
+    // TODO: assert(int(loading_policy) <= int(unloading_policy))
+    LOG_ASSET_TRACE("asset-manager initialized with directory {}", asset_dir);
+  }
 
-	// getDirectory
-	const stdf::path AssetManager::getDirectory() const {
-		return _directory;
-	}
+  // getDirectory
+  const stdf::path AssetManager::getDirectory() const {
+    return _directory;
+  }
 
   // lockAsset
   SharedPtr<Asset> AssetManager::lockAsset(
