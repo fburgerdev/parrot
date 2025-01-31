@@ -6,14 +6,15 @@ namespace Parrot {
 	// Entity
 	class Entity : public UUIDObject, public Scriptable {
 	public:
-		// Entity / ~Entity
+		// (constructor)
 		Entity(Scriptable* parent = nullptr);
 		Entity(Entity* parent);
 		Entity(const SharedPtr<EntityConfig>& config, Scriptable* parent = nullptr);
 		Entity(const SharedPtr<EntityConfig>& config, Entity* parent);
 		Entity(Entity&&) = default;
+    // (destructor)
 		~Entity();
-		// =
+		// (assignment)
 		Entity& operator=(Entity&&) = default;
 
 		// parent

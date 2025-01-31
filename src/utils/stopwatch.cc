@@ -4,7 +4,7 @@
 
 using namespace std::chrono;
 namespace Parrot {
-	// Stopwatch
+	// (constructor)
 	Stopwatch::Stopwatch()
 		: _begin(steady_clock::now().time_since_epoch().count()) {}
 	// elapsed

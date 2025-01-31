@@ -12,7 +12,7 @@ namespace Parrot {
 	// Model (Asset)
 	class Model : public Asset {
 	public:
-		// Model
+		// (constructor)
 		Model() = default;
 		Model(const AssetPath& asset_path, AssetAPI& asset_api);
 		template<JsonType JSON>

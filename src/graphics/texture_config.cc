@@ -4,7 +4,7 @@
 using json = nlohmann::json;
 
 namespace Parrot {
-	// TextureConfig
+	// (constructor)
 	TextureConfig::TextureConfig(const AssetPath& asset_path, AssetAPI& asset_api)
 		: Asset(asset_path) {
 		auto json = asset_path.applySubpathToJSON(

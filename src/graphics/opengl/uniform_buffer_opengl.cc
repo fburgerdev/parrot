@@ -5,7 +5,7 @@
 
 namespace Parrot {
 	namespace OpenGL {
-		// UniformBuffer / ~UniformBuffer
+		// (constructor)
 		UniformBuffer::UniformBuffer(usize size)
 			: _binding_point(++s_buffer_count), _is_static(false) {
 			glGenBuffers(1, &_gpu_id);
@@ -26,12 +26,13 @@ namespace Parrot {
 		}
 		UniformBuffer::UniformBuffer(UniformBuffer&& other) noexcept
 			: _gpu_id(std::exchange(other._gpu_id, 0)), _binding_point(std::exchange(other._binding_point, 0)), _is_static(other._is_static) {}
+    // (destructor)
 		UniformBuffer::~UniformBuffer() {
 			if (_gpu_id) {
 				glDeleteBuffers(1, &_gpu_id);
 			}
 		}
-		// =
+		// (assignment)
 		UniformBuffer& UniformBuffer::operator=(UniformBuffer&& other) noexcept {
 			_gpu_id = std::exchange(other._gpu_id, 0);
 			_binding_point = std::exchange(other._binding_point, 0);

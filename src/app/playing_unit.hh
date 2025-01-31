@@ -8,10 +8,10 @@ namespace Parrot {
 	// PlayingUnit
 	class PlayingUnit : public UUIDObject {
 	public:
-		// PlayingUnit
+		// (constructor)
 		PlayingUnit(const WindowConfig& window_config, const SceneConfig& scene_config, Scriptable* parent = nullptr);
 		PlayingUnit(PlayingUnit&& other) noexcept;
-		// =
+		// (assignment)
 		PlayingUnit& operator=(PlayingUnit&& other) noexcept;
 
 		// draw

@@ -14,11 +14,12 @@ namespace Parrot {
 	// Window
 	class Window : public UUIDObject, public Scriptable {
 	public:
-		// Window / ~Window
+		// (constructor)
 		Window(const WindowConfig& config, Scriptable* parent = nullptr);
 		Window(Window&&) = default;
+    // (destructor)
 		~Window();
-		// =
+		// (assignment)
 		Window& operator=(Window&&) = default;
 
 		// getTitle

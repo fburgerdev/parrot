@@ -8,7 +8,7 @@ namespace Parrot {
 	// Stopwatch
 	class Stopwatch {
 	public:
-		// Stopwatch
+		// (constructor)
 		Stopwatch();
 		// elapsed
 		seconds elapsed() const;

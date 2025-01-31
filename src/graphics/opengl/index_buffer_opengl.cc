@@ -5,7 +5,7 @@
 
 namespace Parrot {
 	namespace OpenGL {
-		// IndexBuffer
+		// (constructor)
 		IndexBuffer::IndexBuffer(usize count)
 			: _is_static(false) {
 			glGenBuffers(1, &_gpu_id);
@@ -24,13 +24,13 @@ namespace Parrot {
 		}
 		IndexBuffer::IndexBuffer(IndexBuffer&& other) noexcept
 			: _gpu_id(std::exchange(other._gpu_id, 0)), _is_static(other._is_static) {}
-		// ~IndexBuffer
+		// (destructor)
 		IndexBuffer::~IndexBuffer() {
 			if (_gpu_id) {
 				glDeleteBuffers(1, &_gpu_id);
 			}
 		}
-		// =
+		// (assignment)
 		IndexBuffer& IndexBuffer::operator=(IndexBuffer&& other) noexcept {
 			_gpu_id = std::exchange(other._gpu_id, 0);
 			_is_static = other._is_static;

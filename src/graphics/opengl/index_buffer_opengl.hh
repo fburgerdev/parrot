@@ -6,13 +6,14 @@ namespace Parrot {
 		// IndexBuffer
 		class IndexBuffer {
 		public:
-			// IndexBuffer / ~IndexBuffer
+			// (constructor)
 			IndexBuffer(usize count);
 			IndexBuffer(const uint32* indices, usize count);
 			IndexBuffer(const IndexBuffer&) = delete;
 			IndexBuffer(IndexBuffer&& other) noexcept;
+      // (destructor)
 			~IndexBuffer();
-			// =
+			// (assignment)
 			IndexBuffer& operator=(const IndexBuffer&) = delete;
 			IndexBuffer& operator=(IndexBuffer&& other) noexcept;
 

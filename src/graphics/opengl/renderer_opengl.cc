@@ -5,7 +5,7 @@
 
 namespace Parrot {
 	namespace OpenGL {
-		// Renderer
+		// (constructor)
 		Renderer::Renderer(Context& context)
 			: _context(&context) {
 			_3d_buffer = &_context->createUniformBuffer(_surface.getSize());

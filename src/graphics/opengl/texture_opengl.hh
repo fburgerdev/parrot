@@ -6,12 +6,13 @@ namespace Parrot {
 		// Texture
 		class Texture {
 		public:
-			// Texture / ~Texture
+			// (constructor)
 			Texture(const TextureConfig& config);
 			Texture(const Texture&) = delete;
 			Texture(Texture&& other) noexcept;
+      // (destructor)
 			~Texture();
-			// =
+			// (assignment)
 			Texture& operator=(const Texture&) = delete;
 			Texture& operator=(Texture&& other) noexcept;
 

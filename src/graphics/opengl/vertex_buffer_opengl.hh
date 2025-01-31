@@ -6,13 +6,14 @@ namespace Parrot {
 		// VertexBuffer
 		class VertexBuffer {
 		public:
-			// VertexBuffer / ~VertexBuffer
+			// (constructor)
 			VertexBuffer(usize size);
 			VertexBuffer(const void* buffer, usize size);
 			VertexBuffer(const VertexBuffer&) = delete;
 			VertexBuffer(VertexBuffer&& other) noexcept;
+      // (destructor)
 			~VertexBuffer();
-			// =
+			// (assignment)
 			VertexBuffer& operator=(const VertexBuffer&) = delete;
 			VertexBuffer& operator=(VertexBuffer&& other) noexcept;
 

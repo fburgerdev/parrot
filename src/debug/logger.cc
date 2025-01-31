@@ -24,7 +24,7 @@ namespace Parrot {
 		{ LogLevel::ERROR, "Error" }
 	};
 
-	// Logger
+	// (constructor)
 	Logger::Logger(strview name)
 		: _name(name) {}
 

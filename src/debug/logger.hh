@@ -9,7 +9,7 @@ namespace Parrot {
 	// Logger
 	class Logger {
 	public:
-		// Logger
+		// (constructor)
 		Logger(strview name);
 
 		// log

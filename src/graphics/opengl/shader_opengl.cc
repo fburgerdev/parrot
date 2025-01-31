@@ -7,7 +7,7 @@
 
 namespace Parrot {
 	namespace OpenGL {
-		// Shader
+		// (constructor)
 		Shader::Shader(const ShaderSource& source) {
 			// source
 			string vertex = source.vertex->toString();
@@ -30,13 +30,13 @@ namespace Parrot {
 		}
 		Shader::Shader(Shader&& other) noexcept
 			: _gpu_id(std::exchange(other._gpu_id, 0)) {}
-		// ~Shader
+		// (destructor)
 		Shader::~Shader() {
 			if (_gpu_id) {
 				glDeleteProgram(_gpu_id);
 			}
 		}
-		// =
+		// (assignment)
 		Shader& Shader::operator=(Shader&& other) noexcept {
 			_gpu_id = std::exchange(other._gpu_id, 0);
 			return *this;

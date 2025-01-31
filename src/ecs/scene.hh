@@ -6,11 +6,12 @@ namespace Parrot {
 	// Scene
 	class Scene : public UUIDObject, public Scriptable {
 	public:
-		// Scene / ~Scene
+		// (constructor)
 		Scene(const SceneConfig& config, Scriptable* parent = nullptr);
 		Scene(Scene&&) = default;
+    // (destructor)
 		~Scene();
-		// =
+		// (assignment)
 		Scene& operator=(Scene&&) = default;
 
 		// foreachChild (scriptable)

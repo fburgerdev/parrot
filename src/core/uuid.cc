@@ -16,7 +16,7 @@ namespace Parrot {
 		return s_dist(rng);
 	}
 
-	// UUIDObject
+	// (constructor)
 	UUIDObject::UUIDObject()
 		: _uuid(generateUUID()) {}
 	UUIDObject::UUIDObject(UUID uuid)
@@ -40,7 +40,7 @@ namespace Parrot {
 		: _uuid(generateUUID()) {}
 	UUIDObject::UUIDObject(UUIDObject&& other) noexcept
 		: _uuid(std::exchange(other._uuid, 0)) {}
-	// =
+	// (assignment)
 	UUIDObject& UUIDObject::operator=([[maybe_unused]] const UUIDObject& other) {
 		_uuid = generateUUID();
 		return *this;

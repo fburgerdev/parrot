@@ -12,7 +12,7 @@ namespace Parrot {
 
 		// SurfaceBlock
 		struct SurfaceBlock {
-			// SurfaceBlock
+			// (constructor)
 			SurfaceBlock() {
 				set({});
 			}

@@ -4,7 +4,7 @@
 
 namespace Parrot {
     namespace OpenGL {
-        // Texture / ~Texture
+        // (constructor)
         Texture::Texture(const TextureConfig& config) {
             // generate
             glGenTextures(1, &_gpu_id);
@@ -29,12 +29,13 @@ namespace Parrot {
         }
         Texture::Texture(Texture&& other) noexcept
             : _gpu_id(std::exchange(other._gpu_id, 0)) {}
+        // (destructor)
         Texture::~Texture() {
             if (_gpu_id) {
                 glDeleteTextures(1, &_gpu_id);
             }
         }
-        // =
+        // (assignment)
         Texture& Texture::operator=(Texture&& other) noexcept {
             _gpu_id = std::exchange(other._gpu_id, 0);
             return *this;

@@ -7,7 +7,7 @@ namespace Parrot {
 		// Renderer
 		class Renderer {
 		public:
-			// Renderer
+			// (constructor)
 			Renderer() = default;
 			Renderer(Context& _context);
 

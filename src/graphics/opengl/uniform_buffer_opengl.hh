@@ -21,13 +21,14 @@ namespace Parrot {
 		// UniformBuffer
 		class UniformBuffer {
 		public:
-			// UniformBuffer / ~UniformBuffer
+			// (constructor)
 			UniformBuffer(usize size);
 			UniformBuffer(const void* buffer, usize size);
 			UniformBuffer(const UniformBuffer&) = delete;
 			UniformBuffer(UniformBuffer&& other) noexcept;
+      // (destructor)
 			~UniformBuffer();
-			// =
+			// (assignment)
 			UniformBuffer& operator=(const UniformBuffer&) = delete;
 			UniformBuffer& operator=(UniformBuffer&& other) noexcept;
 

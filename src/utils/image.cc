@@ -5,7 +5,7 @@
 #include <stb/stb_image_write.hh>
 
 namespace Parrot {
-	// Image
+	// (constructor)
 	Image::Image(const stdf::path& filepath)
 		: _width(0), _height(0), _format(ImageFormat::NONE), _bytes(nullptr) {
 		int width, height, channels;
@@ -87,11 +87,11 @@ namespace Parrot {
 		  _height(std::exchange(other._height, 0)),
 		  _format(std::exchange(other._format, ImageFormat::NONE)),
 		  _bytes(std::exchange(other._bytes, nullptr)) {}
-	// ~Image
+	// (destructor)
 	Image::~Image() {
 		stbi_image_free(_bytes);
 	}
-	// =
+	// (assignment)
 	Image& Image::operator=(const Image& other) {
 		_width = other._width;
 		_height = other._height;

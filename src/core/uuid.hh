@@ -10,13 +10,13 @@ namespace Parrot {
 	// UUIDObject
 	class UUIDObject {
 	public:
-		// UUIDObject
+		// (constructor)
 		UUIDObject();
 		UUIDObject(UUID uuid);
 		UUIDObject(const stdf::path& filepath);
 		UUIDObject(const UUIDObject& other);
 		UUIDObject(UUIDObject&& other) noexcept;
-		// =
+		// (assignment)
 		UUIDObject& operator=(const UUIDObject& other);
 		UUIDObject& operator=(UUIDObject&& other) noexcept;
 		// getUUID

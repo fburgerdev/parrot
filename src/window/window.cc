@@ -3,7 +3,7 @@
 #include "core/registry.hh"
 
 namespace Parrot {
-	// Window / ~Window
+	// (constructor)
 	Window::Window(const WindowConfig& config, Scriptable* parent)
 		: Scriptable(parent) {
 		_title = config.title;
@@ -16,6 +16,7 @@ namespace Parrot {
 			addScript(id, factory(*this));
 		}
 	}
+  // (destructor)
 	Window::~Window() {
 		Scriptable::removeAllScripts();
 	}

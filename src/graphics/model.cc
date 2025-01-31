@@ -57,7 +57,7 @@ namespace Parrot {
     }
   }
 
-  // Model
+  // (constructor)
   Model::Model(const AssetPath& asset_path, AssetAPI& asset_api)
     : Asset(asset_path) {
     Assimp::Importer importer;

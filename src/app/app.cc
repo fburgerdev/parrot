@@ -7,7 +7,7 @@
 #include "debug/engine_logger.hh"
 
 namespace Parrot {
-	// App / ~App
+	// (constructor)
 	App::App(const stdf::path& config_path)
 		: Scriptable(&_default_scriptable), _default_scriptable(*this) {
 		AppConfig config(AssetPath(config_path), _asset_manager);
@@ -28,6 +28,7 @@ namespace Parrot {
 		// );
 		_main_unit = &add(*config.main_window.lock(), *config.main_scene.lock());
 	}
+  // (destructor)
 	App::~App() {
 		for (auto& [uuid, unit] : _units) {
 			unit.scene.removeAllScripts();

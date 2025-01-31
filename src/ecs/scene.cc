@@ -5,11 +5,12 @@
 using json = nlohmann::json;
 
 namespace Parrot {
-	// Scene / ~Scene
+	// (constructor)
 	Scene::Scene(const SceneConfig& config, Scriptable* parent)
 		: name(config.name), root(this) {
 		root = Entity(config.root.lock(), this);
 	}
+  // (destructor)
 	Scene::~Scene() {
 		Scriptable::removeAllScripts();
 	}

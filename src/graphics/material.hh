@@ -24,7 +24,7 @@ namespace Parrot {
 	>;
 	// MaterialNode
 	struct MaterialNode {
-		// MaterialNode
+		// (constructor)
 		MaterialNode() = default;
 		template<JsonType JSON>
 		MaterialNode(const JSON& json, AssetAPI& asset_api) {

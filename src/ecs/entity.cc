@@ -3,7 +3,7 @@
 #include "debug/engine_logger.hh"
 
 namespace Parrot {
-	// Entity / ~Entity
+	// (constructor)
 	Entity::Entity(Scriptable* parent)
 		: Scriptable(parent) {}
 	Entity::Entity(Entity* parent)
@@ -48,6 +48,7 @@ namespace Parrot {
 	}
 	Entity::Entity(UUID uuid, Entity* parent)
 		: UUIDObject(uuid), _parent(parent) {}
+  // (destructor)
 	Entity::~Entity() {
 		for (auto& [uuid, child] : _children) {
 			child.removeAllScripts();

@@ -7,11 +7,12 @@ namespace Parrot {
 	// App
 	class App : public Scriptable {
 	public:
-		// App / ~App
+		// (constructor)
 		App(const stdf::path& config_path);
 		App(App&&) = default;
+    // (destructor)
 		~App();
-		// =
+		// (assignment)
 		App& operator=(App&&) = default;
 
 		// add

@@ -11,12 +11,13 @@ namespace Parrot {
 		// Shader
 		class Shader {
 		public:
-			// Shader / ~Shader
+			// (constructor)
 			Shader(const ShaderSource& source);
 			Shader(const Shader&) = delete;
 			Shader(Shader&& other) noexcept;
+      // (destructor)
 			~Shader();
-			// =
+			// (assignment)
 			Shader& operator=(const Shader&) = delete;
 			Shader& operator=(Shader&& other) noexcept;
 

@@ -5,7 +5,7 @@
 
 namespace Parrot {
 	namespace OpenGL {
-		// VertexBuffer
+		// (constructor)
 		VertexBuffer::VertexBuffer(usize size)
 			: _is_static(false) {
 			glGenBuffers(1, &_gpu_id);
@@ -24,13 +24,13 @@ namespace Parrot {
 		}
 		VertexBuffer::VertexBuffer(VertexBuffer&& other) noexcept
 			: _gpu_id(std::exchange(other._gpu_id, 0)), _is_static(other._is_static) {}
-		// ~VertexBuffer
+		// (destructor)
 		VertexBuffer::~VertexBuffer() {
 			if (_gpu_id) {
 				glDeleteBuffers(1, &_gpu_id);
 			}
 		}
-		// =
+		// (assignment)
 		VertexBuffer& VertexBuffer::operator=(VertexBuffer&& other) noexcept {
 			_gpu_id = std::exchange(other._gpu_id, 0);
 			_is_static = other._is_static;

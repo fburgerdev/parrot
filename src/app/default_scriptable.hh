@@ -7,8 +7,9 @@ namespace Parrot {
 	// DefaultScriptable
 	class DefaultScriptable : public Scriptable {
 	public:
-		// DefaultScriptable / ~DefaultScriptable
+		// (constructor)
 		DefaultScriptable(App& app);
+    // (destructor)
 		~DefaultScriptable();
 
 		// foreachChild

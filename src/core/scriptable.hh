@@ -7,7 +7,7 @@ namespace Parrot {
 	// Event
 	class Event {
 	public:
-		// Event
+		// (constructor)
 		Event() = default;
 		Event(Scriptable* target)
 			: target(target) {}
@@ -26,7 +26,7 @@ namespace Parrot {
 	// Script
 	class Script {
 	public:
-		// Script
+		// (constructor)
 		Script() = default;
 
 		// onUpdate
@@ -62,13 +62,14 @@ namespace Parrot {
 	// Scriptable
 	class Scriptable {
 	public:
-		// Scriptable / ~Scriptable
+		// (constructor)
 		Scriptable() = default;
 		Scriptable(Scriptable* parent);
 		Scriptable(const Scriptable&) = delete;
 		Scriptable(Scriptable&&) noexcept;
+    // (destructor)
 		virtual ~Scriptable();
-		// =
+		// (assignment)
 		Scriptable& operator=(const Scriptable&) = delete;
 		Scriptable& operator=(Scriptable&& other) noexcept;
 

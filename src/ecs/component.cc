@@ -2,7 +2,7 @@
 #include "component.hh"
 
 namespace Parrot {
-	// Component
+	// (constructor)
 	Component::Component(Entity& entity)
 		: entity(entity) {}
 	// update

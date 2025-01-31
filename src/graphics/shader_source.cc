@@ -32,7 +32,7 @@ namespace Parrot {
 		return out;
 	}
 
-	// ShaderSource
+	// (constructor)
 	ShaderSource::ShaderSource(const AssetPath& asset_path, AssetAPI& asset_api)
 		: ShaderSource((ostrstream() << ifstream(asset_path.filepath).rdbuf()).str()) {}
 	ShaderSource::ShaderSource(const string& source) {

@@ -13,7 +13,7 @@ namespace Parrot {
 	*/
 	class Image : public Asset {
 	public:
-		// Image
+		// (constructor)
 		Image() = default;
 		Image(const stdf::path& filepath);
 		Image(strview name, const uchar* buffer, usize size);
@@ -23,9 +23,9 @@ namespace Parrot {
 		template<JsonType JSON>
 		Image(const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api)
       : Asset(asset_path) {}
-		// ~Image
+		// (destructor)
 		~Image();
-		// =
+		// (assignment)
 		Image& operator=(const Image& other);
 		Image& operator=(Image&& other) noexcept;
 

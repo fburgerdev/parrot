@@ -21,7 +21,7 @@ namespace Parrot {
 	// EntityScript
 	class EntityScript : public Script {
 	public:
-		// EntityScript
+		// (constructor)
 		EntityScript(Entity& entity)
 			: entity(&entity) {}
 
@@ -30,7 +30,7 @@ namespace Parrot {
 			entity->raiseEvent(e);
 		}
 
-		// Entity
+		// entity
 		Entity* entity;
 	private:
 		// setScriptOwner
@@ -41,7 +41,7 @@ namespace Parrot {
 	// SceneScript
 	class SceneScript : public Script {
 	public:
-		// SceneScript
+		// (constructor)
 		SceneScript(Scene& scene)
 			: scene(&scene) {}
 
@@ -50,7 +50,7 @@ namespace Parrot {
 			scene->raiseEvent(e);
 		}
 
-		// Scene
+		// scene
 		Scene* scene;
 	private:
 		// setScriptOwner
@@ -61,7 +61,7 @@ namespace Parrot {
 	// WindowScript
 	class WindowScript : public Script {
 	public:
-		// WindowScript
+		// (constructor)
 		WindowScript(Window& window)
 			: window(&window) {}
 
@@ -81,7 +81,7 @@ namespace Parrot {
 	// AppScript
 	class AppScript : public Script {
 	public:
-		// AppScript
+		// (constructor)
 		AppScript(App& app)
 			: app(&app) {}
 
@@ -90,7 +90,7 @@ namespace Parrot {
 			app->raiseEvent(e);
 		}
 
-		// App
+		// app
 		App* app;
 	private:
 		// setScriptOwner

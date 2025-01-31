@@ -29,7 +29,7 @@ namespace Parrot {
 		// ReferenceResolver
 		using ReferenceResolver = Func<void(const Variant<UUID, stdf::path>&, const ResourceFactory&, const Func<void(const void*)>&)>;
 
-		// AssetHandleResolver
+		// (constructor)
 		AssetHandleResolver() = default;
 		AssetHandleResolver(const ReferenceResolver& asset_api)
 			: _resolver(asset_api) {}

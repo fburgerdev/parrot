@@ -2,7 +2,7 @@
 #include "playing_unit.hh"
 
 namespace Parrot {
-	// PlayingUnit
+	// (constructor)
 	PlayingUnit::PlayingUnit(const WindowConfig& window_config, const SceneConfig& scene_config, Scriptable* parent)
 	  : window(window_config, parent), scene(scene_config, parent) {
 		_renderer = Renderer(_gpu_context);
@@ -13,7 +13,7 @@ namespace Parrot {
 		_gpu_context(std::move(other._gpu_context)) {
 		_renderer = Renderer(_gpu_context);
 	}
-	// =
+	// (assignment)
 	PlayingUnit& PlayingUnit::operator=(PlayingUnit&& other) noexcept {
 		window = std::move(other.window);
 		scene = std::move(other.scene);

@@ -6,7 +6,7 @@ namespace Parrot {
 	// DefaultEventHandler
 	class DefaultEventHandler : public Script {
 	public:
-		// DefaultEventHandler
+		// (constructor)
 		DefaultEventHandler(App& app)
 			: _app(&app) {}
 
@@ -50,11 +50,12 @@ namespace Parrot {
 		App* _app;
 	};
 
-	// DefaultScriptable / ~DefaultScriptable
+	// (constructor)
 	DefaultScriptable::DefaultScriptable(App& app)
 		: _app(app) {
 		addScript<DefaultEventHandler>(app);
 	}
+  // (destructor)
 	DefaultScriptable::~DefaultScriptable() {
 		Scriptable::removeAllScripts();
 	}

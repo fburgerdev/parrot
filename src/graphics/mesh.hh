@@ -24,7 +24,7 @@ namespace Parrot {
 	// Mesh
 	class Mesh : public UUIDObject {
 	public:
-		// Mesh
+		// (constructor)
 		Mesh() = default;
 		Mesh(List<Vertex>&& vertices, List<uint32>&& indices);
 

@@ -13,8 +13,9 @@ namespace Parrot {
 	// Component
 	class Component {
 	public:
-		// Component / ~Component
+		// (constructor)
 		Component(Entity& entity);
+    // (destructor)
 		virtual ~Component() = default;
 		// update
 		virtual void update(float32 update);
@@ -27,7 +28,7 @@ namespace Parrot {
 	template<class T>
 	class DerivedComponent : public T, public Component {
 	public:
-		// DerivedComponent / ~DerivedComponent
+		// (constructor)
 		DerivedComponent(const T& value, Entity& entity)
 			: T(value), Component(entity) {}
 		// update
@@ -39,7 +40,7 @@ namespace Parrot {
 	// ComponentConfig
 	class ComponentConfig {
 	public:
-		// ~ComponentConfig
+		// (destructor)
 		virtual ~ComponentConfig() = default;
 		// getComponentID
 		virtual usize getComponentID() const = 0;
@@ -51,7 +52,7 @@ namespace Parrot {
 	template<class T>
 	class DerivedComponentConfig : public T, public ComponentConfig {
 	public:
-		// DerivedComponentConfig
+		// (constructor)
 		using T::T;
 		// getComponentID
 		virtual usize getComponentID() const override {

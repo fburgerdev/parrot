@@ -11,7 +11,7 @@ namespace Parrot {
     };
   }
 
-  // Mesh
+  // (constructor)
   Mesh::Mesh(List<Vertex>&& vertices, List<uint32>&& indices)
     : vertices(std::move(vertices)), indices(std::move(indices)) {}
 }

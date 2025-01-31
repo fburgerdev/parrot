@@ -35,7 +35,7 @@ namespace Parrot {
 	}
 
 	//* Scriptable
-	// Scriptable / ~Scriptable
+	// (constructor)
 	Scriptable::Scriptable(Scriptable* parent)
 		: _parent(parent) {}
 	Scriptable::Scriptable(Scriptable&& other) noexcept
@@ -45,10 +45,11 @@ namespace Parrot {
 			script->setScriptOwner(this);
 		}
 	}
+  // (destructor)
 	Scriptable::~Scriptable() {
 		//TODO: assert all detached
 	}
-	// =
+	// (assignment)
 	Scriptable& Scriptable::operator=(Scriptable&& other) noexcept {
 		_parent = std::exchange(other._parent, nullptr);
 		_scripts = std::move(other._scripts);
