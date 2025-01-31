@@ -59,13 +59,19 @@ namespace Parrot {
       // components
       if (json.contains("components")) {
         for (const auto& [name, data] : json.at("components").items()) {
-          if (g_registry<ComponentConfig, const JSON&, const AssetPath&, AssetAPI&>.contains(name)) {
+          if (g_registry<
+              ComponentConfig, const JSON&, const AssetPath&, AssetAPI&
+            >.contains(name)) {
             components.emplace_back(
-              g_registry<ComponentConfig, const JSON&, const AssetPath&, AssetAPI&>.at(name).second(data, asset_path, asset_api)
+              g_registry<
+                ComponentConfig, const JSON&, const AssetPath&, AssetAPI&
+              >.at(name).second(data, asset_path, asset_api)
             );
           }
           else {
-            LOG_ASSET_WARNING("unregistered component '{}' in json, will be ignored ", name);
+            LOG_ASSET_WARNING(
+              "unregistered component '{}' in json, will be ignored ", name
+            );
           }
         }
       }

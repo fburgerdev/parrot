@@ -16,7 +16,9 @@ namespace Parrot {
     // draw
     void draw(usize count) {
       LOG_GRAPHICS_TRACE("drawing {} elements...", count);
-      glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, static_cast<GLvoid*>(0));
+      glDrawElements(
+        GL_TRIANGLES, count, GL_UNSIGNED_INT, static_cast<GLvoid*>(0)
+      );
     }
   }
 }

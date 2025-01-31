@@ -320,7 +320,10 @@ namespace Parrot {
 
   // insert
   template<typename T, usize N1, usize M1, usize N2, usize M2>
-  Mat<T, N1, M1>& insert(Mat<T, N1, M1>& dest, const Mat<T, N2, M2>& src, Mat<uint, 2, 1> origin = { 0, 0 }) {
+  Mat<T, N1, M1>& insert(
+    Mat<T, N1, M1>& dest, const Mat<T, N2, M2>& src,
+    Mat<uint, 2, 1> origin = { 0, 0 }
+  ) {
     for (usize n = 0; n < min(N1 - origin.x, N2); ++n) {
       for (usize m = 0; m < min(M1 - origin.y, M2); ++m) {
         dest.at(origin.x + n, origin.y + m) = src.at(n, m);
@@ -330,7 +333,9 @@ namespace Parrot {
   }
   // resize
   template<typename T, usize N1, usize M1, usize N2, usize M2>
-  Mat<T, N1, M1> resize(const Mat<T, N2, M2>& mat, const Mat<uint, 2, 1>& origin = { 0, 0 }) {
+  Mat<T, N1, M1> resize(
+    const Mat<T, N2, M2>& mat, const Mat<uint, 2, 1>& origin = { 0, 0 }
+  ) {
     Mat<T, N1, M1> out = zeros<T, N1, M1>();
     insert(out, mat, origin);
     return out;

@@ -58,94 +58,162 @@ namespace Parrot {
       glUniform1i(getUniformLocation(name), value);
     }
     template<>
-    void Shader::setUniform<Vec2<int32>>(const string& name, const Vec2<int32>& value) {
+    void Shader::setUniform<Vec2<int32>>(
+      const string& name, const Vec2<int32>& value
+    ) {
       glUniform2i(getUniformLocation(name), value.x, value.y);
     }
     template<>
-    void Shader::setUniform<Vec3<int32>>(const string& name, const Vec3<int32>& value) {
-      glUniform3i(getUniformLocation(name), value.x, value.y, value.z);
+    void Shader::setUniform<Vec3<int32>>(
+      const string& name, const Vec3<int32>& value
+    ) {
+      glUniform3i(
+        getUniformLocation(name), value.x, value.y, value.z
+      );
     }
     template<>
-    void Shader::setUniform<Vec4<int32>>(const string& name, const Vec4<int32>& value) {
-      glUniform4i(getUniformLocation(name), value.x, value.y, value.z, value.w);
+    void Shader::setUniform<Vec4<int32>>(
+      const string& name, const Vec4<int32>& value
+    ) {
+      glUniform4i(
+        getUniformLocation(name), value.x, value.y, value.z, value.w
+      );
     }
     // :: uint32
     template<>
-    void Shader::setUniform<uint32>(const string& name, const uint32& value) {
+    void Shader::setUniform<uint32>(
+      const string& name, const uint32& value
+    ) {
       glUniform1ui(getUniformLocation(name), value);
     }
     template<>
-    void Shader::setUniform<Vec2<uint32>>(const string& name, const Vec2<uint32>& value) {
+    void Shader::setUniform<Vec2<uint32>>(
+      const string& name, const Vec2<uint32>& value
+    ) {
       glUniform2ui(getUniformLocation(name), value.x, value.y);
     }
     template<>
-    void Shader::setUniform<Vec3<uint32>>(const string& name, const Vec3<uint32>& value) {
-      glUniform3ui(getUniformLocation(name), value.x, value.y, value.z);
+    void Shader::setUniform<Vec3<uint32>>(
+      const string& name, const Vec3<uint32>& value
+    ) {
+      glUniform3ui(
+        getUniformLocation(name), value.x, value.y, value.z
+      );
     }
     template<>
-    void Shader::setUniform<Vec4<uint32>>(const string& name, const Vec4<uint32>& value) {
-      glUniform4ui(getUniformLocation(name), value.x, value.y, value.z, value.w);
+    void Shader::setUniform<Vec4<uint32>>(
+      const string& name, const Vec4<uint32>& value
+    ) {
+      glUniform4ui(
+        getUniformLocation(name), value.x, value.y, value.z, value.w
+      );
     }
     // :: float32
     template<>
-    void Shader::setUniform<float32>(const string& name, const float32& value) {
+    void Shader::setUniform<float32>(
+      const string& name, const float32& value
+    ) {
       glUniform1f(getUniformLocation(name), value);
     }
     template<>
-    void Shader::setUniform<Vec2<float32>>(const string& name, const Vec2<float32>& value) {
+    void Shader::setUniform<Vec2<float32>>(
+      const string& name, const Vec2<float32>& value
+    ) {
       glUniform2f(getUniformLocation(name), value.x, value.y);
     }
     template<>
-    void Shader::setUniform<Vec3<float32>>(const string& name, const Vec3<float32>& value) {
-      glUniform3f(getUniformLocation(name), value.x, value.y, value.z);
+    void Shader::setUniform<Vec3<float32>>(
+      const string& name, const Vec3<float32>& value
+    ) {
+      glUniform3f(
+        getUniformLocation(name), value.x, value.y, value.z
+      );
     }
     template<>
-    void Shader::setUniform<Vec4<float32>>(const string& name, const Vec4<float32>& value) {
-      glUniform4f(getUniformLocation(name), value.x, value.y, value.z, value.w);
+    void Shader::setUniform<Vec4<float32>>(
+      const string& name, const Vec4<float32>& value
+    ) {
+      glUniform4f(
+        getUniformLocation(name), value.x, value.y, value.z, value.w
+      );
     }
     template<>
-    void Shader::setUniform<Mat<float32, 2>>(const string& name, const Mat<float32, 2>& value) {
+    void Shader::setUniform<Mat<float32, 2>>(
+      const string& name, const Mat<float32, 2>& value
+    ) {
       glUniformMatrix2fv(getUniformLocation(name), 1, GL_TRUE, value.data());
     }
     template<>
-    void Shader::setUniform<Mat<float32, 3>>(const string& name, const Mat<float32, 3>& value) {
-      glUniformMatrix3fv(getUniformLocation(name), 1, GL_TRUE, value.data());
+    void Shader::setUniform<Mat<float32, 3>>(
+      const string& name, const Mat<float32, 3>& value
+    ) {
+      glUniformMatrix3fv(
+        getUniformLocation(name), 1, GL_TRUE, value.data()
+      );
     }
     template<>
-    void Shader::setUniform<Mat<float32, 4>>(const string& name, const Mat<float32, 4>& value) {
-      glUniformMatrix4fv(getUniformLocation(name), 1, GL_TRUE, value.data());
+    void Shader::setUniform<Mat<float32, 4>>(
+      const string& name, const Mat<float32, 4>& value
+    ) {
+      glUniformMatrix4fv(
+        getUniformLocation(name), 1, GL_TRUE, value.data()
+      );
     }
     // :: float64
     template<>
-    void Shader::setUniform<float64>(const string& name, const float64& value) {
+    void Shader::setUniform<float64>(
+      const string& name, const float64& value
+    ) {
       glUniform1d(getUniformLocation(name), value);
     }
     template<>
-    void Shader::setUniform<Vec2<float64>>(const string& name, const Vec2<float64>& value) {
+    void Shader::setUniform<Vec2<float64>>(
+      const string& name, const Vec2<float64>& value
+    ) {
       glUniform2d(getUniformLocation(name), value.x, value.y);
     }
     template<>
-    void Shader::setUniform<Vec3<float64>>(const string& name, const Vec3<float64>& value) {
-      glUniform3d(getUniformLocation(name), value.x, value.y, value.z);
+    void Shader::setUniform<Vec3<float64>>(
+      const string& name, const Vec3<float64>& value
+    ) {
+      glUniform3d(
+        getUniformLocation(name), value.x, value.y, value.z
+      );
     }
     template<>
-    void Shader::setUniform<Vec4<float64>>(const string& name, const Vec4<float64>& value) {
-      glUniform4d(getUniformLocation(name), value.x, value.y, value.z, value.w);
+    void Shader::setUniform<Vec4<float64>>(
+      const string& name, const Vec4<float64>& value
+    ) {
+      glUniform4d(
+        getUniformLocation(name), value.x, value.y, value.z, value.w
+      );
     }
     template<>
-    void Shader::setUniform<Mat<float64, 2>>(const string& name, const Mat<float64, 2>& value) {
+    void Shader::setUniform<Mat<float64, 2>>(
+      const string& name, const Mat<float64, 2>& value
+    ) {
       glUniformMatrix2dv(getUniformLocation(name), 1, GL_TRUE, value.data());
     }
     template<>
-    void Shader::setUniform<Mat<float64, 3>>(const string& name, const Mat<float64, 3>& value) {
-      glUniformMatrix3dv(getUniformLocation(name), 1, GL_TRUE, value.data());
+    void Shader::setUniform<Mat<float64, 3>>(
+      const string& name, const Mat<float64, 3>& value
+    ) {
+      glUniformMatrix3dv(
+        getUniformLocation(name), 1, GL_TRUE, value.data()
+      );
     }
     template<>
-    void Shader::setUniform<Mat<float64, 4>>(const string& name, const Mat<float64, 4>& value) {
-      glUniformMatrix4dv(getUniformLocation(name), 1, GL_TRUE, value.data());
+    void Shader::setUniform<Mat<float64, 4>>(
+      const string& name, const Mat<float64, 4>& value
+    ) {
+      glUniformMatrix4dv(
+        getUniformLocation(name), 1, GL_TRUE, value.data()
+      );
     }
     // bindUniformBuffer
-    void Shader::bindUniformBuffer(const string& name, const UniformBuffer& buffer) {
+    void Shader::bindUniformBuffer(
+      const string& name, const UniformBuffer& buffer
+    ) {
       //? warn if name not found
       uint block_index = glGetUniformBlockIndex(_gpu_id, name.c_str());
       glUniformBlockBinding(_gpu_id, block_index, buffer.getBindingPoint());
@@ -180,7 +248,8 @@ namespace Parrot {
       return list;
     }
     // prependLineNumbers
-    static string prependLineNumbers(strview str, const Set<uint>& error_lines) {
+    static string prependLineNumbers(
+      strview str, const Set<uint>& error_lines) {
       string out;
       usize line = 1, offset = 0;
       while (str.find('\n', offset) != string::npos) {
@@ -209,8 +278,10 @@ namespace Parrot {
     uint Shader::compileShader(const string& source, ShaderType type) {
       uint id = glCreateShader(
         type == ShaderType::VERTEX ? GL_VERTEX_SHADER : (
-          type == ShaderType::FRAGMENT ? GL_FRAGMENT_SHADER : throw std::logic_error("invalid enum value")
+          type == ShaderType::FRAGMENT ? GL_FRAGMENT_SHADER : (
+            throw std::logic_error("invalid enum value")
           )
+        )
       );
       const char* source_cstr = source.c_str();
       glShaderSource(id, 1, &source_cstr, nullptr);
@@ -235,7 +306,9 @@ namespace Parrot {
           }
         }
         string extended_source = prependLineNumbers(source, error_lines);
-        LOG_GRAPHICS_ERROR("error message:\n{}shader source code:\n{}", message, extended_source);
+        LOG_GRAPHICS_ERROR(
+          "error message:\n{}shader source code:\n{}", message, extended_source
+        );
         delete[] message;
         glDeleteShader(id);
         return 0;

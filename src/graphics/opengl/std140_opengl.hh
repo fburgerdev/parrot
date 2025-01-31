@@ -20,9 +20,12 @@ namespace Parrot {
 
     // STRUCT_OFFSET_STD140
     template<usize Index, class... Types>
-    constexpr usize STRUCT_OFFSET_STD140 = roundToBaseAlign(
-      STRUCT_OFFSET_STD140<Index - 1, Types...> + SIZE_STD140<std::tuple_element_t<Index - 1, Tuple<Types...>>>,
-      BASE_ALIGN_STD140<std::tuple_element_t<Index, Tuple<Types...>>>
+    constexpr usize STRUCT_OFFSET_STD140 = (
+      roundToBaseAlign(
+        STRUCT_OFFSET_STD140<Index - 1, Types...> +
+        SIZE_STD140<std::tuple_element_t<Index - 1, Tuple<Types...>>>,
+        BASE_ALIGN_STD140<std::tuple_element_t<Index, Tuple<Types...>>>
+      )
     );
     template<class... Types>
     constexpr usize STRUCT_OFFSET_STD140<0, Types...> = 0;
@@ -45,11 +48,17 @@ namespace Parrot {
     template<class T>
     constexpr usize BASE_ALIGN_STD140<Vec4<T>> = BASE_ALIGN_STD140<T> * 4;
     template<class T, usize N>
-    constexpr usize BASE_ALIGN_STD140<Array<T, N>> = roundToBaseAlign(BASE_ALIGN_STD140<T>);
+    constexpr usize BASE_ALIGN_STD140<Array<T, N>> = (
+      roundToBaseAlign(BASE_ALIGN_STD140<T>)
+    );
     template<class T, usize N, usize M>
-    constexpr usize BASE_ALIGN_STD140<Mat<T, N, M>> = roundToBaseAlign(BASE_ALIGN_STD140<T> * N);
+    constexpr usize BASE_ALIGN_STD140<Mat<T, N, M>> = (
+      roundToBaseAlign(BASE_ALIGN_STD140<T> * N)
+    );
     template<class... Types>
-    constexpr usize BASE_ALIGN_STD140<Tuple<Types...>> = roundToBaseAlign(max(BASE_ALIGN_STD140<Types>...));
+    constexpr usize BASE_ALIGN_STD140<Tuple<Types...>> = (
+      roundToBaseAlign(max(BASE_ALIGN_STD140<Types>...))
+    );
     // SIZE_STD140
     template<>
     constexpr usize SIZE_STD140<bool> = 4;
@@ -68,9 +77,13 @@ namespace Parrot {
     template<class T>
     constexpr usize SIZE_STD140<Vec4<T>> = SIZE_STD140<T> * 4;
     template<class T, usize N>
-    constexpr usize SIZE_STD140<Array<T, N>> = roundToBaseAlign(SIZE_STD140<T>) * N;
+    constexpr usize SIZE_STD140<Array<T, N>> = (
+      roundToBaseAlign(SIZE_STD140<T>) * N
+    );
     template<class T, usize N, usize M>
-    constexpr usize SIZE_STD140<Mat<T, N, M>> = roundToBaseAlign(SIZE_STD140<T> * N) * M;
+    constexpr usize SIZE_STD140<Mat<T, N, M>> = (
+      roundToBaseAlign(SIZE_STD140<T> * N) * M
+    );
     template<class... Types>
     constexpr usize SIZE_STD140<Tuple<Types...>> =
       STRUCT_OFFSET_STD140<sizeof...(Types) - 1, Types...> +
@@ -128,7 +141,8 @@ namespace Parrot {
     void setSTD140(const Mat<T, N, M>& mat, List<uchar>::iterator it) {
       for (usize m = 0; m < M; ++m) {
         for (usize n = 0; n < N; ++n) {
-          usize offset = BASE_ALIGN_STD140<Mat<T, N, M>> * m + SIZE_STD140<T> * n;
+          usize offset = BASE_ALIGN_STD140<Mat<T, N, M>> * m;
+          offset += SIZE_STD140<T> * n;
           setSTD140(mat.at(n, m), it + offset);
         }
       }
@@ -137,7 +151,9 @@ namespace Parrot {
     template<usize Index, class... Types>
     void setSTD140(const Tuple<Types...>& tuple, List<uchar>::iterator it) {
       if constexpr (Index < sizeof...(Types)) {
-        setSTD140(std::get<Index>(tuple), it + STRUCT_OFFSET_STD140<Index, Types...>);
+        setSTD140(
+          std::get<Index>(tuple), it + STRUCT_OFFSET_STD140<Index, Types...>
+        );
         setSTD140<Index + 1>(tuple, it);
       }
     }

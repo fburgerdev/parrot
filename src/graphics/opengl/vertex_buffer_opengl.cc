@@ -9,7 +9,9 @@ namespace Parrot {
     VertexBuffer::VertexBuffer(usize size)
       : _is_static(false) {
       glGenBuffers(1, &_gpu_id);
-      LOG_GRAPHICS_TRACE("created vertex-buffer with id={} and size={}", _gpu_id, size);
+      LOG_GRAPHICS_TRACE(
+        "created vertex-buffer with id={} and size={}", _gpu_id, size
+      );
       bind();
       glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
       unbind();
@@ -17,13 +19,16 @@ namespace Parrot {
     VertexBuffer::VertexBuffer(const void* buffer, usize size)
       : _is_static(true) {
       glGenBuffers(1, &_gpu_id);
-      LOG_GRAPHICS_TRACE("created vertex-buffer with id={} and size={}", _gpu_id, size);
+      LOG_GRAPHICS_TRACE(
+        "created vertex-buffer with id={} and size={}", _gpu_id, size
+      );
       bind();
       glBufferData(GL_ARRAY_BUFFER, size, buffer, GL_STATIC_DRAW);
       unbind();
     }
     VertexBuffer::VertexBuffer(VertexBuffer&& other) noexcept
-      : _gpu_id(std::exchange(other._gpu_id, 0)), _is_static(other._is_static) {}
+      : _gpu_id(std::exchange(other._gpu_id, 0)),
+      _is_static(other._is_static) {}
     // (destructor)
     VertexBuffer::~VertexBuffer() {
       if (_gpu_id) {
@@ -37,7 +42,9 @@ namespace Parrot {
       return *this;
     }
     // overwriteData
-    void VertexBuffer::overwriteData(const void* buffer, usize size, usize offset) {
+    void VertexBuffer::overwriteData(
+      const void* buffer, usize size, usize offset
+    ) {
       bind();
       if (_is_static) {
         glBufferData(GL_ARRAY_BUFFER, size, buffer, GL_STATIC_DRAW);
@@ -45,7 +52,9 @@ namespace Parrot {
       else {
         glBufferSubData(GL_ARRAY_BUFFER, offset, size, buffer);
       }
-      LOG_GRAPHICS_TRACE("overwrote vertex-buffer with id={} and size={}", _gpu_id, size);
+      LOG_GRAPHICS_TRACE(
+        "overwrote vertex-buffer with id={} and size={}", _gpu_id, size
+      );
       unbind();
     }
     // bind / unbind

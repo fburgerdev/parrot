@@ -36,8 +36,12 @@ namespace Parrot {
     void setCursorState(CursorState state);
 
     // foreachChild (scriptable)
-    virtual void foreachChild(Func<void(Scriptable&)> func) override;
-    virtual void foreachChild(Func<void(const Scriptable&)> func) const override;
+    virtual void foreachChild(
+      Func<void(Scriptable&)> func
+    ) override;
+    virtual void foreachChild(
+      Func<void(const Scriptable&)> func
+    ) const override;
 
     // pollEvents
     List<WindowEvent> pollEvents();

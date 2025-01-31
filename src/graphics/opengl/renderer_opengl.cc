@@ -13,7 +13,9 @@ namespace Parrot {
     // drawScene
     void Renderer::drawScene(const SceneData& scene_data) {
       if (!_context) {
-        LOG_GRAPHICS_ERROR("no gpu-context specified for renderer, can't draw");
+        LOG_GRAPHICS_ERROR(
+          "no gpu-context specified for renderer, can't draw"
+        );
         return;
       }
       _surface.set(scene_data);
@@ -31,12 +33,20 @@ namespace Parrot {
           _context->applyMaterial(shader_opengl, material->root);
           auto& model_material = model->model_materials.at(material_index);
           if (model_material.tex_index != 0xFFFFFF) {
-            _context->getTexture(model->textures.at(model_material.tex_index)).bind(0);
+            _context->getTexture(
+              model->textures.at(model_material.tex_index)
+            ).bind(0);
           }
-          auto proj = scene_data.camera.second->calcProjectionMatrix(1080.0F / 720.0F);
+          auto proj = scene_data.camera.second->calcProjectionMatrix(
+            1080.0F / 720.0F
+          );
           auto view = scene_data.camera.first->calcLocalViewMatrix();
-          shader_opengl.setUniform("u_local_to_world", transform->calcLocalModelMatrix());
-          shader_opengl.setUniform("u_local_to_world_normal", calcRotationMatrix(transform->rotation));
+          shader_opengl.setUniform(
+            "u_local_to_world", transform->calcLocalModelMatrix()
+          );
+          shader_opengl.setUniform(
+            "u_local_to_world_normal", calcRotationMatrix(transform->rotation)
+          );
           vertex_array.bind();
           draw(mesh.indices.size());
           vertex_array.unbind();

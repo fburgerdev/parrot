@@ -20,8 +20,14 @@ namespace Parrot {
       // set
       void set(const SceneData& scene_data) {
         const auto& [transform, camera] = scene_data.camera;
-        auto view = transform ? transform->calcLocalViewMatrix() : identity<float32, 4>();
-        auto proj = camera ? camera->calcProjectionMatrix(1080.0F / 720.0F) : identity<float32, 4>();
+        auto view = (
+          transform ? transform->calcLocalViewMatrix() : identity<float32, 4>()
+        );
+        auto proj = (
+          camera ? camera->calcProjectionMatrix(1080.0F / 720.0F) : (
+            identity<float32, 4>()
+          )
+        );
         List<Tuple<
           float32,
           Vec3<float32>
@@ -42,7 +48,9 @@ namespace Parrot {
             );
           }
           if (std::holds_alternative<DirectionalLight>(light_source->value)) {
-            auto& directional_light = std::get<DirectionalLight>(light_source->value);
+            auto& directional_light = std::get<DirectionalLight>(
+              light_source->value
+            );
             directional_lights.emplace_back(
               std::make_tuple(
                 directional_light.direction,
@@ -52,20 +60,22 @@ namespace Parrot {
             );
           }
         }
-        _bytes = createSTD140(
-          std::make_tuple(
-            // world_to_clip
-            proj * view, // u_world_to_clip
+        _bytes = createSTD140(std::make_tuple(
+          // world_to_clip
+          proj * view, // u_world_to_clip
 
-            // light
-            // :: ambient
-            uint32(ambient_lights.size()), // u_ambient_count
-            embedList<MAX_LIGHT_COUNT>(ambient_lights), // u_ambient_lights
-            // :: directional
-            uint32(directional_lights.size()), // u_directional_count
-            embedList<MAX_LIGHT_COUNT>(directional_lights) // u_directional_lights
-          )
-        );
+          // light
+          // :: ambient
+          uint32(ambient_lights.size()), // u_ambient_count
+          embedList<MAX_LIGHT_COUNT>(
+            ambient_lights
+          ), // u_ambient_lights
+          // :: directional
+          uint32(directional_lights.size()), // u_directional_count
+          embedList<MAX_LIGHT_COUNT>(
+            directional_lights
+          ) // u_directional_lights
+        ));
       }
 
       // getSize

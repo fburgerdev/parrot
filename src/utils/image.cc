@@ -9,7 +9,9 @@ namespace Parrot {
   Image::Image(const stdf::path& filepath)
     : _width(0), _height(0), _format(ImageFormat::NONE), _bytes(nullptr) {
     int width, height, channels;
-    uchar* img = stbi_load(filepath.string().c_str(), &width, &height, &channels, 4);
+    uchar* img = stbi_load(
+      filepath.string().c_str(), &width, &height, &channels, 4
+    );
     if (!img) {
       LOG_ASSET_ERROR("failed to load image {}", filepath);
       LOG_ASSET_ERROR("stb-image error message:\n{}", stbi_failure_reason());
@@ -26,20 +28,29 @@ namespace Parrot {
       _format = ImageFormat::RGBA;
       break;
     default:
-      LOG_ASSET_ERROR("failed to load image {} due to unsupported image format with {} channels", filepath, channels);
+      LOG_ASSET_ERROR(
+        "failed to load image {}"
+        "due to unsupported image format with {} channels",
+        filepath, channels);
       return;
     }
     _width = width;
     _height = height;
     _bytes = img;
-    LOG_ASSET_DEBUG("loaded image {}, {}px x {}px with {} channels", filepath, width, height, channels);
+    LOG_ASSET_DEBUG(
+      "loaded image {}, {}px x {}px with {} channels",
+      filepath, width, height, channels
+    );
   }
   Image::Image(const AssetPath& asset_path, AssetAPI& asset_api)
     : Image(asset_path.filepath) {}
   Image::Image(strview name, const uchar* buffer, usize size)
-      : _name(name), _width(0), _height(0), _format(ImageFormat::NONE), _bytes(nullptr) {
+      : _name(name), _width(0), _height(0),
+      _format(ImageFormat::NONE), _bytes(nullptr) {
     int width, height, channels;
-    uchar* img = stbi_load_from_memory(buffer, size, &width, &height, &channels, 4);
+    uchar* img = stbi_load_from_memory(
+      buffer, size, &width, &height, &channels, 4
+    );
     if (!img) {
       LOG_ASSET_ERROR("failed to load image {} (from buffer)", name);
       LOG_ASSET_ERROR("stb-image error message:\n{}", stbi_failure_reason());
@@ -56,13 +67,20 @@ namespace Parrot {
       _format = ImageFormat::RGBA;
       break;
     default:
-      LOG_ASSET_ERROR("failed to load image {} (from buffer) due to unsupported image format with {} channels", name, channels);
+      LOG_ASSET_ERROR(
+        "failed to load image {} (from buffer)"
+        "due to unsupported image format with {} channels",
+        name, channels
+      );
       return;
     }
     _width = width;
     _height = height;
     _bytes = img;
-    LOG_ASSET_DEBUG("loaded image {} (from buffer), {}px x {}px with {} channels", name, width, height, channels);
+    LOG_ASSET_DEBUG(
+      "loaded image {} (from buffer), {}px x {}px with {} channels",
+      name, width, height, channels
+    );
   }
   Image::Image(const Image& other)
     : _width(other._width), _height(other._height), _format(other._format) {
@@ -141,10 +159,14 @@ namespace Parrot {
       _width, _height, channels, _bytes
     );
     if (error_code == 0) {
-      LOG_ASSET_ERROR("failed to safe image {} at {}, could not open file", _name, filepath);
+      LOG_ASSET_ERROR(
+        "failed to safe image {} at {}, could not open file", _name, filepath
+      );
     }
     else if (error_code != 1) {
-      LOG_ASSET_ERROR("failed to safe image {} at {}, invalid image data", _name, filepath);
+      LOG_ASSET_ERROR(
+        "failed to safe image {} at {}, invalid image data", _name, filepath
+      );
     }
     else {
       LOG_ASSET_DEBUG("successfully safed image {} at {}", _name, filepath);

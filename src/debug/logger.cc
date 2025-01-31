@@ -38,7 +38,9 @@ namespace Parrot {
     LogLevel level = LogLevel::TRACE;
     for (const auto& [other_scope, other_level] : _levels) {
       if (scope.starts_with(other_scope)) {
-        if (other_scope.empty() || other_scope.length() == scope.length() || scope.at(other_scope.length()) == '/') {
+        if (other_scope.empty() ||
+          other_scope.length() == scope.length() ||
+          scope.at(other_scope.length()) == '/') {
           if (longest_scope.length() <= other_scope.length()) {
             longest_scope = other_scope;
             level = other_level;

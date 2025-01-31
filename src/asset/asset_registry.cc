@@ -90,7 +90,9 @@ namespace Parrot {
     }
   }
   void AssetRegistry::add(const AssetPath& asset_path) {
-    string source = (ostrstream() << ifstream(asset_path.filepath).rdbuf()).str();
+    string source = (
+      ostrstream() << ifstream(asset_path.filepath).rdbuf()
+    ).str();
     auto json = asset_path.applySubpathToJSON(json::parse(source));
     if (json.contains("uuid")) {
       add(json.at("uuid"), asset_path);

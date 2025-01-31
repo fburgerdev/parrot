@@ -61,17 +61,28 @@ namespace Parrot {
   }
 
   // <<
-  ostream& operator<<(ostream& stream, [[maybe_unused]] const WindowCloseRequest& e) {
+  ostream& operator<<(
+    ostream& stream, [[maybe_unused]] const WindowCloseRequest& e
+  ) {
     return stream << "WindowCloseRequest()";
   }
   ostream& operator<<(ostream& stream, const KeyPress& e) {
-    return stream << "KeyPress(action=" << (int)e.code << ",state=" << (int)e.state << ')';
+    stream << "KeyPress(";
+    stream << "action=" << (int)e.code << ",";
+    stream << "state=" << (int)e.state << ")";
+    return stream;
   }
   ostream& operator<<(ostream& stream, const MousePress& e) {
-    return stream << "MousePress(action=" << (int)e.button << ",state=" << (int)e.state << ')';
+    stream << "MousePress(";
+    stream << "button=" << (int)e.button << ",";
+    stream << "state=" << (int)e.state << ")";
+    return stream;
   }
   ostream& operator<<(ostream& stream, const MouseMove& e) {
-    return stream << "MouseMove(x=" << e.coords.x << ",y=" << e.coords.y << ')';
+    stream << "MouseMove(";
+    stream << "x=" << e.coords.x << ",";
+    stream << "y=" << e.coords.y << ")";
+    return stream;
   }
   ostream& operator<<(ostream& stream, const WindowEvent& e) {
     if (std::holds_alternative<WindowCloseRequest>(e._value)) {

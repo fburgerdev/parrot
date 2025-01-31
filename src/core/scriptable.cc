@@ -125,7 +125,9 @@ namespace Parrot {
   }
   // bubbleEvent
   bool Scriptable::bubbleEvent(const Event& e) {
-    return resolveEventBubble(e) || (_parent ? _parent->bubbleEvent(e) : false);
+    return resolveEventBubble(e) || (
+      _parent ? _parent->bubbleEvent(e) : false
+    );
   }
   // cascadeEvent
   bool Scriptable::cascadeEvent(const Event& e) {

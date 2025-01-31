@@ -65,8 +65,11 @@ namespace Parrot {
     flags |= aiProcess_Triangulate;
     flags |= aiProcess_FlipUVs;
     flags |= aiProcess_FlipWindingOrder;
-    const aiScene* scene = importer.ReadFile(asset_path.filepath.string(), flags);
-    if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
+    const aiScene* scene = importer.ReadFile(
+      asset_path.filepath.string(), flags
+    );
+    if (!scene || !scene->mRootNode ||
+      (scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE)) {
         cout << "ERROR::ASSIMP::" << importer.GetErrorString() << endl;
         return;
     }
@@ -89,6 +92,9 @@ namespace Parrot {
         }
       }
     }
-    LOG_ASSET_DEBUG("loaded model {} with {} submodel(s) and {}", asset_path.filepath, submodels.size(), textures.size());
+    LOG_ASSET_DEBUG(
+      "loaded model {} with {} submodel(s) and {}",
+      asset_path.filepath, submodels.size(), textures.size())
+    ;
   }
 }

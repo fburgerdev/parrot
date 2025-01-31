@@ -59,8 +59,12 @@ namespace Parrot {
       return Parrot::getComponentID<DerivedComponent<T>>();
     }
     // createComponent
-    virtual UniquePtr<Component> createComponent(Entity& entity) const override {
-      return std::make_unique<DerivedComponent<T>>(static_cast<const T&>(*this), entity);
+    virtual UniquePtr<Component> createComponent(
+      Entity& entity
+    ) const override {
+      return std::make_unique<DerivedComponent<T>>(
+        static_cast<const T&>(*this), entity
+      );
     }
   };
 }

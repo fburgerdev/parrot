@@ -9,7 +9,10 @@ namespace Parrot {
     class VertexArray {
     public:
       // (constructor)
-      VertexArray(VertexBuffer&& buffer, IndexBuffer&& index, const List<AttributeGPU>& attributes);
+      VertexArray(
+        VertexBuffer&& buffer, IndexBuffer&& index,
+        const List<AttributeGPU>& attributes
+      );
       VertexArray(const VertexArray&) = delete;
       VertexArray(VertexArray&& other) noexcept;
       // (destructor)

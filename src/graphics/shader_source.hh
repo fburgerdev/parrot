@@ -79,7 +79,9 @@ namespace Parrot {
       Set<ShaderSource*> resolved;
       for (usize i = 0; i < snippet.body.size(); ++i) {
         if (std::holds_alternative<SnippetInclude>(snippet.body.at(i))) {
-          SnippetInclude& include = std::get<SnippetInclude>(snippet.body.at(i));
+          SnippetInclude& include = std::get<SnippetInclude>(
+            snippet.body.at(i)
+          );
           bool found = false;
           for (ShaderSource& other : sources) {
             if (this == &other) {
@@ -90,7 +92,9 @@ namespace Parrot {
                 other.resolve(sources);
                 resolved.insert(&other);
               }
-              snippet.body.at(i) = other.snippets.at(include.identifier).toString();
+              snippet.body.at(i) = (
+                other.snippets.at(include.identifier).toString()
+              );
               found = true;
               break;
             }

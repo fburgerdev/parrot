@@ -16,7 +16,10 @@ namespace Parrot {
       Queue<Scriptable*> queue({ _app });
       if (const WindowEvent* we = dynamic_cast<const WindowEvent*>(&e)) {
         if (auto* wcr = we->getWindowCloseRequest()) {
-          LOG_APP_DEBUG("unresolved window-close-request, closing window '{}'...", we->getTargetWindow()->getTitle());
+          LOG_APP_DEBUG(
+            "unresolved window-close-request, closing window '{}'...",
+            we->getTargetWindow()->getTitle()
+          );
           we->getTargetWindow()->close();
           return true;
         }
@@ -60,10 +63,14 @@ namespace Parrot {
     Scriptable::removeAllScripts();
   }
   // foreachChild
-  void DefaultScriptable::foreachChild(Func<void(Scriptable&)> func) {
+  void DefaultScriptable::foreachChild(
+    Func<void(Scriptable&)> func
+  ) {
     func(_app);
   }
-  void DefaultScriptable::foreachChild(Func<void(const Scriptable&)> func) const {
+  void DefaultScriptable::foreachChild(
+    Func<void(const Scriptable&)> func
+  ) const {
     func(_app);
   }
 }

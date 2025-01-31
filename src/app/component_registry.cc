@@ -19,8 +19,9 @@ namespace Parrot {
     {
       "camera",
       {
-        typeid(DerivedComponentConfig<Camera>).hash_code(),
-        [](const json& json, const AssetPath& asset_path, AssetAPI& asset_api) {
+        typeid(DerivedComponentConfig<Camera>).hash_code(), [](
+          const json& json, const AssetPath& asset_path, AssetAPI& asset_api
+        ) {
           return std::make_unique<DerivedComponentConfig<Camera>>(
             json, asset_path, asset_api
           );
@@ -30,8 +31,9 @@ namespace Parrot {
     {
       "light-source",
       {
-        typeid(DerivedComponentConfig<LightSource>).hash_code(),
-        [](const json& json, const AssetPath& asset_path, AssetAPI& asset_api) {
+        typeid(DerivedComponentConfig<LightSource>).hash_code(),[](
+          const json& json, const AssetPath& asset_path, AssetAPI& asset_api
+        ) {
           return std::make_unique<DerivedComponentConfig<LightSource>>(
             json, asset_path, asset_api
           );
@@ -41,8 +43,9 @@ namespace Parrot {
     {
       "render-object",
       {
-        typeid(DerivedComponentConfig<RenderObject>).hash_code(),
-        [](const json& json, const AssetPath& asset_path, AssetAPI& asset_api) {
+        typeid(DerivedComponentConfig<RenderObject>).hash_code(), [](
+          const json& json, const AssetPath& asset_path, AssetAPI& asset_api
+        ) {
           return std::make_unique<DerivedComponentConfig<RenderObject>>(
             json, asset_path, asset_api
           );

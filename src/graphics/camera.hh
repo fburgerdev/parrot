@@ -42,19 +42,28 @@ namespace Parrot {
     // loadFromJSON
     template<JsonType JSON>
       void loadFromJSON(const JSON& json) {
-      Vec2<float32> z_range = json.contains("z_range") ?
-        Vec2<float32>(json.at("z_range")[0], json.at("z_range")[1]) : DEFAULT_ZRANGE;
-      if (!json.contains("type") && json.contains("fov") && json.contains("scale")) {
+      Vec2<float32> z_range = (
+        json.contains("z_range") ? Vec2<float32>(
+          json.at("z_range")[0], json.at("z_range")[1]
+        ) : DEFAULT_ZRANGE
+      );
+      if (!json.contains("type") &&
+          json.contains("fov") &&
+          json.contains("scale")) {
         throw std::logic_error("couldn't deduce camera type from json");
       }
       else if ((json.contains("type") && json.at("type") == "perspective") ||
-        (!json.contains("type") && json.contains("fov"))) {
-        float32 fov = json.contains("fov") ? float32(json.at("fov")) : DEFAULT_FOV;
+          (!json.contains("type") && json.contains("fov"))) {
+        float32 fov = (
+          json.contains("fov") ? float32(json.at("fov")) : DEFAULT_FOV
+        );
         value = PerspectiveCamera(fov, z_range);
       }
       else if ((json.contains("type") && json.at("type") == "orthographic") ||
-        (!json.contains("type") && json.contains("scale"))) {
-        float32 scale = json.contains("scale") ? float32(json.at("scale")) : DEFAULT_SCALE;
+          (!json.contains("type") && json.contains("scale"))) {
+        float32 scale = (
+          json.contains("scale") ? float32(json.at("scale")) : DEFAULT_SCALE
+        );
         value = OrthographicCamera(scale, z_range);
       }
       else {

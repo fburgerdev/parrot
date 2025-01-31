@@ -34,7 +34,9 @@ namespace Parrot {
 
   // (constructor)
   ShaderSource::ShaderSource(const AssetPath& asset_path, AssetAPI& asset_api)
-    : ShaderSource((ostrstream() << ifstream(asset_path.filepath).rdbuf()).str()) {}
+    : ShaderSource(
+      (ostrstream() << ifstream(asset_path.filepath).rdbuf()).str()
+    ) {}
   ShaderSource::ShaderSource(const string& source) {
     usize offset = 0;
     Opt<Variant<ShaderStage, Snippet>> current;
@@ -44,7 +46,9 @@ namespace Parrot {
       if (open_index == string::npos || close_index == string::npos) {
         break;
       }
-      string inner = source.substr((open_index + 2), close_index - (open_index + 2));
+      string inner = source.substr(
+        (open_index + 2), close_index - (open_index + 2)
+      );
       List<string> splitted = split(inner, { ' ', '(', ')', '"' });
       if (splitted.size()) {
         if (splitted.front() == "vertex" || splitted.front() == "fragment") {
@@ -73,7 +77,9 @@ namespace Parrot {
               snippet.body.emplace_back(
                 source.substr(offset, open_index - offset)
               );
-              snippet.body.emplace_back(SnippetInclude({ identifier, (splitted.back() == "optional") }));
+              snippet.body.emplace_back(
+                SnippetInclude({ identifier, (splitted.back() == "optional") })
+              );
             }, * current);
           }
         }

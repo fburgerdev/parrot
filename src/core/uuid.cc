@@ -29,7 +29,9 @@ namespace Parrot {
         _uuid = data.at("uuid");
       }
       else {
-        LOG_ASSET_ERROR("asset file {} does not have a 'uuid' property", filepath);
+        LOG_ASSET_ERROR(
+          "asset file {} does not have a 'uuid' property", filepath
+        );
       }
     }
     else {

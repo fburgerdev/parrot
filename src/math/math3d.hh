@@ -21,9 +21,11 @@ namespace Parrot {
     return out;
   }
   /*
-    Note that the following function calcs a matrix that performs rotations in the following order:
+    Note that the following function calcs a matrix that performs rotations in
+    the following order:
     y -> x -> z
-    which is the "yaw, pitch, roll" pattern when having the following coordinate system
+    which is the "yaw, pitch, roll" pattern when having the following
+    coordinate system
     y
     |  z  
     | /

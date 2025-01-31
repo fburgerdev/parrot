@@ -45,7 +45,11 @@ namespace Parrot {
           cursor = CursorState::CAPTURED;
         }
         else {
-          LOG_ASSET_WARNING("invalid window-config value {} for key 'cursor', defaults to 'normal'", json.at("cursor"));
+          LOG_ASSET_WARNING(
+            "invalid window-config value {} for key 'cursor',"
+            "defaults to 'normal'",
+            json.at("cursor")
+          );
         }
       }
       // scripts

@@ -9,8 +9,12 @@ namespace Parrot {
     // (constructor)
     Entity(Scriptable* parent = nullptr);
     Entity(Entity* parent);
-    Entity(const SharedPtr<EntityConfig>& config, Scriptable* parent = nullptr);
-    Entity(const SharedPtr<EntityConfig>& config, Entity* parent);
+    Entity(
+      const SharedPtr<EntityConfig>& config, Scriptable* parent = nullptr
+    );
+    Entity(
+      const SharedPtr<EntityConfig>& config, Entity* parent
+    );
     Entity(Entity&&) = default;
     // (destructor)
     ~Entity();
@@ -34,8 +38,12 @@ namespace Parrot {
     void foreachChild(Func<void(Entity&)> func);
     void foreachChild(Func<void(const Entity&)> func) const;
     // :: foreach (scriptable)
-    virtual void foreachChild(Func<void(Scriptable&)> func) override;
-    virtual void foreachChild(Func<void(const Scriptable&)> func) const override;
+    virtual void foreachChild(
+      Func<void(Scriptable&)> func
+    ) override;
+    virtual void foreachChild(
+      Func<void(const Scriptable&)> func
+    ) const override;
 
     // component
     // :: has
@@ -55,7 +63,10 @@ namespace Parrot {
     // :: add
     template<class T, class... TArgs>
     T& addComponent(TArgs&&... args) {
-      _components.emplace(getComponentID<T>(), std::make_unique<T>(*this, std::forward<TArgs>(args)...));
+      _components.emplace(
+        getComponentID<T>(),
+        std::make_unique<T>(*this, std::forward<TArgs>(args)...)
+      );
       return getComponent<T>();
     }
     // :: remove
@@ -75,6 +86,6 @@ namespace Parrot {
     string _tag;
     Entity* _parent = nullptr;
     Map<UUID, Entity> _children;
-    Map<usize, UniquePtr<Component>> _components; //? think about reducing indirection
+    Map<usize, UniquePtr<Component>> _components; //? reduce indirection
   };
 }

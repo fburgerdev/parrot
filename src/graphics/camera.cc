@@ -5,7 +5,9 @@
 namespace Parrot {
   // calcProjectionMatrix
   // :: perspective
-  Mat4x4<float32> PerspectiveCamera::calcProjectionMatrix(float32 aspect) const {
+  Mat4x4<float32> PerspectiveCamera::calcProjectionMatrix(
+    float32 aspect
+  ) const {
     Mat4x4<float32> proj_mat = zeros<float32, 4>();
     float32 tan_fov = 1.0F / std::tan(fov / 2);
     proj_mat.at(0, 0) = tan_fov;
@@ -24,7 +26,9 @@ namespace Parrot {
     return proj_mat;
   }
   // :: orthographic
-  Mat4x4<float32> OrthographicCamera::calcProjectionMatrix(float32 aspect) const {
+  Mat4x4<float32> OrthographicCamera::calcProjectionMatrix(
+    float32 aspect
+  ) const {
     Mat4x4<float32> proj_mat = zeros<float32, 4>();
     proj_mat.at(0, 0) = 1.0F / scale;
     proj_mat.at(1, 1) = aspect / scale;
@@ -56,10 +60,16 @@ namespace Parrot {
 
   // <<
   ostream& operator<<(ostream& stream, const PerspectiveCamera& camera) {
-    return stream << "PerspectiveCamera(fov=" << camera.fov << ",zrange=" << camera.z_range << ')';
+    stream << "PerspectiveCamera(";
+    stream << "fov=" << camera.fov << ",";
+    stream << "zrange=" << camera.z_range << ")";
+    return stream;
   }
   ostream& operator<<(ostream& stream, const OrthographicCamera& camera) {
-    return stream << "OrthographicCamera(scale=" << camera.scale << ",zrange=" << camera.z_range << ')';
+    stream << "OrthographicCamera(";
+    stream << "scale=" << camera.scale << ",";
+    stream << "zrange=" << camera.z_range << ")";
+    return stream;
   }
   ostream& operator<<(ostream& stream, const Camera& camera) {
     std::visit([&](const auto& specific_camera) {

@@ -6,8 +6,10 @@
 namespace Parrot {
   namespace OpenGL {
     // (constructor)
-    VertexArray::VertexArray(VertexBuffer&& vertex, IndexBuffer&& index, const List<AttributeGPU>& attributes)
-      : _vertex(std::move(vertex)), _index(std::move(index)) {
+    VertexArray::VertexArray(
+      VertexBuffer&& vertex, IndexBuffer&& index,
+      const List<AttributeGPU>& attributes
+    ) : _vertex(std::move(vertex)), _index(std::move(index)) {
       // generate + bind
       glGenVertexArrays(1, &_gpu_id);
       LOG_GRAPHICS_TRACE("created vertex-array with id={}", _gpu_id);
@@ -25,13 +27,19 @@ namespace Parrot {
         const auto& [dtype, count] = attributes.at(index);
         switch (dtype) {
         case DTypeGPU::INT32:
-          glVertexAttribIPointer(index, count, GL_INT, stride, (const void*)offset);
+          glVertexAttribIPointer(
+            index, count, GL_INT, stride, (const void*)offset
+          );
           break;
         case DTypeGPU::UINT32:
-          glVertexAttribIPointer(index, count, GL_UNSIGNED_INT, stride, (const void*)offset);
+          glVertexAttribIPointer(
+            index, count, GL_UNSIGNED_INT, stride, (const void*)offset
+          );
           break;
         case DTypeGPU::FLOAT32:
-          glVertexAttribPointer(index, count, GL_FLOAT, GL_FALSE, stride, (const void*)offset);
+          glVertexAttribPointer(
+            index, count, GL_FLOAT, GL_FALSE, stride, (const void*)offset
+          );
           break;
         default:
           throw std::logic_error("unexpected branch");
@@ -44,7 +52,9 @@ namespace Parrot {
       _index.unbind();
     }
     VertexArray::VertexArray(VertexArray&& other) noexcept
-      : _gpu_id(std::exchange(other._gpu_id, 0)), _vertex(std::move(other._vertex)), _index(std::move(other._index)) {}
+      : _gpu_id(std::exchange(other._gpu_id, 0)),
+      _vertex(std::move(other._vertex)),
+      _index(std::move(other._index)) {}
     // (destructor)
     VertexArray::~VertexArray() {
       if (_gpu_id) {

@@ -37,8 +37,10 @@ namespace Parrot {
     }
     
     // hor_wrap, ver_wrap, mag_filter, min_filter, mipmap, image
-    TextureWrap hor_wrap = TextureWrap::CLAMP_TO_EDGE, ver_wrap = TextureWrap::CLAMP_TO_EDGE;
-    TextureFilter mag_filter = TextureFilter::LINEAR, min_filter = TextureFilter::LINEAR;
+    TextureWrap hor_wrap = TextureWrap::CLAMP_TO_EDGE;
+    TextureWrap ver_wrap = TextureWrap::CLAMP_TO_EDGE;
+    TextureFilter mag_filter = TextureFilter::LINEAR;
+    TextureFilter min_filter = TextureFilter::LINEAR;
     Mipmap mipmap = Mipmap::NONE;
     AssetHandle<Image> image;
   };

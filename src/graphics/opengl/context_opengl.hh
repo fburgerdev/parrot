@@ -23,26 +23,36 @@ namespace Parrot {
       // createVertexBuffer
       template<class... Args>
       VertexBuffer& createVertexBuffer(Args&&... args) {
-        return _vertex_buffers.try_emplace(generateUUID(), std::forward<Args>(args)...).first->second;
+        return _vertex_buffers.try_emplace(
+          generateUUID(), std::forward<Args>(args)...
+        ).first->second;
       }
       // createIndexBuffer
       template<class... Args>
       IndexBuffer& createIndexBuffer(Args&&... args) {
-        return _index_buffers.try_emplace(generateUUID(), std::forward<Args>(args)...).first->second;
+        return _index_buffers.try_emplace(
+          generateUUID(), std::forward<Args>(args)...
+        ).first->second;
       }
       // createUniformBuffer
       template<class... Args>
       UniformBuffer& createUniformBuffer(Args&&... args) {
-        return _uniform_buffers.try_emplace(generateUUID(), std::forward<Args>(args)...).first->second;
+        return _uniform_buffers.try_emplace(
+          generateUUID(), std::forward<Args>(args)...
+        ).first->second;
       }
       // createVertexArray
       template<class... Args>
       VertexArray& createVertexArray(Args&&... args) {
-        return _vertex_arrays.try_emplace(generateUUID(), std::forward<Args>(args)...).first->second;
+        return _vertex_arrays.try_emplace(
+          generateUUID(), std::forward<Args>(args)...
+        ).first->second;
       }
 
       // applyMaterial
-      void applyMaterial(Shader& shader, const MaterialNode& node, const string& prefix = "");
+      void applyMaterial(
+        Shader& shader, const MaterialNode& node, const string& prefix = ""
+      );
     private:
       HashMap<UUID, Shader> _shaders;
       HashMap<UUID, Texture> _textures;

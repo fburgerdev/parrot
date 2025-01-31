@@ -109,7 +109,9 @@ namespace Parrot {
     void addScript(usize uuid, UniquePtr<Script>&& script);
     template<class T, class... Args> requires std::is_base_of_v<Script, T>
     T& addScript(Args&&... args) {
-      auto result = _scripts.emplace(getScriptID<T>(), std::make_unique<T>(std::forward<Args>(args)...));
+      auto result = _scripts.emplace(
+        getScriptID<T>(), std::make_unique<T>(std::forward<Args>(args)...)
+      );
       auto& script = result.first->second;
       //TODO: assert(result.second)
       script->onAttach();
