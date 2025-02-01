@@ -12,21 +12,21 @@ namespace Parrot {
   // DirectionalLight
   struct DirectionalLight {
     // direction, intensity, color
-    Vec3<DefaultFloat> direction;
+    Vec3<DefaultFloat> direction = { 0, 0, 1 };
     DefaultFloat intensity = 1;
     Vec3<uint8> color = { 255, 255, 255 };
   };
   // PointLight
   struct PointLight {
     // position, range, intensity, color
-    Vec3<DefaultFloat> position;
-    DefaultFloat range, intensity = 1;
+    Vec3<DefaultFloat> position = { 0, 0, 0 };
+    DefaultFloat range = 1, intensity = 1;
     Vec3<uint8> color = { 255, 255, 255 };
   };
   // SpotLight
   struct SpotLight {
     // position, direction, angle, intensity, color
-    Vec3<DefaultFloat> position, direction;
+    Vec3<DefaultFloat> position = { 0, 0, 0 }, direction = { 0, 0, 1 };
     DefaultFloat angle = PI<> / 2, intensity = 1;
     Vec3<uint8> color = { 255, 255, 255 };
   };

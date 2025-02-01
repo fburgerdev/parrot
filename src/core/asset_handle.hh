@@ -9,11 +9,9 @@ namespace Parrot {
   class AssetAPI {
   public:
     // addAsset
-    virtual UUID addAsset(SharedPtr<Asset> asset) = 0;
+    virtual UUID addAsset(SharedPtr<Asset>) = 0;
     // lockAsset
-    virtual SharedPtr<Asset> lockAsset(
-      const AssetKey& key, AssetFactory factory
-    ) = 0;
+    virtual SharedPtr<Asset> lockAsset(const AssetKey&, AssetFactory) = 0;
   };
   // AssetHandle
   template<class T>
@@ -41,6 +39,10 @@ namespace Parrot {
       }
     }
     
+    // bool (cast)
+    operator bool() const {
+      return _api;
+    }
     // lock
     SharedPtr<T> lock() const {
       return std::static_pointer_cast<T>(

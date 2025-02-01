@@ -1,6 +1,5 @@
 # general
-bin
-build
+out
 
 # visual studio
 .vs

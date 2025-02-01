@@ -1,9 +1,6 @@
 #include "common.hh"
+#include "component_registry.hh"
 #include "core/registry.hh"
-#include "ecs/component.hh"
-#include "graphics/camera.hh"
-#include "graphics/light_source.hh"
-#include "graphics/render_object.hh"
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 

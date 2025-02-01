@@ -1,5 +1,6 @@
 #include "common.hh"
 #include "playing_unit.hh"
+#include "component_registry.hh"
 
 namespace Parrot {
   // (constructor)
@@ -24,10 +25,6 @@ namespace Parrot {
     return *this;
   }
 
-  // Component
-  using CameraComponent = DerivedComponent<Camera>;
-  using LightSourceComponent = DerivedComponent<LightSource>;
-  using RenderObjectComponent = DerivedComponent<RenderObject>;
   // draw
   void PlayingUnit::draw() {
     SceneData scene_data;
