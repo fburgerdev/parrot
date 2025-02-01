@@ -1,6 +1,6 @@
 #pragma once
 #include "core/asset_handle.hh"
-#include "utils/image.hh"
+#include "image.hh"
 
 namespace Parrot {
   // TextureWrap

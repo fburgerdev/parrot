@@ -1,6 +1,5 @@
 #pragma once
 #include "window/window_event.hh"
-#include "utils/image.hh"
 #include "math/matrix.hh"
 
 namespace Parrot {
@@ -25,8 +24,8 @@ namespace Parrot {
       // isOpen
       bool isOpen() const;
 
-      // setIcon
-      void setIcon(const Image& image);
+      // setIcon (tray icon)
+      void setIcon(const uchar* bytes, uint width, uint height);
 
       // setCursorStateNormal
       void setCursorStateNormal();

@@ -133,12 +133,12 @@ namespace Parrot {
       return _handle;
     }
 
-    // setIcon
-    void PhysicalWindow::setIcon(const Image& image) {
+    // setIcon (tray icon)
+    void PhysicalWindow::setIcon(const uchar* bytes, uint width, uint height) {
       GLFWimage images[1] = { {
-        .width = int(image.getWidth()), //! narrowing conversio)
-        .height = int(image.getHeight()), //! narrowing conversion
-        .pixels = (uchar*)image.getBytes(), //! unsafe if glfw modifies bytes
+        .width = int(width), //! narrowing conversion
+        .height = int(height), //! narrowing conversion
+        .pixels = (uchar*)bytes, //! unsafe if glfw modifies bytes
       } };
       glfwSetWindowIcon(handle(_handle), 1, images);
     }

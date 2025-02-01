@@ -24,8 +24,8 @@ namespace Parrot {
 
     // getTitle
     const string& getTitle();
-    // setIcon
-    void setIcon(const Image& image);
+    // setIcon (tray icon)
+    void setIcon(const uchar* bytes, uint width, uint height);
 
     // isOpen
     bool isOpen() const;

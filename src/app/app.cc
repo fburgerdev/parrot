@@ -78,10 +78,14 @@ namespace Parrot {
       window.title, scene.name, _name
     );
     PlayingUnit unit(window, scene, this);
-    unit.window.setIcon(Image(
-        _asset_manager.getAssetDirectory() / "default/parrot.png",
-        _asset_manager.getAssetDirectory()
-    ));
+    static Image default_icon = Image(
+      _asset_manager.getAssetDirectory() / "default/parrot.png",
+      _asset_manager.getAssetDirectory()
+    );
+    unit.window.setIcon(
+      default_icon.getBytes(),
+      default_icon.getWidth(), default_icon.getHeight()
+    );
     auto result = _units.emplace(unit.getUUID(), std::move(unit));
     return result.first->second;
   }

@@ -25,9 +25,9 @@ namespace Parrot {
   const string& Window::getTitle() {
     return _title;
   }
-  // setIcon
-  void Window::setIcon(const Image& image) {
-    _physical.setIcon(image);
+  // setIcon (tray icon)
+  void Window::setIcon(const uchar* bytes, uint width, uint height) {
+    _physical.setIcon(bytes, width, height);
   }
 
   // isOpen
