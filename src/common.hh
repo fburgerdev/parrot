@@ -73,6 +73,11 @@ namespace Parrot {
   using Tuple = std::tuple<TArgs...>;
   template<typename... TArgs>
   using Variant = std::variant<TArgs...>;
+  // :: funcs
+  template<class T, class... Args>
+  bool holds(const Variant<Args...>& variant) {
+    return std::holds_alternative<T>(variant);
+  }
 
   // container
   // :: sequential
@@ -110,7 +115,7 @@ namespace Parrot {
   template<typename T>
   using WeakPtr = std::weak_ptr<T>;
 
-  // Function
+  // function
   template<class T>
   using Func = std::function<T>;
 

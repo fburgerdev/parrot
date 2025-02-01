@@ -53,7 +53,7 @@ namespace Parrot {
     void Context::applyMaterial(
       Shader& shader, const MaterialNode& node, const string& prefix
     ) {
-      if (std::holds_alternative<Map<string, MaterialNode>>(node.value)) {
+      if (holds<Map<string, MaterialNode>>(node.value)) {
         const auto& object = std::get<Map<string, MaterialNode>>(node.value);
         for (const auto& [child_name, child_node] : object) {
           if (prefix.empty()) {
@@ -64,7 +64,7 @@ namespace Parrot {
           }
         }
       }
-      else if (std::holds_alternative<List<MaterialNode>>(node.value)) {
+      else if (holds<List<MaterialNode>>(node.value)) {
         const auto& list = std::get<List<MaterialNode>>(node.value);
         for (usize i = 0; i < list.size(); ++i) {
           applyMaterial(
@@ -72,14 +72,14 @@ namespace Parrot {
           );
         }
       }
-      else if (std::holds_alternative<MaterialLeaf>(node.value)) {
+      else if (holds<MaterialLeaf>(node.value)) {
         const auto& leaf = std::get<MaterialLeaf>(node.value);
-        if (std::holds_alternative<NumericMaterialLeaf>(leaf)) {
+        if (holds<NumericMaterialLeaf>(leaf)) {
           std::visit([&](const auto& x) {
             shader.setUniform(prefix, x);
             }, std::get<NumericMaterialLeaf>(leaf));
         }
-        else if (std::holds_alternative<AssetHandle<TextureConfig>>(leaf)) {
+        else if (holds<AssetHandle<TextureConfig>>(leaf)) {
           auto texture = std::get<AssetHandle<TextureConfig>>(leaf).lock();
           getTexture(*texture).bind(0);
           shader.setUniform(prefix, 0);

@@ -39,7 +39,7 @@ namespace Parrot {
       return asset;
     }
     else {
-      if (std::holds_alternative<SharedPtr<Asset>>(it->second)) {
+      if (holds<SharedPtr<Asset>>(it->second)) {
         return std::get<SharedPtr<Asset>>(it->second);
       }
       else if (!std::get<WeakPtr<Asset>>(it->second).expired()) {

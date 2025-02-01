@@ -15,7 +15,7 @@ namespace Parrot {
     return _uuid_map.at(asset_path);
   }
   UUID AssetRegistry::getUUID(const AssetKey& key) const {
-    if (std::holds_alternative<UUID>(key)) {
+    if (holds<UUID>(key)) {
       return std::get<UUID>(key);
     }
     else {
@@ -27,7 +27,7 @@ namespace Parrot {
     return _asset_path_map.at(uuid);
   }
   const AssetPath& AssetRegistry::getAssetPath(const AssetKey& key) const {
-    if (std::holds_alternative<UUID>(key)) {
+    if (holds<UUID>(key)) {
       return getAssetPath(std::get<UUID>(key));
     }
     else {

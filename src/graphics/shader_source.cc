@@ -90,7 +90,7 @@ namespace Parrot {
                 source.substr(offset, open_index - offset)
               );
             }, * current);
-            if (std::holds_alternative<ShaderStage>(*current)) {
+            if (holds<ShaderStage>(*current)) {
               ShaderStage& stage = std::get<ShaderStage>(*current);
               if (stage.type == ShaderStage::Type::VERTEX) {
                 vertex = std::move(stage);

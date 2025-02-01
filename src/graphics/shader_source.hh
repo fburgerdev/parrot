@@ -26,7 +26,7 @@ namespace Parrot {
       string toString() const {
         string out;
         for (const auto& part : body) {
-          if (std::holds_alternative<SnippetInclude>(part)) {
+          if (holds<SnippetInclude>(part)) {
             const SnippetInclude& include = std::get<SnippetInclude>(part);
             if (include.is_optional) {
               out += "[[include \"" + include.identifier + "\" optional]]";
@@ -78,7 +78,7 @@ namespace Parrot {
     void resolve(Snippet& snippet, auto&& sources) {
       Set<ShaderSource*> resolved;
       for (usize i = 0; i < snippet.body.size(); ++i) {
-        if (std::holds_alternative<SnippetInclude>(snippet.body.at(i))) {
+        if (holds<SnippetInclude>(snippet.body.at(i))) {
           SnippetInclude& include = std::get<SnippetInclude>(
             snippet.body.at(i)
           );

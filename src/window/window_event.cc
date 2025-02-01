@@ -8,53 +8,53 @@ namespace Parrot {
   }
   // getWindowCloseRequest
   WindowCloseRequest* WindowEvent::getWindowCloseRequest() {
-    if (std::holds_alternative<WindowCloseRequest>(_value)) {
+    if (holds<WindowCloseRequest>(_value)) {
       return &std::get<WindowCloseRequest>(_value);
     }
     return nullptr;
   }
   const WindowCloseRequest* WindowEvent::getWindowCloseRequest() const {
-    if (std::holds_alternative<WindowCloseRequest>(_value)) {
+    if (holds<WindowCloseRequest>(_value)) {
       return &std::get<WindowCloseRequest>(_value);
     }
     return nullptr;
   }
   // getKeyPress
   KeyPress* WindowEvent::getKeyPress() {
-    if (std::holds_alternative<KeyPress>(_value)) {
+    if (holds<KeyPress>(_value)) {
       return &std::get<KeyPress>(_value);
     }
     return nullptr;
   }
   const KeyPress* WindowEvent::getKeyPress() const {
-    if (std::holds_alternative<KeyPress>(_value)) {
+    if (holds<KeyPress>(_value)) {
       return &std::get<KeyPress>(_value);
     }
     return nullptr;
   }
   // getMousePress
   MousePress* WindowEvent::getMousePress() {
-    if (std::holds_alternative<MousePress>(_value)) {
+    if (holds<MousePress>(_value)) {
       return &std::get<MousePress>(_value);
     }
     return nullptr;
   }
   const MousePress* WindowEvent::getMousePress() const {
-    if (std::holds_alternative<MousePress>(_value)) {
+    if (holds<MousePress>(_value)) {
       return &std::get<MousePress>(_value);
     }
     return nullptr;
   }
   // getMouseMove
   MouseMove* WindowEvent::getMouseMove() {
-    if (std::holds_alternative<MouseMove>(_value)) {
+    if (holds<MouseMove>(_value)) {
       return &std::get<MouseMove>(_value);
     }
     return nullptr;
 
   }
   const MouseMove* WindowEvent::getMouseMove() const {
-    if (std::holds_alternative<MouseMove>(_value)) {
+    if (holds<MouseMove>(_value)) {
       return &std::get<MouseMove>(_value);
     }
     return nullptr;
@@ -85,16 +85,16 @@ namespace Parrot {
     return stream;
   }
   ostream& operator<<(ostream& stream, const WindowEvent& e) {
-    if (std::holds_alternative<WindowCloseRequest>(e._value)) {
+    if (holds<WindowCloseRequest>(e._value)) {
       return stream << std::get<WindowCloseRequest>(e._value);
     }
-    else if (std::holds_alternative<KeyPress>(e._value)) {
+    else if (holds<KeyPress>(e._value)) {
       return stream << std::get<KeyPress>(e._value);
     }
-    else if (std::holds_alternative<MousePress>(e._value)) {
+    else if (holds<MousePress>(e._value)) {
       return stream << std::get<MousePress>(e._value);
     }
-    else if (std::holds_alternative<MouseMove>(e._value)) {
+    else if (holds<MouseMove>(e._value)) {
       return stream << std::get<MouseMove>(e._value);
     }
     else {

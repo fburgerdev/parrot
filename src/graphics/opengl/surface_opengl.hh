@@ -38,7 +38,7 @@ namespace Parrot {
           Vec3<float32>>
           > directional_lights;
         for (auto [transform, light_source] : scene_data.lights) {
-          if (std::holds_alternative<AmbientLight>(light_source->value)) {
+          if (holds<AmbientLight>(light_source->value)) {
             auto& ambient_light = std::get<AmbientLight>(light_source->value);
             ambient_lights.emplace_back(
               std::make_tuple(
@@ -47,7 +47,7 @@ namespace Parrot {
               )
             );
           }
-          if (std::holds_alternative<DirectionalLight>(light_source->value)) {
+          if (holds<DirectionalLight>(light_source->value)) {
             auto& directional_light = std::get<DirectionalLight>(
               light_source->value
             );
