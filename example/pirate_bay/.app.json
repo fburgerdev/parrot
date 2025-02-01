@@ -1,9 +1,9 @@
 {
   "uuid": 3677601194714616601,
-  "name": "demo",
+  "name": "pirate bay",
   "main": [
     {
-      "title": "Main Window",
+      "title": "Pirate Bay",
       "size": [ 1080, 720 ],
       "scripts": [ "FPS" ]
     },

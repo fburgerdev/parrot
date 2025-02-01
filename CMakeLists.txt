@@ -41,34 +41,35 @@ target_include_directories(parrot PUBLIC vendor/json/include)
 # :: stb (target)
 add_subdirectory(vendor/stb)
 
-# example_demo (target)
-add_executable(example_demo)
+# example_teapot (target)
+add_executable(example_teapot)
 # :: files
-file(GLOB_RECURSE EXAMPLE_DEMO_SOURCES example/demo/*.hh)
-file(GLOB_RECURSE EXAMPLE_DEMO_SOURCES example/demo/*.cc)
-target_sources(example_demo PRIVATE ${EXAMPLE_DEMO_SOURCES})
+file(GLOB_RECURSE EXAMPLE_TEAPOT_SOURCES example/teapot/*.hh)
+file(GLOB_RECURSE EXAMPLE_TEAPOT_SOURCES example/teapot/*.cc)
+target_sources(example_teapot PRIVATE ${EXAMPLE_TEAPOT_SOURCES})
 # :: include directories
-target_include_directories(example_demo PUBLIC src vendor example/demo)
+target_include_directories(example_teapot PUBLIC src vendor example/teapot)
 # :: links
-target_link_libraries(example_demo PRIVATE parrot)
-target_link_libraries(example_demo PRIVATE assimp glad glfw stb)
+target_link_libraries(example_teapot PRIVATE parrot)
+target_link_libraries(example_teapot PRIVATE assimp glad glfw stb)
 # :: macros
-target_compile_definitions(example_demo PRIVATE PARROT_GLFW PARROT_OPENGL)
+target_compile_definitions(example_teapot PRIVATE PARROT_GLFW PARROT_OPENGL)
 
 # example_pirate (target)
-add_executable(example_pirate)
+add_executable(example_pirate_bay)
 # :: files
-file(GLOB_RECURSE EXAMPLE_DEMO_SOURCES example/pirate/*.hh)
-file(GLOB_RECURSE EXAMPLE_DEMO_SOURCES example/pirate/*.cc)
-target_sources(example_pirate PRIVATE ${EXAMPLE_DEMO_SOURCES})
+file(GLOB_RECURSE EXAMPLE_PIRATE_BAY_SOURCES example/pirate_bay/*.hh)
+file(GLOB_RECURSE EXAMPLE_PIRATE_BAY_SOURCES example/pirate_bay/*.cc)
+target_sources(example_pirate_bay PRIVATE ${EXAMPLE_PIRATE_BAY_SOURCES})
 # :: include directories
-target_include_directories(example_pirate PUBLIC src vendor example/pirate)
+target_include_directories(example_pirate_bay PUBLIC src vendor example/pirate_bay)
 # :: links
-target_link_libraries(example_pirate PRIVATE parrot)
-target_link_libraries(example_pirate PRIVATE assimp glad glfw stb)
+target_link_libraries(example_pirate_bay PRIVATE parrot)
+target_link_libraries(example_pirate_bay PRIVATE assimp glad glfw stb)
 # :: macros
-target_compile_definitions(example_pirate PRIVATE PARROT_GLFW PARROT_OPENGL)
+target_compile_definitions(example_pirate_bay PRIVATE PARROT_GLFW PARROT_OPENGL)
 
-# Optional: Group projects in an IDE
-# set_target_properties(parrot PROPERTIES FOLDER Libraries)
-# set_target_properties(example_demo PROPERTIES FOLDER Executables)
+# group projects in an ide
+set_target_properties(parrot PROPERTIES FOLDER Parrot)
+set_target_properties(example_teapot PROPERTIES FOLDER Examples)
+set_target_properties(example_pirate_bay PROPERTIES FOLDER Examples)

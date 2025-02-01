@@ -5,7 +5,7 @@
     "texture": [
       "texture",
       {
-        "image": "images/flat.png"
+        "image": "default/flat.png"
       }
     ]
   }

@@ -13,7 +13,7 @@
         "components": {
           "render-object": {
             "model": "models/environment/palm_tree1.fbx",
-            "material": "materials/flat.mat.json"
+            "material": "default/flat.mat.json"
           }
         }
       },
@@ -25,7 +25,7 @@
         "components": {
           "render-object": {
             "model": "models/ships/large.fbx",
-            "material": "materials/flat.mat.json"
+            "material": "default/flat.mat.json"
           }
         }
       },

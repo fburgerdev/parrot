@@ -1,9 +1,9 @@
 {
   "uuid": 3677601194714616601,
-  "name": "pirate",
+  "name": "teapot",
   "main": [
     {
-      "title": "Pirate Bay",
+      "title": "Teapot",
       "size": [ 1080, 720 ],
       "scripts": [ "FPS" ]
     },

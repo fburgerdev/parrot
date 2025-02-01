@@ -1,0 +1,53 @@
+{
+  "uuid": 12303461204403500793,
+  "name": "Main Scene",
+  "root": {
+    "uuid": 1,
+    "tag": "Root",
+    "children": [
+      {
+        "tag": "Teapot",
+        "components": {
+          "render-object": {
+            "model": "meshes/teapot.obj",
+            "material": "default/flat.mat.json"
+          }
+        },
+        "scripts": [ "Rotate" ]
+      },
+      {
+        "tag": "Directional",
+        "components": {
+          "light-source": {
+            "type": "directional",
+            "direction": [ 0, -0.707, 0.707 ],
+            "intensity": 0.7,
+            "color": [ 255, 255, 255 ]
+          }
+        }
+      },
+      {
+        "tag": "Ambient",
+        "components": {
+          "light-source": {
+            "type": "ambient",
+            "intensity": 0.3,
+            "color": [ 255, 255, 255 ]
+          }
+        }
+      },
+      {
+        "tag": "Player",
+        "transform": {
+          "position": [ 0, 5, -50 ]
+        },
+        "components": {
+          "camera": {
+            "type": "perspective"
+          }
+        },
+        "scripts": [ "PlayerController" ]
+      }
+    ]
+  }
+}
