@@ -34,7 +34,7 @@
         "components": {
           "render-object": {
             "model": "models/ships/large.fbx",
-            "material": "default/flat.mat.json"
+            "material": "materials/water.mat.json"
           }
         },
         "scripts": [ "WaterMesh" ]

@@ -1,0 +1,12 @@
+{
+	"uuid": 2347639075235975932,
+	"shader": "shaders/water.glsl.macro",
+	"uniforms": {
+		"texture": [
+			"texture",
+			{
+				"image": "default/flat.png"
+			}
+		]
+	}
+}

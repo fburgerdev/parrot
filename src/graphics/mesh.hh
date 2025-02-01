@@ -31,6 +31,11 @@ namespace Parrot {
       : vertices(std::forward<Vertices>(vertices)),
       indices(std::forward<Indices>(indices)) {}
 
+    // addTriangle
+    void addTriangle(Vertex v1, Vertex v2, Vertex v3);
+    // addQuadrangle
+    void addQuadrangle(Vertex v1, Vertex v2, Vertex v3, Vertex v4);
+
     // vertices, indices
     List<Vertex> vertices;
     List<uint32> indices;

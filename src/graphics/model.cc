@@ -6,7 +6,7 @@
 #include <assimp/postprocess.h>
 
 namespace Parrot {
-  // processSubModel (static)
+  // (static) processSubModel
   static SubModel processSubModel(aiMesh* mesh, const aiScene* scene) {
     List<Vertex> vertices;
     List<uint> indices;
@@ -44,7 +44,7 @@ namespace Parrot {
       mesh->mMaterialIndex
     };
   }
-  // processNode (static)
+  // (static) processNode
   static void processNode(
     aiNode* node, const aiScene* scene, List<SubModel>& submodels
   ) {
@@ -58,6 +58,11 @@ namespace Parrot {
   }
 
   // (constructor)
+  Model::Model(strview name)
+    : Asset(AssetPath(strview(":" + string(name)))) {
+    model_materials.emplace_back();
+  }
+  // :: for Asset
   Model::Model(const AssetPath& asset_path, AssetAPI& asset_api)
     : Asset(asset_path) {
     Assimp::Importer importer;

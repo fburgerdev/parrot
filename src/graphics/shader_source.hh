@@ -5,9 +5,10 @@ namespace Parrot {
   // ShaderSource (Asset)
   class ShaderSource : public Asset {
   public:
-    // (constructor) for Asset
-    ShaderSource(const AssetPath& asset_path, AssetAPI& asset_api);
+    // (constructor)
     ShaderSource(const string& source);
+    // :: for Asset
+    ShaderSource(const AssetPath& asset_path, AssetAPI& asset_api);
     template<JsonType JSON>
     ShaderSource(
       const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
@@ -62,7 +63,7 @@ namespace Parrot {
       string version = "330 core";
     };
 
-    // (static) resolve
+    // resolve
     void resolve(auto&& sources) {
       if (vertex) {
         resolve(*vertex, sources);

@@ -27,7 +27,9 @@ void main() {
     [[include "vertex-prefix" optional]]
     
     // position
-    gl_Position = u_world_to_clip * u_local_to_world * vec4(a_pos, 1);
+    float height = sin(a_pos.x + a_pos.z + u_total_time);
+    vec3 pos = vec3(a_pos.x, height, a_pos.z);
+    gl_Position = u_world_to_clip * u_local_to_world * vec4(pos, 1);
 
     // out
     v_position = (u_local_to_world * vec4(a_pos, 1)).xyz;
@@ -67,7 +69,7 @@ void main() {
 
     // out
     vec3 color = applyLighting(sample(v_tex_coords), v_position, v_normal);
-    o_frag_color = vec4(color, 1);
+    o_frag_color = vec4(color * vec3(0, 0, 1), 1);
     
     // (snippet) postfix
     [[include "fragment-postfix" optional]]

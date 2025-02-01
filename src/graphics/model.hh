@@ -12,7 +12,9 @@ namespace Parrot {
   // Model (Asset)
   class Model : public Asset {
   public:
-    // (constructor) for Asset
+    // (constructor)
+    Model(strview name);
+    // :: for Asset
     Model(const AssetPath& asset_path, AssetAPI& asset_api);
     template<JsonType JSON>
     Model(

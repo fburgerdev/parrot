@@ -2,6 +2,7 @@
 #include "renderer_opengl.hh"
 #include "draw_opengl.hh"
 #include "core/log.hh"
+#include "utils/stopwatch.hh"
 
 namespace Parrot {
   namespace OpenGL {
@@ -41,6 +42,9 @@ namespace Parrot {
             1080.0F / 720.0F
           );
           auto view = scene_data.camera.first->calcLocalViewMatrix();
+          shader_opengl.setUniform(
+            "u_total_time", g_global_watch.elapsed()
+          );
           shader_opengl.setUniform(
             "u_local_to_world", transform->calcLocalModelMatrix()
           );
