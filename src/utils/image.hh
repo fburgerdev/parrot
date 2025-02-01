@@ -14,8 +14,7 @@ namespace Parrot {
   class Image : public Asset {
   public:
     // (constructor)
-    Image() = default;
-    Image(const stdf::path& filepath);
+    Image(const stdf::path& filepath, Opt<stdf::path> debug_root = {});
     Image(strview name, const uchar* buffer, usize size);
     Image(const Image& other);
     Image(Image&& other) noexcept;
@@ -29,17 +28,26 @@ namespace Parrot {
     Image& operator=(const Image& other);
     Image& operator=(Image&& other) noexcept;
 
-    // safeAsBMP
-    void safeAsBMP(const stdf::path& filepath) const;
-    // getWidth
+    // safeAs
+    // :: bmp
+    void safeAsBMP(
+      const stdf::path& filepath, Opt<stdf::path> debug_root = {}
+    ) const;
+
+    // get
+    // :: width
     uint getWidth() const;
-    // getHeight
+    // :: height
     uint getHeight() const;
-    // getFormat
+    // :: format
     ImageFormat getFormat() const;
-    // getBytes
+    // :: bytes
     const uchar* getBytes() const;
   private:
+    static stdf::path getDebugFilepath(
+      const stdf::path& filepath, Opt<stdf::path> debug_root = {}
+    );
+    
     string _name;
     uint _width = 0, _height = 0;
     ImageFormat _format = ImageFormat::NONE;

@@ -17,7 +17,7 @@ namespace Parrot {
       if (const WindowEvent* we = dynamic_cast<const WindowEvent*>(&e)) {
         if (auto* wcr = we->getWindowCloseRequest()) {
           LOG_APP_DEBUG(
-            "unresolved window-close-request, closing window '{}'...",
+            "unresolved window-close-request, closing window '{}'",
             we->getTargetWindow()->getTitle()
           );
           we->getTargetWindow()->close();
@@ -43,7 +43,7 @@ namespace Parrot {
     }
     // setScriptOwner
     virtual void setScriptOwner(Scriptable* owner) override {
-      _app = (App*)owner; //TODO: use c++ style cast
+      _app = (App*)owner; // TODO: use c++ style cast
     }
     // raiseEvent
     virtual void raiseEvent(const Event& e) override {

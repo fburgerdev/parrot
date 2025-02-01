@@ -10,7 +10,6 @@ namespace Parrot {
   class EntityConfig : public Asset {
   public:
     // (constructor) for Asset
-    EntityConfig() = default;
     EntityConfig(const AssetPath& asset_path, AssetAPI& asset_api);
     template<JsonType JSON>
     EntityConfig(

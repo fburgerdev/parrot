@@ -37,10 +37,13 @@ namespace Parrot {
       return std::tie(file, sub) <=> std::tie(other.file, other.sub);
     }
 
-    // file, sub
+    // file, sub, debug_root
     stdf::path file;
     string sub;
+    Opt<stdf::path> debug_root; // for debugging
   };
+  // <<
+  ostream& operator<<(ostream& stream, const AssetPath& asset_path);
   // AssetKey
   using AssetKey = Variant<UUID, AssetPath>;
 }

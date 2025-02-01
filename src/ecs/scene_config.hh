@@ -6,7 +6,6 @@ namespace Parrot {
   class SceneConfig : public Asset {
   public:
     // (constructor) for Asset
-    SceneConfig() = default;
     SceneConfig(const AssetPath& asset_path, AssetAPI& asset_api);
     template<JsonType JSON>
     SceneConfig(

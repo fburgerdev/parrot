@@ -34,7 +34,7 @@ namespace Parrot {
     const T* data() const {
       return _array.data();
     }
-    // <=>
+    // <=> (compare)
     auto operator<=>(const Mat<T, N, M>&) const = default;
   private:
     Array<T, N * M> _array;
@@ -64,7 +64,7 @@ namespace Parrot {
     const T& at(usize n, usize m) const {
       return at(n);
     }
-    // <=>
+    // <=> (compare)
     auto operator<=>(const Mat<T, 2, 1>&) const = default;
 
     // x, y
@@ -102,7 +102,7 @@ namespace Parrot {
     const T& at(usize n, usize m) const {
       return at(n);
     }
-    // <=>
+    // <=> (compare)
     auto operator<=>(const Mat<T, 3, 1>&) const = default;
     
     // x, y, z
@@ -149,7 +149,7 @@ namespace Parrot {
     const T& at(usize n, usize m) const {
       return at(n);
     }
-    // <=>
+    // <=> (compare)
     auto operator<=>(const Mat<T, 4, 1>&) const = default;
 
     // x, y, z, w

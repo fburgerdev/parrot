@@ -24,20 +24,20 @@ namespace Parrot {
 
     // getTitle
     const string& getTitle();
+    // setIcon
+    void setIcon(const Image& image);
 
     // isOpen
     bool isOpen() const;
     // close
     void close();
 
-    // setIcon
-    void setIcon(const Image& image);
     // setCursorState
     void setCursorState(CursorState state);
     // getCursorCoords
     Vec2<> getCursorCoords() const;
 
-    // foreachChild (scriptable)
+    // foreachChild (impl. Scriptable)
     virtual void foreachChild(
       Func<void(Scriptable&)> func
     ) override;
@@ -45,14 +45,15 @@ namespace Parrot {
       Func<void(const Scriptable&)> func
     ) const override;
 
-    // pollEvents
-    List<WindowEvent> pollEvents();
-    // swapBuffers
-    void swapBuffers();
     // bind
     void bind();
     // unbind
     void unbind();
+
+    // pollEvents
+    List<WindowEvent> pollEvents();
+    // swapBuffers
+    void swapBuffers();
   private:
     string _title;
     uint _width = 0, _height = 0;

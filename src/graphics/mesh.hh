@@ -26,7 +26,10 @@ namespace Parrot {
   public:
     // (constructor)
     Mesh() = default;
-    Mesh(List<Vertex>&& vertices, List<uint32>&& indices);
+    template<class Vertices, class Indices>
+    Mesh(Vertices&& vertices, Indices&& indices)
+      : vertices(std::forward<Vertices>(vertices)),
+      indices(std::forward<Indices>(indices)) {}
 
     // vertices, indices
     List<Vertex> vertices;

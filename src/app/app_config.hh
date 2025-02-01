@@ -8,7 +8,6 @@ namespace Parrot {
   class AppConfig : public Asset {
   public:
     // (constructor) for Asset
-    AppConfig() = default;
     AppConfig(const AssetPath& asset_path);
     AppConfig(const AssetPath& asset_path, AssetAPI& asset_api);
     template<JsonType JSON>
@@ -67,7 +66,7 @@ namespace Parrot {
       main_scene = AssetHandle<SceneConfig>(json.at("main")[1], asset_api);
     }
 
-    // name, asset_dir, (un)loading_policy, main (window / scene)
+    // name, asset_dir, (un)loading_policy, main(window/scene)
     string name = "App";
     stdf::path asset_dir = ".";
     LoadingPolicy loading_policy = LoadingPolicy::LAZY_LOAD;

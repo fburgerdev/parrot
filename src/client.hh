@@ -35,7 +35,7 @@ namespace Parrot {
   private:
     // setScriptOwner
     virtual void setScriptOwner(Scriptable* owner) {
-      entity = (Entity*)owner; //TODO: use c++ style cast
+      entity = reinterpret_cast<Entity*>(owner);
     }
   };
   // SceneScript
@@ -55,7 +55,7 @@ namespace Parrot {
   private:
     // setScriptOwner
     virtual void setScriptOwner(Scriptable* owner) {
-      scene = (Scene*)owner; //TODO: use c++ style cast
+      scene = reinterpret_cast<Scene*>(owner);
     }
   };
   // WindowScript
@@ -75,7 +75,7 @@ namespace Parrot {
   private:
     // setScriptOwner
     virtual void setScriptOwner(Scriptable* owner) {
-      window = (Window*)(owner); //TODO: use c++ style cast
+      window = reinterpret_cast<Window*>(owner);
     }
   };
   // AppScript
@@ -95,7 +95,7 @@ namespace Parrot {
   private:
     // setScriptOwner
     virtual void setScriptOwner(Scriptable* owner) {
-      app = (App*)(owner); //TODO: use c++ style cast
+      app = reinterpret_cast<App*>(owner);
     }
   };
 }

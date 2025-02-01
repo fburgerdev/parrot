@@ -7,6 +7,7 @@ namespace Parrot {
   // (constructor)
   Stopwatch::Stopwatch()
     : _begin(steady_clock::now().time_since_epoch().count()) {}
+
   // elapsed
   seconds Stopwatch::elapsed() const {
     uint64 end = steady_clock::now().time_since_epoch().count();

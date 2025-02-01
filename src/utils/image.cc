@@ -6,14 +6,16 @@
 
 namespace Parrot {
   // (constructor)
-  Image::Image(const stdf::path& filepath)
+  Image::Image(const stdf::path& filepath, Opt<stdf::path> debug_root)
     : _width(0), _height(0), _format(ImageFormat::NONE), _bytes(nullptr) {
     int width, height, channels;
     uchar* img = stbi_load(
       filepath.string().c_str(), &width, &height, &channels, 4
     );
     if (!img) {
-      LOG_ASSET_ERROR("failed to load image {}", filepath);
+      LOG_ASSET_ERROR(
+        "failed to load image {}", getDebugFilepath(filepath, debug_root)
+      );
       LOG_ASSET_ERROR("stb-image error message:\n{}", stbi_failure_reason());
       return;
     }
@@ -31,7 +33,8 @@ namespace Parrot {
       LOG_ASSET_ERROR(
         "failed to load image {}"
         "due to unsupported image format with {} channels",
-        filepath, channels);
+        getDebugFilepath(filepath, debug_root), channels
+      );
       return;
     }
     _width = width;
@@ -39,11 +42,11 @@ namespace Parrot {
     _bytes = img;
     LOG_ASSET_DEBUG(
       "loaded image {}, {}px x {}px with {} channels",
-      filepath, width, height, channels
+      getDebugFilepath(filepath, debug_root), width, height, channels
     );
   }
   Image::Image(const AssetPath& asset_path, AssetAPI& asset_api)
-    : Image(asset_path.file) {}
+    : Image(asset_path.file, asset_path.debug_root) {}
   Image::Image(strview name, const uchar* buffer, usize size)
       : _name(name), _width(0), _height(0),
       _format(ImageFormat::NONE), _bytes(nullptr) {
@@ -140,8 +143,11 @@ namespace Parrot {
     return *this;
   }
 
-  // safeAsBMP
-  void Image::safeAsBMP(const stdf::path& filepath) const {
+  // safeAs
+  // :: bmp
+  void Image::safeAsBMP(
+    const stdf::path& filepath, Opt<stdf::path> debug_root
+  ) const {
     int channels = 0;
     switch (_format) {
     case ImageFormat::GRAY:
@@ -149,8 +155,10 @@ namespace Parrot {
       break;
     case ImageFormat::RGB:
       channels = 3;
+      break;
     case ImageFormat::RGBA:
       channels = 4;
+      break;
     default:
       break;
     }
@@ -160,32 +168,50 @@ namespace Parrot {
     );
     if (error_code == 0) {
       LOG_ASSET_ERROR(
-        "failed to safe image {} at {}, could not open file", _name, filepath
+        "failed to safe image {} at {}, could not open file",
+        _name, getDebugFilepath(filepath, debug_root)
       );
     }
     else if (error_code != 1) {
       LOG_ASSET_ERROR(
-        "failed to safe image {} at {}, invalid image data", _name, filepath
+        "failed to safe image {} at {}, invalid image data",
+        _name, getDebugFilepath(filepath, debug_root)
       );
     }
     else {
-      LOG_ASSET_DEBUG("successfully safed image {} at {}", _name, filepath);
+      LOG_ASSET_DEBUG("successfully safed image {} at {}",
+        _name, getDebugFilepath(filepath, debug_root)
+      );
     }
   }
-  // getWidth
+
+  // get
+  // :: width
   uint Image::getWidth() const {
     return _width;
   }
-  // getHeight
+  // :: height
   uint Image::getHeight() const {
     return _height;
   }
-  // getFormat
+  // :: format
   ImageFormat Image::getFormat() const {
     return _format;
   }
-  // getBytes
+  // :: bytes
   const uchar* Image::getBytes() const {
     return _bytes;
+  }
+
+  // getDebugFilepath
+  stdf::path Image::getDebugFilepath(
+    const stdf::path& filepath, Opt<stdf::path> debug_root
+  ) {
+    if (debug_root) {
+      return stdf::relative(filepath, *debug_root);
+    }
+    else {
+      return filepath;
+    }
   }
 }

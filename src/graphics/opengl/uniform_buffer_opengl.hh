@@ -18,7 +18,7 @@ namespace Parrot {
       MAT3X3_FLOAT64, MAT3X4_FLOAT32, MAT3X4_FLOAT64,
       MAT4X2_FLOAT32, MAT4X2_FLOAT64, MAT4X3_FLOAT32,
       MAT4X3_FLOAT64, MAT4X4_FLOAT32, MAT4X4_FLOAT64,
-      //TODO: opaque types... (samples, images, atomic counters)
+      // TODO: opaque types... (samples, images, atomic counters)
     };
 
     // UniformBuffer

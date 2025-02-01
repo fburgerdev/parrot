@@ -92,7 +92,7 @@ namespace Parrot {
     }
     LOG_ASSET_DEBUG(
       "loaded model {} with {} submodel(s) and {}",
-      asset_path.file, submodels.size(), textures.size()
+      asset_path, submodels.size(), textures.size()
     );
   }
 }

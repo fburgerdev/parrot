@@ -12,7 +12,6 @@ namespace Parrot {
   class WindowConfig : public Asset {
   public:
     // (constructor) for Asset
-    WindowConfig() = default;
     WindowConfig(const AssetPath& asset_path, AssetAPI& asset_api);
     template<JsonType JSON>
     WindowConfig(

@@ -32,11 +32,11 @@ namespace Parrot {
     // loadFromJSON
     template<JsonType JSON>
     void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
-      //TODO: properties...
+      // TODO: properties...
       image = AssetHandle<Image>(json.at("image"), asset_api);
     }
     
-    // hor_wrap, ver_wrap, mag_filter, min_filter, mipmap, image
+    // (hor/ver)wrap, (mag/min)filter, mipmap, image
     TextureWrap hor_wrap = TextureWrap::CLAMP_TO_EDGE;
     TextureWrap ver_wrap = TextureWrap::CLAMP_TO_EDGE;
     TextureFilter mag_filter = TextureFilter::LINEAR;

@@ -8,8 +8,10 @@ namespace Parrot {
   // (constructor)
   App::App(const stdf::path& app_path)
     : Scriptable(&_default_scriptable), _default_scriptable(*this) {
-    AppConfig raw_config = AppConfig(AssetPath(app_path));
-    LOG_APP_INFO("creating app '{}' from {}", raw_config.name, app_path);
+    AssetPath asset_path(app_path);
+    AppConfig raw_config = AppConfig(asset_path);
+    asset_path.debug_root = raw_config.asset_dir;
+    LOG_APP_INFO("creating app '{}' from {}", raw_config.name, asset_path);
     // name
     _name = raw_config.name;
     // asset-manager
@@ -18,7 +20,7 @@ namespace Parrot {
       raw_config.loading_policy, raw_config.unloading_policy
     );
     // main (window / scene)
-    AppConfig config = AppConfig(AssetPath(app_path), _asset_manager);
+    AppConfig config = AppConfig(asset_path, _asset_manager);
     _main_unit = &addPlayingUnit(
       *config.main_window.lock(), *config.main_scene.lock()
     );
@@ -76,9 +78,10 @@ namespace Parrot {
       window.title, scene.name, _name
     );
     PlayingUnit unit(window, scene, this);
-    unit.window.setIcon(
-      Image(_asset_manager.getAssetDirectory() / "default/parrot.png")
-    );
+    unit.window.setIcon(Image(
+        _asset_manager.getAssetDirectory() / "default/parrot.png",
+        _asset_manager.getAssetDirectory()
+    ));
     auto result = _units.emplace(unit.getUUID(), std::move(unit));
     return result.first->second;
   }

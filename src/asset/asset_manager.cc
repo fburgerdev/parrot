@@ -32,6 +32,7 @@ namespace Parrot {
     UUID uuid = _registry.getUUID(key);
     AssetPath asset_path = _registry.getAssetPath(key);
     asset_path.file = _asset_dir / asset_path.file;
+    asset_path.debug_root = _asset_dir;
     auto it = _loaded.find(uuid);
     if (it == _loaded.end()) {
       auto asset = factory(asset_path);

@@ -33,4 +33,17 @@ namespace Parrot {
     }
     return splitted;
   }
+  // <<
+  ostream& operator<<(ostream& stream, const AssetPath& asset_path) {
+    if (asset_path.debug_root) {
+      stream << stdf::relative(asset_path.file, *asset_path.debug_root);
+    }
+    else {
+      stream << asset_path.file;
+    }
+    if (!asset_path.sub.empty()) {
+      stream << ":" << asset_path.sub;
+    }
+    return stream;
+  }
 }

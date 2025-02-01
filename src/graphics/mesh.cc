@@ -10,8 +10,4 @@ namespace Parrot {
       { DTypeGPU::FLOAT32, 2 },
     };
   }
-
-  // (constructor)
-  Mesh::Mesh(List<Vertex>&& vertices, List<uint32>&& indices)
-    : vertices(std::move(vertices)), indices(std::move(indices)) {}
 }

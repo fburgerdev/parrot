@@ -6,7 +6,6 @@ namespace Parrot {
   // RenderObject (SubAsset)
   struct RenderObject : public Asset {
     // (constructor) for SubAsset
-    RenderObject() = default;
     template<JsonType JSON>
     RenderObject(
       const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api

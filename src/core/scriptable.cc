@@ -47,7 +47,7 @@ namespace Parrot {
   }
   // (destructor)
   Scriptable::~Scriptable() {
-    //TODO: assert all detached
+    // TODO: assert all detached
   }
   // (assignment)
   Scriptable& Scriptable::operator=(Scriptable&& other) noexcept {
@@ -77,7 +77,6 @@ namespace Parrot {
       script->onUpdate(delta_time);
     }
   }
-
   // raiseEvent
   void Scriptable::raiseEvent(const Event& e) {
     captureEvent(e) || bubbleEvent(e) || cascadeEvent(e);

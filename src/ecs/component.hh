@@ -23,7 +23,7 @@ namespace Parrot {
     // entity
     Entity& entity;
   };
-  //TODO: replace "derived" with a more descriptive name
+  // TODO: replace "derived" with a more descriptive name
   // DerivedComponent
   template<class T>
   class DerivedComponent : public T, public Component {
@@ -47,7 +47,7 @@ namespace Parrot {
     // createComponent
     virtual UniquePtr<Component> createComponent(Entity& entity) const = 0;
   };
-  //TODO: replace "derived" with a more descriptive name
+  // TODO: replace "derived" with a more descriptive name
   // DerivedComponentConfig
   template<class T>
   class DerivedComponentConfig : public T, public ComponentConfig {

@@ -12,7 +12,7 @@ namespace Parrot {
     _physical.open(_width, _height, _title);
     setCursorState(config.cursor);
     for (const string& script_name : config.scripts) {
-      auto [id, factory] = g_registry<Script, Window&>.at(script_name);
+      auto& [id, factory] = g_registry<Script, Window&>.at(script_name);
       addScript(id, factory(*this));
     }
   }
@@ -25,6 +25,10 @@ namespace Parrot {
   const string& Window::getTitle() {
     return _title;
   }
+  // setIcon
+  void Window::setIcon(const Image& image) {
+    _physical.setIcon(image);
+  }
 
   // isOpen
   bool Window::isOpen() const {
@@ -35,10 +39,6 @@ namespace Parrot {
     _physical.close();
   }
 
-  // setIcon
-  void Window::setIcon(const Image& image) {
-    _physical.setIcon(image);
-  }
   // setCursorState
   void Window::setCursorState(CursorState state) {
     if (state != _cursor) {
@@ -63,7 +63,7 @@ namespace Parrot {
     return _physical.getCursorCoords();
   }
 
-  // foreachChild (scriptable)
+  // foreachChild (impl. Scriptable)
   void Window::foreachChild(
     [[maybe_unused]] Func<void(Scriptable&)> func
   ) {
@@ -73,6 +73,15 @@ namespace Parrot {
     [[maybe_unused]] Func<void(const Scriptable&)> func
   ) const {
     // do nothing
+  }
+
+  // bind
+  void Window::bind() {
+    _physical.bind();
+  }
+  // unbind
+  void Window::unbind() {
+    _physical.unbind();
   }
 
   // pollEvents
@@ -86,13 +95,5 @@ namespace Parrot {
   // swapBuffers
   void Window::swapBuffers() {
     _physical.swapBuffers();
-  }
-  // bind
-  void Window::bind() {
-    _physical.bind();
-  }
-  // unbind
-  void Window::unbind() {
-    _physical.unbind();
   }
 }

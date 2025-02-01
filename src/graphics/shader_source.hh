@@ -6,7 +6,6 @@ namespace Parrot {
   class ShaderSource : public Asset {
   public:
     // (constructor) for Asset
-    ShaderSource() = default;
     ShaderSource(const AssetPath& asset_path, AssetAPI& asset_api);
     ShaderSource(const string& source);
     template<JsonType JSON>
@@ -104,7 +103,7 @@ namespace Parrot {
               snippet.body.at(i) = string();
             }
             else {
-              //TODO: error
+              // TODO: error
             }
           }
         }

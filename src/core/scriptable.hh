@@ -73,12 +73,14 @@ namespace Parrot {
     Scriptable& operator=(const Scriptable&) = delete;
     Scriptable& operator=(Scriptable&& other) noexcept;
 
-    // foreachChild
+    // foreachChild (interface)
     virtual void foreachChild(Func<void(Scriptable&)> func) = 0;
     virtual void foreachChild(Func<void(const Scriptable&)> func) const = 0;
 
     // update
     void update(float32 delta_time);
+    // raiseEvent
+    void raiseEvent(const Event& e);
 
     // resolveEvent
     bool resolveEvent(const Event& e);
@@ -89,20 +91,17 @@ namespace Parrot {
     // :: cascade
     bool resolveEventCascade(const Event& e);
 
-    // raiseEvent
-    void raiseEvent(const Event& e);
-
     // getScript
     template<class T> requires std::is_base_of_v<Script, T>
     T& getScript() {
       auto it = _scripts.find(getScriptID<T>());
-      //TODO: assert(it != _scripts.end())
+      // TODO: assert(it != _scripts.end())
       return reinterpret_cast<T&>(*it->second);
     }
     template<class T> requires std::is_base_of_v<Script, T>
     const T& getScript() const {
       auto it = _scripts.find(getScriptID<T>());
-      //TODO: assert(it != _scripts.end())
+      // TODO: assert(it != _scripts.end())
       return reinterpret_cast<const T&>(*it->second);
     }
     // addScript
@@ -113,7 +112,7 @@ namespace Parrot {
         getScriptID<T>(), std::make_unique<T>(std::forward<Args>(args)...)
       );
       auto& script = result.first->second;
-      //TODO: assert(result.second)
+      // TODO: assert(result.second)
       script->onAttach();
       return reinterpret_cast<T&>(*script);
     }
@@ -121,7 +120,7 @@ namespace Parrot {
     template<class T> requires std::is_base_of_v<Script, T>
     void removeScript() {
       auto it = _scripts.find(getScriptID<T>());
-      //TODO: assert(it != _scripts.end())
+      // TODO: assert(it != _scripts.end())
       it->second.onDetach();
       _scripts.erase(it);
     }

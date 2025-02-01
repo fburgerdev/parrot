@@ -10,6 +10,7 @@ namespace Parrot {
   public:
     // (constructor)
     Stopwatch();
+
     // elapsed
     seconds elapsed() const;
     // reset
@@ -18,6 +19,6 @@ namespace Parrot {
     uint64 _begin = 0;
   };
 
-  // (global) global_watch
+  // (global) g_global_watch
   inline const Stopwatch g_global_watch;
 }
