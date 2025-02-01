@@ -71,13 +71,13 @@ namespace Parrot {
   }
   // :: add
   PlayingUnit& App::addPlayingUnit(
-    const WindowConfig& window, const SceneConfig& scene
+    const WindowConfig& window_config, const SceneConfig& scene_config
   ) {
     LOG_APP_INFO(
       "creating playing-unit ('{}', '{}') in app '{}'",
-      window.title, scene.name, _name
+      window_config.title, scene_config.name, _name
     );
-    PlayingUnit unit(window, scene, this);
+    PlayingUnit unit(window_config, scene_config, this, _asset_manager);
     static Image default_icon = Image(
       _asset_manager.getAssetDirectory() / "default/parrot.png",
       _asset_manager.getAssetDirectory()

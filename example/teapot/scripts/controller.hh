@@ -5,9 +5,9 @@ namespace Parrot {
   // PlayerController
   class PlayerController : public EntityScript {
   public:
-    // PlayerController
-    PlayerController(Entity& entity)
-      : EntityScript(entity) {}
+    // (constructor)
+    PlayerController(Entity& entity, AssetAPI& asset_api)
+      : EntityScript(entity, asset_api) {}
 
     // resolveEvent
     virtual bool resolveEvent(const Event& e) override {

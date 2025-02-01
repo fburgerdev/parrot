@@ -30,11 +30,21 @@
         }
       },
       {
+        "tag": "Water",
+        "components": {
+          "render-object": {
+            "model": "models/ships/large.fbx",
+            "material": "default/flat.mat.json"
+          }
+        },
+        "scripts": [ "WaterMesh" ]
+      },
+      {
         "tag": "Directional",
         "components": {
           "light-source": {
             "type": "directional",
-            "direction": [0, -0.707, 0.707]
+            "direction": [ 0, -0.707, 0.707 ]
           }
         }
       },

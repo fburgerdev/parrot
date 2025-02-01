@@ -6,9 +6,10 @@ using json = nlohmann::json;
 
 namespace Parrot {
   // (constructor)
-  Scene::Scene(const SceneConfig& config, Scriptable* parent)
-    : name(config.name), root(this) {
-    root = Entity(config.root.lock(), this);
+  Scene::Scene(
+    const SceneConfig& config, Scriptable* parent, AssetAPI& asset_api
+  ) : name(config.name), root(this) {
+    root = Entity(config.root.lock(), this, asset_api);
   }
   // (destructor)
   Scene::~Scene() {

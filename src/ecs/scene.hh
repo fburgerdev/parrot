@@ -7,7 +7,7 @@ namespace Parrot {
   class Scene : public UUIDObject, public Scriptable {
   public:
     // (constructor)
-    Scene(const SceneConfig& config, Scriptable* parent = nullptr);
+    Scene(const SceneConfig& config, Scriptable* parent, AssetAPI& asset_api);
     Scene(Scene&&) = default;
     // (destructor)
     ~Scene();

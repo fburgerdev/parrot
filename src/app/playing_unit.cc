@@ -6,8 +6,8 @@ namespace Parrot {
   // (constructor)
   PlayingUnit::PlayingUnit(
     const WindowConfig& window_config, const SceneConfig& scene_config,
-    Scriptable* parent
-  ) : window(window_config, parent), scene(scene_config, parent) {
+    Scriptable* parent, AssetAPI& asset_api
+  ) : window(window_config, parent), scene(scene_config, parent, asset_api) {
     _renderer = Renderer(_gpu_context);
   }
   PlayingUnit::PlayingUnit(PlayingUnit&& other) noexcept

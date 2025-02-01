@@ -11,7 +11,7 @@ namespace Parrot {
     // (constructor)
     PlayingUnit(
       const WindowConfig& window_config, const SceneConfig& scene_config, 
-      Scriptable* parent = nullptr
+      Scriptable* parent, AssetAPI& asset_api
     );
     PlayingUnit(PlayingUnit&& other) noexcept;
     // (assignment)

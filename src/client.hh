@@ -5,6 +5,7 @@
 // app
 #include "app/app.hh"
 #include "app/playing_unit.hh"
+#include "app/component_registry.hh"
 // ecs
 #include "ecs/component.hh"
 #include "ecs/entity.hh"
@@ -22,16 +23,17 @@ namespace Parrot {
   class EntityScript : public Script {
   public:
     // (constructor)
-    EntityScript(Entity& entity)
-      : entity(&entity) {}
+    EntityScript(Entity& entity, AssetAPI& asset_api)
+      : entity(&entity), asset_api(&asset_api) {}
 
     // raiseEvent
     virtual void raiseEvent(const Event& e) override {
       entity->raiseEvent(e);
     }
 
-    // entity
+    // entity, asset_api
     Entity* entity;
+    AssetAPI* asset_api;
   private:
     // setScriptOwner
     virtual void setScriptOwner(Scriptable* owner) {

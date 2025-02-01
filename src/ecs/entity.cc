@@ -8,12 +8,14 @@ namespace Parrot {
     : Scriptable(parent) {}
   Entity::Entity(Entity* parent)
     : Scriptable(parent), _parent(parent) {}
-  Entity::Entity(const SharedPtr<EntityConfig>& config, Scriptable* parent)
-    : Scriptable(parent) {
+  Entity::Entity(
+    const SharedPtr<EntityConfig>& config,
+    Scriptable* parent, AssetAPI& asset_api
+  ) : Scriptable(parent) {
     _tag = config->tag;
     transform = config->transform;
     for (const auto& handle : config->children) {
-      Entity child = Entity(handle.lock(), this);
+      Entity child = Entity(handle.lock(), this, asset_api);
       _children.emplace(child.getUUID(), std::move(child));
     }
     for (const auto& component_config : config->components) {
@@ -23,16 +25,20 @@ namespace Parrot {
       );
     }
     for (const string& script_name : config->scripts) {
-      auto [uuid, factory] = g_registry<Script, Entity&>.at(script_name);
-      addScript(uuid, factory(*this));
+      auto [uuid, factory] = g_registry<Script, Entity&, AssetAPI&>.at(
+        script_name
+      );
+      addScript(uuid, factory(*this, asset_api));
     }
   }
-  Entity::Entity(const SharedPtr<EntityConfig>& config, Entity* parent)
-    : Scriptable(parent), _parent(parent) {
+  Entity::Entity(
+    const SharedPtr<EntityConfig>& config,
+    Entity* parent, AssetAPI& asset_api
+  ) : Scriptable(parent), _parent(parent) {
     _tag = config->tag;
     transform = config->transform;
     for (const auto& handle : config->children) {
-      Entity child = Entity(handle.lock(), this);
+      Entity child = Entity(handle.lock(), this, asset_api);
       _children.emplace(child.getUUID(), std::move(child));
     }
     for (const auto& component_config : config->components) {
@@ -42,8 +48,10 @@ namespace Parrot {
       );
     }
     for (const string& script_name : config->scripts) {
-      auto [uuid, factory] = g_registry<Script, Entity&>.at(script_name);
-      addScript(uuid, factory(*this));
+      auto [uuid, factory] = g_registry<Script, Entity&, AssetAPI&>.at(
+        script_name
+      );
+      addScript(uuid, factory(*this, asset_api));
     }
   }
   Entity::Entity(UUID uuid, Entity* parent)

@@ -10,15 +10,19 @@ namespace Parrot {
     Entity(Scriptable* parent = nullptr);
     Entity(Entity* parent);
     Entity(
-      const SharedPtr<EntityConfig>& config, Scriptable* parent = nullptr
+      const SharedPtr<EntityConfig>& config,
+      Scriptable* parent, AssetAPI& asset_api
     );
     Entity(
-      const SharedPtr<EntityConfig>& config, Entity* parent
+      const SharedPtr<EntityConfig>& config,
+      Entity* parent, AssetAPI& asset_api
     );
+    Entity(const Entity&) = delete;
     Entity(Entity&&) = default;
     // (destructor)
     ~Entity();
     // (assignment)
+    Entity& operator=(const Entity&) = delete;
     Entity& operator=(Entity&&) = default;
 
     // parent

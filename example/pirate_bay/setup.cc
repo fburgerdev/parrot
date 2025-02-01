@@ -1,18 +1,32 @@
 #include "client.hh"
 #include "scripts/fps.hh"
 #include "scripts/controller.hh"
+#include "scripts/water_mesh.hh"
 
 namespace Parrot {
     // (global) registry
     template<>
-    Map<string, RegistryEntry<Script, Entity&>>
-        g_registry<Script, Entity&> = {
+    Map<string, RegistryEntry<Script, Entity&, AssetAPI&>>
+        g_registry<Script, Entity&, AssetAPI&> = {
         {
             "PlayerController",
             {
                 typeid(PlayerController).hash_code(),
-                [](Entity& entity) {
-                    return std::make_unique<PlayerController>(entity);
+                [](Entity& entity, AssetAPI& asset_api) {
+                    return std::make_unique<PlayerController>(
+                      entity, asset_api
+                    );
+                }
+            }
+        },
+        {
+            "WaterMesh",
+            {
+                typeid(WaterMesh).hash_code(),
+                [](Entity& entity, AssetAPI& asset_api) {
+                    return std::make_unique<WaterMesh>(
+                      entity, asset_api
+                    );
                 }
             }
         },

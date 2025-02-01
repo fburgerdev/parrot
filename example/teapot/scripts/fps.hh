@@ -4,7 +4,7 @@
 namespace Parrot {
   // FPSEvent
   struct FPSEvent : public Event {
-    // FPSEvent
+    // (constructor)
     FPSEvent(bool is_captured, Window* window)
       : Event(window), is_captured(is_captured) {}
     
@@ -15,21 +15,23 @@ namespace Parrot {
   // FPS
   class FPS : public WindowScript {
   public:
-    // FPS
+    // (constructor)
     FPS(Window& window)
       : WindowScript(window) {}
     
-    // onAttach / onDetach
+    // onAttach
     virtual void onAttach() override {
       //_captured = true;
       //window->setCursorState(CursorState::CAPTURED);
       //raiseEvent(FPSEvent(true, window));
     }
+    // onDetach
     virtual void onDetach() override {
       _captured = false;
       window->setCursorState(CursorState::NORMAL);
       raiseEvent(FPSEvent(false, window));
     }
+
     // resolveEvent
     virtual bool resolveEvent(const Event& e) override {
       if (const WindowEvent* we = dynamic_cast<const WindowEvent*>(&e)) {
