@@ -50,7 +50,7 @@ namespace Parrot {
       );
     }
   private:
-    AssetKey _key;
+    AssetKey _key = UUID(0);
     AssetAPI* _api = nullptr;
   };
 }

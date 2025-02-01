@@ -9,24 +9,21 @@ namespace Parrot {
   public:
     // (constructor)
     AssetManager() = default;
-    AssetManager(const stdf::path& directory);
-    AssetManager(
-      const stdf::path& directory,
-      LoadingPolicy loading_policy,
-      UnloadingPolicy unloading_policy
+    AssetManager(const stdf::path& asset_dir);
+    AssetManager(const stdf::path& asset_dir,
+      LoadingPolicy loading_policy, UnloadingPolicy unloading_policy
     );
-    
-    // getDirectory
-    const stdf::path getDirectory() const;
+    // getAssetDirectory
+    const stdf::path getAssetDirectory() const;
 
-    // lockAsset
+    // addAsset (impl. AssetAPI)
+    virtual UUID addAsset(SharedPtr<Asset> asset) override;
+    // lockAsset (impl. AssetAPI)
     virtual SharedPtr<Asset> lockAsset(
       const AssetKey& key, AssetFactory factory
     ) override;
-    // addAsset
-    virtual UUID addAsset(SharedPtr<Asset> asset) override;
   private:
-    stdf::path _directory;
+    stdf::path _asset_dir;
     LoadingPolicy _loading_policy = LoadingPolicy::LAZY_LOAD;
     UnloadingPolicy _unloading_policy = UnloadingPolicy::UNLOAD_APP;
     AssetRegistry _registry;

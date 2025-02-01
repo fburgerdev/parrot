@@ -1,53 +1,39 @@
 #include "common.hh"
 #include "app.hh"
 #include "app_config.hh"
-#include "window/window.hh"
-#include "graphics/render_object.hh"
-#include "utils/stopwatch.hh"
 #include "debug/engine_logger.hh"
+#include "utils/stopwatch.hh"
 
 namespace Parrot {
   // (constructor)
-  App::App(const stdf::path& config_path)
+  App::App(const stdf::path& app_path)
     : Scriptable(&_default_scriptable), _default_scriptable(*this) {
-    AppConfig config(AssetPath(config_path), _asset_manager);
-    LOG_APP_INFO("creating app '{}' from {}...", config.name, config_path);
+    AppConfig raw_config = AppConfig(AssetPath(app_path));
+    LOG_APP_INFO("creating app '{}' from {}", raw_config.name, app_path);
     // name
-    _name = config.name;
+    _name = raw_config.name;
     // asset-manager
-    if (config.asset_dir.is_relative()) {
-      config.asset_dir = config_path.parent_path() / config.asset_dir;
-    }
     _asset_manager = AssetManager(
-      config.asset_dir, config.loading_policy, config.unloading_policy
+      raw_config.asset_dir,
+      raw_config.loading_policy, raw_config.unloading_policy
     );
-    config = AppConfig(AssetPath(config_path), _asset_manager);
-    _main_unit = &add(*config.main_window.lock(), *config.main_scene.lock());
+    // main (window / scene)
+    AppConfig config = AppConfig(AssetPath(app_path), _asset_manager);
+    _main_unit = &addPlayingUnit(
+      *config.main_window.lock(), *config.main_scene.lock()
+    );
   }
   // (destructor)
   App::~App() {
+    Scriptable::removeAllScripts();
     for (auto& [uuid, unit] : _units) {
       unit.scene.removeAllScripts();
       unit.window.removeAllScripts();
     }
-    Scriptable::removeAllScripts();
   }
-  // add
-  PlayingUnit& App::add(
-    const WindowConfig& window_config, const SceneConfig& scene_config
-  ) {
-    PlayingUnit unit(window_config, scene_config, this);
-    unit.window.setIcon(Image(
-      _asset_manager.getDirectory() / "default/parrot.png")
-    ); //TODO: move
-    auto result = _units.emplace(unit.getUUID(), std::move(unit));
-    LOG_APP_INFO(
-      "created playing-unit ('{}', '{}') in app '{}'",
-      window_config.title, scene_config.name, _name
-    );
-    return result.first->second;
-  }
-  // getPlayingUnit
+
+  // units
+  // :: get (by window)
   PlayingUnit& App::getPlayingUnit(const Window& window) {
     for (auto& [uuid, unit] : _units) {
       if (&unit.window == &window) {
@@ -64,6 +50,7 @@ namespace Parrot {
     }
     throw std::runtime_error("playing-unit not found");
   }
+  // :: get (by scene)
   PlayingUnit& App::getPlayingUnit(const Scene& scene) {
     for (auto& [uuid, unit] : _units) {
       if (&unit.scene == &scene) {
@@ -80,14 +67,30 @@ namespace Parrot {
     }
     throw std::runtime_error("playing-unit not found");
   }
-  // run
-  void App::run() {
+  // :: add
+  PlayingUnit& App::addPlayingUnit(
+    const WindowConfig& window, const SceneConfig& scene
+  ) {
+    LOG_APP_INFO(
+      "creating playing-unit ('{}', '{}') in app '{}'",
+      window.title, scene.name, _name
+    );
+    PlayingUnit unit(window, scene, this);
+    unit.window.setIcon(
+      Image(_asset_manager.getAssetDirectory() / "default/parrot.png")
+    );
+    auto result = _units.emplace(unit.getUUID(), std::move(unit));
+    return result.first->second;
+  }
+
+  // run (game loop)
+  void App::run(seconds timeout) {
     if (_main_unit) {
-      LOG_APP_INFO("app '{}' running", _name);
+      LOG_APP_INFO("running app '{}'", _name);
       Stopwatch total_watch, frame_watch;
       while (_main_unit->window.isOpen()) {
         seconds delta_time = frame_watch.reset();
-        LOG_APP_TRACE("update app '{}'", _name);
+        LOG_APP_TRACE("updating app '{}'", _name);
         for (auto& [uuid, unit] : _units) {
           // update scene
           unit.scene.update(delta_time);
@@ -96,18 +99,16 @@ namespace Parrot {
           // swap + update window
           unit.window.swapBuffers();
           for (auto& e : unit.window.pollEvents()) {
-            if (e.getMouseMove()) {
-              LOG_APP_INFO("MOUSE MOVE: {}", total_watch.elapsed());
-            }
-            LOG_APP_TRACE("polled event: {}", e);
+            LOG_WINDOW_TRACE("raising event: {}", e);
             unit.window.raiseEvent(e);
           }
         }
-        //if (total_watch.elapsed() > 10) {
-        //  _main_unit->window.close();
-        //}
+        // timeout
+        if (timeout && timeout < total_watch.elapsed()) {
+          _main_unit->window.close();
+        }
       }
-      LOG_APP_INFO("app '{}' terminated (gracefully)", _name);
+      LOG_APP_INFO("terminating app '{}' (gracefully)", _name);
     }
   }
 

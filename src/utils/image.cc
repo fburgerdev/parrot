@@ -43,7 +43,7 @@ namespace Parrot {
     );
   }
   Image::Image(const AssetPath& asset_path, AssetAPI& asset_api)
-    : Image(asset_path.filepath) {}
+    : Image(asset_path.file) {}
   Image::Image(strview name, const uchar* buffer, usize size)
       : _name(name), _width(0), _height(0),
       _format(ImageFormat::NONE), _bytes(nullptr) {

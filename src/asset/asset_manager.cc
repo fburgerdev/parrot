@@ -5,14 +5,14 @@
 namespace Parrot {
   // (constructor)
   AssetManager::AssetManager(const stdf::path& asset_dir)
-    : AssetManager(
-    asset_dir, LoadingPolicy::LAZY_LOAD, UnloadingPolicy::UNLOAD_APP
+    : AssetManager(asset_dir,
+      LoadingPolicy::LAZY_LOAD, UnloadingPolicy::UNLOAD_APP
   ) {}
   AssetManager::AssetManager(
     const stdf::path& asset_dir,
     LoadingPolicy loading_policy,
     UnloadingPolicy unloading_policy)
-    : _directory(asset_dir),
+    : _asset_dir(asset_dir),
       _registry(asset_dir),
       _loading_policy(loading_policy),
       _unloading_policy(unloading_policy) {
@@ -21,8 +21,8 @@ namespace Parrot {
   }
 
   // getDirectory
-  const stdf::path AssetManager::getDirectory() const {
-    return _directory;
+  const stdf::path AssetManager::getAssetDirectory() const {
+    return _asset_dir;
   }
 
   // lockAsset
@@ -31,7 +31,7 @@ namespace Parrot {
   ) {
     UUID uuid = _registry.getUUID(key);
     AssetPath asset_path = _registry.getAssetPath(key);
-    asset_path.filepath = _directory / asset_path.filepath;
+    asset_path.file = _asset_dir / asset_path.file;
     auto it = _loaded.find(uuid);
     if (it == _loaded.end()) {
       auto asset = factory(asset_path);

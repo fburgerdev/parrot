@@ -9,6 +9,7 @@ namespace Parrot {
   public:
     // (constructor) for Asset
     AppConfig() = default;
+    AppConfig(const AssetPath& asset_path);
     AppConfig(const AssetPath& asset_path, AssetAPI& asset_api);
     template<JsonType JSON>
     AppConfig(
@@ -19,17 +20,17 @@ namespace Parrot {
 
     // loadFromJSON
     template<JsonType JSON>
-    void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
+    void loadFromJSON(const JSON& json) {
       // name
       if (json.contains("name")) {
         name = string(json.at("name"));
       }
-      // main
-      main_window = AssetHandle<WindowConfig>(json.at("main")[0], asset_api);
-      main_scene = AssetHandle<SceneConfig>(json.at("main")[1], asset_api);
       // asset_dir
       if (json.contains("asset_dir")) {
         asset_dir = stdf::path(string(json.at("asset_dir")));
+      }
+      if (asset_dir.is_relative()) {
+        asset_dir = asset_path.file.parent_path() / asset_dir;
       }
       // (un)loading_policy
       if (json.contains("loading-policy")) {
@@ -47,7 +48,7 @@ namespace Parrot {
       }
       if (json.contains("unloading-policy")) {
         if (json.at("unloading-policy") == "app") {
-           unloading_policy = UnloadingPolicy::UNLOAD_APP;
+          unloading_policy = UnloadingPolicy::UNLOAD_APP;
         }
         else if (json.at("unloading-policy") == "scene") {
           // TODO: uncomment
@@ -58,13 +59,20 @@ namespace Parrot {
         }
       }
     }
+    template<JsonType JSON>
+    void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
+      loadFromJSON(json);
+      // main (window / scene)
+      main_window = AssetHandle<WindowConfig>(json.at("main")[0], asset_api);
+      main_scene = AssetHandle<SceneConfig>(json.at("main")[1], asset_api);
+    }
 
-    // name, main(window/scene), asset_dir, (un)loading_policy
+    // name, asset_dir, (un)loading_policy, main (window / scene)
     string name = "App";
-    AssetHandle<WindowConfig> main_window;
-    AssetHandle<SceneConfig> main_scene;
     stdf::path asset_dir = ".";
     LoadingPolicy loading_policy = LoadingPolicy::LAZY_LOAD;
     UnloadingPolicy unloading_policy = UnloadingPolicy::UNLOAD_APP;
+    AssetHandle<WindowConfig> main_window;
+    AssetHandle<SceneConfig> main_scene;
   };
 }

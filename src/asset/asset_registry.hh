@@ -7,7 +7,7 @@ namespace Parrot {
   public:
     // (constructor)
     AssetRegistry() = default;
-    AssetRegistry(const stdf::path& asset_directory);
+    AssetRegistry(const stdf::path& asset_dir);
 
     // getUUID
     UUID getUUID(const AssetPath& asset_path) const;
@@ -30,7 +30,7 @@ namespace Parrot {
     void remove(UUID uuid);
     void remove(const AssetPath& asset_path);
   private:
-    stdf::path _asset_directory;
+    stdf::path _asset_dir;
     Map<UUID, AssetPath> _asset_path_map;
     Map<AssetPath, UUID> _uuid_map;
   };

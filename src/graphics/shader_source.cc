@@ -35,7 +35,7 @@ namespace Parrot {
   // (constructor)
   ShaderSource::ShaderSource(const AssetPath& asset_path, AssetAPI& asset_api)
     : ShaderSource(
-      (ostrstream() << ifstream(asset_path.filepath).rdbuf()).str()
+      (ostrstream() << ifstream(asset_path.file).rdbuf()).str()
     ) {}
   ShaderSource::ShaderSource(const string& source) {
     usize offset = 0;

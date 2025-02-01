@@ -11,9 +11,9 @@ namespace Parrot {
   struct AssetPath {
     // (constructor)
     AssetPath() = default;
-    AssetPath(const stdf::path& filepath)
-      : filepath(filepath) {}
-    AssetPath(const stdf::path& filepath, strview subpath);
+    AssetPath(const stdf::path& file)
+      : file(file) {}
+    AssetPath(const stdf::path& file, strview sub);
     AssetPath(strview path);
 
     // splitSubpath
@@ -33,11 +33,13 @@ namespace Parrot {
       return *value;
     }
     // <=> (compare)
-    auto operator<=>(const AssetPath&) const = default;
+    auto operator<=>(const AssetPath& other) const {
+      return std::tie(file, sub) <=> std::tie(other.file, other.sub);
+    }
 
-    // filepath, subpath
-    stdf::path filepath;
-    string subpath;
+    // file, sub
+    stdf::path file;
+    string sub;
   };
   // AssetKey
   using AssetKey = Variant<UUID, AssetPath>;

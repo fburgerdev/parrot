@@ -5,9 +5,9 @@ using json = nlohmann::json;
 
 namespace Parrot {
   // (constructor)
-  AssetRegistry::AssetRegistry(const stdf::path& asset_directory)
-    : _asset_directory(asset_directory) {
-    add(asset_directory);
+  AssetRegistry::AssetRegistry(const stdf::path& asset_dir)
+    : _asset_dir(asset_dir) {
+    add(asset_dir);
   }
 
   // getUUID
@@ -72,14 +72,14 @@ namespace Parrot {
         string source = (ostrstream() << ifstream(path).rdbuf()).str();
         auto json = json::parse(source);
         if (json.contains("uuid")) {
-          add(json.at("uuid"), stdf::relative(path, _asset_directory));
+          add(json.at("uuid"), stdf::relative(path, _asset_dir));
         }
         else {
           // TODO: log warning
         }
       }
       else {
-        add(generateUUID(), stdf::relative(path, _asset_directory));
+        add(generateUUID(), stdf::relative(path, _asset_dir));
       }
     }
     else if (stdf::is_directory(path)) {
@@ -91,7 +91,7 @@ namespace Parrot {
   }
   void AssetRegistry::add(const AssetPath& asset_path) {
     string source = (
-      ostrstream() << ifstream(asset_path.filepath).rdbuf()
+      ostrstream() << ifstream(asset_path.file).rdbuf()
     ).str();
     auto json = asset_path.applySubpathToJSON(json::parse(source));
     if (json.contains("uuid")) {
