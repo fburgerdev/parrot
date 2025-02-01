@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "scene.hh"
-#include "debug/engine_logger.hh"
+#include "core/log.hh"
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 

@@ -1,8 +1,8 @@
 #include "common.hh"
 #include "shader_opengl.hh"
 #include "surface_opengl.hh"
-#include "math/matrix.hh"
-#include "debug/engine_logger.hh"
+#include "utils/math_matrix.hh"
+#include "core/log.hh"
 #include <glad/glad.hh>
 
 namespace Parrot {

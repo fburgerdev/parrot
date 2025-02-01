@@ -1,7 +1,7 @@
 #include "common.hh"
 #include "app.hh"
 #include "app_config.hh"
-#include "debug/engine_logger.hh"
+#include "core/log.hh"
 #include "utils/stopwatch.hh"
 
 namespace Parrot {

@@ -1,7 +1,7 @@
 #pragma once
 #include "shader_source.hh"
 #include "texture_config.hh"
-#include "math/matrix.hh"
+#include "utils/math_matrix.hh"
 
 namespace Parrot {
   // NumericMaterialLeaf

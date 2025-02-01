@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "render_object.hh"
-#include "debug/engine_logger.hh"
+#include "core/log.hh"
 
 namespace Parrot {
   // TODO: make << overload more verbose

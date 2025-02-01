@@ -1,6 +1,6 @@
 #pragma once
 #include "core/asset_handle.hh"
-#include "math/matrix.hh"
+#include "utils/math_matrix.hh"
 
 namespace Parrot {
   // AmbientLight

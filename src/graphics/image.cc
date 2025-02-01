@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "image.hh"
-#include "debug/engine_logger.hh"
+#include "core/log.hh"
 #include <stb/stb_image.hh>
 #include <stb/stb_image_write.hh>
 

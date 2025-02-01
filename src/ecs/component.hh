@@ -1,5 +1,5 @@
 #pragma once
-#include "debug/engine_logger.hh"
+#include "core/log.hh"
 
 namespace Parrot {
   // getComponentID

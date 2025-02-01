@@ -1,6 +1,6 @@
 #pragma once
 #include "core/uuid.hh"
-#include "math/matrix.hh"
+#include "utils/math_matrix.hh"
 
 namespace Parrot {
   // DTypeGPU

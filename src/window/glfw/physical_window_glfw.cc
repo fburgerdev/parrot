@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "physical_window_glfw.hh"
-#include "debug/engine_logger.hh"
+#include "core/log.hh"
 #include <glad/glad.hh>
 #include <GLFW/glfw3.h>
 

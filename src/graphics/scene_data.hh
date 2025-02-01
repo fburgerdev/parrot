@@ -2,7 +2,7 @@
 #include "camera.hh"
 #include "light_source.hh"
 #include "render_object.hh"
-#include "math/math3d.hh"
+#include "utils/math_3d.hh"
 
 namespace Parrot {
   // SceneData

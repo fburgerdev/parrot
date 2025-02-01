@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "model.hh"
-#include "debug/engine_logger.hh"
+#include "core/log.hh"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>

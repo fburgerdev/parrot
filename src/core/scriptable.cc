@@ -1,6 +1,6 @@
 #include "common.hh"
-#include "core/scriptable.hh"
-#include "debug/engine_logger.hh"
+#include "scriptable.hh"
+#include "log.hh"
 
 namespace Parrot {
   //* Script

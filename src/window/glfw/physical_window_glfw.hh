@@ -1,6 +1,6 @@
 #pragma once
 #include "window/window_event.hh"
-#include "math/matrix.hh"
+#include "utils/math_matrix.hh"
 
 namespace Parrot {
   namespace GLFW {

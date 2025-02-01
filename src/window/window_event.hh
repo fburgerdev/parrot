@@ -1,6 +1,6 @@
 #pragma once
 #include "core/scriptable.hh"
-#include "math/matrix.hh"
+#include "utils/math_matrix.hh"
 
 namespace Parrot {
   // forward: Window

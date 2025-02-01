@@ -1,6 +1,6 @@
 #pragma once
 #include "core/asset_handle.hh"
-#include "debug/engine_logger.hh"
+#include "core/log.hh"
 
 namespace Parrot {
   // CursorState

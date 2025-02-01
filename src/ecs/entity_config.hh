@@ -2,8 +2,8 @@
 #include "core/asset_handle.hh"
 #include "core/registry.hh"
 #include "component.hh"
-#include "math/math3d.hh"
-#include "debug/engine_logger.hh"
+#include "utils/math_3d.hh"
+#include "core/log.hh"
 
 namespace Parrot {
   // EntityConfig (Asset)

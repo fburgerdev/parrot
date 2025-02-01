@@ -1,5 +1,5 @@
 #pragma once
-#include "math/matrix.hh"
+#include "utils/math_matrix.hh"
 
 namespace Parrot {
   namespace OpenGL {

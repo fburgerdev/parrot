@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "app.hh"
-#include "debug/engine_logger.hh"
+#include "core/log.hh"
 
 // (static) console figures
 static std::string s_info = R""""(

@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "asset_manager.hh"
-#include "debug/engine_logger.hh"
+#include "core/log.hh"
 
 namespace Parrot {
   // (constructor)
