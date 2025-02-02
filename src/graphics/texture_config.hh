@@ -32,8 +32,8 @@ namespace Parrot {
     // loadFromJSON
     template<JsonType JSON>
     void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
-      // TODO: properties...
       image = AssetHandle<Image>(json.at("image"), asset_api);
+      // TODO: properties...
     }
     
     // (hor/ver)wrap, (mag/min)filter, mipmap, image

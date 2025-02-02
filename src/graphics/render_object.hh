@@ -17,7 +17,14 @@ namespace Parrot {
     template<JsonType JSON>
     void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
       model = AssetHandle<Model>(json.at("model"), asset_api);
-      material = AssetHandle<Material>(json.at("material"), asset_api);
+      if (json.contains("material")) {
+        material = AssetHandle<Material>(json.at("material"), asset_api);
+      }
+      else {
+        material = AssetHandle<Material>(
+          AssetPath(stdf::path("default/flat.mat.json")), asset_api
+        );
+      }
     }
 
     // model, material
