@@ -1,6 +1,6 @@
 # general
+build
 out
-local_scripts
 
 # visual studio
 .vs
