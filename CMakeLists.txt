@@ -44,11 +44,11 @@ add_subdirectory(vendor/stb)
 # example_teapot (target)
 add_executable(example_teapot)
 # :: files
-file(GLOB_RECURSE EXAMPLE_TEAPOT_SOURCES example/teapot/*.hh)
-file(GLOB_RECURSE EXAMPLE_TEAPOT_SOURCES example/teapot/*.cc)
+file(GLOB_RECURSE EXAMPLE_TEAPOT_SOURCES examples/teapot/*.hh)
+file(GLOB_RECURSE EXAMPLE_TEAPOT_SOURCES examples/teapot/*.cc)
 target_sources(example_teapot PRIVATE ${EXAMPLE_TEAPOT_SOURCES})
 # :: include directories
-target_include_directories(example_teapot PUBLIC src vendor example/teapot)
+target_include_directories(example_teapot PUBLIC src vendor examples/teapot)
 # :: links
 target_link_libraries(example_teapot PRIVATE parrot)
 target_link_libraries(example_teapot PRIVATE assimp glad glfw stb)
@@ -58,11 +58,11 @@ target_compile_definitions(example_teapot PRIVATE PARROT_GLFW PARROT_OPENGL)
 # example_pirate (target)
 add_executable(example_pirate_bay)
 # :: files
-file(GLOB_RECURSE EXAMPLE_PIRATE_BAY_SOURCES example/pirate_bay/*.hh)
-file(GLOB_RECURSE EXAMPLE_PIRATE_BAY_SOURCES example/pirate_bay/*.cc)
+file(GLOB_RECURSE EXAMPLE_PIRATE_BAY_SOURCES examples/pirate_bay/*.hh)
+file(GLOB_RECURSE EXAMPLE_PIRATE_BAY_SOURCES examples/pirate_bay/*.cc)
 target_sources(example_pirate_bay PRIVATE ${EXAMPLE_PIRATE_BAY_SOURCES})
 # :: include directories
-target_include_directories(example_pirate_bay PUBLIC src vendor example/pirate_bay)
+target_include_directories(example_pirate_bay PUBLIC src vendor examples/pirate_bay)
 # :: links
 target_link_libraries(example_pirate_bay PRIVATE parrot)
 target_link_libraries(example_pirate_bay PRIVATE assimp glad glfw stb)
