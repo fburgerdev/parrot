@@ -1,5 +1,5 @@
 #pragma once
-#include "entity_config.hh"
+#include "entity_preset.hh"
 
 namespace Parrot {
   // SceneConfig (Asset)
@@ -22,11 +22,11 @@ namespace Parrot {
         name = string(json.at("name"));
       }
       // root
-      root = AssetHandle<EntityConfig>(json.at("root"), asset_api);
+      root = AssetHandle<EntityPreset>(json.at("root"), asset_api);
     }
 
     // name, root
     string name = "Unnamed Scene";
-    AssetHandle<EntityConfig> root;
+    AssetHandle<EntityPreset> root;
   };
 }

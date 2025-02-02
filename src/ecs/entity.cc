@@ -9,22 +9,22 @@ namespace Parrot {
   Entity::Entity(Entity* parent)
     : Scriptable(parent), _parent(parent) {}
   Entity::Entity(
-    const SharedPtr<EntityConfig>& config,
+    const SharedPtr<EntityPreset>& preset,
     Scriptable* parent, AssetAPI& asset_api
   ) : Scriptable(parent) {
-    _tag = config->tag;
-    transform = config->transform;
-    for (const auto& handle : config->children) {
+    _tag = preset->tag;
+    transform = preset->transform;
+    for (const auto& handle : preset->children) {
       Entity child = Entity(handle.lock(), this, asset_api);
       _children.emplace(child.getUUID(), std::move(child));
     }
-    for (const auto& component_config : config->components) {
+    for (const auto& component_config : preset->components) {
       _components.emplace(
         component_config->getComponentID(),
         component_config->createComponent(*this)
       );
     }
-    for (const string& script_name : config->scripts) {
+    for (const string& script_name : preset->scripts) {
       auto [uuid, factory] = g_registry<Script, Entity&, AssetAPI&>.at(
         script_name
       );
@@ -32,22 +32,22 @@ namespace Parrot {
     }
   }
   Entity::Entity(
-    const SharedPtr<EntityConfig>& config,
+    const SharedPtr<EntityPreset>& preset,
     Entity* parent, AssetAPI& asset_api
   ) : Scriptable(parent), _parent(parent) {
-    _tag = config->tag;
-    transform = config->transform;
-    for (const auto& handle : config->children) {
+    _tag = preset->tag;
+    transform = preset->transform;
+    for (const auto& handle : preset->children) {
       Entity child = Entity(handle.lock(), this, asset_api);
       _children.emplace(child.getUUID(), std::move(child));
     }
-    for (const auto& component_config : config->components) {
+    for (const auto& component_config : preset->components) {
       _components.emplace(
         component_config->getComponentID(),
         component_config->createComponent(*this)
       );
     }
-    for (const string& script_name : config->scripts) {
+    for (const string& script_name : preset->scripts) {
       auto [uuid, factory] = g_registry<Script, Entity&, AssetAPI&>.at(
         script_name
       );

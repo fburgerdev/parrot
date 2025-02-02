@@ -6,13 +6,13 @@
 #include "core/log.hh"
 
 namespace Parrot {
-  // EntityConfig (Asset)
-  class EntityConfig : public Asset {
+  // EntityPreset (Asset)
+  class EntityPreset : public Asset {
   public:
     // (constructor) for Asset
-    EntityConfig(const AssetPath& asset_path, AssetAPI& asset_api);
+    EntityPreset(const AssetPath& asset_path, AssetAPI& asset_api);
     template<JsonType JSON>
-    EntityConfig(
+    EntityPreset(
       const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
     ) : Asset(asset_path) {
       loadFromJSON(json, asset_api);
@@ -85,7 +85,7 @@ namespace Parrot {
     // tag, transform, children, components, scripts
     string tag = "Entity";
     Transform<> transform;
-    List<AssetHandle<EntityConfig>> children;
+    List<AssetHandle<EntityPreset>> children;
     List<UniquePtr<ComponentConfig>> components;
     List<string> scripts;
   };

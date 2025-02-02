@@ -1,6 +1,6 @@
 #pragma once
 #include "core/scriptable.hh"
-#include "entity_config.hh"
+#include "entity_preset.hh"
 
 namespace Parrot {
   // Entity
@@ -10,11 +10,11 @@ namespace Parrot {
     Entity(Scriptable* parent = nullptr);
     Entity(Entity* parent);
     Entity(
-      const SharedPtr<EntityConfig>& config,
+      const SharedPtr<EntityPreset>& preset,
       Scriptable* parent, AssetAPI& asset_api
     );
     Entity(
-      const SharedPtr<EntityConfig>& config,
+      const SharedPtr<EntityPreset>& preset,
       Entity* parent, AssetAPI& asset_api
     );
     Entity(const Entity&) = delete;
