@@ -43,8 +43,8 @@ namespace Parrot {
     template<JsonType JSON>
       void loadFromJSON(const JSON& json) {
       Vec2<float32> z_range = (
-        json.contains("z_range") ? Vec2<float32>(
-          json.at("z_range")[0], json.at("z_range")[1]
+        json.contains("z-range") ? Vec2<float32>(
+          json.at("z-range")[0], json.at("z-range")[1]
         ) : DEFAULT_ZRANGE
       );
       if (!json.contains("type") &&

@@ -31,30 +31,34 @@ namespace Parrot {
       if (asset_dir.is_relative()) {
         asset_dir = asset_path.file.parent_path() / asset_dir;
       }
-      // (un)loading_policy
-      if (json.contains("loading-policy")) {
-        if (json.at("loading-policy") == "app") {
-          // TODO: uncomment
-          // loading_policy = LoadingPolicy::PRELOAD_APP;
+      // asset-manager
+      if (json.contains("asset-manager")) {
+        const JSON& json_asset_manager = json.at("asset-manager");
+        // (un)loading_policy
+        if (json_asset_manager.contains("loading-policy")) {
+          if (json_asset_manager.at("loading-policy") == "app") {
+            // TODO: uncomment
+            // loading_policy = LoadingPolicy::PRELOAD_APP;
+          }
+          else if (json_asset_manager.at("loading-policy") == "scene") {
+            // TODO: uncomment
+            // loading_policy = LoadingPolicy::PRELOAD_SCENE;
+          }
+          else if (json_asset_manager.at("loading-policy") == "lazy") {
+            loading_policy = LoadingPolicy::LAZY_LOAD;
+          }
         }
-        else if (json.at("loading-policy") == "scene") {
-          // TODO: uncomment
-          // loading_policy = LoadingPolicy::PRELOAD_SCENE;
-        }
-        else if (json.at("loading-policy") == "lazy") {
-          loading_policy = LoadingPolicy::LAZY_LOAD;
-        }
-      }
-      if (json.contains("unloading-policy")) {
-        if (json.at("unloading-policy") == "app") {
-          unloading_policy = UnloadingPolicy::UNLOAD_APP;
-        }
-        else if (json.at("unloading-policy") == "scene") {
-          // TODO: uncomment
-          // unloading_policy = UnloadingPolicy::UNLOAD_SCENE;
-        }
-        else if (json.at("unloading-policy") == "unused") {
-          unloading_policy = UnloadingPolicy::UNLOAD_UNUSED;
+        if (json_asset_manager.contains("unloading-policy")) {
+          if (json_asset_manager.at("unloading-policy") == "app") {
+            unloading_policy = UnloadingPolicy::UNLOAD_APP;
+          }
+          else if (json_asset_manager.at("unloading-policy") == "scene") {
+            // TODO: uncomment
+            // unloading_policy = UnloadingPolicy::UNLOAD_SCENE;
+          }
+          else if (json_asset_manager.at("unloading-policy") == "unused") {
+            unloading_policy = UnloadingPolicy::UNLOAD_UNUSED;
+          }
         }
       }
     }
