@@ -1,154 +1,57 @@
-![parrot-title](https://github.com/user-attachments/assets/1056fc4a-0e39-4856-b956-507c1975ae27)
-# Parrot
-Parrot is a game engine written in C++ created for educational purposes.
-The engine lets you develop games using custom asset formats and C++ scripts.
+﻿![parrot-title](https://github.com/user-attachments/assets/1056fc4a-0e39-4856-b956-507c1975ae27)
 
-![image](https://github.com/user-attachments/assets/998e8642-6cc0-464e-9837-f3d0b7d5a54c)
+# 🦜 Parrot
 
-technologies used:
-- window-api: [glfw](https://github.com/glfw/glfw)
-- graphics-api: _opengl_ using [glad](https://github.com/Dav1dde/glad)
-- assets: [nlohmann/json](https://github.com/nlohmann/json), [nothings/stb](https://github.com/nothings/stb/blob/master/stb_image.h), [tinyobjloader/tinyobjloader](https://github.com/tinyobjloader/tinyobjloader)
+Welcome to Parrot, a C++ game engine designed as an educational project
+to help developers learn about game engine architecture and graphics programming.
 
-## Architecture
-![image](https://github.com/user-attachments/assets/ea4ed375-3b5d-4436-a083-19cd35f29509)
+## 🚀 About
 
-modules:
-- `core` create, run and destroy apps and playing-units + connect to client code 
-- `window` create, update and destroy physical windows
-- `ecs` provide [ecs](https://en.wikipedia.org/wiki/Entity_component_system) api with scenes, entities and components
-- `graphics` handle graphics data like meshes or materials and communicate with the gpu
-- `asset-manager` manage the client asset-directory and handle the assets lifetimes
+Parrot is a modern C++ game engine focused on clean architecture
+and an intuitive game development. It is asset-based,
+meaning everything you do to create a game involves creating and managing assets.
+Featuring an entity component system, a rendering pipeline,
+an asset manager and window handling, the game engine provides a basic foundation for game development
 
-> besides the `core` module, no modules depend on each other
+![showcase](https://github.com/user-attachments/assets/998e8642-6cc0-464e-9837-f3d0b7d5a54c)
 
-## Scripting
-In order to have logic in your game, you can add scripts written in C++.
-### Example Script
-```cc
-#include "path/to/src/client.hh"
+## 📖 Documentation
+Read the full documentation [here](docs/index.md).
 
-class ScriptName : public Script {
-    ScriptName(Entity& entity)
-        : entity(entity) {}
+## 🔧 Building the Project
 
-    virtual bool resolveEvent(const Event& e) override {
-        if (auto* mouse_move = e.getMouseMove()) {
-            std::cout << "Mouse was moved!" << std::endl;
-        }
-        return false;
-    }
-    virtual void onUpdate(float32 delta_time) override {
-        std::cout << "I'm getting updated!" << std::endl;
-    }
+### Prerequisites
+- C++20 compatible compiler
+- CMake (version 3.16 or higher)
 
-    Entity& entity;
-}
+### Build Steps
+```sh
+# Clone the repository
+git clone https://github.com/your-repo/parrot.git
+cd parrot
+
+# Create a build directory
+mkdir build && cd build
+
+# Configure with CMake
+cmake .. -DCMAKE_BUILD_TYPE=Release
+
+# Build the engine
+make -j20
 ```
-this is a script that you can attach to entities.
 
-You can add scripts to
-- Apps
-- Playing-Units (Window, Scene)
-- Entities
+## 🎮 Hello, Rotating Cube!
+To create a basic game with a rotating cube in Parrot:
 
->[!IMPORTANT]  
->in the current development state you can only attach scripts to entities
+// TODO
 
-![image](https://github.com/user-attachments/assets/00378e8a-0136-4394-b641-36f90eb172ee)
+## 🛠 Developer Notes
+For more details on Parrot’s architecture and contribution guidelines:
+- [Architecture Overview](./docs/architecture.md)
+- [Contributing Guidelines](./CONTRIBUTING.md)
 
+## 📬 Get Involved
+We welcome contributions! Feel free to open issues, submit PRs, or discuss improvements.
 
-## Asset Formats
-For now, all assets are stored in a _.json_ format.
-> handles can be either uuids (i.e. numbers), filepaths (i.e. strings) or inlined (i.e. objects) 
-
-### Format: ".app.json"
-```jsonc
-{
-    // general
-    "name": "App Name", // default: "Unnamed App"
-    "main": [
-        "<window-handle>",
-        "<scene-handle>",
-        [ "ScriptName1", /* ... */ ] // optional
-    ],
-    
-    // assets
-    "loading-policy": "app|scene|lazy", // default: "lazy"
-    "unloading-policy": "app|scene|unused" // default: "app"
-
-    // scripts
-    "scripts": [ // default: []
-        "ScriptName1", /* ... */
-    ]
-}
-```
-### Format: ".wndw.json"
-```jsonc
-{
-    "uuid": 1234567889,
-    "title": "Window Title", // default: "Untitled Window"
-    "size": [ 1080, 720 ], // default: [ 1080, 720 ]
-}
-```
-### Format: ".scn.json
-```jsonc
-{
-    // general
-    "uuid": 1234567889,
-    "name": "Scene Name", // default: "Unnamed Scene"
-    
-    // hierarchy
-    "root": "<entity-handle>" // default: null
-}
-```
-### Format: ".entt.json"
-```jsonc
-{
-    // general
-    "uuid": 1234567889,
-    "tag": "Entity Tag", // default: "Entity"
-
-    // transform
-    "transform": { // default: {}
-        "position": [ 0, 0, 0 ], // default: [ 0, 0, 0 ]
-        "rotation": [ 0, 0, 0 ], // default: [ 0, 0, 0 ]
-        "scale": [ 1, 1, 1 ] // default: [ 1, 1, 1 ]
-    },
-    // children
-    "children": [ // default: []
-        "<entity-handle>", /* ... */
-    ],
-    // components
-    "components": { // default: {}
-        "component_name": {
-            /* data depends on component */
-        }, /* ... */
-    },
-    // scripts
-    "scripts": [ // default: []
-        "ScriptName1", /* ... */
-    ]
-}
-```
-### Format: ".mesh.json"
-```jsonc
-{
-    // general
-    "uuid": 1234567889,
-    "resource": "path/to/mesh.obj"
-}
-```
-### Format: ".shader.json"
-```jsonc
-{
-    // general
-    "uuid": 1234567889,
-    "vertex": {
-        "resource": "path/to/vertex_shader.vs.glsl"
-    },
-    "fragment": {
-        "resource": "path/to/fragment_shader.fs.glsl"
-    }
-}
-```
+---
+🦜 Happy coding with Parrot!
