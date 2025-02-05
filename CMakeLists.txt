@@ -20,24 +20,52 @@ target_include_directories(parrot PUBLIC src vendor)
 target_compile_definitions(parrot PRIVATE PARROT_GLFW PARROT_OPENGL)
 
 # vendor
+# :: download cpm
+file(
+  DOWNLOAD
+  https://github.com/cpm-cmake/CPM.cmake/releases/download/v0.40.5/CPM.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/cmake/CPM.cmake
+)
+include(${CMAKE_CURRENT_BINARY_DIR}/cmake/CPM.cmake)
 # :: assimp (target)
-set(BUILD_SHARED_LIBS OFF)
-set(CMAKE_COMMAND POST_BUILD)
-add_subdirectory(vendor/assimp)
-target_include_directories(parrot PUBLIC src vendor/assimp/include)
-target_include_directories(parrot PUBLIC src ${CMAKE_CURRENT_BINARY_DIR}/vendor/assimp/include)
-unset(CMAKE_COMMAND)
-unset(BUILD_SHARED_LIBS)
+CPMAddPackage(
+  NAME assimp
+  GITHUB_REPOSITORY assimp/assimp
+  GIT_TAG v5.4.3
+  OPTIONS
+    "ASSIMP_INSTALL ON"
+    "BUILD_SHARED_LIBS OFF"
+    "ASSIMP_BUILD_TESTS OFF"
+    "ASSIMP_BUILD_ALL_EXPORTERS_BY_DEFAULT OFF"
+    "ASSIMP_BUILD_ASSIMP_VIEW OFF"
+)
+target_include_directories(parrot PUBLIC ${CMAKE_BINARY_DIR}/_deps/assimp-src/include)
+target_include_directories(parrot PUBLIC ${CMAKE_BINARY_DIR}/_deps/assimp-build/include)
 # :: glad (target)
 add_subdirectory(vendor/glad)
 # :: glfw (target)
-set(GLFW_LIBRARY_TYPE STATIC)
-add_subdirectory(vendor/glfw)
-target_include_directories(parrot PUBLIC src vendor/glfw/include)
-unset(GLFW_LIBRARY_TYPE)
+CPMAddPackage(
+  NAME glfw
+  GITHUB_REPOSITORY glfw/glfw
+  GIT_TAG 3.4
+  OPTIONS
+    "GLFW_INSTALL ON"
+    "BUILD_SHARED_LIBS OFF"
+    "GLFW_BUILD_TESTS OFF"
+    "GLFW_BUILD_EXAMPLES OFF"
+    "GLFW_BUILD_DOCS OFF"
+)
+target_include_directories(parrot PUBLIC ${CMAKE_BINARY_DIR}/_deps/glfw-src/include)
+target_include_directories(parrot PUBLIC ${CMAKE_BINARY_DIR}/_deps/glfw-build/include)
 # :: json (target)
-add_subdirectory(vendor/json)
-target_include_directories(parrot PUBLIC vendor/json/include)
+CPMAddPackage(
+  NAME json
+  VERSION 3.7.3
+  URL https://github.com/nlohmann/json/releases/download/v3.7.3/include.zip
+  URL_HASH SHA256=87b5884741427220d3a33df1363ae0e8b898099fbc59f1c451113f6732891014
+)
+target_include_directories(parrot PUBLIC ${CMAKE_BINARY_DIR}/_deps/json-src/include)
+target_include_directories(parrot PUBLIC ${CMAKE_BINARY_DIR}/_deps/json-build/include)
 # :: stb (target)
 add_subdirectory(vendor/stb)
 
