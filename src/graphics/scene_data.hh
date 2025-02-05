@@ -9,6 +9,7 @@ namespace Parrot {
   struct SceneData {
     Pair<const Transform<>*, const Camera*> camera = { nullptr, nullptr };
     Set<Pair<const Transform<>*, const LightSource*>> lights;
-    Set<Pair<const Transform<>*, const RenderObject*>> render_objects;
+    Set<Pair<const Transform<>*, const RenderObject*>> opaque_objects;
+    List<Pair<const Transform<>*, const RenderObject*>> translucent_objects;
   };
 }

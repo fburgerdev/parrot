@@ -50,10 +50,17 @@ namespace Parrot {
     }
     // render-objects
     for (const Entity* entity : scene.queryEntities<RenderObjectComponent>()) {
-      scene_data.render_objects.emplace(
-        &entity->transform,
-        &entity->getComponent<RenderObjectComponent>()
-      );
+      auto& component = entity->getComponent<RenderObjectComponent>();
+      if (component.is_opaque) {
+        scene_data.opaque_objects.emplace(
+          &entity->transform, &component
+        );
+      }
+      else {
+        scene_data.translucent_objects.emplace_back(
+          &entity->transform, &component
+        );
+      }
     }
     
     _renderer.drawScene(scene_data);

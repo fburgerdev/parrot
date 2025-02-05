@@ -27,6 +27,7 @@ namespace Parrot {
       );
       _handle = AssetHandle<Model>(asset_api->addAsset(_asset), *asset_api);
       entity->getComponent<RenderObjectComponent>().model = _handle;
+      entity->getComponent<RenderObjectComponent>().is_opaque = false;
     }
   private:
     AssetHandle<Model> _handle;

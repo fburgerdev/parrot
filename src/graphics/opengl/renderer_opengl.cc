@@ -3,6 +3,7 @@
 #include "draw_opengl.hh"
 #include "core/log.hh"
 #include "utils/stopwatch.hh"
+#include <glad/glad.hh>
 
 namespace Parrot {
   namespace OpenGL {
@@ -22,9 +23,11 @@ namespace Parrot {
       _surface.set(scene_data);
       _3d_buffer->overwriteData(_surface.getBuffer(), _surface.getSize());
       prepareDraw();
-      for (auto [transform, render_object] : scene_data.render_objects) {
-        auto model = render_object->model.lock();
-        auto material = render_object->material.lock();
+      auto draw_render_object = [&](
+        const Transform<>& transform, const RenderObject& render_object
+      ) {
+        auto model = render_object.model.lock();
+        auto material = render_object.material.lock();
         auto shader = material->shader.lock();
         for (const auto& [mesh, material_index] : model->submodels) {
           auto& vertex_array = _context->getVertexArray(mesh);
@@ -46,15 +49,23 @@ namespace Parrot {
             "u_total_time", g_global_watch.elapsed()
           );
           shader_opengl.setUniform(
-            "u_local_to_world", transform->calcLocalModelMatrix()
+            "u_local_to_world", transform.calcLocalModelMatrix()
           );
           shader_opengl.setUniform(
-            "u_local_to_world_normal", calcRotationMatrix(transform->rotation)
+            "u_local_to_world_normal", calcRotationMatrix(transform.rotation)
           );
           vertex_array.bind();
           draw(mesh.indices.size());
           vertex_array.unbind();
         }
+      };
+      for (auto [transform, render_object] : scene_data.opaque_objects) {
+        draw_render_object(*transform, *render_object);
+      }
+      glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+      glEnable(GL_BLEND);
+      for (auto [transform, render_object] : scene_data.translucent_objects) {
+        draw_render_object(*transform, *render_object);
       }
     }
   }
