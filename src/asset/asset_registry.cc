@@ -75,7 +75,7 @@ namespace Parrot {
           add(json.at("uuid"), stdf::relative(path, _asset_dir));
         }
         else {
-          // TODO: log warning
+          add(generateUUID(), stdf::relative(path, _asset_dir));
         }
       }
       else {

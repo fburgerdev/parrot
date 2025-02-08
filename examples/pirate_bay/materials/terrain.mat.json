@@ -1,5 +1,5 @@
 {
-	"uuid": 2349239075235975932,
+	"shader": {
 	"shader": "shaders/terrain.glsl.macro",
 	"uniforms": {
 		"texture": [

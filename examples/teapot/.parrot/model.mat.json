@@ -1,5 +1,4 @@
 {
-  "uuid": 1000000000000000000,
   "shader": ".parrot/model.glsl.macro",
   "uniforms": {
     "texture": [
