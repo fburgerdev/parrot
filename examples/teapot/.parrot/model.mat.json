@@ -1,11 +1,11 @@
 {
   "uuid": 1000000000000000000,
-  "shader": "default/model.glsl.macro",
+  "shader": ".parrot/model.glsl.macro",
   "uniforms": {
     "texture": [
       "texture",
       {
-        "image": "default/white.png"
+        "image": ".parrot/white.png"
       }
     ]
   }

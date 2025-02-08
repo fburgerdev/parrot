@@ -22,7 +22,7 @@ namespace Parrot {
       }
       else {
         material = AssetHandle<Material>(
-          AssetPath(stdf::path("default/flat.mat.json")), asset_api
+          AssetPath(stdf::path(".parrot/flat.mat.json")), asset_api
         );
       }
       if (json.contains("opaque") && !json.at("translucent")) {

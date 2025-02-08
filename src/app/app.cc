@@ -79,7 +79,7 @@ namespace Parrot {
     );
     PlayingUnit unit(window_config, scene_config, this, _asset_manager);
     static Image default_icon = Image(
-      _asset_manager.getAssetDirectory() / "default/parrot.png",
+      _asset_manager.getAssetDirectory() / ".parrot/parrot.png",
       _asset_manager.getAssetDirectory()
     );
     unit.window.setIcon(

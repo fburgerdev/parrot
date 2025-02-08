@@ -5,7 +5,7 @@
 		"texture": [
 			"texture",
 			{
-				"image": "default/white.png"
+				"image": ".parrot/white.png"
 			}
 		]
 	}

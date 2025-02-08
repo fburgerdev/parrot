@@ -46,7 +46,7 @@ namespace Parrot {
     // lock
     SharedPtr<T> lock() const {
       return std::static_pointer_cast<T>(
-        _api->lockAsset(_key, [&](const  AssetPath& path) {
+        _api->lockAsset(_key, [&](const AssetPath& path) {
           return std::make_shared<T>(path, *_api);
         })
       );

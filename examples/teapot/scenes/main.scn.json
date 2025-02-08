@@ -10,7 +10,7 @@
         "components": {
           "render-object": {
             "model": "meshes/teapot.obj",
-            "material": "default/model.mat.json"
+            "material": ".parrot/model.mat.json"
           }
         },
         "scripts": [ "Rotate" ]
