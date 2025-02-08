@@ -12,7 +12,7 @@ namespace Parrot {
     class Shader {
     public:
       // (constructor)
-      Shader(const ShaderSource& source);
+      Shader(const ShaderProgram& program);
       Shader(const Shader&) = delete;
       Shader(Shader&& other) noexcept;
       // (destructor)

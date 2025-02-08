@@ -63,56 +63,99 @@ namespace Parrot {
       string version = "330 core";
     };
 
-    // resolve
-    void resolve(auto&& sources) {
-      if (vertex) {
-        resolve(*vertex, sources);
-      }
-      if (fragment) {
-        resolve(*fragment, sources);
-      }
-      for (auto& [name, snippet] : snippets) {
-        resolve(snippet, sources);
-      }
+    // vertex, fragment, snippets
+    Opt<ShaderStage> vertex, fragment;
+    Map<string, Snippet> snippets;
+  };
+
+  // ShaderProgram
+  class ShaderProgram : public Asset {
+  public:
+    // (constructor) for Asset
+    ShaderProgram(const AssetPath& asset_path, AssetAPI& asset_api);
+    template<JsonType JSON>
+    ShaderProgram(
+      const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
+    ) : Asset(asset_path) {
+      loadFromJSON(json, asset_api);
     }
-    void resolve(Snippet& snippet, auto&& sources) {
-      Set<ShaderSource*> resolved;
-      for (usize i = 0; i < snippet.body.size(); ++i) {
-        if (holds<SnippetInclude>(snippet.body.at(i))) {
-          SnippetInclude& include = std::get<SnippetInclude>(
-            snippet.body.at(i)
+
+    // loadFromJSON
+    template<JsonType JSON>
+    void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
+      _sources.emplace_back(
+        AssetPath(stdf::path(".parrot/model.glsl.macro")), asset_api
+      );
+      _sources.emplace_back(
+        AssetPath(stdf::path(".parrot/surface.glsl.macro")), asset_api
+      );
+      if (json.contains("sources")) {
+        for (const auto& source_json : json.at("sources")) {
+          _sources.emplace_back(
+            AssetPath(stdf::path(string(source_json))), asset_api
           );
-          bool found = false;
-          for (ShaderSource& other : sources) {
-            if (this == &other) {
-              continue;
-            }
-            if (other.snippets.contains(include.identifier)) {
-              if (!resolved.contains(&other)) {
-                other.resolve(sources);
-                resolved.insert(&other);
-              }
-              snippet.body.at(i) = (
-                other.snippets.at(include.identifier).toString()
-              );
-              found = true;
-              break;
-            }
-          }
-          if (!found) {
-            if (include.is_optional) {
-              snippet.body.at(i) = string();
-            }
-            else {
-              // TODO: error
-            }
-          }
         }
       }
     }
 
-    // vertex, fragment, snippets
-    Opt<ShaderStage> vertex, fragment;
-    Map<string, Snippet> snippets;
+    // resolveShaderStages
+    Pair<string, string> resolveShaderStages() const {
+      // lock
+      List<SharedPtr<ShaderSource>> locked_sources;
+      for (const auto& source : _sources) {
+        locked_sources.emplace_back(source.lock());
+      }
+      // merge
+      ShaderSource::ShaderStage* vertex = nullptr;
+      ShaderSource::ShaderStage* fragment = nullptr;
+      Map<string, ShaderSource::Snippet*> snippets;
+      for (auto& locked_source : locked_sources) {
+        if (locked_source->vertex) {
+          vertex = &locked_source->vertex.value();
+        }
+        if (locked_source->fragment) {
+          fragment = &locked_source->fragment.value();
+        }
+        for (auto& [name, snippet] : locked_source->snippets) {
+          snippets.emplace(name, &snippet);
+        }
+      }
+      // resolve
+      Set<ShaderSource::Snippet*> resolved;
+      Func<void(ShaderSource::Snippet&)> resolve = [&](
+        ShaderSource::Snippet& snippet
+      ) {
+        if (resolved.contains(&snippet)) {
+          return;
+        }
+        for (auto& part : snippet.body) {
+          if (holds<ShaderSource::SnippetInclude>(part)) {
+            auto& include = std::get<ShaderSource::SnippetInclude>(part);
+            if (snippets.contains(include.identifier)) {
+              resolve(*snippets.at(include.identifier));
+              part = snippets.at(include.identifier)->toString();
+            }
+            else {
+              if (include.is_optional) {
+                part = string();
+              }
+              else {
+                // TODO: error
+              }
+            }
+          }
+        }
+        resolved.insert(&snippet);
+      };
+      resolve(*vertex);
+      resolve(*fragment);
+
+      return {
+        vertex->toString(),
+        fragment->toString()
+      };
+    }
+  private:
+    List<AssetHandle<ShaderSource>> _sources;
   };
 }

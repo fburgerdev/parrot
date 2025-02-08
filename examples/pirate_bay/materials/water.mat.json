@@ -1,6 +1,7 @@
 {
 	"shader": {
-	"shader": "shaders/water.glsl.macro",
+		"sources": [ "shaders/water.glsl.macro" ]
+	},
 	"uniforms": {
 		"texture": [
 			"texture",

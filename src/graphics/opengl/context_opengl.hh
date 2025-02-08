@@ -16,7 +16,7 @@ namespace Parrot {
       // getVertexArray
       VertexArray& getVertexArray(const Mesh& mesh);
       // getShader
-      Shader& getShader(const ShaderSource& shader);
+      Shader& getShader(const ShaderProgram& program);
       // getTexture
       Texture& getTexture(const TextureConfig& texture);
 

@@ -1,5 +1,4 @@
 {
-  "shader": ".parrot/model.glsl.macro",
   "uniforms": {
     "texture": [
       "texture",

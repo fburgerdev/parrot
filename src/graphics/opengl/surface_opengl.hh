@@ -6,9 +6,8 @@
 namespace Parrot {
   namespace OpenGL {
     // MAX_LIGHT_COUNT
-    constexpr uint MAX_LIGHT_COUNT = 50; // needs to match with shader snippet!
-    // (global) surface_snippet
-    extern const ShaderSource g_surface_snippet;
+    //! This must match with MAX_LIGHT_COUNT in ".parrot/surface.glsl.macro"
+    constexpr uint MAX_LIGHT_COUNT = 50;
 
     // SurfaceBlock
     struct SurfaceBlock {

@@ -8,10 +8,9 @@
 namespace Parrot {
   namespace OpenGL {
     // (constructor)
-    Shader::Shader(const ShaderSource& source) {
+    Shader::Shader(const ShaderProgram& program) {
       // source
-      string vertex = source.vertex->toString();
-      string fragment = source.fragment->toString();
+      auto [vertex, fragment] = program.resolveShaderStages();
       // create + compile
       _gpu_id = glCreateProgram();
       LOG_GRAPHICS_TRACE("created shader");

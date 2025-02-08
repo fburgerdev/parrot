@@ -1,6 +1,7 @@
 {
 	"shader": {
-	"shader": "shaders/terrain.glsl.macro",
+		"sources": [ "shaders/terrain.glsl.macro" ]
+	},
 	"uniforms": {
 		"texture": [
 			"texture",

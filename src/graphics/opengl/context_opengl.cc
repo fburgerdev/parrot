@@ -22,14 +22,11 @@ namespace Parrot {
       }
     }
     // getShader
-    Shader& Context::getShader(const ShaderSource& shader) {
-      auto it = _shaders.find(shader.getUUID());
+    Shader& Context::getShader(const ShaderProgram& program) {
+      auto it = _shaders.find(program.getUUID());
       if (it == _shaders.end()) {
-        ShaderSource source = shader;
-        List<ShaderSource> snippets = { g_surface_snippet };
-        source.resolve(snippets);
         return _shaders.emplace(
-          shader.getUUID(), Shader(source)
+          program.getUUID(), Shader(program)
         ).first->second;
       }
       else {

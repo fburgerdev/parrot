@@ -177,11 +177,19 @@ namespace Parrot {
         root.loadFromJSON(json.at("uniforms"), asset_api);
       }
       // shader
-      shader = AssetHandle<ShaderSource>(json.at("shader"), asset_api);
+      if (json.contains("shader")) {
+        shader = AssetHandle<ShaderProgram>(json.at("shader"), asset_api);
+      }
+      else {
+        shader = AssetHandle<ShaderProgram>(
+          AssetPath(stdf::path(string(".parrot/model.program.json"))),
+          asset_api
+        );
+      }
     }
 
     // root, shader
     MaterialNode root;
-    AssetHandle<ShaderSource> shader;
+    AssetHandle<ShaderProgram> shader;
   };
 }
