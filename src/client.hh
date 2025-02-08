@@ -17,6 +17,8 @@
 #include "utils/math_basic.hh"
 #include "utils/math_matrix.hh"
 #include "utils/math_3d.hh"
+#include "utils/math_random.hh"
+#include "utils/math_perlin.hh"
 
 namespace Parrot {
   // EntityScript

@@ -30,6 +30,16 @@
         }
       },
       {
+        "tag": "Terrain",
+        "components": {
+          "render-object": {
+            "model": "models/ships/large.fbx",
+            "material": "materials/terrain.mat.json"
+          }
+        },
+        "scripts": [ "TerrainMesh" ]
+      },
+      {
         "tag": "Water",
         "components": {
           "render-object": {

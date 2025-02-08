@@ -272,6 +272,15 @@ namespace Parrot {
     }
     return out;
   }
+  // cross
+  template<typename T>
+  Mat<T, 3, 1> cross(const Mat<T, 3, 1>& v1, const Mat<T, 3, 1>& v2) {
+    return {
+      v1.z * v2.y - v1.y * v2.z,
+      v1.x * v2.z - v1.z * v2.x,
+      v1.y * v2.x - v1.x * v2.y,
+    };
+  }
   // magnitude
   template<typename T, usize N, usize M = N>
   T magnitude(const Mat<T, N, M>& mat) {

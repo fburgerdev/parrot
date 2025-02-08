@@ -27,9 +27,7 @@ void main() {
     [[include "vertex-prefix" optional]]
     
     // position
-    float height = 0; // sin(a_pos.x + a_pos.z + u_total_time);
-    vec3 pos = vec3(a_pos.x, height, a_pos.z);
-    gl_Position = u_world_to_clip * u_local_to_world * vec4(pos, 1);
+    gl_Position = u_world_to_clip * u_local_to_world * vec4(a_pos, 1);
 
     // out
     v_position = (u_local_to_world * vec4(a_pos, 1)).xyz;
@@ -62,14 +60,23 @@ vec3 sample(vec2 tex_coords) {
 // (snippet) global
 [[include "fragment-global" optional]]
 
+vec3 cartoon(vec3 color, float round) {
+  return vec3(
+    int(color.r / round) * round,
+    int(color.g / round) * round,
+    int(color.b / round) * round
+  );
+}
+
 // main
 void main() {
     // (snippet) prefix
     [[include "fragment-prefix" optional]]
 
     // out
-    vec3 color = applyLighting(sample(v_tex_coords), v_position, v_normal);
-    o_frag_color = vec4(color * vec3(0, 0, 1), 0.5);
+    vec3 sand_color = vec3(255, 255, 224) / 255;
+    vec3 color = applyLighting(sand_color, v_position, v_normal);
+    o_frag_color = vec4(color, 1);
     
     // (snippet) postfix
     [[include "fragment-postfix" optional]]
