@@ -1,14 +1,20 @@
 [[vertex(330 core)]]
 // in
-layout (location = 0) in vec3 a_pos;
+layout (location = 0) in vec3 a_position;
 layout (location = 1) in vec3 a_normal;
 layout (location = 2) in vec2 a_tex_coords;
+layout (location = 3) in vec3 a_tangent;
 // out
 out vec3 v_position;
 out vec3 v_normal;
 out vec2 v_tex_coords;
+out vec3 v_tangent;
+out vec3 v_bitangent;
 
-// camera + lighting
+// general
+uniform float u_total_time;
+
+// world-to-clip
 [[include "surface"]]
 
 // model
@@ -24,13 +30,15 @@ void main() {
     [[include "vertex-prefix" optional]]
     
     // position
-    gl_Position = u_world_to_clip * u_local_to_world * vec4(a_pos, 1);
+    gl_Position = u_world_to_clip * u_local_to_world * vec4(a_position, 1);
 
     // out
-    v_position = (u_local_to_world * vec4(a_pos, 1)).xyz;
+    v_position = (u_local_to_world * vec4(a_position, 1)).xyz;
     v_normal = (u_local_to_world_normal * vec4(a_normal, 0)).xyz;
     v_tex_coords = a_tex_coords;
-    
+    v_tangent = a_tangent;
+    v_bitangent = cross(a_tangent, (u_local_to_world_normal * vec4(a_normal, 0)).xyz);
+
     // (snippet) postfix
     [[include "vertex-postfix" optional]]
 }
@@ -41,18 +49,16 @@ void main() {
 in vec3 v_position;
 in vec3 v_normal;
 in vec2 v_tex_coords;
+in vec3 v_tangent;
+in vec3 v_bitangent;
 // out
 out vec4 o_frag_color; 
 
-// camera + lighting
-[[include "surface"]]
+// general
+uniform float u_total_time;
 
-// texture + tint
-uniform sampler2D u_texture;
-uniform vec3 u_tint = vec3(1, 1, 1);
-vec3 sample(vec2 tex_coords) {
-    return texture(u_texture, tex_coords).rgb * u_tint;
-}
+// camera + textures + lights
+[[include "surface"]]
 
 // (snippet) global
 [[include "fragment-global" optional]]
@@ -63,8 +69,10 @@ void main() {
     [[include "fragment-prefix" optional]]
 
     // out
-    vec3 color = applyLighting(sample(v_tex_coords), v_position, v_normal);
-    o_frag_color = vec4(color, 1);
+    o_frag_color = vec4(calcSurfaceColor(
+      v_position, v_normal, v_tex_coords,
+      v_tangent, v_bitangent
+    ), 1);
     
     // (snippet) postfix
     [[include "fragment-postfix" optional]]

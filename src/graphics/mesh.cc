@@ -8,6 +8,7 @@ namespace Parrot {
       { DTypeGPU::FLOAT32, 3 },
       { DTypeGPU::FLOAT32, 3 },
       { DTypeGPU::FLOAT32, 2 },
+      { DTypeGPU::FLOAT32, 3 },
     };
   }
 

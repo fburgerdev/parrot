@@ -15,6 +15,9 @@ struct DirectionalLight {
 
 // std
 layout (std140) uniform u_std {
+  // camera
+  vec3 u_camera_pos;
+
   // world_to_clip
   mat4 u_world_to_clip;
 
@@ -32,19 +35,49 @@ vec3 applyLighting(vec3 in_color, vec3 position, vec3 normal) {
   vec3 out_color = vec3(0);
   // ambient
   for (uint i = uint(0); i < u_ambient_count; ++i) {
-    vec3 color = u_ambient_lights[i].intensity * u_ambient_lights[i].color;
-    out_color += color * in_color;
+    // ambient
+    vec3 ambient = u_ambient_lights[i].intensity * u_ambient_lights[i].color;
+    out_color += ambient * in_color;
   }
   // directional
   for (uint i = uint(0); i < u_directional_count; ++i) {
-    float factor = clamp(dot(
-      u_directional_lights[i].direction, -normal
+    // diffuse
+    float diffuse = clamp(dot(
+      -u_directional_lights[i].direction, normal
     ), 0, 1);
+    // specular
+    vec3 view_direction = normalize(position - u_camera_pos);
+    //return (position - u_camera_pos) / 10;
+    float shininess = 75.0f;
+    float energyCompensation = (shininess + 2.0) / 8.0;
+    float specularStrength = 0.75f;
+    vec3 reflect_direction = reflect(u_directional_lights[i].direction, normal);
+    float specular_factor = max(dot(-view_direction, reflect_direction), 0.0);
+    float specular = pow(specular_factor, shininess) * energyCompensation * specularStrength;
+    // mix
     vec3 color = (
       u_directional_lights[i].intensity * u_directional_lights[i].color
     );
-    out_color += factor * color * in_color;
+    out_color += (diffuse + specular) * color * in_color;
   }
   return out_color;
+}
+
+// texture + tint
+// :: texture
+uniform sampler2D u_albedo;
+uniform sampler2D u_normal;
+uniform sampler2D u_specular;
+// :: tint
+uniform vec3 u_tint = vec3(1, 1, 1);
+
+// calcSurfaceColor
+vec3 calcSurfaceColor(
+  vec3 position, vec3 normal, vec2 tex_coords, vec3 tangent, vec3 bitangent
+) {
+  mat3 tbn = mat3(tangent, bitangent, normal);
+  vec3 albedo = texture(u_albedo, tex_coords).rgb * u_tint;
+  vec3 rough_normal = tbn * (texture(u_normal, tex_coords).rgb * 2 - vec3(1));
+  return applyLighting(albedo, position, rough_normal);
 }
 [[end]]

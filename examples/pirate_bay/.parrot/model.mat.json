@@ -1,6 +1,18 @@
 {
   "uniforms": {
-    "texture": [
+    "albedo": [
+      "texture",
+      {
+        "image": ".parrot/white.png"
+      }
+    ],
+    "normal": [
+      "texture",
+      {
+        "image": ".parrot/blue.png"
+      }
+    ],
+    "specular": [
       "texture",
       {
         "image": ".parrot/white.png"

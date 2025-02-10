@@ -1,13 +1,20 @@
 {
-	"shader": {
-		"sources": [ "shaders/water.glsl.macro" ]
-	},
 	"uniforms": {
-		"texture": [
+		"albedo": [
 			"texture",
-			{
-				"image": ".parrot/white.png"
-			}
+			{ "image": "images/water-albedo.jpg" }
+		],
+		"normal": [
+			"texture",
+			{ "image": "images/water-normal.jpg" }
+		],
+		"specular": [
+			"texture",
+			{ "image": "images/water-specular.jpg" }
+		],
+		"bump": [
+			"texture",
+			{ "image": "images/water-bump.png" }
 		]
 	}
 }

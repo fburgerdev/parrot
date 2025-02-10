@@ -19,16 +19,26 @@ namespace Parrot {
         mesh->mVertices[i].z,
       };
       // normal
-      vertex.normal = {
-        mesh->mNormals[i].x,
-        mesh->mNormals[i].y,
-        mesh->mNormals[i].z,
-      };
+      if (mesh->mNormals) {
+        vertex.normal = {
+          mesh->mNormals[i].x,
+          mesh->mNormals[i].y,
+          mesh->mNormals[i].z,
+        };
+      }
       // tex_coords
       if (mesh->mTextureCoords[0]) {
         vertex.tex_coords = {
           mesh->mTextureCoords[0][i].x,
           mesh->mTextureCoords[0][i].y,
+        };
+      }
+      // tangent
+      if (mesh->mTangents) {
+        vertex.tangent = {
+          mesh->mTangents[i].x,
+          mesh->mTangents[i].y,
+          mesh->mTangents[i].z,
         };
       }
     }

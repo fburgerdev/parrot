@@ -15,10 +15,11 @@ namespace Parrot {
     // attributes (static)
     static List<AttributeGPU> attributes();
 
-    // position, normal, tex_coords
+    // position, normal, tex_coords, tangent
     Vec3<float32> position = { 0, 0, 0 };
     Vec3<float32> normal = { 0, 0, -1 };
     Vec2<float32> tex_coords = { 0, 0 };
+    Vec3<float32> tangent = { 1, 0, 0 };
   };
 
   // Mesh

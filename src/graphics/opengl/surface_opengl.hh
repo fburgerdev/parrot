@@ -60,6 +60,8 @@ namespace Parrot {
           }
         }
         _bytes = createSTD140(std::make_tuple(
+          // camera
+          (transform ? transform->position : Vec3<>(0, 0, 0)), // u_camera_pos
           // world_to_clip
           proj * view, // u_world_to_clip
 
