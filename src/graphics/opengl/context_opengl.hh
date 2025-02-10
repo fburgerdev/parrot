@@ -50,8 +50,9 @@ namespace Parrot {
       }
 
       // applyMaterial
-      void applyMaterial(
-        Shader& shader, const MaterialNode& node, const string& prefix = ""
+      uint applyMaterial(
+        Shader& shader, const MaterialNode& node,
+        const string& prefix = "", uint tex_slot = 1
       );
     private:
       HashMap<UUID, Shader> _shaders;

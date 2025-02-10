@@ -8,6 +8,7 @@ namespace Parrot {
     Texture::Texture(const TextureConfig& config) {
       // generate
       glGenTextures(1, &_gpu_id);
+      glActiveTexture(GL_TEXTURE0);
       glBindTexture(GL_TEXTURE_2D, _gpu_id);
       glEnable(GL_TEXTURE_2D);
 
@@ -45,10 +46,12 @@ namespace Parrot {
     void Texture::bind(uint slot) const {
       glActiveTexture(GL_TEXTURE0 + slot);
       glBindTexture(GL_TEXTURE_2D, _gpu_id);
+      glActiveTexture(GL_TEXTURE0);
     }
     void Texture::unbind(uint slot) {
       glActiveTexture(GL_TEXTURE0 + slot);
       glBindTexture(GL_TEXTURE_2D, 0);
+      glActiveTexture(GL_TEXTURE0);
     }
   }
 }

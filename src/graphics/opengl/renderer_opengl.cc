@@ -40,6 +40,7 @@ namespace Parrot {
             _context->getTexture(
               model->textures.at(model_material.tex_index)
             ).bind(0);
+            shader_opengl.setUniform("u_texture", 0);
           }
           auto proj = scene_data.camera.second->calcProjectionMatrix(
             1080.0F / 720.0F

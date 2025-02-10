@@ -47,25 +47,31 @@ namespace Parrot {
     }
 
     // applyMaterial
-    void Context::applyMaterial(
-      Shader& shader, const MaterialNode& node, const string& prefix
+    uint Context::applyMaterial(
+      Shader& shader, const MaterialNode& node,
+      const string& prefix, uint tex_slot
     ) {
       if (holds<Map<string, MaterialNode>>(node.value)) {
         const auto& object = std::get<Map<string, MaterialNode>>(node.value);
         for (const auto& [child_name, child_node] : object) {
           if (prefix.empty()) {
-            applyMaterial(shader, child_node, "u_" + child_name);
+            tex_slot = applyMaterial(
+              shader, child_node, "u_" + child_name, tex_slot
+            );
           }
           else {
-            applyMaterial(shader, child_node, prefix + "." + child_name);
+            tex_slot = applyMaterial(
+              shader, child_node, prefix + "." + child_name, tex_slot
+            );
           }
         }
       }
       else if (holds<List<MaterialNode>>(node.value)) {
         const auto& list = std::get<List<MaterialNode>>(node.value);
         for (usize i = 0; i < list.size(); ++i) {
-          applyMaterial(
-            shader, list.at(i), prefix + "[" + std::to_string(i) + "]"
+          tex_slot = applyMaterial(
+            shader, list.at(i),
+            prefix + "[" + std::to_string(i) + "]", tex_slot
           );
         }
       }
@@ -74,14 +80,16 @@ namespace Parrot {
         if (holds<NumericMaterialLeaf>(leaf)) {
           std::visit([&](const auto& x) {
             shader.setUniform(prefix, x);
-            }, std::get<NumericMaterialLeaf>(leaf));
+          }, std::get<NumericMaterialLeaf>(leaf));
         }
         else if (holds<AssetHandle<TextureConfig>>(leaf)) {
           auto texture = std::get<AssetHandle<TextureConfig>>(leaf).lock();
-          getTexture(*texture).bind(0);
-          shader.setUniform(prefix, 0);
+          getTexture(*texture).bind(tex_slot);
+          shader.setUniform<int32>(prefix, tex_slot);
+          tex_slot += 1;
         }
       }
+      return tex_slot;
     }
   }
 }
