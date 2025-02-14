@@ -1,13 +1,12 @@
 {
   "name": "teapot",
-  "main": [
-    {
+  "stage": {
+    "window": {
       "title": "Teapot",
-      "size": [ 1080, 720 ],
-      "scripts": [ "FPS" ]
+      "size": [ 1080, 720 ]
     },
-    "scenes/main.scn.json"
-  ],
+    "scene": "scenes/main.scn.json"
+  },
   "loading_policy": "lazy",
   "unloading_policy": "unused"
 }

@@ -1,14 +1,14 @@
 #pragma once
-#include "window/window_config.hh"
-#include "ecs/scene_config.hh"
+#include "stage_config.hh"
 #include "asset/asset_policy.hh"
 
 namespace Parrot {
   // AppConfig (Asset)
   class AppConfig : public Asset {
   public:
-    // (constructor) for Asset
+    // (constructor)
     AppConfig(const AssetPath& asset_path);
+    // :: for Asset
     AppConfig(const AssetPath& asset_path, AssetAPI& asset_api);
     template<JsonType JSON>
     AppConfig(
@@ -65,9 +65,8 @@ namespace Parrot {
     template<JsonType JSON>
     void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
       loadFromJSON(json);
-      // main (window / scene)
-      main_window = AssetHandle<WindowConfig>(json.at("main")[0], asset_api);
-      main_scene = AssetHandle<SceneConfig>(json.at("main")[1], asset_api);
+      // stage
+      main_stage = AssetHandle<StageConfig>(json.at("stage"), asset_api);
     }
 
     // name, asset_dir, (un)loading_policy, main(window/scene)
@@ -75,7 +74,6 @@ namespace Parrot {
     stdf::path asset_dir = ".";
     LoadingPolicy loading_policy = LoadingPolicy::LAZY_LOAD;
     UnloadingPolicy unloading_policy = UnloadingPolicy::UNLOAD_APP;
-    AssetHandle<WindowConfig> main_window;
-    AssetHandle<SceneConfig> main_scene;
+    AssetHandle<StageConfig> main_stage;
   };
 }

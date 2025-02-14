@@ -34,7 +34,7 @@ namespace Parrot {
           else {
             front->foreachChild([&](Scriptable& child) {
               queue.push(&child);
-              });
+            });
           }
         }
         return success;

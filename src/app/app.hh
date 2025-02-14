@@ -1,6 +1,6 @@
 #pragma once
 #include "default_scriptable.hh"
-#include "playing_unit.hh"
+#include "stage.hh"
 #include "asset/asset_manager.hh"
 #include "utils/stopwatch.hh"
 
@@ -18,18 +18,6 @@ namespace Parrot {
     App& operator=(const App&) = delete;
     App& operator=(App&&) = default;
 
-    // units
-    // :: get (by window)
-    PlayingUnit& getPlayingUnit(const Window& window);
-    const PlayingUnit& getPlayingUnit(const Window& window) const;
-    // :: get (by scene)
-    PlayingUnit& getPlayingUnit(const Scene& scene);
-    const PlayingUnit& getPlayingUnit(const Scene& scene) const;
-    // :: add
-    PlayingUnit& addPlayingUnit(
-      const WindowConfig& window_config, const SceneConfig& scene_config
-    );
-
     // run (game loop)
     void run(seconds timeout = 0);
 
@@ -42,8 +30,7 @@ namespace Parrot {
     ) const override;
   private:
     string _name;
-    PlayingUnit* _main_unit = nullptr;
-    Map<UUID, PlayingUnit> _units;
+    Stage* _main_stage = nullptr;
     AssetManager _asset_manager;
     DefaultScriptable _default_scriptable;
   };

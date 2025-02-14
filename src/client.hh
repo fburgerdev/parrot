@@ -4,7 +4,6 @@
 #include "core/scriptable.hh"
 // app
 #include "app/app.hh"
-#include "app/playing_unit.hh"
 #include "app/component_registry.hh"
 // ecs
 #include "ecs/component.hh"

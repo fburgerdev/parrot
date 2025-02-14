@@ -19,100 +19,50 @@ namespace Parrot {
       raw_config.asset_dir,
       raw_config.loading_policy, raw_config.unloading_policy
     );
-    // main (window / scene)
+    // main-stage
     AppConfig config = AppConfig(asset_path, _asset_manager);
-    _main_unit = &addPlayingUnit(
-      *config.main_window.lock(), *config.main_scene.lock()
+    _main_stage = new Stage(*config.main_stage.lock(), this, _asset_manager);
+    // :: icon
+    static Image default_icon = Image(
+      _asset_manager.getAssetDirectory() / ".parrot/parrot.png",
+      _asset_manager.getAssetDirectory()
+    );
+    _main_stage->window.setIcon(
+      default_icon.getBytes(),
+      default_icon.getWidth(), default_icon.getHeight()
     );
   }
   // (destructor)
   App::~App() {
     Scriptable::removeAllScripts();
-    for (auto& [uuid, unit] : _units) {
-      unit.scene.removeAllScripts();
-      unit.window.removeAllScripts();
+    if (_main_stage) {
+      _main_stage->removeAllScripts();
     }
-  }
-
-  // units
-  // :: get (by window)
-  PlayingUnit& App::getPlayingUnit(const Window& window) {
-    for (auto& [uuid, unit] : _units) {
-      if (&unit.window == &window) {
-        return unit;
-      }
-    }
-    throw std::runtime_error("playing-unit not found");
-  }
-  const PlayingUnit& App::getPlayingUnit(const Window& window) const {
-    for (const auto& [uuid, unit] : _units) {
-      if (&unit.window == &window) {
-        return unit;
-      }
-    }
-    throw std::runtime_error("playing-unit not found");
-  }
-  // :: get (by scene)
-  PlayingUnit& App::getPlayingUnit(const Scene& scene) {
-    for (auto& [uuid, unit] : _units) {
-      if (&unit.scene == &scene) {
-        return unit;
-      }
-    }
-    throw std::runtime_error("playing-unit not found");
-  }
-  const PlayingUnit& App::getPlayingUnit(const Scene& scene) const {
-    for (const auto& [uuid, unit] : _units) {
-      if (&unit.scene == &scene) {
-        return unit;
-      }
-    }
-    throw std::runtime_error("playing-unit not found");
-  }
-  // :: add
-  PlayingUnit& App::addPlayingUnit(
-    const WindowConfig& window_config, const SceneConfig& scene_config
-  ) {
-    LOG_APP_INFO(
-      "creating playing-unit ('{}', '{}') in app '{}'",
-      window_config.title, scene_config.name, _name
-    );
-    PlayingUnit unit(window_config, scene_config, this, _asset_manager);
-    static Image default_icon = Image(
-      _asset_manager.getAssetDirectory() / ".parrot/parrot.png",
-      _asset_manager.getAssetDirectory()
-    );
-    unit.window.setIcon(
-      default_icon.getBytes(),
-      default_icon.getWidth(), default_icon.getHeight()
-    );
-    auto result = _units.emplace(unit.getUUID(), std::move(unit));
-    return result.first->second;
   }
 
   // run (game loop)
   void App::run(seconds timeout) {
-    if (_main_unit) {
+    if (_main_stage) {
       LOG_APP_INFO("running app '{}'", _name);
       Stopwatch total_watch, frame_watch;
-      while (_main_unit->window.isOpen()) {
+      while (_main_stage->window.isOpen()) {
         seconds delta_time = frame_watch.reset();
         LOG_APP_TRACE("updating app '{}'", _name);
-        for (auto& [uuid, unit] : _units) {
-          // update scene
-          unit.scene.update(delta_time);
-          // draw
-          unit.draw();
-          // swap + update window
-          unit.window.swapBuffers();
-          for (auto& e : unit.window.pollEvents()) {
-            LOG_WINDOW_TRACE("raising event: {}", e);
-            unit.window.raiseEvent(e);
-          }
+        // stage
+        auto& stage = *_main_stage;
+        // :: update
+        stage.update(delta_time);
+        // :: render
+        stage.render();
+        // :: swap buffers + poll events
+        stage.window.swapBuffers();
+        for (auto& e : stage.window.pollEvents()) {
+          LOG_WINDOW_TRACE("raising event: {}", e);
+          stage.window.raiseEvent(e);
         }
         // timeout
         if (timeout && timeout < total_watch.elapsed()) {
-          _main_unit->window.close();
+          _main_stage->window.close();
         }
       }
       LOG_APP_INFO("terminating app '{}' (gracefully)", _name);
@@ -121,15 +71,9 @@ namespace Parrot {
 
   // foreachChild
   void App::foreachChild(Func<void(Scriptable&)> func) {
-    for (auto& [uuid, unit] : _units) {
-      func(unit.window);
-      func(unit.scene);
-    }
+    func(*_main_stage);
   }
   void App::foreachChild(Func<void(const Scriptable&)> func) const {
-    for (const auto& [uuid, unit] : _units) {
-      func(unit.window);
-      func(unit.scene);
-    }
+    func(*_main_stage);
   }
 }

@@ -1,13 +1,13 @@
 {
   "name": "pirate bay",
-  "main": [
-    {
+  "stage": {
+    "window": {
       "title": "Pirate Bay",
       "size": [ 1080, 720 ],
       "scripts": [ "FPS" ]
     },
-    "scenes/main.scn.json"
-  ],
+    "scene": "scenes/main.scn.json"
+  },
   "loading_policy": "lazy",
   "unloading_policy": "unused"
 }
