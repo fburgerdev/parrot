@@ -6,8 +6,6 @@ namespace Parrot {
   // (constructor)
   Entity::Entity(Scriptable* parent)
     : Scriptable(parent) {}
-  Entity::Entity(Entity* parent)
-    : Scriptable(parent), _parent(parent) {}
   Entity::Entity(
     const SharedPtr<EntityPreset>& preset,
     Scriptable* parent, AssetAPI& asset_api
@@ -15,7 +13,7 @@ namespace Parrot {
     _tag = preset->tag;
     transform = preset->transform;
     for (const auto& handle : preset->children) {
-      Entity child = Entity(handle.lock(), this, asset_api);
+      auto child = HierarchyNode<Entity>(handle.lock(), this, asset_api);
       _children.emplace(child.getUUID(), std::move(child));
     }
     for (const auto& component_config : preset->components) {
@@ -24,38 +22,11 @@ namespace Parrot {
         component_config->createComponent(*this)
       );
     }
-    for (const string& script_name : preset->scripts) {
-      auto [uuid, factory] = g_registry<Script, Entity&, AssetAPI&>.at(
-        script_name
-      );
+    for (const string& script : preset->scripts) {
+      auto [uuid, factory] = g_registry<Script, Entity&, AssetAPI&>.at(script);
       addScript(uuid, factory(*this, asset_api));
     }
   }
-  Entity::Entity(
-    const SharedPtr<EntityPreset>& preset,
-    Entity* parent, AssetAPI& asset_api
-  ) : Scriptable(parent), _parent(parent) {
-    _tag = preset->tag;
-    transform = preset->transform;
-    for (const auto& handle : preset->children) {
-      Entity child = Entity(handle.lock(), this, asset_api);
-      _children.emplace(child.getUUID(), std::move(child));
-    }
-    for (const auto& component_config : preset->components) {
-      _components.emplace(
-        component_config->getComponentID(),
-        component_config->createComponent(*this)
-      );
-    }
-    for (const string& script_name : preset->scripts) {
-      auto [uuid, factory] = g_registry<Script, Entity&, AssetAPI&>.at(
-        script_name
-      );
-      addScript(uuid, factory(*this, asset_api));
-    }
-  }
-  Entity::Entity(UUID uuid, Entity* parent)
-    : UUIDObject(uuid), _parent(parent) {}
   // (destructor)
   Entity::~Entity() {
     for (auto& [uuid, child] : _children) {
@@ -64,31 +35,64 @@ namespace Parrot {
     Scriptable::removeAllScripts();
   }
 
-  // parent
-  // :: has
-  bool Entity::hasParent() const {
-    return _parent;
+  // getTag
+  const string& Entity::getTag() const {
+    return _tag;
   }
-  // :: get
-  Entity& Entity::getParent() {
-    return *_parent;
+  // findByTag
+  Set<Entity*> Entity::findByTag(strview tag, Set<Entity*>&& found) {
+    for (auto& [uuid, child] : _children) {
+      if (tag == child.getTag()) {
+        found.insert(&child);
+      }
+      if (child.is_visible) {
+        found = child.findByTag(tag, std::move(found));
+      }
+    }
+    return found;
   }
-  const Entity& Entity::getParent() const {
-    return *_parent;
+  Set<const Entity*> Entity::findByTag(strview tag, Set<const Entity*>&& found) const {
+    for (const auto& [uuid, child] : _children) {
+      if (tag == child.getTag()) {
+        found.insert(&child);
+      }
+      if (child.is_visible) {
+        found = child.findByTag(tag, std::move(found));
+      }
+    }
+    return found;
   }
 
   // child
   // :: create
-  Entity& Entity::createChild() {
-    Entity child(this);
+  Entity& Entity::createChild(bool is_visible) {
+    auto child = HierarchyNode<Entity>(this);
+    child.is_visible = is_visible;
     return _children.emplace(child.getUUID(), std::move(child)).first->second;
   }
   // :: destroy
-  void Entity::destroyChild(UUID uuid) {
-    _children.erase(uuid);
+  bool Entity::destroyChild(UUID uuid) {
+    auto it = _children.find(uuid);
+    if (it != _children.end()) {
+      if (!it->second.is_static) {
+        _children.erase(it);
+        return true;
+      }
+    }
+    return false;
   }
-  void Entity::destroyChild(const Entity& child) {
-    _children.erase(child.getUUID());
+  bool Entity::destroyChild(strview tag) {
+    bool destroyed = false;
+    for (auto it = _children.begin(); it != _children.end();) {
+      if (tag == it->second.getTag() && it->second.is_static) {
+        it = _children.erase(it);
+        destroyed |= true;
+      }
+      else {
+        ++it;
+      }
+    }
+    return destroyed;
   }
   // :: foreach
   void Entity::foreachChild(Func<void(Entity&)> func) {

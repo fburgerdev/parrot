@@ -3,19 +3,26 @@
 #include "entity_preset.hh"
 
 namespace Parrot {
+  // HierarchyNode
+  template<class T>
+  struct HierarchyNode : public T {
+  public:
+    // (constructor)
+    using T::T;
+
+    // is_visible, is_static
+    bool is_visible = false;
+    bool is_static = false;
+  };
+
   // Entity
   class Entity : public UUIDObject, public Scriptable {
   public:
     // (constructor)
     Entity(Scriptable* parent = nullptr);
-    Entity(Entity* parent);
     Entity(
       const SharedPtr<EntityPreset>& preset,
       Scriptable* parent, AssetAPI& asset_api
-    );
-    Entity(
-      const SharedPtr<EntityPreset>& preset,
-      Entity* parent, AssetAPI& asset_api
     );
     Entity(const Entity&) = delete;
     Entity(Entity&&) = default;
@@ -25,29 +32,21 @@ namespace Parrot {
     Entity& operator=(const Entity&) = delete;
     Entity& operator=(Entity&&) = default;
 
-    // parent
-    // :: has
-    bool hasParent() const;
-    // :: get
-    Entity& getParent();
-    const Entity& getParent() const;
+    // getTag
+    const string& getTag() const;
+    // findByTag
+    Set<Entity*> findByTag(strview tag, Set<Entity*>&& found = {});
+    Set<const Entity*> findByTag(strview tag, Set<const Entity*>&& found = {}) const;
 
-    // child
+    // children
     // :: create
-    Entity& createChild();
+    Entity& createChild(bool is_visible = false);
     // :: destroy
-    void destroyChild(UUID uuid);
-    void destroyChild(const Entity& child);
+    bool destroyChild(UUID uuid);
+    bool destroyChild(strview tag);
     // :: foreach
     void foreachChild(Func<void(Entity&)> func);
     void foreachChild(Func<void(const Entity&)> func) const;
-    // :: foreach (scriptable)
-    virtual void foreachChild(
-      Func<void(Scriptable&)> func
-    ) override;
-    virtual void foreachChild(
-      Func<void(const Scriptable&)> func
-    ) const override;
 
     // component
     // :: has
@@ -82,14 +81,19 @@ namespace Parrot {
     // update
     void update(float32 delta_time);
 
+    // foreachChild (impl. Scriptable)
+    virtual void foreachChild(
+      Func<void(Scriptable&)> func
+    ) override;
+    virtual void foreachChild(
+      Func<void(const Scriptable&)> func
+    ) const override;
+
     // transform
     Transform<> transform;
   private:
-    Entity(UUID uuid, Entity* parent);
-
     string _tag;
-    Entity* _parent = nullptr;
-    Map<UUID, Entity> _children;
+    Map<UUID, HierarchyNode<Entity>> _children;
     Map<usize, UniquePtr<Component>> _components; //? reduce indirection
   };
 }
