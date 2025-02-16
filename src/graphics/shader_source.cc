@@ -115,7 +115,9 @@ namespace Parrot {
     ) {}
 
   // (constructor) for Asset
-  ShaderProgram::ShaderProgram(const AssetPath& asset_path, AssetAPI& asset_api) {
+  ShaderProgram::ShaderProgram(
+    const AssetPath& asset_path, AssetAPI& asset_api
+  ) {
     auto json = asset_path.applySubpathToJSON(
       json::parse(ifstream(asset_path.file))
     );

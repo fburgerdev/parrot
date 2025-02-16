@@ -43,7 +43,7 @@ namespace Parrot {
   }
 
   // (constructor)
-	Stage::Stage(
+  Stage::Stage(
     const StageConfig& stage_config, Scriptable* parent, AssetAPI& asset_api
   ) : Scriptable(parent), window(*stage_config.window.lock(), this) {
     for (const auto& scene : stage_config.scenes) {
@@ -52,7 +52,7 @@ namespace Parrot {
         Renderer(_gpu_context)
       );
     }
-	}
+  }
   // update
   void Stage::update(float32 delta_time) {
     for (auto& [scene, renderer] : scene_layers) {

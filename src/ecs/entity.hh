@@ -35,8 +35,12 @@ namespace Parrot {
     // getTag
     const string& getTag() const;
     // findByTag
-    Set<Entity*> findByTag(strview tag, Set<Entity*>&& found = {});
-    Set<const Entity*> findByTag(strview tag, Set<const Entity*>&& found = {}) const;
+    Set<Entity*> findByTag(
+      strview tag, Set<Entity*>&& found = {}
+    );
+    Set<const Entity*> findByTag(
+      strview tag, Set<const Entity*>&& found = {}
+    ) const;
 
     // children
     // :: create

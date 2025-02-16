@@ -40,7 +40,9 @@ namespace Parrot {
     return _tag;
   }
   // findByTag
-  Set<Entity*> Entity::findByTag(strview tag, Set<Entity*>&& found) {
+  Set<Entity*> Entity::findByTag(
+    strview tag, Set<Entity*>&& found
+  ) {
     for (auto& [uuid, child] : _children) {
       if (tag == child.getTag()) {
         found.insert(&child);
@@ -51,7 +53,9 @@ namespace Parrot {
     }
     return found;
   }
-  Set<const Entity*> Entity::findByTag(strview tag, Set<const Entity*>&& found) const {
+  Set<const Entity*> Entity::findByTag(
+    strview tag, Set<const Entity*>&& found
+  ) const {
     for (const auto& [uuid, child] : _children) {
       if (tag == child.getTag()) {
         found.insert(&child);

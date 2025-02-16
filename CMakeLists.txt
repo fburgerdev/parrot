@@ -39,10 +39,8 @@ CPMAddPackage(
     "ASSIMP_BUILD_ALL_EXPORTERS_BY_DEFAULT OFF"
     "ASSIMP_BUILD_ASSIMP_VIEW OFF"
 )
-target_include_directories(parrot PUBLIC ${CMAKE_BINARY_DIR}/_deps/assimp-src/include)
-target_include_directories(parrot PUBLIC ${CMAKE_BINARY_DIR}/_deps/assimp-build/include)
-# :: glad (target)
-add_subdirectory(vendor/glad)
+target_include_directories(parrot PUBLIC "${CMAKE_BINARY_DIR}/_deps/assimp-src/include")
+target_include_directories(parrot PUBLIC "${CMAKE_BINARY_DIR}/_deps/assimp-build/include")
 # :: glfw (target)
 CPMAddPackage(
   NAME glfw
@@ -55,8 +53,8 @@ CPMAddPackage(
     "GLFW_BUILD_EXAMPLES OFF"
     "GLFW_BUILD_DOCS OFF"
 )
-target_include_directories(parrot PUBLIC ${CMAKE_BINARY_DIR}/_deps/glfw-src/include)
-target_include_directories(parrot PUBLIC ${CMAKE_BINARY_DIR}/_deps/glfw-build/include)
+target_include_directories(parrot PUBLIC "${CMAKE_BINARY_DIR}/_deps/glfw-src/include")
+target_include_directories(parrot PUBLIC "${CMAKE_BINARY_DIR}/_deps/glfw-build/include")
 # :: json (target)
 CPMAddPackage(
   NAME json
@@ -64,8 +62,10 @@ CPMAddPackage(
   URL https://github.com/nlohmann/json/releases/download/v3.7.3/include.zip
   URL_HASH SHA256=87b5884741427220d3a33df1363ae0e8b898099fbc59f1c451113f6732891014
 )
-target_include_directories(parrot PUBLIC ${CMAKE_BINARY_DIR}/_deps/json-src/include)
-target_include_directories(parrot PUBLIC ${CMAKE_BINARY_DIR}/_deps/json-build/include)
+target_include_directories(parrot PUBLIC "${CMAKE_BINARY_DIR}/_deps/json-src/include")
+target_include_directories(parrot PUBLIC "${CMAKE_BINARY_DIR}/_deps/json-build/include")
+# :: glad (target)
+add_subdirectory(vendor/glad)
 # :: stb (target)
 add_subdirectory(vendor/stb)
 

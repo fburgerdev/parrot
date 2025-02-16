@@ -1,13 +1,13 @@
 {
-	"shader": {
-		"sources": [ "shaders/terrain.glsl.macro" ]
-	},
-	"uniforms": {
-		"texture": [
-			"texture",
-			{
-				"image": ".parrot/white.png"
-			}
-		]
-	}
+  "shader": {
+    "sources": [ "shaders/terrain.glsl.macro" ]
+  },
+  "uniforms": {
+    "texture": [
+      "texture",
+      {
+        "image": ".parrot/white.png"
+      }
+    ]
+  }
 }
