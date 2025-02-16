@@ -51,9 +51,12 @@ namespace Parrot {
     // onAttach
     virtual void onAttach() override {
       static constexpr uint WIDTH = 100, DEPTH = 100;
+      static constexpr uint RESOLUTION = 2;
       static constexpr float32 WATER_DEPTH = 10.0F, ISLAND_HEIGHT = 10.0F;
       // heights
-      List<float32> heights = generatePerlin2D(WIDTH, DEPTH, 2.3F);
+      List<float32> heights = generatePerlin2D(
+        WIDTH * RESOLUTION, DEPTH * RESOLUTION, 3.0F
+      );
       float32 min_height = +99999, max_height = -99999;
       for (float32 height : heights) {
         min_height = std::min(height, min_height);
@@ -67,29 +70,32 @@ namespace Parrot {
       }
       // mesh
       Mesh mesh;
-      for (uint z = 0; z < DEPTH; ++z) {
-        for (uint x = 0; x < WIDTH; ++x) {
+      for (uint z = 0; z < DEPTH * RESOLUTION; ++z) {
+        for (uint x = 0; x < WIDTH * RESOLUTION; ++x) {
           mesh.vertices.push_back({
             .position = {
-              x - float32(WIDTH) / 2,
-              heights[WIDTH * z + x],
-              z - float32(DEPTH) / 2,
+              float32(x) / RESOLUTION - float32(WIDTH) / 2,
+              heights[WIDTH * RESOLUTION * z + x],
+              float32(z) / RESOLUTION - float32(DEPTH) / 2,
             },
-            .tex_coords = { float32(x) / WIDTH, float32(z) / DEPTH },
+            .tex_coords = {
+              float32(x) / (WIDTH * RESOLUTION),
+              float32(z) / (DEPTH * RESOLUTION)
+            },
           });
         }
       }
-      for (uint z = 0; z < DEPTH - 1; ++z) {
-        for (uint x = 0; x < WIDTH - 1; ++x) {
-          mesh.indices.push_back(WIDTH * (z + 0) + (x + 0));
-          mesh.indices.push_back(WIDTH * (z + 0) + (x + 1));
-          mesh.indices.push_back(WIDTH * (z + 1) + (x + 1));
-          mesh.indices.push_back(WIDTH * (z + 0) + (x + 0));
-          mesh.indices.push_back(WIDTH * (z + 1) + (x + 1));
-          mesh.indices.push_back(WIDTH * (z + 1) + (x + 0));
+      for (uint z = 0; z < DEPTH * RESOLUTION - 1; ++z) {
+        for (uint x = 0; x < WIDTH * RESOLUTION - 1; ++x) {
+          mesh.indices.push_back(WIDTH * RESOLUTION * (z + 0) + (x + 0));
+          mesh.indices.push_back(WIDTH * RESOLUTION * (z + 0) + (x + 1));
+          mesh.indices.push_back(WIDTH * RESOLUTION * (z + 1) + (x + 1));
+          mesh.indices.push_back(WIDTH * RESOLUTION * (z + 0) + (x + 0));
+          mesh.indices.push_back(WIDTH * RESOLUTION * (z + 1) + (x + 1));
+          mesh.indices.push_back(WIDTH * RESOLUTION * (z + 1) + (x + 0));
         }
       }
-      calcGridNormals(WIDTH, DEPTH, mesh.vertices);
+      calcGridNormals(WIDTH * RESOLUTION, DEPTH * RESOLUTION, mesh.vertices);
       // asset
       _asset = std::make_shared<Model>("water_model");
       _asset->submodels.emplace_back(

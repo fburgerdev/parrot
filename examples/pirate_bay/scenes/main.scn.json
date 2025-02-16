@@ -32,7 +32,8 @@
         "tag": "Terrain",
         "components": {
           "render-object": {
-            "model": ".parrot/quad.obj"
+            "model": ".parrot/quad.obj",
+            "material": "materials/terrain.mat.json"
           }
         },
         "scripts": [ "TerrainMesh" ]

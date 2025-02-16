@@ -60,6 +60,9 @@ uniform float u_total_time;
 // camera + textures + lights
 [[include "surface"]]
 
+// opacity
+uniform float u_opacity = 1.0f;
+
 // (snippet) global
 [[include "fragment-global" optional]]
 
@@ -72,7 +75,7 @@ void main() {
     o_frag_color = vec4(calcSurfaceColor(
       v_position, v_normal, v_tex_coords,
       v_tangent, v_bitangent
-    ), 1);
+    ), u_opacity);
     
     // (snippet) postfix
     [[include "fragment-postfix" optional]]

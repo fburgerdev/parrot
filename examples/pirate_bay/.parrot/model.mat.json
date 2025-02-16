@@ -9,7 +9,7 @@
     "normal": [
       "texture",
       {
-        "image": ".parrot/blue.png"
+        "image": ".parrot/normal.png"
       }
     ],
     "specular": [
@@ -17,6 +17,13 @@
       {
         "image": ".parrot/white.png"
       }
-    ]
+    ],
+    "surface": {
+      "ambient_strength": [ "f32", 1.0 ],
+      "diffuse_strength": [ "f32", 1.0 ],
+      "shininess": [ "f32", 1.0 ],
+      "specular_strength": [ "f32", 1.0 ]
+    },
+    "opacity": [ "f32", 1.0 ]
   }
 }

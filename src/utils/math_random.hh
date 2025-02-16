@@ -10,6 +10,10 @@ namespace Parrot {
     // (constructor)
     RandomGenerator()
       : _generator(_device()) {}
+    RandomGenerator(uint seed)
+      : _generator(_device()) {
+      _generator.seed(seed);
+    }
 
     // random
     // :: 1D

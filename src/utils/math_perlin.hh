@@ -7,13 +7,13 @@ namespace Parrot {
   template<class T = DefaultFloat>
   List<T> generatePerlin1D(uint count, T bias = 2.0) {
     // random
-    List<T> random_values = List<T>(count);
-    RandomGenerator<T> generator;
+    auto random_values = List<T>(count);
+    auto generator = RandomGenerator<T>(0);
     for (uint i = 0; i < count; ++i) {
       random_values[i] = generator.random();
     }
     // interpolate
-    List<T> samples = List<T>(count);
+    auto samples = List<T>(count);
     for (uint i = 0; i < count; ++i) {
       T result = 0.0, scale = 1.0, accumulate = 0.0;
       for (uint octave = 0; (count >> octave) > 0; ++count) {
@@ -39,13 +39,13 @@ namespace Parrot {
   template<class T = DefaultFloat>
   List<T> generatePerlin2D(uint xcount, uint ycount, T bias = 2.0) {
     // random
-    List<T> random_values = List<T>(xcount * ycount);
-    RandomGenerator<T> generator;
+    auto random_values = List<T>(xcount * ycount);
+    auto generator = RandomGenerator<T>(0);
     for (uint i = 0; i < xcount * ycount; ++i) {
       random_values[i] = generator.random();
     }
     // interpolate
-    List<T> samples = List<T>(xcount * ycount);
+    auto samples = List<T>(xcount * ycount);
     for (uint y = 0; y < ycount; ++y) {
       for (uint x = 0; x < xcount; ++x) {
         T result = 0.0, scale = 1.0, accumulate = 0.0;

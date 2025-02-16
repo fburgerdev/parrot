@@ -30,6 +30,18 @@ layout (std140) uniform u_std {
   DirectionalLight u_directional_lights[MAX_LIGHT_COUNT];
 };
 
+// surface
+struct Surface {
+  // ambient
+  float ambient_strength;
+  // diffuse
+  float diffuse_strength;
+  // specular
+  float shininess;
+  float specular_strength;
+};
+uniform Surface u_surface = Surface(1, 1, 1, 1);
+
 // applyLighting
 vec3 applyLighting(vec3 in_color, vec3 position, vec3 normal) {
   vec3 out_color = vec3(0);
@@ -37,7 +49,7 @@ vec3 applyLighting(vec3 in_color, vec3 position, vec3 normal) {
   for (uint i = uint(0); i < u_ambient_count; ++i) {
     // ambient
     vec3 ambient = u_ambient_lights[i].intensity * u_ambient_lights[i].color;
-    out_color += ambient * in_color;
+    out_color += (ambient * u_surface.ambient_strength) * in_color;
   }
   // directional
   for (uint i = uint(0); i < u_directional_count; ++i) {
@@ -47,18 +59,18 @@ vec3 applyLighting(vec3 in_color, vec3 position, vec3 normal) {
     ), 0, 1);
     // specular
     vec3 view_direction = normalize(position - u_camera_pos);
-    //return (position - u_camera_pos) / 10;
-    float shininess = 75.0f;
-    float energyCompensation = (shininess + 2.0) / 8.0;
-    float specularStrength = 0.75f;
+    float compensation = (u_surface.shininess + 2.0) / 8.0;
     vec3 reflect_direction = reflect(u_directional_lights[i].direction, normal);
     float specular_factor = max(dot(-view_direction, reflect_direction), 0.0);
-    float specular = pow(specular_factor, shininess) * energyCompensation * specularStrength;
-    // mix
+    float specular = pow(specular_factor, u_surface.shininess) * compensation;
+    // total
+    float total = 0;
+    total += diffuse * u_surface.diffuse_strength;
+    total += specular * u_surface.specular_strength;
     vec3 color = (
       u_directional_lights[i].intensity * u_directional_lights[i].color
     );
-    out_color += (diffuse + specular) * color * in_color;
+    out_color += total * color * in_color;
   }
   return out_color;
 }
