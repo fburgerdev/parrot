@@ -44,8 +44,7 @@
           "camera": {
             "type": "perspective"
           }
-        },
-        "scripts": [ "PlayerController" ]
+        }
       }
     ]
   }

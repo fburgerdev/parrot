@@ -33,10 +33,17 @@ namespace Parrot {
           );
         }
       }
+      // scripts
+      if (json.contains("scripts")) {
+        for (const auto& script : json.at("scripts")) {
+          scripts.emplace_back(string(script));
+        }
+      }
     }
 
-    // window, scenes
+    // window, scenes, scripts
     AssetHandle<WindowConfig> window;
     List<AssetHandle<SceneConfig>> scenes;
+    List<string> scripts;
   };
 }

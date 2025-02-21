@@ -13,23 +13,17 @@ namespace Parrot {
   };
 
   // FPS
-  class FPS : public WindowScript {
+  class FPS : public StageScript {
   public:
     // (constructor)
-    FPS(Window& window)
-      : WindowScript(window) {}
-    
-    // onAttach
-    virtual void onAttach() override {
-      //_captured = true;
-      //window->setCursorState(CursorState::CAPTURED);
-      //raiseEvent(FPSEvent(true, window));
-    }
+    FPS(Stage& stage)
+      : StageScript(stage) {}
+
     // onDetach
     virtual void onDetach() override {
       _captured = false;
-      window->setCursorState(CursorState::NORMAL);
-      raiseEvent(FPSEvent(false, window));
+      stage->window.setCursorState(CursorState::NORMAL);
+      stage->cascadeEvent(FPSEvent(false, &stage->window));
     }
 
     // resolveEvent
@@ -41,11 +35,11 @@ namespace Parrot {
             if (kp->code == KeyCode::KEY_ESCAPE) {
               if (_captured) {
                 _captured = false;
-                window->setCursorState(CursorState::NORMAL);
-                raiseEvent(FPSEvent(false, window));
+                stage->window.setCursorState(CursorState::NORMAL);
+                raiseEvent(FPSEvent(false, &stage->window));
               }
               else {
-                window->close();
+                stage->window.close();
               }
               return true;
             }
@@ -56,14 +50,14 @@ namespace Parrot {
             if (mp->button == MouseButton::LEFT) {
               if (!_captured) {
                 _captured = true;
-                window->setCursorState(CursorState::CAPTURED);
-                raiseEvent(FPSEvent(true, window));
+                stage->window.setCursorState(CursorState::CAPTURED);
+                stage->cascadeEvent(FPSEvent(true, &stage->window));
                 return true;
               }
             }
           }
         }
-        raiseEvent(FPSEvent(_captured, window));
+        stage->cascadeEvent(FPSEvent(_captured, &stage->window));
         return false;
       }
       return false;

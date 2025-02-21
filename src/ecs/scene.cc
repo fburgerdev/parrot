@@ -29,4 +29,16 @@ namespace Parrot {
     LOG_ECS_TRACE("update scene '{}'", name);
     root.update(delta_time);
   }
+  // resolveEvent
+  void Scene::resolveEvent(const Event& e) {
+    auto entities = Stack<Entity*>({ &root });
+    while (!entities.empty()) {
+      auto entity = entities.top();
+      entities.pop();
+      entity->resolveEvent(e);
+      entity->foreachChild([&] (Entity& child) {
+        entities.push(&child);
+      });
+    }
+  }
 }

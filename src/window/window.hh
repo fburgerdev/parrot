@@ -37,14 +37,6 @@ namespace Parrot {
     // getCursorCoords
     Vec2<> getCursorCoords() const;
 
-    // foreachChild (impl. Scriptable)
-    virtual void foreachChild(
-      Func<void(Scriptable&)> func
-    ) override;
-    virtual void foreachChild(
-      Func<void(const Scriptable&)> func
-    ) const override;
-
     // bind
     void bind();
     // unbind
@@ -54,6 +46,14 @@ namespace Parrot {
     List<WindowEvent> pollEvents();
     // swapBuffers
     void swapBuffers();
+
+    // foreachChild (impl. Scriptable)
+    virtual void foreachChild(
+      Func<void(Scriptable&)> func
+    ) override;
+    virtual void foreachChild(
+      Func<void(const Scriptable&)> func
+    ) const override;
   private:
     string _title;
     uint _width = 0, _height = 0;

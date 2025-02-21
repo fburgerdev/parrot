@@ -3,10 +3,10 @@
   "stage": {
     "window": {
       "title": "Pirate Bay",
-      "size": [ 1080, 720 ],
-      "scripts": [ "FPS" ]
+      "size": [ 1080, 720 ]
     },
-    "scene": "scenes/main.scn.json"
+    "scene": "scenes/main.scn.json",
+    "scripts": [ "FPS" ]
   },
   "loading_policy": "lazy",
   "unloading_policy": "unused"

@@ -33,13 +33,6 @@ namespace Parrot {
     virtual void onUpdate(float32 delta_time);
     // resolveEvent
     virtual bool resolveEvent(const Event& e);
-    // :: capture
-    virtual bool resolveEventCapture(const Event& e);
-    // :: bubble
-    virtual bool resolveEventBubble(const Event& e);
-    // :: cascade
-    virtual bool resolveEventCascade(const Event& e);
-
     // raiseEvent
     virtual void raiseEvent(const Event& e) = 0;
 
@@ -81,15 +74,10 @@ namespace Parrot {
     void update(float32 delta_time);
     // raiseEvent
     void raiseEvent(const Event& e);
-
+    // cascadeEvent
+    void cascadeEvent(const Event& e);
     // resolveEvent
     bool resolveEvent(const Event& e);
-    // :: capture
-    bool resolveEventCapture(const Event& e);
-    // :: bubble
-    bool resolveEventBubble(const Event& e);
-    // :: cascade
-    bool resolveEventCascade(const Event& e);
 
     // getScript
     template<class T> requires std::is_base_of_v<Script, T>
@@ -127,10 +115,6 @@ namespace Parrot {
     // removeAllScripts
     void removeAllScripts();
   private:
-    bool captureEvent(const Event& e);
-    bool bubbleEvent(const Event& e);
-    bool cascadeEvent(const Event& e);
-
     Scriptable* _parent = nullptr;
     HashMap<usize, UniquePtr<Script>> _scripts;
   };

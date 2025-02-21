@@ -1,5 +1,4 @@
 #pragma once
-#include "default_scriptable.hh"
 #include "stage.hh"
 #include "asset/asset_manager.hh"
 #include "utils/stopwatch.hh"
@@ -32,6 +31,5 @@ namespace Parrot {
     string _name;
     Stage* _main_stage = nullptr;
     AssetManager _asset_manager;
-    DefaultScriptable _default_scriptable;
   };
 }

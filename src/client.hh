@@ -61,24 +61,24 @@ namespace Parrot {
       scene = reinterpret_cast<Scene*>(owner);
     }
   };
-  // WindowScript
-  class WindowScript : public Script {
+  // StageScript
+  class StageScript : public Script {
   public:
     // (constructor)
-    WindowScript(Window& window)
-      : window(&window) {}
+    StageScript(Stage& stage)
+      : stage(&stage) {}
 
     // raiseEvent
     virtual void raiseEvent(const Event& e) override {
-      window->raiseEvent(e);
+      stage->raiseEvent(e);
     }
 
-    // Window
-    Window* window;
+    // Stage
+    Stage* stage;
   private:
     // setScriptOwner
     virtual void setScriptOwner(Scriptable* owner) {
-      window = reinterpret_cast<Window*>(owner);
+      stage = reinterpret_cast<Stage*>(owner);
     }
   };
   // AppScript

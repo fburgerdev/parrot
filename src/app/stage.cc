@@ -52,6 +52,10 @@ namespace Parrot {
         Renderer(_gpu_context)
       );
     }
+    for (const string& script_name : stage_config.scripts) {
+      auto& [id, factory] = g_registry<Script, Stage&>.at(script_name);
+      addScript(id, factory(*this));
+    }
   }
   // update
   void Stage::update(float32 delta_time) {

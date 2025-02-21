@@ -21,18 +21,6 @@ namespace Parrot {
   bool Script::resolveEvent([[maybe_unused]] const Event& e) {
     return false;
   }
-  // :: capture
-  bool Script::resolveEventCapture([[maybe_unused]] const Event& e) {
-    return false;
-  }
-  // :: bubble
-  bool Script::resolveEventBubble([[maybe_unused]] const Event& e) {
-    return false;
-  }
-  // :: cascade
-  bool Script::resolveEventCascade([[maybe_unused]] const Event& e) {
-    return false;
-  }
 
   //* Scriptable
   // (constructor)
@@ -79,7 +67,16 @@ namespace Parrot {
   }
   // raiseEvent
   void Scriptable::raiseEvent(const Event& e) {
-    captureEvent(e) || bubbleEvent(e) || cascadeEvent(e);
+    if (!resolveEvent(e) && _parent) {
+      _parent->raiseEvent(e);
+    }
+  }
+  // cascadeEvent
+  void Scriptable::cascadeEvent(const Event& e) {
+    foreachChild([&](Scriptable& child) {
+      child.resolveEvent(e);
+      child.cascadeEvent(e);
+    });
   }
 
   // resolveEvent
@@ -88,52 +85,6 @@ namespace Parrot {
     for (auto& [id, script] : _scripts) {
       resolved |= script->resolveEvent(e);
     }
-    return resolved;
-  }
-  // :: capture
-  bool Scriptable::resolveEventCapture(const Event& e) {
-    bool resolved = false;
-    for (auto& [id, script] : _scripts) {
-      resolved |= script->resolveEventCapture(e) | script->resolveEvent(e);
-    }
-    return resolved;
-  }
-  // :: bubble
-  bool Scriptable::resolveEventBubble(const Event& e) {
-    bool resolved = false;
-    for (auto& [id, script] : _scripts) {
-      resolved |= script->resolveEventBubble(e) | script->resolveEvent(e);
-    }
-    return resolved;
-  }
-  // :: cascade
-  bool Scriptable::resolveEventCascade(const Event& e) {
-    bool resolved = false;
-    for (auto& [id, script] : _scripts) {
-      resolved |= script->resolveEventCascade(e) | script->resolveEvent(e);
-    }
-    return resolved;
-  }
-
-  // captureEvent
-  bool Scriptable::captureEvent(const Event& e) {
-    if (_parent == nullptr) {
-      return resolveEventCapture(e);
-    }
-    return _parent->captureEvent(e) || resolveEventCapture(e);
-  }
-  // bubbleEvent
-  bool Scriptable::bubbleEvent(const Event& e) {
-    return resolveEventBubble(e) || (
-      _parent ? _parent->bubbleEvent(e) : false
-    );
-  }
-  // cascadeEvent
-  bool Scriptable::cascadeEvent(const Event& e) {
-    bool resolved = true;
-    foreachChild([&](Scriptable& child) {
-      resolved |= child.cascadeEvent(e);
-    });
     return resolved;
   }
 }

@@ -63,18 +63,6 @@ namespace Parrot {
     return _physical.getCursorCoords();
   }
 
-  // foreachChild (impl. Scriptable)
-  void Window::foreachChild(
-    [[maybe_unused]] Func<void(Scriptable&)> func
-  ) {
-    // do nothing
-  }
-  void Window::foreachChild(
-    [[maybe_unused]] Func<void(const Scriptable&)> func
-  ) const {
-    // do nothing
-  }
-
   // bind
   void Window::bind() {
     _physical.bind();
@@ -95,5 +83,17 @@ namespace Parrot {
   // swapBuffers
   void Window::swapBuffers() {
     _physical.swapBuffers();
+  }
+
+  // foreachChild (impl. Scriptable)
+  void Window::foreachChild(
+    [[maybe_unused]] Func<void(Scriptable&)> func
+  ) {
+    // do nothing
+  }
+  void Window::foreachChild(
+    [[maybe_unused]] Func<void(const Scriptable&)> func
+  ) const {
+    // do nothing
   }
 }

@@ -6,8 +6,7 @@
 
 namespace Parrot {
   // (constructor)
-  App::App(const stdf::path& app_path)
-    : Scriptable(&_default_scriptable), _default_scriptable(*this) {
+  App::App(const stdf::path& app_path) {
     AssetPath asset_path(app_path);
     AppConfig raw_config = AppConfig(asset_path);
     asset_path.debug_root = raw_config.asset_dir;
@@ -58,7 +57,16 @@ namespace Parrot {
         stage.window.swapBuffers();
         for (auto& e : stage.window.pollEvents()) {
           LOG_WINDOW_TRACE("raising event: {}", e);
-          stage.window.raiseEvent(e);
+          stage.cascadeEvent(e);
+          if (!stage.resolveEvent(e)) {
+            if (auto* wcr = e.getWindowCloseRequest()) {
+              LOG_APP_DEBUG(
+                "unresolved window-close-request, closing window '{}'",
+                stage.window.getTitle()
+              );
+              stage.window.close();
+            }
+          }
         }
         // timeout
         if (timeout && timeout < total_watch.elapsed()) {

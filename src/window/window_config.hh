@@ -59,7 +59,7 @@ namespace Parrot {
       }
     }
 
-    // title, width, height, cursor, scripts
+    // title, width, height, cursor, /* scripts */
     string title = "Untitled Window";
     uint width = 1080, height = 720;
     CursorState cursor = CursorState::NORMAL;

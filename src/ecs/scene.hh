@@ -24,6 +24,8 @@ namespace Parrot {
 
     // update
     void update(float32 delta_time);
+    // resolveEvent
+    void resolveEvent(const Event& e);
 
     // queryEntities
     template<class T>
