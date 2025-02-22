@@ -13,7 +13,7 @@ namespace Parrot {
     proj_mat.at(0, 0) = tan_fov;
     proj_mat.at(1, 1) = tan_fov * aspect;
 #if 0
-    // clip z to [0, 1] for future graphics apis
+    // clip z to [0, 1] for future graphics API's
     proj_mat.at(2, 2) = z_range.y / (z_range.y - z_range.x);
     proj_mat.at(2, 3) = -z_range.x * z_range.y / (z_range.y - z_range.x);
 #endif
@@ -33,7 +33,7 @@ namespace Parrot {
     proj_mat.at(0, 0) = 1.0F / scale;
     proj_mat.at(1, 1) = aspect / scale;
 #if 0
-    // clip z to [0, 1] for future graphics apis
+    // clip z to [0, 1] for future graphics API's
     proj_mat.at(2, 2) = 1 / (z_range.y - z_range.x);
     proj_mat.at(2, 3) = -z_range.x / (z_range.y - z_range.x);
 #endif

@@ -1,6 +1,6 @@
 #pragma once
-#include "uuid.hh"
 #include "asset_path.hh"
+#include "utils/uuid.hh"
 
 namespace Parrot {
   // Asset

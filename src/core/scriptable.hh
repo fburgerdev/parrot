@@ -51,6 +51,9 @@ namespace Parrot {
   usize getScriptID() {
     return typeid(T).hash_code();
   }
+  // ScriptType
+  template<class T>
+  concept ScriptType = std::is_base_of_v<Script, T>;
 
   // Scriptable
   class Scriptable {
@@ -80,13 +83,13 @@ namespace Parrot {
     bool resolveEvent(const Event& e);
 
     // getScript
-    template<class T> requires std::is_base_of_v<Script, T>
+    template<ScriptType T>
     T& getScript() {
       auto it = _scripts.find(getScriptID<T>());
       // TODO: assert(it != _scripts.end())
       return reinterpret_cast<T&>(*it->second);
     }
-    template<class T> requires std::is_base_of_v<Script, T>
+    template<ScriptType T>
     const T& getScript() const {
       auto it = _scripts.find(getScriptID<T>());
       // TODO: assert(it != _scripts.end())
@@ -94,10 +97,11 @@ namespace Parrot {
     }
     // addScript
     void addScript(usize uuid, UniquePtr<Script>&& script);
-    template<class T, class... Args> requires std::is_base_of_v<Script, T>
+    template<ScriptType T, class... Args>
     T& addScript(Args&&... args) {
       auto result = _scripts.emplace(
-        getScriptID<T>(), std::make_unique<T>(std::forward<Args>(args)...)
+        getScriptID<T>(),
+        std::make_unique<T>(std::forward<Args>(args)...)
       );
       auto& script = result.first->second;
       // TODO: assert(result.second)
@@ -105,7 +109,7 @@ namespace Parrot {
       return reinterpret_cast<T&>(*script);
     }
     // removeScript
-    template<class T> requires std::is_base_of_v<Script, T>
+    template<ScriptType T>
     void removeScript() {
       auto it = _scripts.find(getScriptID<T>());
       // TODO: assert(it != _scripts.end())
@@ -119,7 +123,7 @@ namespace Parrot {
     HashMap<usize, UniquePtr<Script>> _scripts;
   };
   // makeSingleScriptable
-  template<class T, class... Args> requires std::is_base_of_v<Script, T>
+  template<ScriptType T, class... Args>
   Scriptable makeSingleScriptable(Args&&... args) {
     Scriptable out;
     out.addScript<T>(std::forward<Args>(args)...);

@@ -4,7 +4,7 @@
 
 namespace Parrot {
   // Scene
-  class Scene : public UUIDObject, public Scriptable {
+  class Scene : public Scriptable {
   public:
     // (constructor)
     Scene(const SceneConfig& config, Scriptable* parent, AssetAPI& asset_api);
@@ -14,18 +14,8 @@ namespace Parrot {
     // (assignment)
     Scene& operator=(Scene&&) = default;
 
-    // foreachChild (scriptable)
-    virtual void foreachChild(
-      Func<void(Scriptable&)> func
-    ) override;
-    virtual void foreachChild(
-      Func<void(const Scriptable&)> func
-    ) const override;
-
     // update
     void update(float32 delta_time);
-    // resolveEvent
-    void resolveEvent(const Event& e);
 
     // queryEntities
     template<class T>
@@ -44,6 +34,14 @@ namespace Parrot {
       }
       return found;
     }
+
+    // foreachChild (impl.Scriptable)
+    virtual void foreachChild(
+      Func<void(Scriptable&)> func
+    ) override;
+    virtual void foreachChild(
+      Func<void(const Scriptable&)> func
+    ) const override;
 
     // name, root
     string name;

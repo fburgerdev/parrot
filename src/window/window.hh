@@ -1,5 +1,4 @@
 #pragma once
-#include "core/uuid.hh"
 #include "window_config.hh"
 #include "window_event.hh"
 
@@ -12,7 +11,7 @@ namespace Parrot {
 
 namespace Parrot {
   // Window
-  class Window : public UUIDObject, public Scriptable {
+  class Window : public Scriptable {
   public:
     // (constructor)
     Window(const WindowConfig& config, Scriptable* parent = nullptr);

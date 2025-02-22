@@ -76,7 +76,6 @@ namespace Parrot {
     for (auto& [scene, renderer] : scene_layers) {
       func(scene);
     }
-
   }
   void Stage::foreachChild(Func<void(const Scriptable&)> func) const {
     func(window);
@@ -84,5 +83,4 @@ namespace Parrot {
       func(scene);
     }
   }
-
 }

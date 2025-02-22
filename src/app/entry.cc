@@ -23,25 +23,25 @@ static std::string s_debug_foot =
 "========================================================";
 
 namespace Parrot {
-    // setup (defined in client-app)
-    stdf::path setup();
+  // setup (defined in client-app)
+  stdf::path setup();
 
-    // (static) launch
-    static void launch() {
-        engine_logger.setLevel("app", LogLevel::DEBUG);
-        engine_logger.setLevel("core", LogLevel::DEBUG);
-        engine_logger.setLevel("asset", LogLevel::DEBUG);
-        engine_logger.setLevel("ecs", LogLevel::DEBUG);
-        engine_logger.setLevel("graphics", LogLevel::DEBUG);
-        engine_logger.setLevel("math", LogLevel::DEBUG);
-        engine_logger.setLevel("window", LogLevel::DEBUG);
+  // (static) launch
+  static void launch() {
+    engine_logger.setLevel("app", LogLevel::DEBUG);
+    engine_logger.setLevel("core", LogLevel::DEBUG);
+    engine_logger.setLevel("asset", LogLevel::DEBUG);
+    engine_logger.setLevel("ecs", LogLevel::DEBUG);
+    engine_logger.setLevel("graphics", LogLevel::DEBUG);
+    engine_logger.setLevel("math", LogLevel::DEBUG);
+    engine_logger.setLevel("window", LogLevel::DEBUG);
 
-        cout << s_info << endl;
-        cout << s_debug_head << endl;
-        App app(setup());
-        app.run();
-        cout << s_debug_foot << endl;
-    }
+    cout << s_info << endl;
+    cout << s_debug_head << endl;
+    App app(setup());
+    app.run();
+    cout << s_debug_foot << endl;
+  }
 }
 
 // main

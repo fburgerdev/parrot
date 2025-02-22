@@ -39,6 +39,7 @@ namespace Parrot {
     ) : Asset(asset_path) {
       loadFromJSON(json);
     }
+
     // loadFromJSON
     template<JsonType JSON>
       void loadFromJSON(const JSON& json) {

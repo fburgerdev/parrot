@@ -15,30 +15,18 @@ namespace Parrot {
   Scene::~Scene() {
     Scriptable::removeAllScripts();
   }
-
-  // foreachChild (scriptable)
-  void Scene::foreachChild(Func<void(Scriptable&)> func) {
-    func(root);
-  }
-  void Scene::foreachChild(Func<void(const Scriptable&)> func) const {
-    func(root);
-  }
   
   // update
   void Scene::update(float32 delta_time) {
     LOG_ECS_TRACE("update scene '{}'", name);
     root.update(delta_time);
   }
-  // resolveEvent
-  void Scene::resolveEvent(const Event& e) {
-    auto entities = Stack<Entity*>({ &root });
-    while (!entities.empty()) {
-      auto entity = entities.top();
-      entities.pop();
-      entity->resolveEvent(e);
-      entity->foreachChild([&] (Entity& child) {
-        entities.push(&child);
-      });
-    }
+
+  // foreachChild (impl. Scriptable)
+  void Scene::foreachChild(Func<void(Scriptable&)> func) {
+    func(root);
+  }
+  void Scene::foreachChild(Func<void(const Scriptable&)> func) const {
+    func(root);
   }
 }

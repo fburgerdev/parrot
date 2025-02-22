@@ -1,5 +1,5 @@
 #pragma once
-#include "uuid.hh"
+#include "utils/uuid.hh"
 
 namespace Parrot {
   // JsonType
