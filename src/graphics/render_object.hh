@@ -31,9 +31,9 @@ namespace Parrot {
     }
 
     // model, material, is_opaque
-    AssetHandle<Model> model;
-    AssetHandle<Material> material;
-    bool is_opaque = true;
+    AssetHandle<Model> model; /* PARROT_API */
+    AssetHandle<Material> material; /* PARROT_API */
+    bool is_opaque = true; /* PARROT_API */
   };
   // <<
   ostream& operator<<(ostream& stream, const RenderObject& render_object);

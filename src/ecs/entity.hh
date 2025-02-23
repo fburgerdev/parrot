@@ -33,43 +33,43 @@ namespace Parrot {
     Entity& operator=(Entity&&) = default;
 
     // getTag
-    const string& getTag() const;
+    const string& getTag() const; /* PARROT_API */
     // findByTag
     Set<Entity*> findByTag(
       strview tag, Set<Entity*>&& found = {}
-    );
+    ); /* PARROT_API */
     Set<const Entity*> findByTag(
       strview tag, Set<const Entity*>&& found = {}
-    ) const;
+    ) const; /* PARROT_API */
 
     // children
     // :: create
-    Entity& createChild(bool is_visible = false);
+    Entity& createChild(bool is_visible = false); /* PARROT_API */
     // :: destroy
-    bool destroyChild(UUID uuid);
-    bool destroyChild(strview tag);
+    bool destroyChild(UUID uuid); /* PARROT_API */
+    bool destroyChild(strview tag); /* PARROT_API */
     // :: foreach
-    void foreachChild(Func<void(Entity&)> func);
-    void foreachChild(Func<void(const Entity&)> func) const;
+    void foreachChild(Func<void(Entity&)> func); /* PARROT_API */
+    void foreachChild(Func<void(const Entity&)> func) const; /* PARROT_API */
 
     // component
     // :: has
     template<class T>
-    bool hasComponent() const {
+    bool hasComponent() const /* PARROT_API */ {
       return _components.contains(getComponentID<T>());
     }
     // :: get
     template<class T>
-    T& getComponent() {
+    T& getComponent() /* PARROT_API */ {
       return dynamic_cast<T&>(*_components.at(getComponentID<T>()));
     }
     template<class T>
-    const T& getComponent() const {
+    const T& getComponent() const /* PARROT_API */ {
       return dynamic_cast<const T&>(*_components.at(getComponentID<T>()));
     }
     // :: add
     template<class T, class... TArgs>
-    T& addComponent(TArgs&&... args) {
+    T& addComponent(TArgs&&... args) /* PARROT_API */ {
       _components.emplace(
         getComponentID<T>(),
         std::make_unique<T>(*this, std::forward<TArgs>(args)...)
@@ -78,7 +78,7 @@ namespace Parrot {
     }
     // :: remove
     template<class T>
-    void removeComponent() {
+    void removeComponent() /* PARROT_API */ {
       _components.erase(getComponentID<T>());
     }
 
@@ -94,7 +94,7 @@ namespace Parrot {
     ) const override;
 
     // transform
-    Transform<> transform;
+    Transform<> transform; /* PARROT_API */
   private:
     string _tag;
     Map<UUID, HierarchyNode<Entity>> _children;

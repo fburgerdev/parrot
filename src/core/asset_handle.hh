@@ -9,9 +9,11 @@ namespace Parrot {
   class AssetAPI {
   public:
     // addAsset
-    virtual UUID addAsset(SharedPtr<Asset>) = 0;
+    virtual UUID addAsset(SharedPtr<Asset> asset) = 0; /* PARROT_API */
     // lockAsset
-    virtual SharedPtr<Asset> lockAsset(const AssetKey&, AssetFactory) = 0;
+    virtual SharedPtr<Asset> lockAsset(
+      const AssetKey& key, AssetFactory factory
+    ) = 0; /* PARROT_API */
   };
   // AssetHandle
   template<class T>

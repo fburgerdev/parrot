@@ -6,29 +6,32 @@ namespace Parrot {
   // AmbientLight
   struct AmbientLight {
     // intensity, color
-    DefaultFloat intensity = 1;
-    Vec3<uint8> color = { 255, 255, 255 };
+    DefaultFloat intensity /* PARROT_API */ = 1;
+    Vec3<uint8> color /* PARROT_API */ = { 255, 255, 255 };
   };
   // DirectionalLight
   struct DirectionalLight {
     // direction, intensity, color
-    Vec3<DefaultFloat> direction = { 0, 0, 1 };
-    DefaultFloat intensity = 1;
-    Vec3<uint8> color = { 255, 255, 255 };
+    Vec3<DefaultFloat> direction /* PARROT_API */ = { 0, 0, 1 };
+    DefaultFloat intensity /* PARROT_API */ = 1;
+    Vec3<uint8> color /* PARROT_API */ = { 255, 255, 255 };
   };
   // PointLight
   struct PointLight {
     // position, range, intensity, color
-    Vec3<DefaultFloat> position = { 0, 0, 0 };
-    DefaultFloat range = 1, intensity = 1;
-    Vec3<uint8> color = { 255, 255, 255 };
+    Vec3<DefaultFloat> position /* PARROT_API */ = { 0, 0, 0 };
+    DefaultFloat range /* PARROT_API */ = 1;
+    DefaultFloat intensity /* PARROT_API */ = 1;
+    Vec3<uint8> color /* PARROT_API */ = { 255, 255, 255 };
   };
   // SpotLight
   struct SpotLight {
     // position, direction, angle, intensity, color
-    Vec3<DefaultFloat> position = { 0, 0, 0 }, direction = { 0, 0, 1 };
-    DefaultFloat angle = PI<> / 2, intensity = 1;
-    Vec3<uint8> color = { 255, 255, 255 };
+    Vec3<DefaultFloat> position /* PARROT_API */ = { 0, 0, 0 };
+    Vec3<DefaultFloat> direction /* PARROT_API */ = { 0, 0, 1 };
+    DefaultFloat angle /* PARROT_API */ = PI<> / 2;
+    DefaultFloat intensity /* PARROT_API */ = 1;
+    Vec3<uint8> color /* PARROT_API */ = { 255, 255, 255 };
   };
 
   // LightSource
@@ -151,7 +154,7 @@ namespace Parrot {
       DirectionalLight,
       PointLight,
       SpotLight
-    > value;
+    > value; /* PARROT_API */
   };
   // <<
   ostream& operator<<(ostream& stream, const AmbientLight& light);

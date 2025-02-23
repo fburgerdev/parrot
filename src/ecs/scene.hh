@@ -44,7 +44,7 @@ namespace Parrot {
     ) const override;
 
     // name, root
-    string name;
-    Entity root;
+    string name; /* PARROT_API */
+    Entity root; /* PARROT_API */
   };
 }
