@@ -7,7 +7,7 @@
 #### `getTitle`
 
 ```c++
-const string& Window::getTitle()
+const string& Window::getTitle();
 ```
 
 > Get the title of the physical window.
@@ -15,7 +15,7 @@ const string& Window::getTitle()
 #### `setIcon`
 
 ```c++
-void Window::setIcon(const uchar* bytes, uint width, uint height)
+void Window::setIcon(const uchar* bytes, uint width, uint height);
 ```
 
 > Set the window icon in both the titlebar and the tray.
@@ -25,7 +25,7 @@ void Window::setIcon(const uchar* bytes, uint width, uint height)
 #### `isOpen`
 
 ```c++
-bool Window::isOpen() const
+bool Window::isOpen() const;
 ```
 
 > Find out whether the window is marked as open.
@@ -37,7 +37,7 @@ bool Window::isOpen() const
 #### `close`
 
 ```c++
-void Window::close()
+void Window::close();
 ```
 
 > Mark the window as closed.
@@ -51,7 +51,7 @@ void Window::close()
 #### `setCursorState`
 
 ```c++
-void Window::setCursorState(CursorState state)
+void Window::setCursorState(CursorState state);
 ```
 
 > Set the cursor state of for the window.
@@ -65,7 +65,7 @@ void Window::setCursorState(CursorState state)
 #### `getCursorCoords`
 
 ```c++
-Vec2<> Window::getCursorCoords() const
+Vec2<> Window::getCursorCoords() const;
 ```
 
 > Get the cursor coordinates relative to the windows top-left corner.

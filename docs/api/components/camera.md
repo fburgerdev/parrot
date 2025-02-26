@@ -5,7 +5,7 @@
 ### `value`
 
 ```c++
-Variant<PerspectiveCamera, OrthographicCamera> Camera::value
+Variant<PerspectiveCamera, OrthographicCamera> Camera::value;
 ```
 
 > The type-specific data of the camera.
@@ -15,7 +15,7 @@ Variant<PerspectiveCamera, OrthographicCamera> Camera::value
 #### `fov`
 
 ```c++
-float32 PerspectiveCamera::fov
+float32 PerspectiveCamera::fov;
 ```
 
 > The field-of-view of the perspective-camera.
@@ -25,7 +25,7 @@ float32 PerspectiveCamera::fov
 #### `z_range`
 
 ```c++
-Vec2<float32> PerspectiveCamera::z_range
+Vec2<float32> PerspectiveCamera::z_range;
 ```
 
 > The depth range `{min, max}` where objects are captured by the camera.
@@ -37,7 +37,7 @@ Vec2<float32> PerspectiveCamera::z_range
 #### `scale`
 
 ```c++
-float32 OrthographicCamera::scale
+float32 OrthographicCamera::scale;
 ```
 
 > The scale of the orthographic-camera.
@@ -50,7 +50,7 @@ smaller they appear.
 #### `z_range`
 
 ```c++
-Vec2<float32> OrthographicCamera::z_range
+Vec2<float32> OrthographicCamera::z_range;
 ```
 
 > The depth range `{min, max}` where objects are captured by the camera.

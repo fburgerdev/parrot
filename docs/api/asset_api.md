@@ -5,7 +5,7 @@
 ### `addAsset`
 
 ```c++
-UUID AssetAPI::addAsset(SharedPtr<Asset> asset)
+UUID AssetAPI::addAsset(SharedPtr<Asset> asset);
 ```
 
 > Add an asset to the asset-manager.
@@ -15,7 +15,7 @@ UUID AssetAPI::addAsset(SharedPtr<Asset> asset)
 ### `lockAsset`
 
 ```c++
-SharedPtr<Asset> AssetAPI::lockAsset(const AssetKey& key, AssetFactory factory)
+SharedPtr<Asset> AssetAPI::lockAsset(const AssetKey& key, AssetFactory factory);
 ```
 
 > Lock an asset for usage.

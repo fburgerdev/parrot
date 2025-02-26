@@ -5,7 +5,7 @@
 ### Window
 
 ```c++
-Window Stage::window
+Window Stage::window;
 ```
 
 > The window the stage renders all scenes to.
@@ -13,7 +13,7 @@ Window Stage::window
 ### Root
 
 ```c++
-List<Pair<Scene, Renderer>>::scene_layers
+List<Pair<Scene, Renderer>>::scene_layers;
 ```
 
 > A stack of scene-renderer pairs that are rendered to the window one after another.

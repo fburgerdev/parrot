@@ -5,7 +5,7 @@
 ### `model`
 
 ```c++
-AssetHandle<Model> RenderObject::model
+AssetHandle<Model> RenderObject::model;
 ```
 
 > The handle to the model used to render this render-object.
@@ -16,7 +16,7 @@ AssetHandle<Model> RenderObject::model
 ### `material`
 
 ```c++
-AssetHandle<Material> RenderObject::material
+AssetHandle<Material> RenderObject::material;
 ```
 
 > The handle to the material used to render this render-object.
@@ -27,7 +27,7 @@ AssetHandle<Material> RenderObject::material
 ### `is_opaque`
 
 ```c++
-bool RenderObject::is_opaque
+bool RenderObject::is_opaque;
 ```
 
 > Decides whether the render-object is put in the opaque or translucent render batch.

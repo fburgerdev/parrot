@@ -5,7 +5,7 @@
 ### Name
 
 ```c++
-string Scene::name
+string Scene::name;
 ```
 
 > The name of the scene.
@@ -13,7 +13,7 @@ string Scene::name
 ### Root
 
 ```c++
-Entity Scene::root
+Entity Scene::root;
 ```
 
 > The top-level entity of the scene.

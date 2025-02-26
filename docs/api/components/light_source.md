@@ -10,7 +10,7 @@ Variant<
   DirectionalLight,
   PointLight,
   SpotLight
-> LightSource::value
+> LightSource::value;
 ```
 
 > The type-specific data of the light-source.
@@ -20,7 +20,7 @@ Variant<
 #### `intensity`
 
 ```c++
-DefaultFloat AmbientLight::intensity
+DefaultFloat AmbientLight::intensity;
 ```
 
 > The light intensity of the ambient-light.
@@ -30,7 +30,7 @@ DefaultFloat AmbientLight::intensity
 #### `color`
 
 ```c++
-Vec3<uint8> AmbientLight::color
+Vec3<uint8> AmbientLight::color;
 ```
 
 > The emitting color of the ambient-light.
@@ -42,7 +42,7 @@ Vec3<uint8> AmbientLight::color
 #### `direction`
 
 ```c++
-Vec3<> DirectionalLight::direction
+Vec3<> DirectionalLight::direction;
 ```
 
 > The direction the directional-light is pointing to.
@@ -53,7 +53,7 @@ Vec3<> DirectionalLight::direction
 #### `intensity`
 
 ```c++
-DefaultFloat DirectionalLight::intensity
+DefaultFloat DirectionalLight::intensity;
 ```
 
 > The light intensity of the directional-light.
@@ -63,7 +63,7 @@ DefaultFloat DirectionalLight::intensity
 #### `color`
 
 ```c++
-Vec3<uint8> DirectionalLight::color
+Vec3<uint8> DirectionalLight::color;
 ```
 
 > The emitting color of the directional-light.
@@ -75,7 +75,7 @@ Vec3<uint8> DirectionalLight::color
 #### `position`
 
 ```c++
-Vec3<> PointLight::position
+Vec3<> PointLight::position;
 ```
 
 > The position where the point-light is located.
@@ -83,7 +83,7 @@ Vec3<> PointLight::position
 #### `range`
 
 ```c++
-DefaultFloat PointLight::range
+DefaultFloat PointLight::range;
 ```
 
 > The maximum distance the point-light illuminates objects.
@@ -91,7 +91,7 @@ DefaultFloat PointLight::range
 #### `intensity`
 
 ```c++
-DefaultFloat PointLight::intensity
+DefaultFloat PointLight::intensity;
 ```
 
 > The light intensity of the directional-light.
@@ -101,7 +101,7 @@ DefaultFloat PointLight::intensity
 #### `color`
 
 ```c++
-Vec3<uint8> PointLight::color
+Vec3<uint8> PointLight::color;
 ```
 
 > The emitting color of the point-light.
@@ -113,7 +113,7 @@ Vec3<uint8> PointLight::color
 #### `position`
 
 ```c++
-Vec3<> SpotLight::position
+Vec3<> SpotLight::position;
 ```
 
 > The position where the spot-light is located.
@@ -121,7 +121,7 @@ Vec3<> SpotLight::position
 #### `direction`
 
 ```c++
-Vec3<> SpotLight::direction
+Vec3<> SpotLight::direction;
 ```
 
 > The direction the spot-light is pointing to.
@@ -132,7 +132,7 @@ Vec3<> SpotLight::direction
 #### `angle`
 
 ```c++
-DefaultFloat SpotLight::angle
+DefaultFloat SpotLight::angle;
 ```
 
 > The maximum angle the spot-light emits light based on `SpotLight::direction`.
@@ -142,7 +142,7 @@ DefaultFloat SpotLight::angle
 #### `intensity`
 
 ```c++
-DefaultFloat SpotLight::intensity
+DefaultFloat SpotLight::intensity;
 ```
 
 > The light intensity of the spot-light.
@@ -152,7 +152,7 @@ DefaultFloat SpotLight::intensity
 #### `color`
 
 ```c++
-Vec3<uint8> SpotLight::color
+Vec3<uint8> SpotLight::color;
 ```
 
 > The emitting color of the spot-light.

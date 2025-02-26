@@ -8,5 +8,5 @@ you can use events.
 ### `raiseEvent`
 
 ```c++
-void Script::raiseEvent(const Event& e)
+void Script::raiseEvent(const Event& e);
 ```
