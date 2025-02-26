@@ -13,6 +13,13 @@ namespace Parrot {
   constexpr float32 PI<float32> = 3.1415926F;
   template<>
   constexpr float64 PI<float64> = 3.1415926;
+  // :: SQRT_2
+  template<class T = DefaultFloat>
+  constexpr T SQRT_2;
+  template<>
+  constexpr float32 SQRT_2<float32> = 1.4142135F;
+  template<>
+  constexpr float64 SQRT_2<float64> = 1.4142135;
 
   // clamp
   template<class T = DefaultFloat>

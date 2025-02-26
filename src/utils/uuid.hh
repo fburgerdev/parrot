@@ -19,6 +19,7 @@ namespace Parrot {
     // (assignment)
     UUIDObject& operator=(const UUIDObject& other);
     UUIDObject& operator=(UUIDObject&& other) noexcept;
+
     // getUUID
     UUID getUUID() const;
   private:
