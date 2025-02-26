@@ -20,3 +20,7 @@ title: Home
 | [Camera](api/components/camera.md) | Defines the viewpoint and projection for rendering the scene. |
 | [RenderObject](api/components/render_object.md) | Represents a visual object in the scene with a mesh and material data. |
 | [LightSource](api/components/light_source.md) | Emits light in the scene, affecting how objects are shaded and rendered. |
+
+| ❓ Other |
+| - |
+| [Math](api/math.md) | Various math utilities including vectors. |

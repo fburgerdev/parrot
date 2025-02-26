@@ -1,8 +1,6 @@
-# RenderObject
+# Render Object
 
-## API
-
-### `model`
+## Model
 
 ```c++
 AssetHandle<Model> RenderObject::model;
@@ -13,7 +11,7 @@ AssetHandle<Model> RenderObject::model;
 > ![NOTE]
 > Values in materials defined within this model are preferred over values in `RenderObject::material` on render. 
 
-### `material`
+## Material
 
 ```c++
 AssetHandle<Material> RenderObject::material;

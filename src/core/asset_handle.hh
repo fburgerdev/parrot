@@ -13,7 +13,7 @@ namespace Parrot {
     // lockAsset
     virtual SharedPtr<Asset> lockAsset(
       const AssetKey& key, AssetFactory factory
-    ) = 0; /* PARROT_API */
+    ) = 0;
   };
   // AssetHandle
   template<class T>

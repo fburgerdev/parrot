@@ -11,10 +11,10 @@ namespace Parrot {
   struct AssetPath {
     // (constructor)
     AssetPath() = default;
-    AssetPath(const stdf::path& file)
+    AssetPath(const stdf::path& file) /* ASSET_API */
       : file(file) {}
-    AssetPath(const stdf::path& file, strview sub);
-    AssetPath(strview path);
+    AssetPath(const stdf::path& file, strview sub) /* ASSET_API */;
+    AssetPath(strview path) /* ASSET_API */;
 
     // splitSubpath
     List<string> splitSubpath() const;
@@ -45,5 +45,5 @@ namespace Parrot {
   // <<
   ostream& operator<<(ostream& stream, const AssetPath& asset_path);
   // AssetKey
-  using AssetKey = Variant<UUID, AssetPath>;
+  using AssetKey = Variant<UUID, AssetPath>; /* ASSET_API */
 }

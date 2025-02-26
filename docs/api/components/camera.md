@@ -1,6 +1,6 @@
 # Camera
 
-## API
+## Data
 
 ### `value`
 
@@ -10,9 +10,9 @@ Variant<PerspectiveCamera, OrthographicCamera> Camera::value;
 
 > The type-specific data of the camera.
 
-### PerspectiveCamera
+## PerspectiveCamera
 
-#### `fov`
+### `fov`
 
 ```c++
 float32 PerspectiveCamera::fov;
@@ -22,7 +22,7 @@ float32 PerspectiveCamera::fov;
 
 *Default value* is `pi/2`, i.e. 90deg.
 
-#### `z_range`
+### `z_range`
 
 ```c++
 Vec2<float32> PerspectiveCamera::z_range;
@@ -32,9 +32,9 @@ Vec2<float32> PerspectiveCamera::z_range;
 
 *Default value* is `{0.01, 10'000.0}`.
 
-### OrthographicCamera
+## OrthographicCamera
 
-#### `scale`
+### `scale`
 
 ```c++
 float32 OrthographicCamera::scale;
@@ -47,7 +47,7 @@ smaller they appear.
 
 *Default value* is `1`.
 
-#### `z_range`
+### `z_range`
 
 ```c++
 Vec2<float32> OrthographicCamera::z_range;

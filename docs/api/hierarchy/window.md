@@ -1,10 +1,8 @@
 # Window
 
-## API
-
-### Titlebar
+## Titlebar
     
-#### `getTitle`
+### `getTitle`
 
 ```c++
 const string& Window::getTitle();
@@ -12,7 +10,7 @@ const string& Window::getTitle();
 
 > Get the title of the physical window.
 
-#### `setIcon`
+### `setIcon`
 
 ```c++
 void Window::setIcon(const uchar* bytes, uint width, uint height);
@@ -20,9 +18,9 @@ void Window::setIcon(const uchar* bytes, uint width, uint height);
 
 > Set the window icon in both the titlebar and the tray.
 
-### Open / Close
+## Open / Close
 
-#### `isOpen`
+### `isOpen`
 
 ```c++
 bool Window::isOpen() const;
@@ -34,7 +32,7 @@ bool Window::isOpen() const;
 > This does not reflect the actual physical state of the window,
 > but whether one should proceed with the update loop or not.
 
-#### `close`
+### `close`
 
 ```c++
 void Window::close();
@@ -46,9 +44,9 @@ void Window::close();
 > This does not physically close the window,
 > but rather mark the window as closed so that the update loop stops in the next iteration.
 
-### Cursor
+## Cursor
 
-#### `setCursorState`
+### `setCursorState`
 
 ```c++
 void Window::setCursorState(CursorState state);
@@ -62,7 +60,7 @@ void Window::setCursorState(CursorState state);
 - `CAPTURED` - Cursor is hidden and at a fixed position, mouse movement events still occur.
 
 
-#### `getCursorCoords`
+### `getCursorCoords`
 
 ```c++
 Vec2<> Window::getCursorCoords() const;

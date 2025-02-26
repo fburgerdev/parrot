@@ -1,6 +1,6 @@
-# LightSource
+# Light Source
 
-## API
+## Data
 
 ### `value`
 
@@ -15,9 +15,9 @@ Variant<
 
 > The type-specific data of the light-source.
 
-### AmbientLight
+## AmbientLight
 
-#### `intensity`
+### `intensity`
 
 ```c++
 DefaultFloat AmbientLight::intensity;
@@ -27,7 +27,7 @@ DefaultFloat AmbientLight::intensity;
 
 *Default value* is `1`.
 
-#### `color`
+### `color`
 
 ```c++
 Vec3<uint8> AmbientLight::color;
@@ -37,9 +37,9 @@ Vec3<uint8> AmbientLight::color;
 
 *Default value* is `{255,255,255}`, i.e white.
 
-### DirectionalLight
+## DirectionalLight
 
-#### `direction`
+### `direction`
 
 ```c++
 Vec3<> DirectionalLight::direction;
@@ -50,7 +50,7 @@ Vec3<> DirectionalLight::direction;
 > [!IMPORTANT]
 > This vector is expected to be normalized.
 
-#### `intensity`
+### `intensity`
 
 ```c++
 DefaultFloat DirectionalLight::intensity;
@@ -60,7 +60,7 @@ DefaultFloat DirectionalLight::intensity;
 
 *Default value* is `1`.
 
-#### `color`
+### `color`
 
 ```c++
 Vec3<uint8> DirectionalLight::color;
@@ -70,9 +70,9 @@ Vec3<uint8> DirectionalLight::color;
 
 *Default value* is `{255,255,255}`, i.e white.
 
-### PointLight
+## PointLight
 
-#### `position`
+### `position`
 
 ```c++
 Vec3<> PointLight::position;
@@ -80,7 +80,7 @@ Vec3<> PointLight::position;
 
 > The position where the point-light is located.
 
-#### `range`
+### `range`
 
 ```c++
 DefaultFloat PointLight::range;
@@ -88,7 +88,7 @@ DefaultFloat PointLight::range;
 
 > The maximum distance the point-light illuminates objects.
 
-#### `intensity`
+### `intensity`
 
 ```c++
 DefaultFloat PointLight::intensity;
@@ -98,7 +98,7 @@ DefaultFloat PointLight::intensity;
 
 *Default value* is `1`.
 
-#### `color`
+### `color`
 
 ```c++
 Vec3<uint8> PointLight::color;
@@ -108,9 +108,9 @@ Vec3<uint8> PointLight::color;
 
 *Default value* is `{255,255,255}`, i.e white.
 
-### SpotLight
+## SpotLight
 
-#### `position`
+### `position`
 
 ```c++
 Vec3<> SpotLight::position;
@@ -118,7 +118,7 @@ Vec3<> SpotLight::position;
 
 > The position where the spot-light is located.
 
-#### `direction`
+### `direction`
 
 ```c++
 Vec3<> SpotLight::direction;
@@ -129,7 +129,7 @@ Vec3<> SpotLight::direction;
 > [!IMPORTANT]
 > This vector is expected to be normalized.
 
-#### `angle`
+### `angle`
 
 ```c++
 DefaultFloat SpotLight::angle;
@@ -139,7 +139,7 @@ DefaultFloat SpotLight::angle;
 
 *Default value* is `pi/2`, i.e. 90deg.
 
-#### `intensity`
+### `intensity`
 
 ```c++
 DefaultFloat SpotLight::intensity;
@@ -149,7 +149,7 @@ DefaultFloat SpotLight::intensity;
 
 *Default value* is `1`.
 
-#### `color`
+### `color`
 
 ```c++
 Vec3<uint8> SpotLight::color;

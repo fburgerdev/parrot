@@ -1,8 +1,6 @@
 # Scene
 
-## API
-
-### Name
+## Name
 
 ```c++
 string Scene::name;
@@ -10,7 +8,7 @@ string Scene::name;
 
 > The name of the scene.
 
-### Root
+## Root
 
 ```c++
 Entity Scene::root;
