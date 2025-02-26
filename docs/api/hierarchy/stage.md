@@ -4,7 +4,7 @@
 
 ### Window
 
-```cpp
+```c++
 Window Stage::window
 ```
 
@@ -12,7 +12,7 @@ Window Stage::window
 
 ### Root
 
-```cpp
+```c++
 List<Pair<Scene, Renderer>>::scene_layers
 ```
 

@@ -4,7 +4,7 @@
 
 ### `value`
 
-```cpp
+```c++
 Variant<PerspectiveCamera, OrthographicCamera> Camera::value
 ```
 
@@ -14,7 +14,7 @@ Variant<PerspectiveCamera, OrthographicCamera> Camera::value
 
 #### `fov`
 
-```cpp
+```c++
 float32 PerspectiveCamera::fov
 ```
 
@@ -24,7 +24,7 @@ float32 PerspectiveCamera::fov
 
 #### `z_range`
 
-```cpp
+```c++
 Vec2<float32> PerspectiveCamera::z_range
 ```
 
@@ -36,7 +36,7 @@ Vec2<float32> PerspectiveCamera::z_range
 
 #### `scale`
 
-```cpp
+```c++
 float32 OrthographicCamera::scale
 ```
 
@@ -49,7 +49,7 @@ smaller they appear.
 
 #### `z_range`
 
-```cpp
+```c++
 Vec2<float32> OrthographicCamera::z_range
 ```
 

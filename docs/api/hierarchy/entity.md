@@ -6,7 +6,7 @@
 
 #### `getTag`
 
-```cpp
+```c++
 const string& Entity::getTag() const
 ```
 
@@ -14,11 +14,11 @@ const string& Entity::getTag() const
 
 #### `findByTag`
 
-```cpp
+```c++
 Set<Entity*> Entity::findByTag(strview tag)
 ```
 
-```cpp
+```c++
 Set<const Entity*> Entity::findByTag(strview tag) const
 ```
 
@@ -28,7 +28,7 @@ Set<const Entity*> Entity::findByTag(strview tag) const
 
 #### `createChild`
 
-```cpp
+```c++
 Entity& Entity::createChild(bool is_visible = false)
 ```
 
@@ -39,7 +39,7 @@ Entity& Entity::createChild(bool is_visible = false)
 *Return* a reference to the created child entity.
 #### `destroyChild`
 
-```cpp
+```c++
 bool Entity::destroyChild(UUID uuid)
 ```
 
@@ -47,7 +47,7 @@ bool Entity::destroyChild(UUID uuid)
 
 *Return* whether such a child existed.
 
-```cpp
+```c++
 bool Entity::destroyChild(strview tag)
 ```
 
@@ -57,11 +57,11 @@ bool Entity::destroyChild(strview tag)
 
 #### `foreachChild`
 
-```cpp
+```c++
 void Entity::foreachChild(Func<void(Entity&)> func)
 ```
 
-```cpp
+```c++
 void Entity::foreachChild(Func<void(const Entity&)> func) const
 ```
 
@@ -71,7 +71,7 @@ void Entity::foreachChild(Func<void(const Entity&)> func) const
 
 #### `hasComponent`
 
-```cpp
+```c++
 template<class T>
 bool Entity::hasComponent() const
 ```
@@ -80,14 +80,14 @@ bool Entity::hasComponent() const
 
 #### `getComponent`
 
-```cpp
+```c++
 template<class T>
 T& Entity::getComponent()
 ```
 
-```cpp
+```c++
 template<class T>
-const T& Entity::getComponent() const
+const T& Entity::getComponent() const;
 ```
 
 > Get the component of the given type.
@@ -97,7 +97,7 @@ const T& Entity::getComponent() const
 
 #### `addComponent`
 
-```cpp
+```c++
 template<class T, class... TArgs>
 T& Entity::addComponent(TArgs&&... args)
 ```
@@ -111,7 +111,7 @@ T& Entity::addComponent(TArgs&&... args)
 
 #### `removeComponent`
 
-```cpp
+```c++
 template<class T>
 void Entity::removeComponent()
 ```
@@ -123,6 +123,6 @@ void Entity::removeComponent()
 
 ### Transform
 
-```cpp
+```c++
 Transform<> Entity::transform
 ```

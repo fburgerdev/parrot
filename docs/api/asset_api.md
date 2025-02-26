@@ -4,7 +4,7 @@
 
 ### `addAsset`
 
-```cpp
+```c++
 UUID AssetAPI::addAsset(SharedPtr<Asset> asset)
 ```
 
@@ -14,7 +14,7 @@ UUID AssetAPI::addAsset(SharedPtr<Asset> asset)
 
 ### `lockAsset`
 
-```cpp
+```c++
 SharedPtr<Asset> AssetAPI::lockAsset(const AssetKey& key, AssetFactory factory)
 ```
 

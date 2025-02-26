@@ -4,7 +4,7 @@
 
 ### `model`
 
-```cpp
+```c++
 AssetHandle<Model> RenderObject::model
 ```
 
@@ -15,7 +15,7 @@ AssetHandle<Model> RenderObject::model
 
 ### `material`
 
-```cpp
+```c++
 AssetHandle<Material> RenderObject::material
 ```
 
@@ -26,7 +26,7 @@ AssetHandle<Material> RenderObject::material
 
 ### `is_opaque`
 
-```cpp
+```c++
 bool RenderObject::is_opaque
 ```
 

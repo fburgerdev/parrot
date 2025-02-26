@@ -6,7 +6,7 @@
     
 #### `getTitle`
 
-```cpp
+```c++
 const string& Window::getTitle()
 ```
 
@@ -14,7 +14,7 @@ const string& Window::getTitle()
 
 #### `setIcon`
 
-```cpp
+```c++
 void Window::setIcon(const uchar* bytes, uint width, uint height)
 ```
 
@@ -24,7 +24,7 @@ void Window::setIcon(const uchar* bytes, uint width, uint height)
 
 #### `isOpen`
 
-```cpp
+```c++
 bool Window::isOpen() const
 ```
 
@@ -36,7 +36,7 @@ bool Window::isOpen() const
 
 #### `close`
 
-```cpp
+```c++
 void Window::close()
 ```
 
@@ -50,7 +50,7 @@ void Window::close()
 
 #### `setCursorState`
 
-```cpp
+```c++
 void Window::setCursorState(CursorState state)
 ```
 
@@ -64,7 +64,7 @@ void Window::setCursorState(CursorState state)
 
 #### `getCursorCoords`
 
-```cpp
+```c++
 Vec2<> Window::getCursorCoords() const
 ```
 

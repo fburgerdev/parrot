@@ -4,7 +4,7 @@
 
 ### `value`
 
-```cpp
+```c++
 Variant<
   AmbientLight,
   DirectionalLight,
@@ -19,7 +19,7 @@ Variant<
 
 #### `intensity`
 
-```cpp
+```c++
 DefaultFloat AmbientLight::intensity
 ```
 
@@ -29,7 +29,7 @@ DefaultFloat AmbientLight::intensity
 
 #### `color`
 
-```cpp
+```c++
 Vec3<uint8> AmbientLight::color
 ```
 
@@ -41,7 +41,7 @@ Vec3<uint8> AmbientLight::color
 
 #### `direction`
 
-```cpp
+```c++
 Vec3<> DirectionalLight::direction
 ```
 
@@ -52,7 +52,7 @@ Vec3<> DirectionalLight::direction
 
 #### `intensity`
 
-```cpp
+```c++
 DefaultFloat DirectionalLight::intensity
 ```
 
@@ -62,7 +62,7 @@ DefaultFloat DirectionalLight::intensity
 
 #### `color`
 
-```cpp
+```c++
 Vec3<uint8> DirectionalLight::color
 ```
 
@@ -74,7 +74,7 @@ Vec3<uint8> DirectionalLight::color
 
 #### `position`
 
-```cpp
+```c++
 Vec3<> PointLight::position
 ```
 
@@ -82,7 +82,7 @@ Vec3<> PointLight::position
 
 #### `range`
 
-```cpp
+```c++
 DefaultFloat PointLight::range
 ```
 
@@ -90,7 +90,7 @@ DefaultFloat PointLight::range
 
 #### `intensity`
 
-```cpp
+```c++
 DefaultFloat PointLight::intensity
 ```
 
@@ -100,7 +100,7 @@ DefaultFloat PointLight::intensity
 
 #### `color`
 
-```cpp
+```c++
 Vec3<uint8> PointLight::color
 ```
 
@@ -112,7 +112,7 @@ Vec3<uint8> PointLight::color
 
 #### `position`
 
-```cpp
+```c++
 Vec3<> SpotLight::position
 ```
 
@@ -120,7 +120,7 @@ Vec3<> SpotLight::position
 
 #### `direction`
 
-```cpp
+```c++
 Vec3<> SpotLight::direction
 ```
 
@@ -131,7 +131,7 @@ Vec3<> SpotLight::direction
 
 #### `angle`
 
-```cpp
+```c++
 DefaultFloat SpotLight::angle
 ```
 
@@ -141,7 +141,7 @@ DefaultFloat SpotLight::angle
 
 #### `intensity`
 
-```cpp
+```c++
 DefaultFloat SpotLight::intensity
 ```
 
@@ -151,7 +151,7 @@ DefaultFloat SpotLight::intensity
 
 #### `color`
 
-```cpp
+```c++
 Vec3<uint8> SpotLight::color
 ```
 

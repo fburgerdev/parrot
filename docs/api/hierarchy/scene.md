@@ -4,7 +4,7 @@
 
 ### Name
 
-```cpp
+```c++
 string Scene::name
 ```
 
@@ -12,7 +12,7 @@ string Scene::name
 
 ### Root
 
-```cpp
+```c++
 Entity Scene::root
 ```
 
