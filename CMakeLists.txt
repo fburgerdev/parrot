@@ -69,6 +69,20 @@ add_subdirectory(vendor/glad)
 # :: stb (target)
 add_subdirectory(vendor/stb)
 
+# example_hello_cube (target)
+add_executable(example_hello_cube)
+# :: files
+file(GLOB_RECURSE EXAMPLE_HELLO_CUBE_SOURCES examples/hello_cube/*.hh)
+file(GLOB_RECURSE EXAMPLE_HELLO_CUBE_SOURCES examples/hello_cube/*.cc)
+target_sources(example_hello_cube PRIVATE ${EXAMPLE_HELLO_CUBE_SOURCES})
+# :: include directories
+target_include_directories(example_hello_cube PUBLIC src vendor examples/hello_cube)
+# :: links
+target_link_libraries(example_hello_cube PRIVATE parrot)
+target_link_libraries(example_hello_cube PRIVATE assimp glad glfw stb)
+# :: macros
+target_compile_definitions(example_hello_cube PRIVATE PARROT_GLFW PARROT_OPENGL)
+
 # example_teapot (target)
 add_executable(example_teapot)
 # :: files

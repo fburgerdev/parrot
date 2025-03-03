@@ -1,0 +1,29 @@
+{
+  "uniforms": {
+    "albedo": [
+      "texture",
+      {
+        "image": ".parrot/white.png"
+      }
+    ],
+    "normal": [
+      "texture",
+      {
+        "image": ".parrot/normal.png"
+      }
+    ],
+    "specular": [
+      "texture",
+      {
+        "image": ".parrot/white.png"
+      }
+    ],
+    "surface": {
+      "ambient_strength": [ "f32", 1.0 ],
+      "diffuse_strength": [ "f32", 1.0 ],
+      "shininess": [ "f32", 1.0 ],
+      "specular_strength": [ "f32", 1.0 ]
+    },
+    "opacity": [ "f32", 1.0 ]
+  }
+}
