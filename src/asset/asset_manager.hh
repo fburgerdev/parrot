@@ -19,7 +19,7 @@ namespace Parrot {
     // addAsset (impl. AssetAPI)
     virtual UUID addAsset(SharedPtr<Asset> asset) override;
     // lockAsset (impl. AssetAPI)
-    virtual SharedPtr<Asset> lockAsset(
+    virtual SharedPtr<const Asset> lockAsset(
       const AssetKey& key, AssetFactory factory
     ) override;
   private:

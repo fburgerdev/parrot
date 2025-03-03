@@ -7,7 +7,7 @@ namespace Parrot {
   Entity::Entity(Scriptable* parent)
     : Scriptable(parent) {}
   Entity::Entity(
-    const SharedPtr<EntityPreset>& preset,
+    SharedPtr<const EntityPreset> preset,
     Scriptable* parent, AssetAPI& asset_api
   ) : Scriptable(parent) {
     _tag = preset->tag;

@@ -26,7 +26,7 @@ namespace Parrot {
   }
 
   // lockAsset
-  SharedPtr<Asset> AssetManager::lockAsset(
+  SharedPtr<const Asset> AssetManager::lockAsset(
     const AssetKey& key, AssetFactory factory
   ) {
     UUID uuid = _registry.getUUID(key);

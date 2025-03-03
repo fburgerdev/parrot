@@ -101,23 +101,23 @@ namespace Parrot {
     // resolveShaderStages
     Pair<string, string> resolveShaderStages() const {
       // lock
-      List<SharedPtr<ShaderSource>> locked_sources;
+      List<SharedPtr<const ShaderSource>> locked_sources;
       for (const auto& source : _sources) {
         locked_sources.emplace_back(source.lock());
       }
       // merge
-      ShaderSource::ShaderStage* vertex = nullptr;
-      ShaderSource::ShaderStage* fragment = nullptr;
-      Map<string, ShaderSource::Snippet*> snippets;
+      ShaderSource::ShaderStage vertex;
+      ShaderSource::ShaderStage fragment;
+      Map<string, ShaderSource::Snippet> snippets;
       for (auto& locked_source : locked_sources) {
         if (locked_source->vertex) {
-          vertex = &locked_source->vertex.value();
+          vertex = locked_source->vertex.value();
         }
         if (locked_source->fragment) {
-          fragment = &locked_source->fragment.value();
+          fragment = locked_source->fragment.value();
         }
-        for (auto& [name, snippet] : locked_source->snippets) {
-          snippets.emplace(name, &snippet);
+        for (const auto& [name, snippet] : locked_source->snippets) {
+          snippets.emplace(name, snippet);
         }
       }
       // resolve
@@ -132,8 +132,8 @@ namespace Parrot {
           if (holds<ShaderSource::SnippetInclude>(part)) {
             auto& include = std::get<ShaderSource::SnippetInclude>(part);
             if (snippets.contains(include.identifier)) {
-              resolve(*snippets.at(include.identifier));
-              part = snippets.at(include.identifier)->toString();
+              resolve(snippets.at(include.identifier));
+              part = snippets.at(include.identifier).toString();
             }
             else {
               if (include.is_optional) {
@@ -147,12 +147,12 @@ namespace Parrot {
         }
         resolved.insert(&snippet);
       };
-      resolve(*vertex);
-      resolve(*fragment);
+      resolve(vertex);
+      resolve(fragment);
 
       return {
-        vertex->toString(),
-        fragment->toString()
+        vertex.toString(),
+        fragment.toString()
       };
     }
   private:

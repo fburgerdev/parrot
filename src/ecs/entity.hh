@@ -21,7 +21,7 @@ namespace Parrot {
     // (constructor)
     Entity(Scriptable* parent = nullptr);
     Entity(
-      const SharedPtr<EntityPreset>& preset,
+      SharedPtr<const EntityPreset> preset,
       Scriptable* parent, AssetAPI& asset_api
     );
     Entity(const Entity&) = delete;

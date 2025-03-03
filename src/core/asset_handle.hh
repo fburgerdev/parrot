@@ -11,7 +11,7 @@ namespace Parrot {
     // addAsset
     virtual UUID addAsset(SharedPtr<Asset> asset) = 0; /* PARROT_API */
     // lockAsset
-    virtual SharedPtr<Asset> lockAsset(
+    virtual SharedPtr<const Asset> lockAsset(
       const AssetKey& key, AssetFactory factory
     ) = 0;
   };
@@ -46,8 +46,8 @@ namespace Parrot {
       return _api;
     }
     // lock
-    SharedPtr<T> lock() const {
-      return std::static_pointer_cast<T>(
+    SharedPtr<const T> lock() const {
+      return std::static_pointer_cast<const T>(
         _api->lockAsset(_key, [&](const AssetPath& path) {
           return std::make_shared<T>(path, *_api);
         })
