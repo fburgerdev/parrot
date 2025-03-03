@@ -3,14 +3,14 @@
 #include <random>
 
 namespace Parrot {
-  // RandomGenerator
+  // RNG
   template<class T = DefaultFloat>
-  class RandomGenerator {
+  class RNG {
   public:
     // (constructor)
-    RandomGenerator()
+    RNG()
       : _generator(_device()) {}
-    RandomGenerator(uint seed)
+    RNG(uint seed)
       : _generator(_device()) {
       _generator.seed(seed);
     }
@@ -23,15 +23,21 @@ namespace Parrot {
     }
     // :: 2D
     Vec2<T> random2() {
-      return normalized(Vec2<T>(random(), random()));
+      return normalized(
+        Vec2<T>(random(-1, +1), random(-1, +1))
+      );
     }
     // :: 3D
     Vec3<T> random3() {
-      return normalized(Vec3<T>(random(), random(), random()));
+      return normalized(
+        Vec3<T>(random(-1, +1), random(-1, +1), random(-1, +1))
+      );
     }
     // :: 4D
     Vec4<T> random4() {
-      return normalized(Vec4<T>(random(), random(), random(), random()));
+      return normalized(
+        Vec4<T>(random(-1, +1), random(-1, +1), random(-1, +1), random(-1, +1))
+      );
     }
   private:
     std::random_device _device;

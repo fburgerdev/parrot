@@ -51,11 +51,12 @@ namespace Parrot {
     // onAttach
     virtual void onAttach() override {
       static constexpr uint WIDTH = 100, DEPTH = 100;
-      static constexpr uint RESOLUTION = 2;
+      static constexpr uint RESOLUTION = 1;
       static constexpr float32 WATER_DEPTH = 10.0F, ISLAND_HEIGHT = 10.0F;
       // heights
-      List<float32> heights = generatePerlin2D(
-        WIDTH * RESOLUTION, DEPTH * RESOLUTION, 3.0F
+      auto rng = RNG<>(0);
+      List<float32> heights = generatePerlin2D<float32>(
+        { WIDTH * RESOLUTION, DEPTH * RESOLUTION }, { 2, 2 }, 4, rng
       );
       float32 min_height = +99999, max_height = -99999;
       for (float32 height : heights) {
