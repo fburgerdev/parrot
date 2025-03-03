@@ -13,14 +13,14 @@ namespace Parrot {
       _3d_buffer = &_context->createUniformBuffer(_surface.getSize());
     }
     // drawScene
-    void Renderer::drawScene(const SceneData& scene_data) {
+    void Renderer::drawScene(const RenderData& render_data) {
       if (!_context) {
         LOG_GRAPHICS_ERROR(
           "no gpu-context specified for renderer, can't draw"
         );
         return;
       }
-      _surface.set(scene_data);
+      _surface.set(render_data);
       _3d_buffer->overwriteData(_surface.getBuffer(), _surface.getSize());
       prepareDraw();
       auto draw_render_object = [&](
@@ -42,10 +42,10 @@ namespace Parrot {
             ).bind(0);
             shader_opengl.setUniform("u_albedo", 0);
           }
-          auto proj = scene_data.camera.second->calcProjectionMatrix(
+          auto proj = render_data.camera.second->calcProjectionMatrix(
             1080.0F / 720.0F
           );
-          auto view = scene_data.camera.first->calcLocalViewMatrix();
+          auto view = render_data.camera.first->calcLocalViewMatrix();
           shader_opengl.setUniform(
             "u_total_time", g_global_watch.elapsed()
           );
@@ -60,12 +60,12 @@ namespace Parrot {
           vertex_array.unbind();
         }
       };
-      for (auto [transform, render_object] : scene_data.opaque_objects) {
+      for (auto [transform, render_object] : render_data.opaque_objects) {
         draw_render_object(*transform, *render_object);
       }
       glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
       glEnable(GL_BLEND);
-      for (auto [transform, render_object] : scene_data.translucent_objects) {
+      for (auto [transform, render_object] : render_data.translucent_objects) {
         draw_render_object(*transform, *render_object);
       }
     }

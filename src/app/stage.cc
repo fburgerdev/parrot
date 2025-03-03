@@ -3,9 +3,9 @@
 #include "component_registry.hh"
 
 namespace Parrot {
-  // (static) getSceneData
-  static SceneData getSceneData(Scene& scene) {
-    SceneData scene_data;
+  // (static) getRenderData
+  static RenderData getRenderData(Scene& scene) {
+    RenderData render_data;
     // camera
     auto camera_entities = scene.queryEntities<CameraComponent>();
     if (camera_entities.size() != 1) {
@@ -14,13 +14,13 @@ namespace Parrot {
         scene.name, camera_entities.size()
       );
     }
-    scene_data.camera = {
+    render_data.camera = {
       &camera_entities.front()->transform,
       &camera_entities.front()->getComponent<CameraComponent>()
     };
     // lights
     for (const Entity* entity : scene.queryEntities<LightSourceComponent>()) {
-      scene_data.lights.emplace(
+      render_data.lights.emplace(
         &entity->transform,
         &entity->getComponent<LightSourceComponent>()
       );
@@ -29,17 +29,17 @@ namespace Parrot {
     for (const Entity* entity : scene.queryEntities<RenderObjectComponent>()) {
       auto& component = entity->getComponent<RenderObjectComponent>();
       if (component.is_opaque) {
-        scene_data.opaque_objects.emplace(
+        render_data.opaque_objects.emplace(
           &entity->transform, &component
         );
       }
       else {
-        scene_data.translucent_objects.emplace_back(
+        render_data.translucent_objects.emplace_back(
           &entity->transform, &component
         );
       }
     }
-    return scene_data;
+    return render_data;
   }
 
   // (constructor)
@@ -66,7 +66,7 @@ namespace Parrot {
   // render
   void Stage::render() {
     for (auto& [scene, renderer] : scene_layers) {
-      renderer.drawScene(getSceneData(scene));
+      renderer.drawScene(getRenderData(scene));
     }
   }
 

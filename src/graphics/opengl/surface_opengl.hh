@@ -1,5 +1,5 @@
 #pragma once
-#include "graphics/scene_data.hh"
+#include "graphics/render_data.hh"
 #include "graphics/shader_source.hh"
 #include "std140_opengl.hh"
 
@@ -17,8 +17,8 @@ namespace Parrot {
       }
 
       // set
-      void set(const SceneData& scene_data) {
-        const auto& [transform, camera] = scene_data.camera;
+      void set(const RenderData& render_data) {
+        const auto& [transform, camera] = render_data.camera;
         auto view = (
           transform ? transform->calcLocalViewMatrix() : identity<float32, 4>()
         );
@@ -36,7 +36,7 @@ namespace Parrot {
           float32,
           Vec3<float32>>
           > directional_lights;
-        for (auto [transform, light_source] : scene_data.lights) {
+        for (auto [transform, light_source] : render_data.lights) {
           if (holds<AmbientLight>(light_source->value)) {
             auto& ambient_light = std::get<AmbientLight>(light_source->value);
             ambient_lights.emplace_back(
