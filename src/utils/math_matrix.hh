@@ -414,4 +414,20 @@ namespace Parrot {
   using Vec3 = Vec<T, 3>;
   template<typename T = DefaultFloat>
   using Vec4 = Vec<T, 4>;
+  // :: int
+  using Vec2i = Vec2<int>;
+  using Vec3i = Vec3<int>;
+  using Vec4i = Vec4<int>;
+  // :: uint
+  using Vec2u = Vec2<uint>;
+  using Vec3u = Vec3<uint>;
+  using Vec4u = Vec4<uint>;
+  // :: float
+  using Vec2f = Vec2<float>;
+  using Vec3f = Vec3<float>;
+  using Vec4f = Vec4<float>;
+  // :: double
+  using Vec2d = Vec2<double>;
+  using Vec3d = Vec3<double>;
+  using Vec4d = Vec4<double>;
 }

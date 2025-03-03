@@ -23,7 +23,7 @@ namespace Parrot {
 
   // clamp
   template<class T = DefaultFloat>
-  T clamp(T value, T min, T max) {
+  constexpr T clamp(T value, T min, T max) {
     return (value < min ? min : (value > max ? max : value));
   }
 
@@ -48,5 +48,15 @@ namespace Parrot {
     else {
       return left;
     }
+  }
+
+  // pow
+  template<class T = DefaultFloat>
+  constexpr T pow(T base, usize exponent) {
+    T out = (T)1.0;
+    for (usize i = 0; i < exponent; ++i) {
+      out *= base;
+    }
+    return out;
   }
 }
