@@ -36,9 +36,9 @@ namespace Parrot {
           float32,
           Vec3<float32>>
           > directional_lights;
-        for (auto [transform, light_source] : render_data.lights) {
-          if (holds<AmbientLight>(light_source->value)) {
-            auto& ambient_light = std::get<AmbientLight>(light_source->value);
+        for (auto [transform, light] : render_data.lights) {
+          if (holds<AmbientLight>(light->value)) {
+            auto& ambient_light = std::get<AmbientLight>(light->value);
             ambient_lights.emplace_back(
               std::make_tuple(
                 ambient_light.intensity,
@@ -46,9 +46,9 @@ namespace Parrot {
               )
             );
           }
-          if (holds<DirectionalLight>(light_source->value)) {
+          if (holds<DirectionalLight>(light->value)) {
             auto& directional_light = std::get<DirectionalLight>(
-              light_source->value
+              light->value
             );
             directional_lights.emplace_back(
               std::make_tuple(

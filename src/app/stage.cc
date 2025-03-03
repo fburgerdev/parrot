@@ -19,10 +19,10 @@ namespace Parrot {
       &camera_entities.front()->getComponent<CameraComponent>()
     };
     // lights
-    for (const Entity* entity : scene.queryEntities<LightSourceComponent>()) {
+    for (const Entity* entity : scene.queryEntities<LightComponent>()) {
       render_data.lights.emplace(
         &entity->transform,
-        &entity->getComponent<LightSourceComponent>()
+        &entity->getComponent<LightComponent>()
       );
     }
     // render-objects

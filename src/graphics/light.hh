@@ -34,12 +34,12 @@ namespace Parrot {
     Vec3<uint8> color /* PARROT_API */ = { 255, 255, 255 };
   };
 
-  // LightSource
-  class LightSource : public Asset {
+  // Light
+  class Light : public Asset {
   public:
     // (constructor) for SubAsset
     template<JsonType JSON>
-    LightSource(
+    Light(
       const JSON& json,
       const AssetPath& asset_path,
       [[maybe_unused]] AssetAPI& asset_api
@@ -161,5 +161,5 @@ namespace Parrot {
   ostream& operator<<(ostream& stream, const DirectionalLight& light);
   ostream& operator<<(ostream& stream, const PointLight& light);
   ostream& operator<<(ostream& stream, const SpotLight& light);
-  ostream& operator<<(ostream& stream, const LightSource& source);
+  ostream& operator<<(ostream& stream, const Light& source);
 }

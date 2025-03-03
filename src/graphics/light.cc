@@ -1,5 +1,5 @@
 #include "common.hh"
-#include "light_source.hh"
+#include "light.hh"
 
 namespace Parrot {
   // <<
@@ -47,7 +47,7 @@ namespace Parrot {
     stream << ')';
     return stream;
   }
-  ostream& operator<<(ostream& stream, const LightSource& source) {
+  ostream& operator<<(ostream& stream, const Light& source) {
     std::visit([&](const auto& light) {
       stream << light;
     }, source.value);

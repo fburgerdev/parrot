@@ -26,12 +26,12 @@ namespace Parrot {
       },
     },
     {
-      "light-source",
+      "light",
       {
-        typeid(DerivedComponentConfig<LightSource>).hash_code(),[](
+        typeid(DerivedComponentConfig<Light>).hash_code(),[](
           const json& json, const AssetPath& asset_path, AssetAPI& asset_api
         ) {
-          return std::make_unique<DerivedComponentConfig<LightSource>>(
+          return std::make_unique<DerivedComponentConfig<Light>>(
             json, asset_path, asset_api
           );
         }

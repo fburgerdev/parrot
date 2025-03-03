@@ -1,6 +1,6 @@
 #pragma once
 #include "graphics/camera.hh"
-#include "graphics/light_source.hh"
+#include "graphics/light.hh"
 #include "graphics/render_object.hh"
 #include "graphics/material.hh"
 #include "vertex_array_opengl.hh"

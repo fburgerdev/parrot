@@ -17,7 +17,7 @@
       {
         "tag": "Directional",
         "components": {
-          "light-source": {
+          "light": {
             "type": "directional",
             "direction": [ 0, -0.707, 0.707 ],
             "intensity": 0.7,
@@ -28,7 +28,7 @@
       {
         "tag": "Ambient",
         "components": {
-          "light-source": {
+          "light": {
             "type": "ambient",
             "intensity": 0.3,
             "color": [ 255, 255, 255 ]
