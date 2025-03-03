@@ -71,13 +71,15 @@ void main() {
     // (snippet) prefix
     [[include "fragment-prefix" optional]]
 
-    // out
-    o_frag_color = vec4(calcSurfaceColor(
+    // color
+    vec4 color = vec4(calcSurfaceColor(
       v_position, v_normal, v_tex_coords,
       v_tangent, v_bitangent
     ), u_opacity);
     
     // (snippet) postfix
     [[include "fragment-postfix" optional]]
+
+    o_frag_color = color;
 }
 [[end]]

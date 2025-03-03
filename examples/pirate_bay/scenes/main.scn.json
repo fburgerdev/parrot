@@ -5,21 +5,10 @@
     "tag": "Root",
     "children": [
       {
-        "tag": "Palm",
-        "transform": {
-          "position": [ 0, 0, -5 ]
-        },
-        "components": {
-          "render-object": {
-            "model": "models/environment/palm_tree1.fbx",
-            "material": ".parrot/model.mat.json"
-          }
-        }
-      },
-      {
         "tag": "Ship",
         "transform": {
-          "position": [ 10, 0, 0 ]
+          "position": [ 17.5, 0.5, -32.5 ],
+          "rotation": [ 0, -0.4, 0 ]
         },
         "components": {
           "render-object": {
@@ -30,6 +19,17 @@
       },
       {
         "tag": "Terrain",
+        "children": [
+          {
+            "tag": "Border",
+            "components": {
+              "render-object": {
+                "model": ".parrot/quad.obj",
+                "material": "materials/terrain.mat.json"
+              }
+            }
+          }
+        ],
         "components": {
           "render-object": {
             "model": ".parrot/quad.obj",
@@ -50,8 +50,7 @@
             "material": "materials/water.mat.json",
             "opaque": false
           }
-        },
-        "scripts": [ "WaterMesh" ]
+        }
       },
       {
         "tag": "Directional",
@@ -59,6 +58,15 @@
           "light": {
             "type": "directional",
             "direction": [ 0, -0.707, -0.707 ]
+          }
+        }
+      },
+      {
+        "tag": "Ambient",
+        "components": {
+          "light": {
+            "type": "ambient",
+            "intensity": 0.1
           }
         }
       },

@@ -51,7 +51,7 @@ namespace Parrot {
     // onAttach
     virtual void onAttach() override {
       static constexpr uint WIDTH = 100, DEPTH = 100;
-      static constexpr uint RESOLUTION = 1;
+      static constexpr uint RESOLUTION = 5;
       static constexpr float32 WATER_DEPTH = 10.0F, ISLAND_HEIGHT = 10.0F;
       // heights
       auto rng = RNG<>(0);
@@ -98,15 +98,123 @@ namespace Parrot {
       }
       calcGridNormals(WIDTH * RESOLUTION, DEPTH * RESOLUTION, mesh.vertices);
       // asset
-      _asset = std::make_shared<Model>("water_model");
+      _asset = std::make_shared<Model>("terrain");
       _asset->submodels.emplace_back(
-        std::move(mesh), 0
+        mesh, 0
       );
       _handle = AssetHandle<Model>(asset_api->addAsset(_asset), *asset_api);
       entity->getComponent<RenderObjectComponent>().model = _handle;
+
+      // border
+      auto children = entity->findByTag("Border");
+      auto& child = **children.begin();
+      Mesh border_mesh;
+      for (uint z : List<uint>({ 0, DEPTH * RESOLUTION - 1 })) {
+        for (uint x = 0; x < WIDTH * RESOLUTION; ++x) {
+          border_mesh.vertices.push_back({
+            .position = {
+              float32(x) / RESOLUTION - float32(WIDTH) / 2,
+              -10,
+              float32(z) / RESOLUTION - float32(DEPTH) / 2,
+            },
+            .normal = { 0, 0, -1 },
+            .tex_coords = {
+              float32(z) / (WIDTH * RESOLUTION),
+              float32(z) / (DEPTH * RESOLUTION)
+            },
+          });
+        }
+        for (uint x = 0; x < WIDTH * RESOLUTION; ++x) {
+          border_mesh.vertices.push_back({
+            .position = {
+              float32(x) / RESOLUTION - float32(WIDTH) / 2,
+              heights[WIDTH * RESOLUTION * z + x],
+              float32(z) / RESOLUTION - float32(DEPTH) / 2,
+            },
+            .normal = mesh.vertices.at(WIDTH * RESOLUTION * z + x).normal,
+            .tex_coords = {
+              float32(x) / (WIDTH * RESOLUTION),
+              float32(z) / (DEPTH * RESOLUTION)
+            },
+          });
+        }
+      }
+      for (uint x = 0; x < WIDTH * RESOLUTION - 1; ++x) {
+        border_mesh.indices.push_back(WIDTH * RESOLUTION * (0 + 0) + (x + 0));
+        border_mesh.indices.push_back(WIDTH * RESOLUTION * (0 + 0) + (x + 1));
+        border_mesh.indices.push_back(WIDTH * RESOLUTION * (0 + 1) + (x + 1));
+        border_mesh.indices.push_back(WIDTH * RESOLUTION * (0 + 0) + (x + 0));
+        border_mesh.indices.push_back(WIDTH * RESOLUTION * (0 + 1) + (x + 1));
+        border_mesh.indices.push_back(WIDTH * RESOLUTION * (0 + 1) + (x + 0));
+      }
+      for (uint x = 0; x < WIDTH * RESOLUTION - 1; ++x) {
+        border_mesh.indices.push_back(WIDTH * RESOLUTION * (2 + 0) + (x + 0));
+        border_mesh.indices.push_back(WIDTH * RESOLUTION * (2 + 1) + (x + 1));
+        border_mesh.indices.push_back(WIDTH * RESOLUTION * (2 + 0) + (x + 1));
+        border_mesh.indices.push_back(WIDTH * RESOLUTION * (2 + 0) + (x + 0));
+        border_mesh.indices.push_back(WIDTH * RESOLUTION * (2 + 1) + (x + 0));
+        border_mesh.indices.push_back(WIDTH * RESOLUTION * (2 + 1) + (x + 1));
+      }
+
+      usize offset = border_mesh.vertices.size();
+      for (uint x : List<uint>({ 0, WIDTH * RESOLUTION - 1 })) {
+        for (uint z = 0; z < DEPTH * RESOLUTION; ++z) {
+          border_mesh.vertices.push_back({
+            .position = {
+              float32(x) / RESOLUTION - float32(WIDTH) / 2,
+              -10,
+              float32(z) / RESOLUTION - float32(DEPTH) / 2,
+            },
+            .normal = { 0, 0, -1 },
+            .tex_coords = {
+              float32(z) / (WIDTH * RESOLUTION),
+              float32(z) / (DEPTH * RESOLUTION)
+            },
+            });
+        }
+        for (uint z = 0; z < DEPTH * RESOLUTION; ++z) {
+          border_mesh.vertices.push_back({
+            .position = {
+              float32(x) / RESOLUTION - float32(WIDTH) / 2,
+              heights[WIDTH * RESOLUTION * z + x],
+              float32(z) / RESOLUTION - float32(DEPTH) / 2,
+            },
+            .normal = mesh.vertices.at(WIDTH * RESOLUTION * z + x).normal,
+            .tex_coords = {
+              float32(x) / (WIDTH * RESOLUTION),
+              float32(z) / (DEPTH * RESOLUTION)
+            },
+            });
+        }
+      }
+      for (uint z = 0; z < DEPTH * RESOLUTION - 1; ++z) {
+        border_mesh.indices.push_back(offset + WIDTH * RESOLUTION * (0 + 0) + (z + 0));
+        border_mesh.indices.push_back(offset + WIDTH * RESOLUTION * (0 + 1) + (z + 1));
+        border_mesh.indices.push_back(offset + WIDTH * RESOLUTION * (0 + 0) + (z + 1));
+        border_mesh.indices.push_back(offset + WIDTH * RESOLUTION * (0 + 0) + (z + 0));
+        border_mesh.indices.push_back(offset + WIDTH * RESOLUTION * (0 + 1) + (z + 0));
+        border_mesh.indices.push_back(offset + WIDTH * RESOLUTION * (0 + 1) + (z + 1));
+      }
+      for (uint z = 0; z < DEPTH * RESOLUTION - 1; ++z) {
+        border_mesh.indices.push_back(offset + DEPTH * RESOLUTION * (2 + 0) + (z + 0));
+        border_mesh.indices.push_back(offset + DEPTH * RESOLUTION * (2 + 0) + (z + 1));
+        border_mesh.indices.push_back(offset + DEPTH * RESOLUTION * (2 + 1) + (z + 1));
+        border_mesh.indices.push_back(offset + DEPTH * RESOLUTION * (2 + 0) + (z + 0));
+        border_mesh.indices.push_back(offset + DEPTH * RESOLUTION * (2 + 1) + (z + 1));
+        border_mesh.indices.push_back(offset + DEPTH * RESOLUTION * (2 + 1) + (z + 0));
+      }
+      // asset
+      _border_asset = std::make_shared<Model>("border");
+      _border_asset->submodels.emplace_back(
+        std::move(border_mesh), 0
+      );
+      _border_handle = AssetHandle<Model>(asset_api->addAsset(_border_asset), *asset_api);
+      child.getComponent<RenderObjectComponent>().model = _border_handle;
     }
   private:
     AssetHandle<Model> _handle;
+    AssetHandle<Model> _border_handle;
     SharedPtr<Model> _asset;
+    SharedPtr<Model> _border_asset;
   };
 }

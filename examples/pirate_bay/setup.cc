@@ -2,7 +2,6 @@
 #include "scripts/fps.hh"
 #include "scripts/controller.hh"
 #include "scripts/terrain_mesh.hh"
-#include "scripts/water_mesh.hh"
 
 namespace Parrot {
   // (global) registry
@@ -26,17 +25,6 @@ namespace Parrot {
         typeid(TerrainMesh).hash_code(),
         [](Entity& entity, AssetAPI& asset_api) {
           return std::make_unique<TerrainMesh>(
-            entity, asset_api
-          );
-        }
-      }
-    },
-    {
-      "WaterMesh",
-      {
-        typeid(WaterMesh).hash_code(),
-        [](Entity& entity, AssetAPI& asset_api) {
-          return std::make_unique<WaterMesh>(
             entity, asset_api
           );
         }
