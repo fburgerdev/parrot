@@ -7,14 +7,13 @@ namespace Parrot {
   class AppConfig : public Asset {
   public:
     // (constructor)
-    AppConfig(const AssetPath& asset_path);
+    AppConfig(const AssetPath& path);
     // :: for Asset
-    AppConfig(const AssetPath& asset_path, AssetAPI& asset_api);
+    AppConfig(const AssetPath& path, AssetAPI& api);
     template<JsonType JSON>
-    AppConfig(
-      const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
-    ) : Asset(asset_path) {
-      loadFromJSON(json, asset_api);
+    AppConfig(const JSON& json, const AssetPath& path, AssetAPI& api)
+      : Asset(path) {
+      loadFromJSON(json, api);
     }
 
     // loadFromJSON
@@ -24,7 +23,7 @@ namespace Parrot {
       if (json.contains("name")) {
         name = string(json.at("name"));
       }
-      // asset_dir
+      // asset-dir
       if (json.contains("asset_dir")) {
         asset_dir = stdf::path(string(json.at("asset_dir")));
       }
@@ -34,27 +33,40 @@ namespace Parrot {
       // asset-manager
       if (json.contains("asset-manager")) {
         const JSON& json_asset_manager = json.at("asset-manager");
-        // (un)loading_policy
+        // loading_policy
         if (json_asset_manager.contains("loading-policy")) {
           if (json_asset_manager.at("loading-policy") == "app") {
-            // TODO: uncomment
+            // TODO: implement loading-policy 'app'
             // loading_policy = LoadingPolicy::PRELOAD_APP;
+            LOG_ASSET_WARNING(
+              "loading-policy 'app' is not yet implemented,"
+              "falling back to 'lazy'"
+            );
           }
           else if (json_asset_manager.at("loading-policy") == "scene") {
-            // TODO: uncomment
+            // TODO: implement loading-policy 'scene'
             // loading_policy = LoadingPolicy::PRELOAD_SCENE;
+            LOG_ASSET_WARNING(
+              "loading-policy 'scene' is not yet implemented,"
+              "falling back to 'lazy'"
+            );
           }
           else if (json_asset_manager.at("loading-policy") == "lazy") {
             loading_policy = LoadingPolicy::LAZY_LOAD;
           }
         }
+        // unloading-policy
         if (json_asset_manager.contains("unloading-policy")) {
           if (json_asset_manager.at("unloading-policy") == "app") {
             unloading_policy = UnloadingPolicy::UNLOAD_APP;
           }
           else if (json_asset_manager.at("unloading-policy") == "scene") {
-            // TODO: uncomment
+            // TODO: implement unloading-policy 'scene'
             // unloading_policy = UnloadingPolicy::UNLOAD_SCENE;
+            LOG_ASSET_WARNING(
+              "unloading-policy 'scene' is not yet implemented,"
+              "falling back to 'unused'"
+            );
           }
           else if (json_asset_manager.at("unloading-policy") == "unused") {
             unloading_policy = UnloadingPolicy::UNLOAD_UNUSED;
@@ -63,10 +75,11 @@ namespace Parrot {
       }
     }
     template<JsonType JSON>
-    void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
+    void loadFromJSON(const JSON& json, AssetAPI& api) {
+      // name, asset-dir, asset-manager
       loadFromJSON(json);
       // stage
-      main_stage = AssetHandle<StageConfig>(json.at("stage"), asset_api);
+      main_stage = AssetHandle<StageConfig>(json.at("stage"), api);
     }
 
     // name, asset_dir, (un)loading_policy, main(window/scene)

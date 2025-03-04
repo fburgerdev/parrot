@@ -15,11 +15,10 @@ namespace Parrot {
     // (constructor)
     Model(strview name);
     // :: for Asset
-    Model(const AssetPath& asset_path, AssetAPI& asset_api);
+    Model(const AssetPath& path, AssetAPI& api);
     template<JsonType JSON>
-    Model(
-      const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
-    ) : Asset(asset_path) {}
+    Model(const JSON& json, const AssetPath& path, AssetAPI& api)
+      : Asset(path) {}
 
     // submodels, model_materials, textures
     List<SubModel> submodels;

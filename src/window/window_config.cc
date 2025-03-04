@@ -4,12 +4,12 @@
 using json = nlohmann::json;
 
 namespace Parrot {
-  // (constructor)
-  WindowConfig::WindowConfig(const AssetPath& asset_path, AssetAPI& asset_api)
-    : Asset(asset_path) {
-    auto json = asset_path.applySubpathToJSON(
-      json::parse(ifstream(asset_path.file))
+  // (constructor) for Asset
+  WindowConfig::WindowConfig(const AssetPath& path, AssetAPI& api)
+    : Asset(path) {
+    auto json = path.applySubpathToJSON(
+      json::parse(ifstream(path.file))
     );
-    loadFromJSON(json, asset_api);
+    loadFromJSON(json, api);
   }
 }

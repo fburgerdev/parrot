@@ -7,29 +7,28 @@ namespace Parrot {
   class StageConfig : public Asset {
   public:
     // (constructor) for Asset
-    StageConfig(const AssetPath& asset_path, AssetAPI& asset_api);
+    StageConfig(const AssetPath& path, AssetAPI& api);
     template<JsonType JSON>
-    StageConfig(
-      const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
-    ) : Asset(asset_path) {
-      loadFromJSON(json, asset_api);
+    StageConfig(const JSON& json, const AssetPath& path, AssetAPI& api)
+      : Asset(path) {
+      loadFromJSON(json, api);
     }
 
     // loadFromJSON
     template<JsonType JSON>
-    void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
+    void loadFromJSON(const JSON& json, AssetAPI& api) {
       // window
-      window = AssetHandle<WindowConfig>(json.at("window"), asset_api);
-      // scenes
+      window = AssetHandle<WindowConfig>(json.at("window"), api);
+      // scene(s)
       if (json.contains("scene")) {
         scenes.emplace_back(
-          AssetHandle<SceneConfig>(json.at("scene"), asset_api)
+          AssetHandle<SceneConfig>(json.at("scene"), api)
         );
       }
       if (json.contains("scenes")) {
         for (const auto& scene : json.at("scenes")) {
           scenes.emplace_back(
-            AssetHandle<SceneConfig>(scene, asset_api)
+            AssetHandle<SceneConfig>(scene, api)
           );
         }
       }

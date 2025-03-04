@@ -28,31 +28,33 @@ namespace Parrot {
   };
   // Camera
   struct Camera : public Asset {
-    // (constructor) for Asset
+    // (constructor)
     Camera(const PerspectiveCamera& value);
     Camera(const OrthographicCamera& value);
+    // :: for Asset
+    Camera(const AssetPath& path, AssetAPI& api);
     template<JsonType JSON>
-    Camera(
-      const JSON& json,
-      const AssetPath& asset_path,
-      [[maybe_unused]] AssetAPI& asset_api
-    ) : Asset(asset_path) {
-      loadFromJSON(json);
+    Camera(const JSON& json, const AssetPath& path, AssetAPI& api)
+      : Asset(path) {
+      loadFromJSON(json, api);
     }
 
     // loadFromJSON
     template<JsonType JSON>
-      void loadFromJSON(const JSON& json) {
+    void loadFromJSON(const JSON& json, [[maybe_unused]] AssetAPI& api) {
+      // z-range
       Vec2<float32> z_range = (
         json.contains("z-range") ? Vec2<float32>(
           json.at("z-range")[0], json.at("z-range")[1]
         ) : DEFAULT_ZRANGE
       );
+      // type
       if (!json.contains("type") &&
           json.contains("fov") &&
           json.contains("scale")) {
         throw std::logic_error("couldn't deduce camera type from json");
       }
+      // :: perspective
       else if ((json.contains("type") && json.at("type") == "perspective") ||
           (!json.contains("type") && json.contains("fov"))) {
         float32 fov = (
@@ -60,6 +62,7 @@ namespace Parrot {
         );
         value = PerspectiveCamera(fov, z_range);
       }
+      // :: orthographic
       else if ((json.contains("type") && json.at("type") == "orthographic") ||
           (!json.contains("type") && json.contains("scale"))) {
         float32 scale = (
@@ -76,8 +79,7 @@ namespace Parrot {
 
     // value
     Variant<
-      PerspectiveCamera,
-      OrthographicCamera
+      PerspectiveCamera, OrthographicCamera
     > value /* PARROT_API */ = PerspectiveCamera();
   };
   // <<

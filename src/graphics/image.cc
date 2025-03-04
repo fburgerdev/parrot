@@ -45,8 +45,6 @@ namespace Parrot {
       getDebugFilepath(filepath, debug_root), width, height, channels
     );
   }
-  Image::Image(const AssetPath& asset_path, AssetAPI& asset_api)
-    : Image(asset_path.file, asset_path.debug_root) {}
   Image::Image(strview name, const uchar* buffer, usize size)
       : _name(name), _width(0), _height(0),
       _format(ImageFormat::NONE), _bytes(nullptr) {
@@ -108,6 +106,9 @@ namespace Parrot {
       _height(std::exchange(other._height, 0)),
       _format(std::exchange(other._format, ImageFormat::NONE)),
       _bytes(std::exchange(other._bytes, nullptr)) {}
+  // :: for Asset
+  Image::Image(const AssetPath& path, [[maybe_unused]] AssetAPI& api)
+    : Image(path.file, path.debug_root) {}
   // (destructor)
   Image::~Image() {
     stbi_image_free(_bytes);

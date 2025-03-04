@@ -6,23 +6,22 @@ namespace Parrot {
   class SceneConfig : public Asset {
   public:
     // (constructor) for Asset
-    SceneConfig(const AssetPath& asset_path, AssetAPI& asset_api);
+    SceneConfig(const AssetPath& path, AssetAPI& apit);
     template<JsonType JSON>
-    SceneConfig(
-      const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
-    ) : Asset(asset_path) {
-      loadFromJSON(json, asset_api);
+    SceneConfig(const JSON& json, const AssetPath& path, AssetAPI& api)
+      : Asset(path) {
+      loadFromJSON(json, api);
     }
 
     // loadFromJSON
     template<JsonType JSON>
-    void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
+    void loadFromJSON(const JSON& json, AssetAPI& api) {
       // name
       if (json.contains("name")) {
         name = string(json.at("name"));
       }
       // root
-      root = AssetHandle<EntityPreset>(json.at("root"), asset_api);
+      root = AssetHandle<EntityPreset>(json.at("root"), api);
     }
 
     // name, root

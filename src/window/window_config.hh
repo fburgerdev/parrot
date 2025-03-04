@@ -12,17 +12,16 @@ namespace Parrot {
   class WindowConfig : public Asset {
   public:
     // (constructor) for Asset
-    WindowConfig(const AssetPath& asset_path, AssetAPI& asset_api);
+    WindowConfig(const AssetPath& path, AssetAPI& api);
     template<JsonType JSON>
-    WindowConfig(
-      const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
-    ) : Asset(asset_path) {
-      loadFromJSON(json, asset_api);
+    WindowConfig(const JSON& json, const AssetPath& path, AssetAPI& api)
+      : Asset(path) {
+      loadFromJSON(json, api);
     }
 
     // loadFromJSON
     template<JsonType JSON>
-    void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
+    void loadFromJSON(const JSON& json, AssetAPI& api) {
       // title
       if (json.contains("title")) {
         title = string(json.at("title"));

@@ -38,18 +38,17 @@ namespace Parrot {
   class Light : public Asset {
   public:
     // (constructor) for SubAsset
+    Light(const AssetPath& path, AssetAPI& api);
     template<JsonType JSON>
-    Light(
-      const JSON& json,
-      const AssetPath& asset_path,
-      [[maybe_unused]] AssetAPI& asset_api
-    ) : Asset(asset_path) {
-      loadFromJSON(json);
+    Light(const JSON& json, const AssetPath& path, AssetAPI& api)
+      : Asset(path) {
+      loadFromJSON(json, api);
     }
 
     // loadFromJSON
     template<JsonType JSON>
-    void loadFromJSON(const JSON& json) {
+    void loadFromJSON(const JSON& json, [[maybe_unused]] AssetAPI& api) {
+      // ambient
       if (json.at("type") == "ambient") {
         AmbientLight light;
         // intensity
@@ -66,6 +65,7 @@ namespace Parrot {
         }
         value = light;
       }
+      // directional
       else if (json.at("type") == "directional") {
         DirectionalLight light;
         // direction
@@ -88,6 +88,7 @@ namespace Parrot {
         }
         value = light;
       }
+      // point
       else if (json.at("type") == "point") {
         PointLight light;
         // position
@@ -114,6 +115,7 @@ namespace Parrot {
         }
         value = light;
       }
+      // spot
       else if (json.at("type") == "spot") {
         SpotLight light;
         // position
@@ -150,12 +152,10 @@ namespace Parrot {
 
     // value
     Variant<
-      AmbientLight,
-      DirectionalLight,
-      PointLight,
-      SpotLight
+      AmbientLight, DirectionalLight, PointLight, SpotLight
     > value; /* PARROT_API */
   };
+
   // <<
   ostream& operator<<(ostream& stream, const AmbientLight& light);
   ostream& operator<<(ostream& stream, const DirectionalLight& light);

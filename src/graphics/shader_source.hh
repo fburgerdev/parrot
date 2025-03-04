@@ -1,18 +1,20 @@
 #pragma once
 #include "core/asset_handle.hh"
+#include "core/log.hh"
 
 namespace Parrot {
-  // ShaderSource (Asset)
+  // ShaderSource
   class ShaderSource : public Asset {
   public:
     // (constructor)
     ShaderSource(const string& source);
     // :: for Asset
-    ShaderSource(const AssetPath& asset_path, AssetAPI& asset_api);
+    ShaderSource(const AssetPath& path, AssetAPI& api);
     template<JsonType JSON>
-    ShaderSource(
-      const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
-    ) : Asset(asset_path) {}
+    ShaderSource(const JSON& json, const AssetPath& path, AssetAPI& api)
+      : Asset(path) {
+      LOG_ASSET_ERROR("this method only exists to implement the asset-api");
+    }
 
     // SnippetInclude
     struct SnippetInclude {
@@ -50,7 +52,7 @@ namespace Parrot {
     struct ShaderStage : public Snippet {
       // Type
       enum class Type {
-        VERTEX, FRAGMENT
+        NONE = 0, VERTEX, FRAGMENT
       };
 
       // toString
@@ -59,7 +61,7 @@ namespace Parrot {
       }
 
       // type, version
-      Type type;
+      Type type = Type::NONE;
       string version = "330 core";
     };
 
@@ -72,27 +74,26 @@ namespace Parrot {
   class ShaderProgram : public Asset {
   public:
     // (constructor) for Asset
-    ShaderProgram(const AssetPath& asset_path, AssetAPI& asset_api);
+    ShaderProgram(const AssetPath& path, AssetAPI& api);
     template<JsonType JSON>
-    ShaderProgram(
-      const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
-    ) : Asset(asset_path) {
-      loadFromJSON(json, asset_api);
+    ShaderProgram(const JSON& json, const AssetPath& path, AssetAPI& api)
+      : Asset(path) {
+      loadFromJSON(json, api);
     }
 
     // loadFromJSON
     template<JsonType JSON>
-    void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
+    void loadFromJSON(const JSON& json, AssetAPI& api) {
       _sources.emplace_back(
-        AssetPath(stdf::path(".parrot/model.glsl.macro")), asset_api
+        AssetPath(stdf::path(".parrot/model.glsl.macro")), api
       );
       _sources.emplace_back(
-        AssetPath(stdf::path(".parrot/surface.glsl.macro")), asset_api
+        AssetPath(stdf::path(".parrot/surface.glsl.macro")), api
       );
       if (json.contains("sources")) {
         for (const auto& source_json : json.at("sources")) {
           _sources.emplace_back(
-            AssetPath(stdf::path(string(source_json))), asset_api
+            AssetPath(stdf::path(string(source_json))), api
           );
         }
       }

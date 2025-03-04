@@ -1,5 +1,6 @@
 #pragma once
 #include "core/asset_handle.hh"
+#include "core/log.hh"
 
 namespace Parrot {
   // ImageFormat
@@ -18,10 +19,13 @@ namespace Parrot {
     Image(strview name, const uchar* buffer, usize size);
     Image(const Image& other);
     Image(Image&& other) noexcept;
-    Image(const AssetPath& asset_path, AssetAPI& asset_api);
+    // :: for Asset
+    Image(const AssetPath& path, AssetAPI& api);
     template<JsonType JSON>
-    Image(const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api)
-      : Asset(asset_path) {}
+    Image(const JSON& json, const AssetPath& path, AssetAPI& api)
+      : Asset(path) {
+      LOG_ASSET_ERROR("this method only exists to implement the asset-api");
+    }
     // (destructor)
     ~Image();
     // (assignment)

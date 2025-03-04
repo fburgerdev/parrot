@@ -19,20 +19,20 @@ namespace Parrot {
   // TextureConfig (Asset)
   class TextureConfig : public Asset {
   public:
-    // (constructor) for Asset
-    TextureConfig(const AssetPath& asset_path, AssetAPI& asset_api);
+    // (constructor)
     TextureConfig(AssetHandle<Image> image);
+    // :: for Asset
+    TextureConfig(const AssetPath& path, AssetAPI& api);
     template<JsonType JSON>
-    TextureConfig(
-      const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
-    ) : Asset(asset_path) {
-      loadFromJSON(json, asset_api);
+    TextureConfig(const JSON& json, const AssetPath& path, AssetAPI& api)
+      : Asset(path) {
+      loadFromJSON(json, api);
     }
 
     // loadFromJSON
     template<JsonType JSON>
-    void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
-      image = AssetHandle<Image>(json.at("image"), asset_api);
+    void loadFromJSON(const JSON& json, AssetAPI& api) {
+      image = AssetHandle<Image>(json.at("image"), api);
       // TODO: properties...
     }
     

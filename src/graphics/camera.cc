@@ -1,6 +1,8 @@
 #include "common.hh"
 #include "camera.hh"
 #include "core/log.hh"
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
 
 namespace Parrot {
   // calcProjectionMatrix
@@ -46,11 +48,20 @@ namespace Parrot {
     return proj_mat;
   }
 
-  // Camera
+  // (constructor)
   Camera::Camera(const PerspectiveCamera& value)
     : value(value) {}
   Camera::Camera(const OrthographicCamera& value)
     : value(value) {}
+  // :: for Asset
+  Camera::Camera(const AssetPath& path, AssetAPI& api)
+    : Asset(path) {
+    auto json = path.applySubpathToJSON(
+      json::parse(ifstream(path.file))
+    );
+    loadFromJSON(json, api);
+  }
+
   // calcProjectionMatrix
   Mat4x4<float32> Camera::calcProjectionMatrix(float32 aspect) const {
     return std::visit([=](const auto& specific_camera) {

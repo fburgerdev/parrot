@@ -10,23 +10,23 @@ namespace Parrot {
   class EntityPreset : public Asset {
   public:
     // (constructor) for Asset
-    EntityPreset(const AssetPath& asset_path, AssetAPI& asset_api);
+    EntityPreset(const AssetPath& asset_path, AssetAPI& api);
     template<JsonType JSON>
-    EntityPreset(
-      const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
-    ) : Asset(asset_path) {
-      loadFromJSON(json, asset_api);
+    EntityPreset(const JSON& json, const AssetPath& path, AssetAPI& api)
+      : Asset(path) {
+      loadFromJSON(json, api);
     }
 
     // loadFromJSON
     template<JsonType JSON>
-    void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
+    void loadFromJSON(const JSON& json, AssetAPI& api) {
       // tag
       if (json.contains("tag")) {
         tag = string(json.at("tag"));
       }
       // transform
       if (json.contains("transform")) {
+        // position
         if (json.at("transform").contains("position")) {
           transform.position = Vec3<float32>(
             json.at("transform").at("position")[0],
@@ -34,6 +34,7 @@ namespace Parrot {
             json.at("transform").at("position")[2]
           );
         }
+        // rotation
         if (json.at("transform").contains("rotation")) {
           transform.rotation = Vec3<float32>(
             json.at("transform").at("rotation")[0],
@@ -41,6 +42,7 @@ namespace Parrot {
             json.at("transform").at("rotation")[2]
           );
         }
+        // scale
         if (json.at("transform").contains("scale")) {
           transform.scale = Vec3<float32>(
             json.at("transform").at("scale")[0],
@@ -52,19 +54,19 @@ namespace Parrot {
       // children
       if (json.contains("children")) {
         for (const auto& child : json.at("children")) {
-          children.emplace_back(child, asset_api);
+          children.emplace_back(child, api);
         }
       }
       // components
       if (json.contains("components")) {
         for (const auto& [name, data] : json.at("components").items()) {
           if (g_registry<
-              ComponentConfig, const JSON&, const AssetPath&, AssetAPI&
-            >.contains(name)) {
+                ComponentConfig, const JSON&, const AssetPath&, AssetAPI&
+              >.contains(name)) {
             components.emplace_back(
               g_registry<
                 ComponentConfig, const JSON&, const AssetPath&, AssetAPI&
-              >.at(name).second(data, asset_path, asset_api)
+              >.at(name).second(data, asset_path, api)
             );
           }
           else {

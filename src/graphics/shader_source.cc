@@ -34,6 +34,7 @@ namespace Parrot {
     return out;
   }
 
+  //* ShaderSource
   // (constructor)
   ShaderSource::ShaderSource(const string& source) {
     usize offset = 0;
@@ -109,18 +110,17 @@ namespace Parrot {
     }
   }
   // :: for Asset
-  ShaderSource::ShaderSource(const AssetPath& asset_path, AssetAPI& asset_api)
+  ShaderSource::ShaderSource(const AssetPath& path, AssetAPI& api)
     : ShaderSource(
-      (ostrstream() << ifstream(asset_path.file).rdbuf()).str()
-    ) {}
+        (ostrstream() << ifstream(path.file).rdbuf()).str()
+      ) {}
 
+  // ShaderProgram
   // (constructor) for Asset
-  ShaderProgram::ShaderProgram(
-    const AssetPath& asset_path, AssetAPI& asset_api
-  ) {
-    auto json = asset_path.applySubpathToJSON(
-      json::parse(ifstream(asset_path.file))
+  ShaderProgram::ShaderProgram(const AssetPath& path, AssetAPI& api) {
+    auto json = path.applySubpathToJSON(
+      json::parse(ifstream(path.file))
     );
-    loadFromJSON(json, asset_api);
+    loadFromJSON(json, api);
   }
 }

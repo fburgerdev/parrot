@@ -17,28 +17,25 @@ namespace Parrot {
   >;
   // MaterialLeaf
   using MaterialLeaf = Variant<
-    // numeric
-    NumericMaterialLeaf,
-    // texture
-    AssetHandle<TextureConfig>
+    NumericMaterialLeaf, AssetHandle<TextureConfig>
   >;
   // MaterialNode
   struct MaterialNode {
     // (constructor)
     MaterialNode() = default;
     template<JsonType JSON>
-    MaterialNode(const JSON& json, AssetAPI& asset_api) {
-      loadFromJSON(json, asset_api);
+    MaterialNode(const JSON& json, AssetAPI& api) {
+      loadFromJSON(json, api);
     }
 
     // loadFromJSON
     template<JsonType JSON>
-    void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
+    void loadFromJSON(const JSON& json, AssetAPI& api) {
       // object
       if (json.is_object()) {
         Map<string, MaterialNode> map;
         for (const auto& [key, value] : json.items()) {
-          map.try_emplace(key, value, asset_api);
+          map.try_emplace(key, value, api);
         }
         value = std::move(map);
       }
@@ -108,7 +105,7 @@ namespace Parrot {
           // texture
           else if (dtype == "texture") {
             value = MaterialLeaf(
-              AssetHandle<TextureConfig>(array.at(1), asset_api)
+              AssetHandle<TextureConfig>(array.at(1), api)
             );
           }
         }
@@ -116,7 +113,7 @@ namespace Parrot {
         else {
           List<MaterialNode> list;
           for (const auto& el : array) {
-            list.emplace_back(el, asset_api);
+            list.emplace_back(el, api);
           }
           value = std::move(list);
         }
@@ -125,9 +122,7 @@ namespace Parrot {
 
     // value
     Variant<
-      Map<string, MaterialNode>,
-      List<MaterialNode>,
-      MaterialLeaf
+      Map<string, MaterialNode>, List<MaterialNode>, MaterialLeaf
     > value;
   private:
     static string normalized(const string& str) {
@@ -161,29 +156,27 @@ namespace Parrot {
   class Material : public Asset {
   public:
     // (constructor) for Asset
-    Material(const AssetPath& asset_path, AssetAPI& asset_api);
+    Material(const AssetPath& path, AssetAPI& api);
     template<JsonType JSON>
-    Material(
-      const JSON& json, const AssetPath& asset_path, AssetAPI& asset_api
-    ) : Asset(asset_path) {
-      loadFromJSON(json, asset_api);
+    Material(const JSON& json, const AssetPath& path, AssetAPI& api)
+      : Asset(path) {
+      loadFromJSON(json, api);
     }
 
     // loadFromJSON
     template<JsonType JSON>
-    void loadFromJSON(const JSON& json, AssetAPI& asset_api) {
+    void loadFromJSON(const JSON& json, AssetAPI& api) {
       // root
       if (json.contains("uniforms")) {
-        root.loadFromJSON(json.at("uniforms"), asset_api);
+        root.loadFromJSON(json.at("uniforms"), api);
       }
       // shader
       if (json.contains("shader")) {
-        shader = AssetHandle<ShaderProgram>(json.at("shader"), asset_api);
+        shader = AssetHandle<ShaderProgram>(json.at("shader"), api);
       }
       else {
         shader = AssetHandle<ShaderProgram>(
-          AssetPath(stdf::path(string(".parrot/model.program.json"))),
-          asset_api
+          AssetPath(stdf::path(string(".parrot/model.program.json"))), api
         );
       }
     }

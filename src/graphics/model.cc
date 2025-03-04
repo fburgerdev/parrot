@@ -73,14 +73,14 @@ namespace Parrot {
     model_materials.emplace_back();
   }
   // :: for Asset
-  Model::Model(const AssetPath& asset_path, AssetAPI& asset_api)
-    : Asset(asset_path) {
+  Model::Model(const AssetPath& path, AssetAPI& api)
+    : Asset(path) {
     Assimp::Importer importer;
     uint flags = 0;
     flags |= aiProcess_Triangulate;
     flags |= aiProcess_FlipUVs;
     flags |= aiProcess_FlipWindingOrder;
-    const aiScene* scene = importer.ReadFile(asset_path.file.string(), flags);
+    const aiScene* scene = importer.ReadFile(path.file.string(), flags);
     if (!scene || !scene->mRootNode ||
       (scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE)) {
         cout << "ERROR::ASSIMP::" << importer.GetErrorString() << endl;
@@ -98,16 +98,16 @@ namespace Parrot {
         const auto* texture = scene->GetEmbeddedTexture(name.C_Str());
         if (texture->mHeight == 0) {
           model_material.tex_index = textures.size();
-          UUID uuid = asset_api.addAsset(std::make_shared<Image>(
+          UUID uuid = api.addAsset(std::make_shared<Image>(
             name.C_Str(), (const uchar*)texture->pcData, texture->mWidth
           ));
-          textures.emplace_back(AssetHandle<Image>(uuid, asset_api));
+          textures.emplace_back(AssetHandle<Image>(uuid, api));
         }
       }
     }
     LOG_ASSET_DEBUG(
       "loaded model {} with {} submodel(s) and {}",
-      asset_path, submodels.size(), textures.size()
+      path, submodels.size(), textures.size()
     );
   }
 }

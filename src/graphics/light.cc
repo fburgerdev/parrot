@@ -1,7 +1,18 @@
 #include "common.hh"
 #include "light.hh"
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
 
 namespace Parrot {
+  // (constructor) for Asset
+  Light::Light(const AssetPath& path, AssetAPI& api)
+    : Asset(path) {
+    auto json = path.applySubpathToJSON(
+      json::parse(ifstream(path.file))
+    );
+    loadFromJSON(json, api);
+  }
+
   // <<
   ostream& operator<<(ostream& stream, const AmbientLight& light) {
     stream << "AmbientLight(";
