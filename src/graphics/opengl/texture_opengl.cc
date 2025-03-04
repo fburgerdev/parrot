@@ -5,6 +5,26 @@
 namespace Parrot {
   namespace OpenGL {
     // (constructor)
+    Texture::Texture(uint width, uint height) {
+      // generate
+      glGenTextures(1, &_gpu_id);
+      glActiveTexture(GL_TEXTURE0);
+      glBindTexture(GL_TEXTURE_2D, _gpu_id);
+      glEnable(GL_TEXTURE_2D);
+
+      // set texture wrapping to GL_REPEAT (default wrapping method)
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+      // set texture filtering parameters
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+      glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+      // set data
+      glTexImage2D(
+        GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0,
+        GL_RGBA, GL_UNSIGNED_BYTE, nullptr
+      );
+    }
     Texture::Texture(const TextureConfig& config) {
       // generate
       glGenTextures(1, &_gpu_id);
@@ -20,7 +40,7 @@ namespace Parrot {
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-      // load image
+      // set data
       auto image = config.image.lock();
       glTexImage2D(
         GL_TEXTURE_2D, 0, GL_RGBA,

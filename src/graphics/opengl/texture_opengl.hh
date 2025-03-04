@@ -7,6 +7,7 @@ namespace Parrot {
     class Texture {
     public:
       // (constructor)
+      Texture(uint width, uint height);
       Texture(const TextureConfig& config);
       Texture(const Texture&) = delete;
       Texture(Texture&& other) noexcept;
@@ -19,6 +20,9 @@ namespace Parrot {
       // bind, unbind
       void bind(uint slot) const;
       static void unbind(uint slot);
+
+      // friend
+      friend class FrameBuffer;
     private:
       uint _gpu_id = 0;
     };
