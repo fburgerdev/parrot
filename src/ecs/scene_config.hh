@@ -22,10 +22,17 @@ namespace Parrot {
       }
       // root
       root = AssetHandle<EntityPreset>(json.at("root"), api);
+      // scripts
+      if (json.contains("scripts")) {
+        for (const auto& script : json.at("scripts")) {
+          scripts.emplace_back(string(script));
+        }
+      }
     }
 
-    // name, root
+    // name, root, scripts
     string name = "Unnamed Scene";
     AssetHandle<EntityPreset> root;
+    List<string> scripts;
   };
 }

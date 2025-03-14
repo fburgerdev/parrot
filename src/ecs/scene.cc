@@ -10,6 +10,10 @@ namespace Parrot {
     const SceneConfig& config, Scriptable* parent, AssetAPI& asset_api
   ) : name(config.name), root(this) {
     root = Entity(config.root.lock(), this, asset_api);
+    for (const string& script : config.scripts) {
+      auto [uuid, factory] = g_registry<Script, Scene&, AssetAPI&>.at(script);
+      addScript(uuid, factory(*this, asset_api));
+    }
   }
   // (destructor)
   Scene::~Scene() {
