@@ -3,6 +3,7 @@
 #include "graphics/light.hh"
 #include "graphics/render_object.hh"
 #include "graphics/material.hh"
+#include "frame_buffer_opengl.hh"
 #include "vertex_array_opengl.hh"
 #include "shader_opengl.hh"
 #include "texture_opengl.hh"
@@ -13,6 +14,10 @@ namespace Parrot {
     // Context
     class Context {
     public:
+      // getFrameBuffer
+      FrameBuffer& getFrameBuffer(usize index);
+      FrameBuffer& getFrameBuffer(const string& name);
+
       // getVertexArray
       VertexArray& getVertexArray(const Mesh& mesh);
       // getShader
@@ -55,6 +60,7 @@ namespace Parrot {
         const string& prefix = "", uint tex_slot = 1
       );
     private:
+      Map<string, FrameBuffer> _frame_buffers;
       HashMap<UUID, Shader> _shaders;
       HashMap<UUID, Texture> _textures;
       HashMap<UUID, VertexBuffer> _vertex_buffers;

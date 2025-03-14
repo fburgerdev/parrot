@@ -4,6 +4,18 @@
 
 namespace Parrot {
   namespace OpenGL {
+    // getFrameBuffer
+    FrameBuffer& Context::getFrameBuffer(usize index) {
+      return getFrameBuffer("Frame" + std::to_string(index));
+    }
+    FrameBuffer& Context::getFrameBuffer(const string& name) {
+      if (!_frame_buffers.contains(name)) {
+        // TODO: remove hard coded size
+        _frame_buffers.emplace(name, FrameBuffer(1080, 720));
+      }
+      return _frame_buffers.at(name);
+    }
+
     // getVertexArray
     VertexArray& Context::getVertexArray(const Mesh& mesh) {
       auto it = _vertex_arrays.find(mesh.getUUID());
