@@ -63,8 +63,9 @@ namespace Parrot {
         const string& prefix = "", uint tex_slot = 1
       );
 
-      // flat_shader
+      // flat_shader, frame_vertex_array
       Shader flat_shader;
+      VertexArray frame_vertex_array;
     private:
       Map<string, FrameBuffer> _frame_buffers;
       HashMap<UUID, Shader> _shaders;

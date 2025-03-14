@@ -4,12 +4,29 @@
 
 namespace Parrot {
   namespace OpenGL {
-    // (static) flat_path
+    // (static) flat_path, frame_path
     static AssetPath flat_path = stdf::path(".parrot/flat.shader.json");
-    
+    static AssetPath frame_path = stdf::path(".parrot/frame.obj");
+
+    // (static) createVertexArray
+    VertexArray createVertexArray(const Mesh& mesh) {
+      return {
+        VertexBuffer(
+          mesh.vertices.data(), mesh.vertices.size() * sizeof(Vertex)
+        ),
+        IndexBuffer(mesh.indices.data(), mesh.indices.size()),
+        Vertex::attributes()
+      };
+    }
+
     // (constructor)
     Context::Context(AssetAPI& api)
-      : flat_shader(*AssetHandle<ShaderProgram>(flat_path, api).lock()) {}
+      : flat_shader(
+          *AssetHandle<ShaderProgram>(flat_path, api).lock()
+        ),
+        frame_vertex_array(OpenGL::createVertexArray(
+          AssetHandle<Model>(frame_path, api).lock()->submodels.front().first
+        )) {}
 
     // getFrameBuffer
     FrameBuffer& Context::getFrameBuffer(usize index) {
