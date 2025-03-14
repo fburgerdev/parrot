@@ -59,6 +59,18 @@ namespace Parrot {
     _scripts.clear();
   }
 
+  // foreachScript
+  void Scriptable::foreachScript(Func<void(Script&)> func) {
+    for (auto& [uuid, script] : _scripts) {
+      func(*script);
+    }
+  }
+  void Scriptable::foreachScript(Func<void(const Script&)> func) const {
+    for (const auto& [uuid, script] : _scripts) {
+      func(*script);
+    }
+  }
+
   // update
   void Scriptable::update(float32 delta_time) {
     for (auto& [id, script] : _scripts) {

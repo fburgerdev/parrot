@@ -118,6 +118,9 @@ namespace Parrot {
     }
     // removeAllScripts
     void removeAllScripts();
+    // foreachScript
+    void foreachScript(Func<void(Script&)> func);
+    void foreachScript(Func<void(const Script&)> func) const;
   private:
     Scriptable* _parent = nullptr;
     HashMap<usize, UniquePtr<Script>> _scripts;
