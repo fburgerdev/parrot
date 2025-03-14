@@ -51,12 +51,13 @@ namespace Parrot {
     // onAttach
     virtual void onAttach() override {
       static constexpr uint WIDTH = 100, DEPTH = 100;
+      static constexpr uint SAMPLE_X = 500, SAMPLE_Z = 500;
       static constexpr uint RESOLUTION = 5;
       static constexpr float32 WATER_DEPTH = 10.0F, ISLAND_HEIGHT = 10.0F;
       // heights
       auto rng = RNG<>(0);
       List<float32> heights = generatePerlin2D<float32>(
-        { WIDTH * RESOLUTION, DEPTH * RESOLUTION }, { 2, 2 }, 4, rng
+        { SAMPLE_X, SAMPLE_Z }, { 2, 2 }, 4, rng
       );
       float32 min_height = +99999, max_height = -99999;
       for (float32 height : heights) {
@@ -71,32 +72,32 @@ namespace Parrot {
       }
       // mesh
       Mesh mesh;
-      for (uint z = 0; z < DEPTH * RESOLUTION; ++z) {
-        for (uint x = 0; x < WIDTH * RESOLUTION; ++x) {
+      for (uint z = 0; z < SAMPLE_Z; ++z) {
+        for (uint x = 0; x < SAMPLE_X; ++x) {
           mesh.vertices.push_back({
             .position = {
               float32(x) / RESOLUTION - float32(WIDTH) / 2,
-              heights[WIDTH * RESOLUTION * z + x],
+              heights[SAMPLE_X * z + x],
               float32(z) / RESOLUTION - float32(DEPTH) / 2,
             },
             .tex_coords = {
-              float32(x) / (WIDTH * RESOLUTION),
-              float32(z) / (DEPTH * RESOLUTION)
+              float32(x) / (SAMPLE_X),
+              float32(z) / (SAMPLE_Z)
             },
           });
         }
       }
-      for (uint z = 0; z < DEPTH * RESOLUTION - 1; ++z) {
-        for (uint x = 0; x < WIDTH * RESOLUTION - 1; ++x) {
-          mesh.indices.push_back(WIDTH * RESOLUTION * (z + 0) + (x + 0));
-          mesh.indices.push_back(WIDTH * RESOLUTION * (z + 0) + (x + 1));
-          mesh.indices.push_back(WIDTH * RESOLUTION * (z + 1) + (x + 1));
-          mesh.indices.push_back(WIDTH * RESOLUTION * (z + 0) + (x + 0));
-          mesh.indices.push_back(WIDTH * RESOLUTION * (z + 1) + (x + 1));
-          mesh.indices.push_back(WIDTH * RESOLUTION * (z + 1) + (x + 0));
+      for (uint z = 0; z < SAMPLE_Z - 1; ++z) {
+        for (uint x = 0; x < SAMPLE_X - 1; ++x) {
+          mesh.indices.push_back(SAMPLE_X * (z + 0) + (x + 0));
+          mesh.indices.push_back(SAMPLE_X * (z + 0) + (x + 1));
+          mesh.indices.push_back(SAMPLE_X * (z + 1) + (x + 1));
+          mesh.indices.push_back(SAMPLE_X * (z + 0) + (x + 0));
+          mesh.indices.push_back(SAMPLE_X * (z + 1) + (x + 1));
+          mesh.indices.push_back(SAMPLE_X * (z + 1) + (x + 0));
         }
       }
-      calcGridNormals(WIDTH * RESOLUTION, DEPTH * RESOLUTION, mesh.vertices);
+      calcGridNormals(SAMPLE_X, SAMPLE_Z, mesh.vertices);
       // asset
       _asset = std::make_shared<Model>("terrain");
       _asset->submodels.emplace_back(
@@ -109,8 +110,8 @@ namespace Parrot {
       auto children = entity->findByTag("Border");
       auto& child = **children.begin();
       Mesh border_mesh;
-      for (uint z : List<uint>({ 0, DEPTH * RESOLUTION - 1 })) {
-        for (uint x = 0; x < WIDTH * RESOLUTION; ++x) {
+      for (uint z : List<uint>({ 0, SAMPLE_Z - 1 })) {
+        for (uint x = 0; x < SAMPLE_X; ++x) {
           border_mesh.vertices.push_back({
             .position = {
               float32(x) / RESOLUTION - float32(WIDTH) / 2,
@@ -119,46 +120,46 @@ namespace Parrot {
             },
             .normal = { 0, 0, -1 },
             .tex_coords = {
-              float32(z) / (WIDTH * RESOLUTION),
-              float32(z) / (DEPTH * RESOLUTION)
+              float32(z) / (SAMPLE_X),
+              float32(z) / (SAMPLE_Z)
             },
           });
         }
-        for (uint x = 0; x < WIDTH * RESOLUTION; ++x) {
+        for (uint x = 0; x < SAMPLE_X; ++x) {
           border_mesh.vertices.push_back({
             .position = {
               float32(x) / RESOLUTION - float32(WIDTH) / 2,
-              heights[WIDTH * RESOLUTION * z + x],
+              heights[SAMPLE_X * z + x],
               float32(z) / RESOLUTION - float32(DEPTH) / 2,
             },
-            .normal = mesh.vertices.at(WIDTH * RESOLUTION * z + x).normal,
+            .normal = mesh.vertices.at(SAMPLE_X * z + x).normal,
             .tex_coords = {
-              float32(x) / (WIDTH * RESOLUTION),
-              float32(z) / (DEPTH * RESOLUTION)
+              float32(x) / (SAMPLE_X),
+              float32(z) / (SAMPLE_Z)
             },
           });
         }
       }
-      for (uint x = 0; x < WIDTH * RESOLUTION - 1; ++x) {
-        border_mesh.indices.push_back(WIDTH * RESOLUTION * (0 + 0) + (x + 0));
-        border_mesh.indices.push_back(WIDTH * RESOLUTION * (0 + 0) + (x + 1));
-        border_mesh.indices.push_back(WIDTH * RESOLUTION * (0 + 1) + (x + 1));
-        border_mesh.indices.push_back(WIDTH * RESOLUTION * (0 + 0) + (x + 0));
-        border_mesh.indices.push_back(WIDTH * RESOLUTION * (0 + 1) + (x + 1));
-        border_mesh.indices.push_back(WIDTH * RESOLUTION * (0 + 1) + (x + 0));
+      for (uint x = 0; x < SAMPLE_X - 1; ++x) {
+        border_mesh.indices.push_back(SAMPLE_X * 0 + (x + 0));
+        border_mesh.indices.push_back(SAMPLE_X * 0 + (x + 1));
+        border_mesh.indices.push_back(SAMPLE_X * 1 + (x + 1));
+        border_mesh.indices.push_back(SAMPLE_X * 0 + (x + 0));
+        border_mesh.indices.push_back(SAMPLE_X * 1 + (x + 1));
+        border_mesh.indices.push_back(SAMPLE_X * 1 + (x + 0));
       }
-      for (uint x = 0; x < WIDTH * RESOLUTION - 1; ++x) {
-        border_mesh.indices.push_back(WIDTH * RESOLUTION * (2 + 0) + (x + 0));
-        border_mesh.indices.push_back(WIDTH * RESOLUTION * (2 + 1) + (x + 1));
-        border_mesh.indices.push_back(WIDTH * RESOLUTION * (2 + 0) + (x + 1));
-        border_mesh.indices.push_back(WIDTH * RESOLUTION * (2 + 0) + (x + 0));
-        border_mesh.indices.push_back(WIDTH * RESOLUTION * (2 + 1) + (x + 0));
-        border_mesh.indices.push_back(WIDTH * RESOLUTION * (2 + 1) + (x + 1));
+      for (uint x = 0; x < SAMPLE_X - 1; ++x) {
+        border_mesh.indices.push_back(SAMPLE_X * 2 + (x + 0));
+        border_mesh.indices.push_back(SAMPLE_X * 3 + (x + 1));
+        border_mesh.indices.push_back(SAMPLE_X * 2 + (x + 1));
+        border_mesh.indices.push_back(SAMPLE_X * 2 + (x + 0));
+        border_mesh.indices.push_back(SAMPLE_X * 3 + (x + 0));
+        border_mesh.indices.push_back(SAMPLE_X * 3 + (x + 1));
       }
 
       usize offset = border_mesh.vertices.size();
-      for (uint x : List<uint>({ 0, WIDTH * RESOLUTION - 1 })) {
-        for (uint z = 0; z < DEPTH * RESOLUTION; ++z) {
+      for (uint x : List<uint>({ 0, SAMPLE_X - 1 })) {
+        for (uint z = 0; z < SAMPLE_Z; ++z) {
           border_mesh.vertices.push_back({
             .position = {
               float32(x) / RESOLUTION - float32(WIDTH) / 2,
@@ -167,54 +168,56 @@ namespace Parrot {
             },
             .normal = { 0, 0, -1 },
             .tex_coords = {
-              float32(z) / (WIDTH * RESOLUTION),
-              float32(z) / (DEPTH * RESOLUTION)
+              float32(z) / (SAMPLE_X),
+              float32(z) / (SAMPLE_Z)
             },
             });
         }
-        for (uint z = 0; z < DEPTH * RESOLUTION; ++z) {
+        for (uint z = 0; z < SAMPLE_Z; ++z) {
           border_mesh.vertices.push_back({
             .position = {
               float32(x) / RESOLUTION - float32(WIDTH) / 2,
-              heights[WIDTH * RESOLUTION * z + x],
+              heights[SAMPLE_X * z + x],
               float32(z) / RESOLUTION - float32(DEPTH) / 2,
             },
-            .normal = mesh.vertices.at(WIDTH * RESOLUTION * z + x).normal,
+            .normal = mesh.vertices.at(SAMPLE_X * z + x).normal,
             .tex_coords = {
-              float32(x) / (WIDTH * RESOLUTION),
-              float32(z) / (DEPTH * RESOLUTION)
+              float32(x) / (SAMPLE_X),
+              float32(z) / (SAMPLE_Z)
             },
             });
         }
       }
-      for (uint z = 0; z < DEPTH * RESOLUTION - 1; ++z) {
-        border_mesh.indices.push_back(offset + WIDTH * RESOLUTION * (0 + 0) + (z + 0));
-        border_mesh.indices.push_back(offset + WIDTH * RESOLUTION * (0 + 1) + (z + 1));
-        border_mesh.indices.push_back(offset + WIDTH * RESOLUTION * (0 + 0) + (z + 1));
-        border_mesh.indices.push_back(offset + WIDTH * RESOLUTION * (0 + 0) + (z + 0));
-        border_mesh.indices.push_back(offset + WIDTH * RESOLUTION * (0 + 1) + (z + 0));
-        border_mesh.indices.push_back(offset + WIDTH * RESOLUTION * (0 + 1) + (z + 1));
+      for (uint z = 0; z < SAMPLE_Z - 1; ++z) {
+        border_mesh.indices.push_back(offset + SAMPLE_X * 0 + (z + 0));
+        border_mesh.indices.push_back(offset + SAMPLE_X * 1 + (z + 1));
+        border_mesh.indices.push_back(offset + SAMPLE_X * 0 + (z + 1));
+        border_mesh.indices.push_back(offset + SAMPLE_X * 0 + (z + 0));
+        border_mesh.indices.push_back(offset + SAMPLE_X * 1 + (z + 0));
+        border_mesh.indices.push_back(offset + SAMPLE_X * 1 + (z + 1));
       }
-      for (uint z = 0; z < DEPTH * RESOLUTION - 1; ++z) {
-        border_mesh.indices.push_back(offset + DEPTH * RESOLUTION * (2 + 0) + (z + 0));
-        border_mesh.indices.push_back(offset + DEPTH * RESOLUTION * (2 + 0) + (z + 1));
-        border_mesh.indices.push_back(offset + DEPTH * RESOLUTION * (2 + 1) + (z + 1));
-        border_mesh.indices.push_back(offset + DEPTH * RESOLUTION * (2 + 0) + (z + 0));
-        border_mesh.indices.push_back(offset + DEPTH * RESOLUTION * (2 + 1) + (z + 1));
-        border_mesh.indices.push_back(offset + DEPTH * RESOLUTION * (2 + 1) + (z + 0));
+      for (uint z = 0; z < SAMPLE_Z - 1; ++z) {
+        border_mesh.indices.push_back(offset + SAMPLE_Z * 2 + (z + 0));
+        border_mesh.indices.push_back(offset + SAMPLE_Z * 2 + (z + 1));
+        border_mesh.indices.push_back(offset + SAMPLE_Z * 3 + (z + 1));
+        border_mesh.indices.push_back(offset + SAMPLE_Z * 2 + (z + 0));
+        border_mesh.indices.push_back(offset + SAMPLE_Z * 3 + (z + 1));
+        border_mesh.indices.push_back(offset + SAMPLE_Z * 3 + (z + 0));
       }
       // asset
       _border_asset = std::make_shared<Model>("border");
       _border_asset->submodels.emplace_back(
         std::move(border_mesh), 0
       );
-      _border_handle = AssetHandle<Model>(asset_api->addAsset(_border_asset), *asset_api);
+      _border_handle = AssetHandle<Model>(
+        asset_api->addAsset(_border_asset), *asset_api
+      );
       child.getComponent<RenderObjectComponent>().model = _border_handle;
     }
   private:
     AssetHandle<Model> _handle;
-    AssetHandle<Model> _border_handle;
     SharedPtr<Model> _asset;
+    AssetHandle<Model> _border_handle;
     SharedPtr<Model> _border_asset;
   };
 }

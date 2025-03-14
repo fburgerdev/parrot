@@ -1,0 +1,36 @@
+{
+  "shader": {
+    "sources": [
+      "shaders/terrain.glsl.macro",
+      "shaders/reflection.glsl.macro"
+    ]
+  },
+  "uniforms": {
+    "albedo": [
+      "texture",
+      {
+        "image": ".parrot/white.png"
+      }
+    ],
+    "normal": [
+      "texture",
+      {
+        "image": ".parrot/normal.png"
+      }
+    ],
+    "specular": [
+      "texture",
+      {
+        "image": ".parrot/white.png"
+      }
+    ],
+    "surface": {
+      "specular_strength": [ "f32", 0.0 ]
+    },
+    "tint": [
+      "vec3f32",
+      [ 1, 1, 1 ]
+    ],
+    "opacity": [ "f32", 1.0 ]
+  }
+}

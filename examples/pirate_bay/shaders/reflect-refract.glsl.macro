@@ -1,0 +1,51 @@
+[[snippet "fragment-global"]]
+float linear_depth(float depth, float near, float far) {
+    float z = depth * 2.0 - 1.0; // back to NDC
+    return (2.0 * near * far) / (far + near - z * (far - near));
+}
+float linear_depth01(float depth, float near, float far) {
+    float z = depth * 2.0 - 1.0; // Back to NDC
+    float linear = (2.0 * near * far) / (far + near - z * (far - near));
+    return (linear - near) / (far - near); // Now between 0 and 1
+}
+[[end]]
+
+[[snippet "fragment-postfix"]]
+float normal_depth = linear_depth(
+	texture(u_frame1_depth, v_tex_coords).r,
+	0.01, 10000
+);
+float water_depth = linear_depth(
+	texture(u_frame2_depth, v_tex_coords).r,
+	0.01, 10000
+);
+float delta_depth = normal_depth - water_depth;
+if (delta_depth > 0) {
+  float water_opacity = clamp(sqrt(delta_depth) / 4, 0.3, 0.9);
+  vec4 refraction = mix(
+    texture(u_frame1, v_tex_coords),
+    vec4(0, 84, 119, 255) / 255,
+    water_opacity
+  );
+  float foam_threshold = 0.0;
+  if (delta_depth < foam_threshold) {
+    int steps = 2;
+    float foam_factor = 1 - float(int((delta_depth / foam_threshold) * steps)) / steps;
+    refraction = mix(
+      refraction,
+      vec4(1),
+      foam_factor
+    );
+  }
+  vec4 reflection = texture(u_frame2, v_tex_coords);
+  color = mix(
+    refraction,
+    reflection,
+    water_opacity
+  );
+}
+else {
+  color = texture(u_frame1, v_tex_coords);
+}
+
+[[end]]

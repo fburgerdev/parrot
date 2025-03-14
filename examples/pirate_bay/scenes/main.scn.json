@@ -83,5 +83,6 @@
         "scripts": [ "PlayerController" ]
       }
     ]
-  }
+  },
+  "scripts": [ "RenderMain" ]
 }

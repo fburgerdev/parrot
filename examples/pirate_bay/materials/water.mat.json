@@ -1,5 +1,12 @@
 {
+  "shader": {
+    "sources": [ "shaders/water.glsl.macro" ]
+  },
   "uniforms": {
+    "reflection": [
+      "frame",
+      "Reflection"
+    ],
     "albedo": [
       "texture",
       { "image": "images/water-albedo.jpg" }

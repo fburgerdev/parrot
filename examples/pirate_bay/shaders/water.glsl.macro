@@ -1,0 +1,11 @@
+[[snippet "fragment-global"]]
+uniform sampler2D u_reflection;
+[[end]]
+
+[[snippet "fragment-postfix"]]
+vec2 reflection_coords = vec2(gl_FragCoord.x / 1080, 1 - gl_FragCoord.y / 720);
+vec4 refraction = vec4(color.rgb, 0.5);
+vec4 reflection = texture(u_reflection, reflection_coords);
+color = mix(refraction, reflection, 0.3);
+color = vec4(reflection.rgb, 0.5);
+[[end]]

@@ -1,5 +1,6 @@
 #include "client.hh"
 #include "scripts/fps.hh"
+#include "scripts/render-main.hh"
 #include "scripts/controller.hh"
 #include "scripts/terrain_mesh.hh"
 
@@ -33,7 +34,17 @@ namespace Parrot {
   };
   template<>
   Map<string, RegistryEntry<Script, Scene&, AssetAPI&>>
-    g_registry<Script, Scene&, AssetAPI&> = {};
+    g_registry<Script, Scene&, AssetAPI&> = {
+    {
+      "RenderMain",
+      {
+        typeid(RenderMain).hash_code(),
+        [](Scene& scene, AssetAPI& asset_api) {
+          return std::make_unique<RenderMain>(scene, asset_api);
+        }
+      }
+    },
+  };
   template<>
   Map<string, RegistryEntry<Script, Window&>>
     g_registry<Script, Window&> = {};
