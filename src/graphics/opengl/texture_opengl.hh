@@ -3,11 +3,15 @@
 
 namespace Parrot {
   namespace OpenGL {
+    // TextureFormat
+    enum class TextureFormat {
+      RGBA, DEPTH
+    };
     // Texture
     class Texture {
     public:
       // (constructor)
-      Texture(uint width, uint height);
+      Texture(uint width, uint height, TextureFormat format);
       Texture(const TextureConfig& config);
       Texture(const Texture&) = delete;
       Texture(Texture&& other) noexcept;

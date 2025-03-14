@@ -5,7 +5,7 @@
 namespace Parrot {
   namespace OpenGL {
     // (constructor)
-    Texture::Texture(uint width, uint height) {
+    Texture::Texture(uint width, uint height, TextureFormat format) {
       // generate
       glGenTextures(1, &_gpu_id);
       glActiveTexture(GL_TEXTURE0);
@@ -20,10 +20,23 @@ namespace Parrot {
       glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
       // set data
-      glTexImage2D(
-        GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0,
-        GL_RGBA, GL_UNSIGNED_BYTE, nullptr
-      );
+      if (format == TextureFormat::RGBA) {
+        glTexImage2D(
+          GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0,
+          GL_RGBA, GL_UNSIGNED_BYTE, nullptr
+        );
+      }
+      else if (format == TextureFormat::DEPTH) {
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexImage2D(
+          GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, width, height, 0,
+          GL_DEPTH_COMPONENT, GL_FLOAT, nullptr
+        );
+      }
+      glBindTexture(GL_TEXTURE_2D, 0);
     }
     Texture::Texture(const TextureConfig& config) {
       // generate
@@ -48,6 +61,7 @@ namespace Parrot {
         GL_RGBA, GL_UNSIGNED_BYTE,
         image->getBytes()
       );
+      glBindTexture(GL_TEXTURE_2D, 0);
     }
     Texture::Texture(Texture&& other) noexcept
       : _gpu_id(std::exchange(other._gpu_id, 0)) {}
