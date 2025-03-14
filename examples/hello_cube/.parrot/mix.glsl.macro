@@ -1,0 +1,66 @@
+[[vertex(330 core)]]
+// in
+layout (location = 0) in vec3 a_position;
+layout (location = 1) in vec3 a_normal;
+layout (location = 2) in vec2 a_tex_coords;
+layout (location = 3) in vec3 a_tangent;
+// out
+out vec3 v_position;
+out vec2 v_tex_coords;
+
+// general
+uniform float u_total_time;
+
+// (snippet) global
+[[include "vertex-global" optional]]
+
+// main
+void main() {
+    // (snippet) prefix
+    [[include "vertex-prefix" optional]]
+    
+    // position
+    gl_Position = vec4(a_position, 1);
+
+    // out
+    v_position = a_position;
+    v_tex_coords = a_tex_coords;
+
+    // (snippet) postfix
+    [[include "vertex-postfix" optional]]
+}
+[[end]]
+
+[[fragment(330 core)]]
+// in
+in vec3 v_position;
+in vec2 v_tex_coords;
+// out
+out vec4 o_frag_color; 
+
+// general
+uniform float u_total_time;
+
+// opacity
+uniform sampler2D u_frame1;
+uniform sampler2D u_frame1_depth;
+uniform sampler2D u_frame2;
+uniform sampler2D u_frame2_depth;
+
+// (snippet) global
+[[include "fragment-global" optional]]
+
+// main
+void main() {
+    // (snippet) prefix
+    [[include "fragment-prefix" optional]]
+
+    // color
+    vec4 color = vec4(1, 0, 1, 1);
+    
+    // (snippet) postfix
+    [[include "fragment-postfix" optional]]
+
+    o_frag_color = color;
+}
+[[end]]
