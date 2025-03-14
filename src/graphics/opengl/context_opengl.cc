@@ -100,6 +100,12 @@ namespace Parrot {
           shader.setUniform<int32>(prefix, tex_slot);
           tex_slot += 1;
         }
+        else if (holds<FrameName>(leaf)) {
+          auto& frame_buffer = getFrameBuffer(std::get<FrameName>(leaf));
+          frame_buffer.getTexture().bind(tex_slot);
+          shader.setUniform<int32>(prefix, tex_slot);
+          tex_slot += 1;
+        }
       }
       return tex_slot;
     }

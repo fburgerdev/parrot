@@ -4,6 +4,8 @@
 #include "utils/math_matrix.hh"
 
 namespace Parrot {
+  // FrameName
+  using FrameName = string;
   // NumericMaterialLeaf
   using NumericMaterialLeaf = Variant<
     // int32
@@ -17,7 +19,7 @@ namespace Parrot {
   >;
   // MaterialLeaf
   using MaterialLeaf = Variant<
-    NumericMaterialLeaf, AssetHandle<TextureConfig>
+    NumericMaterialLeaf, AssetHandle<TextureConfig>, FrameName
   >;
   // MaterialNode
   struct MaterialNode {
@@ -107,6 +109,10 @@ namespace Parrot {
             value = MaterialLeaf(
               AssetHandle<TextureConfig>(array.at(1), api)
             );
+          }
+          // frame
+          else if (dtype == "frame") {
+            value = MaterialLeaf(FrameName(array.at(1)));
           }
         }
         // list
