@@ -18,13 +18,15 @@ namespace Parrot {
 
       // getTexture
       const Texture& getTexture() const;
+      // getDepthTexture
+      const Texture& getDepthTexture() const;
 
       // bind / unbind
       void bind() const;
       static void unbind();
     private:
-      uint _gpu_id = 0, _depth_stencil_id = 0;
-      Texture _texture;
+      uint _gpu_id = 0;
+      Texture _texture, _depth;
     };
   }
 }
