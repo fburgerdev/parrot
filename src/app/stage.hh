@@ -5,6 +5,9 @@
 #include "graphics/renderer.hh"
 
 namespace Parrot {
+  // getRenderData
+  RenderData getRenderData(Scene& scene);
+  
   // Stage
   class Stage : public Scriptable {
   public:

@@ -3,8 +3,8 @@
 #include "component_registry.hh"
 
 namespace Parrot {
-  // (static) getRenderData
-  static RenderData getRenderData(Scene& scene) {
+  // getRenderData
+  RenderData getRenderData(Scene& scene) {
     RenderData render_data;
     // camera
     auto camera_entities = scene.queryEntities<CameraComponent>();
@@ -66,7 +66,13 @@ namespace Parrot {
   // render
   void Stage::render() {
     for (auto& [scene, renderer] : scene_layers) {
-      renderer.drawScene(getRenderData(scene));
+      if (scene.render) {
+        (*scene.render)(renderer, scene);
+      }
+      else {
+        renderer.drawScene(getRenderData(scene), "Main");
+        renderer.submit("Main");
+      }
     }
   }
 

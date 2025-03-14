@@ -3,6 +3,13 @@
 #include "entity.hh"
 
 namespace Parrot {
+  // forward: Scene
+  class Scene;
+  // forward: Renderer
+  class Renderer;
+  // RenderFunc
+  using RenderFunc = Func<void(Renderer&, Scene&)>;
+
   // Scene
   class Scene : public Scriptable {
   public:
@@ -59,8 +66,9 @@ namespace Parrot {
       Func<void(const Scriptable&)> func
     ) const override;
 
-    // name, root
+    // name, root, render
     string name; /* PARROT_API */
     Entity root; /* PARROT_API */
+    Opt<RenderFunc> render = std::nullopt;
   };
 }
