@@ -19,8 +19,8 @@ namespace Parrot {
     },
   };
   template<>
-  Map<string, RegistryEntry<Script, Scene&>>
-    g_registry<Script, Scene&> = {};
+  Map<string, RegistryEntry<Script, Scene&, AssetAPI&>>
+    g_registry<Script, Scene&, AssetAPI&> = {};
   template<>
   Map<string, RegistryEntry<Script, Window&>>
     g_registry<Script, Window&> = {};

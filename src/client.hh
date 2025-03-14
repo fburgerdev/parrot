@@ -45,16 +45,17 @@ namespace Parrot {
   class SceneScript : public Script {
   public:
     // (constructor)
-    SceneScript(Scene& scene)
-      : scene(&scene) {}
+    SceneScript(Scene& scene, AssetAPI& asset_api)
+      : scene(&scene), asset_api(&asset_api) {}
 
     // raiseEvent
     virtual void raiseEvent(const Event& e) override {
       scene->raiseEvent(e);
     }
 
-    // scene
+    // scene, asset_api
     Scene* scene;
+    AssetAPI* asset_api;
   private:
     // setScriptOwner
     virtual void setScriptOwner(Scriptable* owner) {
