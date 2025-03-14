@@ -14,6 +14,9 @@ namespace Parrot {
     // Context
     class Context {
     public:
+      // (constructor)
+      Context(AssetAPI& api);
+
       // getFrameBuffer
       FrameBuffer& getFrameBuffer(usize index);
       FrameBuffer& getFrameBuffer(const string& name);
@@ -59,6 +62,9 @@ namespace Parrot {
         Shader& shader, const MaterialNode& node,
         const string& prefix = "", uint tex_slot = 1
       );
+
+      // flat_shader
+      Shader flat_shader;
     private:
       Map<string, FrameBuffer> _frame_buffers;
       HashMap<UUID, Shader> _shaders;

@@ -4,6 +4,13 @@
 
 namespace Parrot {
   namespace OpenGL {
+    // (static) flat_path
+    static AssetPath flat_path = stdf::path(".parrot/flat.shader.json");
+    
+    // (constructor)
+    Context::Context(AssetAPI& api)
+      : flat_shader(*AssetHandle<ShaderProgram>(flat_path, api).lock()) {}
+
     // getFrameBuffer
     FrameBuffer& Context::getFrameBuffer(usize index) {
       return getFrameBuffer("Frame" + std::to_string(index));
