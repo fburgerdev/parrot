@@ -43,16 +43,16 @@ namespace Parrot {
   }
 
   // (constructor)
-  Stage::Stage(
-    const StageConfig& stage_config, Scriptable* parent, AssetAPI& asset_api
-  ) : Scriptable(parent), window(*stage_config.window.lock(), this) {
-    for (const auto& scene : stage_config.scenes) {
+  Stage::Stage(const StageConfig& config, Scriptable* parent, AssetAPI& api)
+    : Scriptable(parent),
+      window(*config.window.lock(), this), _gpu_context(api) {
+    for (const auto& scene : config.scenes) {
       scene_layers.emplace_back(
-        Scene(*scene.lock(), this, asset_api),
+        Scene(*scene.lock(), this, api),
         Renderer(_gpu_context)
       );
     }
-    for (const string& script_name : stage_config.scripts) {
+    for (const string& script_name : config.scripts) {
       auto& [id, factory] = g_registry<Script, Stage&>.at(script_name);
       addScript(id, factory(*this));
     }

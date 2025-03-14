@@ -9,9 +9,7 @@ namespace Parrot {
   class Stage : public Scriptable {
   public:
     // (constructor)
-    Stage(
-      const StageConfig& stage_config, Scriptable* parent, AssetAPI& asset_api
-    );
+    Stage(const StageConfig& config, Scriptable* parent, AssetAPI& api);
 
     // update
     void update(float32 delta_time);
