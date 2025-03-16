@@ -125,11 +125,4 @@ namespace Parrot {
     Scriptable* _parent = nullptr;
     HashMap<usize, UniquePtr<Script>> _scripts;
   };
-  // makeSingleScriptable
-  template<ScriptType T, class... Args>
-  Scriptable makeSingleScriptable(Args&&... args) {
-    Scriptable out;
-    out.addScript<T>(std::forward<Args>(args)...);
-    return out;
-  }
 }
