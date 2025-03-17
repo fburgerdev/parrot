@@ -3,7 +3,7 @@
 
 namespace Parrot {
   // default
-  using DefaultFloat = float32; /* ASSET_API */
+  using DefaultFloat = float32; /* API */
 
   // constants
   // :: PI

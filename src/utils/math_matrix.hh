@@ -68,7 +68,7 @@ namespace Parrot {
     auto operator<=>(const Mat<T, 2, 1>&) const = default;
 
     // x, y
-    T x, y; /* ASSET_API */
+    T x, y; /* API */
   };
   // Mat3x1 
   template<typename T>
@@ -106,7 +106,7 @@ namespace Parrot {
     auto operator<=>(const Mat<T, 3, 1>&) const = default;
     
     // x, y, z
-    T x, y, z; /* ASSET_API */
+    T x, y, z; /* API */
   };
   // Mat4x1
   template<typename T>
@@ -153,7 +153,7 @@ namespace Parrot {
     auto operator<=>(const Mat<T, 4, 1>&) const = default;
 
     // x, y, z, w
-    T x, y, z, w; /* ASSET_API */
+    T x, y, z, w; /* API */
   };
 
   // zeros
@@ -186,7 +186,7 @@ namespace Parrot {
   }
   // +=
   template<typename T, usize N, usize M = N>
-  Mat<T, N, M>& operator+=(Mat<T, N, M>& mat, const Mat<T, N, M>& other) /* ASSET_API */ {
+  Mat<T, N, M>& operator+=(Mat<T, N, M>& mat, const Mat<T, N, M>& other) /* API */ {
     for (usize i = 0; i < N * M; ++i) {
       mat.at(i) += other.at(i);
     }
@@ -194,7 +194,7 @@ namespace Parrot {
   }
   // -=
   template<typename T, usize N, usize M = N>
-  Mat<T, N, M>& operator-=(Mat<T, N, M>& mat, const Mat<T, N, M>& other) /* ASSET_API */ {
+  Mat<T, N, M>& operator-=(Mat<T, N, M>& mat, const Mat<T, N, M>& other) /* API */ {
     for (usize i = 0; i < N * M; ++i) {
       mat.at(i) -= other.at(i);
     }
@@ -202,7 +202,7 @@ namespace Parrot {
   }
   // *=
   template<typename T, usize N, usize M = N>
-  Mat<T, N, M>& operator*=(Mat<T, N, M>& mat, T scalar) /* ASSET_API */ {
+  Mat<T, N, M>& operator*=(Mat<T, N, M>& mat, T scalar) /* API */ {
     for (usize i = 0; i < N * M; ++i) {
       mat.at(i) *= scalar;
     }
@@ -210,7 +210,7 @@ namespace Parrot {
   }
   // /=
   template<typename T, usize N, usize M = N>
-  Mat<T, N, M>& operator/=(Mat<T, N, M>& mat, T scalar) /* ASSET_API */ {
+  Mat<T, N, M>& operator/=(Mat<T, N, M>& mat, T scalar) /* API */ {
     for (usize i = 0; i < N * M; ++i) {
       mat.at(i) /= scalar;
     }
@@ -219,7 +219,7 @@ namespace Parrot {
   // +
   template<typename T, usize N, usize M = N>
   Mat<T, N, M> operator+(const Mat<T, N, M>& mat, const Mat<T, N, M>& other)
-    /* ASSET_API */ {
+    /* API */ {
     Mat<T, N, M> out(mat);
     out += other;
     return out;
@@ -227,21 +227,21 @@ namespace Parrot {
   // -
   template<typename T, usize N, usize M = N>
   Mat<T, N, M> operator-(const Mat<T, N, M>& mat, const Mat<T, N, M>& other)
-    /* ASSET_API */ {
+    /* API */ {
     Mat<T, N, M> out(mat);
     out -= other;
     return out;
   }
   // * (scalar)
   template<typename T, usize N, usize M = N>
-  Mat<T, N, M> operator*(const Mat<T, N, M>& mat, T scalar) /* ASSET_API */ {
+  Mat<T, N, M> operator*(const Mat<T, N, M>& mat, T scalar) /* API */ {
     Mat<T, N, M> out(mat);
     out *= scalar;
     return out;
   }
   // / (scalar)
   template<typename T, usize N, usize M = N>
-  Mat<T, N, M> operator/(const Mat<T, N, M>& mat, T scalar) /* ASSET_API */ {
+  Mat<T, N, M> operator/(const Mat<T, N, M>& mat, T scalar) /* API */ {
     Mat<T, N, M> out(mat);
     out /= scalar;
     return out;
@@ -267,7 +267,7 @@ namespace Parrot {
 
   // dot
   template<typename T, usize N, usize M = N>
-  T dot(const Mat<T, N, M>& mat1, const Mat<T, N, M>& mat2) /* ASSET_API */ {
+  T dot(const Mat<T, N, M>& mat1, const Mat<T, N, M>& mat2) /* API */ {
     T out = 0;
     for (usize i = 0; i < N * M; ++i) {
       out += mat1.at(i) * mat2.at(i);
@@ -277,7 +277,7 @@ namespace Parrot {
   // cross
   template<typename T>
   Mat<T, 3, 1> cross(const Mat<T, 3, 1>& v1, const Mat<T, 3, 1>& v2)
-    /* ASSET_API */ {
+    /* API */ {
     return {
       v1.z * v2.y - v1.y * v2.z,
       v1.x * v2.z - v1.z * v2.x,

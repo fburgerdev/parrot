@@ -6,32 +6,32 @@ namespace Parrot {
   // AmbientLight
   struct AmbientLight {
     // intensity, color
-    DefaultFloat intensity /* PARROT_API */ = 1;
-    Vec3<uint8> color /* PARROT_API */ = { 255, 255, 255 };
+    DefaultFloat intensity /* API */ = 1;
+    Vec3<uint8> color /* API */ = { 255, 255, 255 };
   };
   // DirectionalLight
   struct DirectionalLight {
     // direction, intensity, color
-    Vec3<DefaultFloat> direction /* PARROT_API */ = { 0, 0, 1 };
-    DefaultFloat intensity /* PARROT_API */ = 1;
-    Vec3<uint8> color /* PARROT_API */ = { 255, 255, 255 };
+    Vec3<DefaultFloat> direction /* API */ = { 0, 0, 1 };
+    DefaultFloat intensity /* API */ = 1;
+    Vec3<uint8> color /* API */ = { 255, 255, 255 };
   };
   // PointLight
   struct PointLight {
     // position, range, intensity, color
-    Vec3<DefaultFloat> position /* PARROT_API */ = { 0, 0, 0 };
-    DefaultFloat range /* PARROT_API */ = 1;
-    DefaultFloat intensity /* PARROT_API */ = 1;
-    Vec3<uint8> color /* PARROT_API */ = { 255, 255, 255 };
+    Vec3<DefaultFloat> position /* API */ = { 0, 0, 0 };
+    DefaultFloat range /* API */ = 1;
+    DefaultFloat intensity /* API */ = 1;
+    Vec3<uint8> color /* API */ = { 255, 255, 255 };
   };
   // SpotLight
   struct SpotLight {
     // position, direction, angle, intensity, color
-    Vec3<DefaultFloat> position /* PARROT_API */ = { 0, 0, 0 };
-    Vec3<DefaultFloat> direction /* PARROT_API */ = { 0, 0, 1 };
-    DefaultFloat angle /* PARROT_API */ = PI<> / 2;
-    DefaultFloat intensity /* PARROT_API */ = 1;
-    Vec3<uint8> color /* PARROT_API */ = { 255, 255, 255 };
+    Vec3<DefaultFloat> position /* API */ = { 0, 0, 0 };
+    Vec3<DefaultFloat> direction /* API */ = { 0, 0, 1 };
+    DefaultFloat angle /* API */ = PI<> / 2;
+    DefaultFloat intensity /* API */ = 1;
+    Vec3<uint8> color /* API */ = { 255, 255, 255 };
   };
 
   // Light
@@ -153,7 +153,7 @@ namespace Parrot {
     // value
     Variant<
       AmbientLight, DirectionalLight, PointLight, SpotLight
-    > value; /* PARROT_API */
+    > value; /* API */
   };
 
   // <<

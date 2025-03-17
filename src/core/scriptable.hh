@@ -30,11 +30,11 @@ namespace Parrot {
     Script() = default;
 
     // onUpdate
-    virtual void onUpdate(float32 delta_time); /* ASSET_API */
+    virtual void onUpdate(float32 delta_time); /* API */
     // resolveEvent
-    virtual bool resolveEvent(const Event& e); /* ASSET_API */
+    virtual bool resolveEvent(const Event& e); /* API */
     // raiseEvent
-    virtual void raiseEvent(const Event& e) = 0; /* ASSET_API */
+    virtual void raiseEvent(const Event& e) = 0; /* API */
 
     // friend: Scriptable
     friend Scriptable;

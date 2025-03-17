@@ -67,8 +67,8 @@ namespace Parrot {
     ) const override;
 
     // name, root, render
-    string name; /* PARROT_API */
-    Entity root; /* PARROT_API */
+    string name; /* API */
+    Entity root; /* API */
     Opt<RenderFunc> render = std::nullopt;
   };
 }
