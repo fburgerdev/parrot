@@ -111,6 +111,38 @@ target_link_libraries(example_pirate_bay PRIVATE assimp glad glfw stb)
 # :: macros
 target_compile_definitions(example_pirate_bay PRIVATE PARROT_GLFW PARROT_OPENGL)
 
+# tests (target)
+enable_testing()
+add_executable(tests)
+# :: gtest
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+)
+# :: for windows, prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+# :: files
+file(GLOB_RECURSE TESTS_SOURCES tests/*.hh)
+file(GLOB_RECURSE TESTS_SOURCES tests/*.cc)
+target_sources(tests PRIVATE ${TESTS_SOURCES})
+# :: include directories
+target_include_directories(tests PUBLIC tests src vendor)
+target_include_directories(tests PUBLIC "${CMAKE_BINARY_DIR}/_deps/googletest-src/googletest/include")
+target_include_directories(tests PUBLIC "${CMAKE_BINARY_DIR}/_deps/googletest-src/googlemock/include")
+target_include_directories(tests PUBLIC "${CMAKE_BINARY_DIR}/_deps/googletest-build/googletest/include")
+target_include_directories(tests PUBLIC "${CMAKE_BINARY_DIR}/_deps/googletest-build/googlemock/include")
+# :: links
+target_link_libraries(tests PRIVATE parrot)
+target_link_libraries(tests PRIVATE GTest::gtest_main)
+target_link_libraries(tests PRIVATE assimp glad glfw stb)
+# :: macros
+target_compile_definitions(tests PRIVATE PARROT_GLFW PARROT_OPENGL)
+# :: add tests
+include(GoogleTest)
+gtest_discover_tests(tests)
+
 # group projects in an ide
 set_target_properties(parrot PROPERTIES FOLDER Parrot)
 set_target_properties(example_teapot PROPERTIES FOLDER Examples)
