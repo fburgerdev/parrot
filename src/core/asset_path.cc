@@ -3,6 +3,8 @@
 
 namespace Parrot {
   // (constructor)
+  AssetPath::AssetPath(const stdf::path& file)
+    : file(file) {}
   AssetPath::AssetPath(const stdf::path& filepath, strview subpath)
     : file(filepath), sub(subpath) {}
   AssetPath::AssetPath(strview path) {
@@ -33,13 +35,13 @@ namespace Parrot {
     }
     return splitted;
   }
-  // <<
+  // << (stream)
   ostream& operator<<(ostream& stream, const AssetPath& asset_path) {
     if (asset_path.debug_root) {
-      stream << stdf::relative(asset_path.file, *asset_path.debug_root);
+      stream << stdf::relative(asset_path.file, *asset_path.debug_root).string();
     }
     else {
-      stream << asset_path.file;
+      stream << asset_path.file.string();
     }
     if (!asset_path.sub.empty()) {
       stream << ":" << asset_path.sub;

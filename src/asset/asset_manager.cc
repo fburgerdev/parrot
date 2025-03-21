@@ -56,7 +56,7 @@ namespace Parrot {
   // addAsset
   UUID AssetManager::addAsset(SharedPtr<Asset> asset) {
     UUID uuid = generateUUID();
-    _registry.add(uuid, asset->asset_path);
+    _registry.add(uuid, asset->getAssetPath());
     _loaded.emplace(uuid, asset);
     return uuid;
   }

@@ -7,7 +7,7 @@ namespace Parrot {
   // (constructor)
   StageConfig::StageConfig(const AssetPath& path, AssetAPI& api)
     : Asset(path) {
-    auto json = asset_path.applySubpathToJSON(
+    auto json = getAssetPath().applySubpathToJSON(
       json::parse(ifstream(path.file))
     );
     loadFromJSON(json, api);

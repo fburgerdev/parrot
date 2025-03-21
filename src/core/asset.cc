@@ -3,8 +3,13 @@
 
 namespace Parrot {
   // (constructor)
-  Asset::Asset(const AssetPath& asset_path)
-    : asset_path(asset_path) {}
-  Asset::Asset(AssetPath&& asset_path)
-    : asset_path(std::move(asset_path)) {}
+  Asset::Asset(const AssetPath& path)
+    : _path(path) {}
+  Asset::Asset(AssetPath&& path)
+    : _path(std::move(path)) {}
+  
+  // getAssetPath
+  const AssetPath& Asset::getAssetPath() const {
+    return _path;
+  }
 }

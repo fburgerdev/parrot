@@ -11,8 +11,7 @@ namespace Parrot {
   struct AssetPath {
     // (constructor)
     AssetPath() = default;
-    AssetPath(const stdf::path& file) /* API */
-      : file(file) {}
+    AssetPath(const stdf::path& file); /* API */
     AssetPath(const stdf::path& file, strview sub) /* API */;
     AssetPath(strview path) /* API */;
 
@@ -33,17 +32,15 @@ namespace Parrot {
       return *value;
     }
     // <=> (compare)
-    auto operator<=>(const AssetPath& other) const {
-      return std::tie(file, sub) <=> std::tie(other.file, other.sub);
-    }
+    auto operator<=>(const AssetPath& other) const = default;
+    // << (stream)
+    friend ostream& operator<<(ostream& stream, const AssetPath& asset_path);
 
     // file, sub, debug_root
     stdf::path file;
     string sub;
     Opt<stdf::path> debug_root; // for debugging
   };
-  // <<
-  ostream& operator<<(ostream& stream, const AssetPath& asset_path);
   // AssetKey
   using AssetKey = Variant<UUID, AssetPath>; /* API */
 }

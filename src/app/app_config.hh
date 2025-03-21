@@ -28,7 +28,7 @@ namespace Parrot {
         asset_dir = stdf::path(string(json.at("asset_dir")));
       }
       if (asset_dir.is_relative()) {
-        asset_dir = asset_path.file.parent_path() / asset_dir;
+        asset_dir = getAssetPath().file.parent_path() / asset_dir;
       }
       // asset-manager
       if (json.contains("asset-manager")) {

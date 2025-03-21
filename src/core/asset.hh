@@ -8,11 +8,13 @@ namespace Parrot {
   public:
     // (constructor)
     Asset() = default;
-    Asset(const AssetPath& asset_path);
-    Asset(AssetPath&& asset_path);
+    Asset(const AssetPath& path);
+    Asset(AssetPath&& path);
 
-    // asset_path
-    AssetPath asset_path;
+    // getAssetPath
+    const AssetPath& getAssetPath() const;
+  private:
+    AssetPath _path;
   };
   // AssetType
   template<class T>

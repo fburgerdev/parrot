@@ -66,7 +66,7 @@ namespace Parrot {
             components.emplace_back(
               g_registry<
                 ComponentConfig, const JSON&, const AssetPath&, AssetAPI&
-              >.at(name).second(data, asset_path, api)
+              >.at(name).second(data, getAssetPath(), api)
             );
           }
           else {

@@ -13,7 +13,7 @@ namespace Parrot {
     // lockAsset
     virtual SharedPtr<const Asset> lockAsset(
       const AssetKey& key, AssetFactory factory
-    ) = 0;
+    ) = 0; /* API */
   };
   // AssetHandle
   template<class T>
@@ -28,7 +28,7 @@ namespace Parrot {
     AssetHandle(const AssetKey& key, AssetAPI& asset_api)
       : _key(key), _api(&asset_api) {}
     template<JsonType JSON>
-    AssetHandle(const JSON& json, AssetAPI& asset_api)
+    AssetHandle(const JSON& json, AssetAPI& asset_api) /* DEPRECATED */
       : _api(&asset_api) {
       if (json.is_number()) {
         _key = UUID(json);
@@ -40,7 +40,7 @@ namespace Parrot {
         _key = _api->addAsset(std::make_shared<T>(json, stdf::path(), *_api));
       }
     }
-    
+
     // bool (cast)
     operator bool() const {
       return _api;

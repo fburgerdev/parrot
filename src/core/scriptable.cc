@@ -3,26 +3,6 @@
 #include "log.hh"
 
 namespace Parrot {
-  //* Script
-  // onAttach / onDetach
-  void Script::onAttach() {
-    LOG_APP_TRACE("Script::onAttach");
-  }
-  void Script::onDetach() {
-    LOG_APP_TRACE("Script::onDetach");
-  }
-  
-  // onUpdate
-  void Script::onUpdate([[maybe_unused]] float32 delta_time) {
-    LOG_APP_TRACE("Script::onUpdate(delta_time={})", delta_time);
-  }
-
-  // resolveEvent
-  bool Script::resolveEvent([[maybe_unused]] const Event& e) {
-    return false;
-  }
-
-  //* Scriptable
   // (constructor)
   Scriptable::Scriptable(Scriptable* parent)
     : _parent(parent) {}
@@ -47,6 +27,10 @@ namespace Parrot {
     return *this;
   }
 
+  // getScriptCount
+  usize Scriptable::getScriptCount() const {
+    return _scripts.size();
+  }
   // addScript
   void Scriptable::addScript(usize id, UniquePtr<Script>&& script) {
     _scripts.emplace(id, std::move(script)).first->second->onAttach();
