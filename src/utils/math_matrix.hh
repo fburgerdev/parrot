@@ -6,6 +6,11 @@ namespace Parrot {
   template<typename T, usize N, usize M = N>
   struct Mat {
   public:
+    // Type
+    using Type = T;
+    // (static) ROWS, COLS
+    static constexpr usize ROWS = N, COLS = M;
+
     // (constructor)
     Mat() = default;
     template<typename U>
@@ -14,6 +19,7 @@ namespace Parrot {
         _array.at(i) = T(mat.at(i));
       }
     }
+    
     // at
     T& at(usize index) {
       return _array.at(index);
@@ -34,6 +40,7 @@ namespace Parrot {
     const T* data() const {
       return _array.data();
     }
+
     // <=> (compare)
     auto operator<=>(const Mat<T, N, M>&) const = default;
   private:
@@ -42,6 +49,11 @@ namespace Parrot {
   // Marix2x1
   template<typename T>
   struct Mat<T, 2, 1> {
+    // Type
+    using Type = T;
+    // (static) ROWS, COLS
+    static constexpr usize ROWS = 2, COLS = 1;
+
     // (constructor)
     Mat() = default;
     Mat(T val)
@@ -51,6 +63,7 @@ namespace Parrot {
     template<typename U, usize N>
     Mat(const Mat<U, N, 1>& vec)
       : x(T(vec.at(0))), y(T(vec.at(1))) {}
+
     // at
     T& at(usize index) {
       return index == 0 ? x : y;
@@ -64,6 +77,7 @@ namespace Parrot {
     const T& at(usize n, usize m) const {
       return at(n);
     }
+    
     // <=> (compare)
     auto operator<=>(const Mat<T, 2, 1>&) const = default;
 
@@ -73,6 +87,11 @@ namespace Parrot {
   // Mat3x1 
   template<typename T>
   struct Mat<T, 3, 1> {
+    // Type
+    using Type = T;
+    // (static) ROWS, COLS
+    static constexpr usize ROWS = 3, COLS = 1;
+
     // (constructor)
     Mat() = default;
     Mat(T val)
@@ -89,6 +108,7 @@ namespace Parrot {
     template<typename U>
     Mat(const Mat<U, 2, 1>& vec)
       : x(vec.at(0)), y(vec.at(1)), z(0) {}
+    
     // at
     T& at(usize index) {
       return index == 0 ? x : index == 1 ? y : z;
@@ -102,6 +122,7 @@ namespace Parrot {
     const T& at(usize n, usize m) const {
       return at(n);
     }
+    
     // <=> (compare)
     auto operator<=>(const Mat<T, 3, 1>&) const = default;
     
@@ -111,6 +132,11 @@ namespace Parrot {
   // Mat4x1
   template<typename T>
   struct Mat<T, 4, 1> {
+    // Type
+    using Type = T;
+    // (static) ROWS, COLS
+    static constexpr usize ROWS = 4, COLS = 1;
+
     // (constructor)
     Mat() = default;
     Mat(T val)
@@ -136,6 +162,7 @@ namespace Parrot {
     template<typename U, usize N>
     Mat(const Mat<U, 3, 1>& vec)
       : x(vec.at(0)), y(vec.at(1)), z(vec.at(2)), w(0) {}
+
     // at
     T& at(usize index) {
       return index == 0 ? x : index == 1 ? y : index == 2 ? z : w;
@@ -149,6 +176,7 @@ namespace Parrot {
     const T& at(usize n, usize m) const {
       return at(n);
     }
+    
     // <=> (compare)
     auto operator<=>(const Mat<T, 4, 1>&) const = default;
 
@@ -186,7 +214,8 @@ namespace Parrot {
   }
   // +=
   template<typename T, usize N, usize M = N>
-  Mat<T, N, M>& operator+=(Mat<T, N, M>& mat, const Mat<T, N, M>& other) /* API */ {
+  Mat<T, N, M>& operator+=(Mat<T, N, M>& mat, const Mat<T, N, M>& other)
+    /* API */ {
     for (usize i = 0; i < N * M; ++i) {
       mat.at(i) += other.at(i);
     }
@@ -194,7 +223,8 @@ namespace Parrot {
   }
   // -=
   template<typename T, usize N, usize M = N>
-  Mat<T, N, M>& operator-=(Mat<T, N, M>& mat, const Mat<T, N, M>& other) /* API */ {
+  Mat<T, N, M>& operator-=(Mat<T, N, M>& mat, const Mat<T, N, M>& other)
+    /* API */ {
     for (usize i = 0; i < N * M; ++i) {
       mat.at(i) -= other.at(i);
     }
@@ -216,6 +246,7 @@ namespace Parrot {
     }
     return mat;
   }
+
   // +
   template<typename T, usize N, usize M = N>
   Mat<T, N, M> operator+(const Mat<T, N, M>& mat, const Mat<T, N, M>& other)
@@ -294,6 +325,7 @@ namespace Parrot {
   T length(const Mat<T, N, M>& mat) {
     return magnitude(mat);
   }
+  // dist
   template<typename T, usize N, usize M = N>
   T dist(const Mat<T, N, M>& mat1, const Mat<T, N, M>& mat2) {
     return length(mat2 - mat1);
@@ -314,7 +346,9 @@ namespace Parrot {
   Mat<T, N>& transpose(Mat<T, N>& mat) {
     for (usize n1 = 0; n1 < N; ++n1) {
       for (usize n2 = 0; n2 < n1; ++n2) {
-        mat.at(N * n2 + n1) = mat.at(N * n1 + n2);
+        T temp = mat.at(n1, n2);
+        mat.at(n1, n2) = mat.at(n2, n1);
+        mat.at(n2, n1) = temp;
       }
     }
     return mat;
@@ -324,7 +358,7 @@ namespace Parrot {
     Mat<T, M, N> out;
     for (usize n = 0; n < N; ++n) {
       for (usize m = 0; m < M; ++m) {
-        out.at(N * m + n) = mat.at(M * n + m);
+        out.at(m, n) = mat.at(n, m);
       }
     }
     return out;
@@ -344,7 +378,7 @@ namespace Parrot {
     return dest;
   }
   // resize
-  template<typename T, usize N1, usize M1, usize N2, usize M2>
+  template<usize N1, usize M1, typename T, usize N2, usize M2>
   Mat<T, N1, M1> resize(
     const Mat<T, N2, M2>& mat, const Mat<uint, 2, 1>& origin = { 0, 0 }
   ) {
@@ -353,7 +387,7 @@ namespace Parrot {
     return out;
   }
 
-  // <<
+  // << (stream)
   template<typename T, usize N, usize M = N>
   ostream& operator<<(ostream& stream, const Mat<T, N, M>& mat) {
     if constexpr (M == 1) {
