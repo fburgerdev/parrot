@@ -16,11 +16,9 @@ namespace Parrot {
       auto child = HierarchyNode<Entity>(handle.lock(), this, asset_api);
       _children.emplace(child.getUUID(), std::move(child));
     }
-    for (const auto& component_config : preset->components) {
-      _components.emplace(
-        component_config->getComponentID(),
-        component_config->createComponent(*this)
-      );
+    for (const auto& component_factory : preset->component_factories) {
+      auto component = component_factory->create();
+      _components.emplace(component->getID(), std::move(component));
     }
     for (const string& script : preset->scripts) {
       auto [uuid, factory] = g_registry<Script, Entity&, AssetAPI&>.at(script);

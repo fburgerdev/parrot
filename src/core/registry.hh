@@ -4,12 +4,12 @@
 namespace Parrot{
   // TypeID
   using TypeID = usize;
-  // Factory
+  // RegistryFactory
   template<class Base, class... Args>
-  using Factory = Func<UniquePtr<Base>(Args&&...)>;
+  using RegistryFactory = Func<UniquePtr<Base>(Args&&...)>;
   // RegistryEntry
   template<class Base, class... Args>
-  using RegistryEntry = Pair<TypeID, Factory<Base, Args...>>;
+  using RegistryEntry = Pair<TypeID, RegistryFactory<Base, Args...>>;
 
   // (global) registry
   template<class Base, class... Args>

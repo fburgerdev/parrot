@@ -1,12 +1,10 @@
 #include "common.hh"
 #include "component.hh"
+#include "core/log.hh"
 
 namespace Parrot {
-  // (constructor)
-  Component::Component(Entity& entity)
-    : entity(entity) {}
   // update
-  void Component::update([[maybe_unused]] float32 update) {
-    LOG_ECS_TRACE("component update");
+  void Component::update(float32) {
+    LOG_ECS_TRACE("component update (addr = {})", this);
   }
 }

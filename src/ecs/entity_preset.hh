@@ -1,4 +1,5 @@
 #pragma once
+#include "core/factory.hh"
 #include "core/asset_handle.hh"
 #include "core/registry.hh"
 #include "component.hh"
@@ -61,11 +62,11 @@ namespace Parrot {
       if (json.contains("components")) {
         for (const auto& [name, data] : json.at("components").items()) {
           if (g_registry<
-                ComponentConfig, const JSON&, const AssetPath&, AssetAPI&
+            Factory<Component>, const JSON&, const AssetPath&, AssetAPI&
               >.contains(name)) {
-            components.emplace_back(
+            component_factories.emplace_back(
               g_registry<
-                ComponentConfig, const JSON&, const AssetPath&, AssetAPI&
+                Factory<Component>, const JSON&, const AssetPath&, AssetAPI&
               >.at(name).second(data, getAssetPath(), api)
             );
           }
@@ -88,7 +89,7 @@ namespace Parrot {
     string tag = "Entity";
     Transform<> transform;
     List<AssetHandle<EntityPreset>> children;
-    List<UniquePtr<ComponentConfig>> components;
+    List<UniquePtr<Factory<Component>>> component_factories;
     List<string> scripts;
   };
 }

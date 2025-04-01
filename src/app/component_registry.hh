@@ -1,12 +1,12 @@
 #pragma once
-#include "ecs/component.hh"
+#include "ecs/basic_component.hh"
 #include "graphics/camera.hh"
 #include "graphics/light.hh"
 #include "graphics/render_object.hh"
 
 namespace Parrot {
-  // Component
-  using CameraComponent = DerivedComponent<Camera>;
-  using LightComponent = DerivedComponent<Light>;
-  using RenderObjectComponent = DerivedComponent<RenderObject>;
+  // camera, light and render-object
+  using CameraComponent = BasicComponent<Camera>;
+  using LightComponent = BasicComponent<Light>;
+  using RenderObjectComponent = BasicComponent<RenderObject>;
 }

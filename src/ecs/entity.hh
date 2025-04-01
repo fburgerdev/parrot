@@ -56,30 +56,28 @@ namespace Parrot {
     // :: has
     template<class T>
     bool hasComponent() const /* API */ {
-      return _components.contains(getComponentID<T>());
+      return _components.contains(typeid(T).hash_code());
     }
     // :: get
     template<class T>
     T& getComponent() /* API */ {
-      return dynamic_cast<T&>(*_components.at(getComponentID<T>()));
+      return dynamic_cast<T&>(*_components.at(typeid(T).hash_code()));
     }
     template<class T>
     const T& getComponent() const /* API */ {
-      return dynamic_cast<const T&>(*_components.at(getComponentID<T>()));
+      return dynamic_cast<const T&>(*_components.at(typeid(T).hash_code()));
     }
     // :: add
     template<class T, class... TArgs>
     T& addComponent(TArgs&&... args) /* API */ {
-      _components.emplace(
-        getComponentID<T>(),
-        std::make_unique<T>(*this, std::forward<TArgs>(args)...)
-      );
+      auto component = std::make_unique<T>(std::forward<TArgs>(args)...);
+      _components.emplace(typeid(T).hash_code(), std::move(component));
       return getComponent<T>();
     }
     // :: remove
     template<class T>
     void removeComponent() /* API */ {
-      _components.erase(getComponentID<T>());
+      _components.erase(typeid(T).hash_code());
     }
 
     // update
