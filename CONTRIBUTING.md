@@ -8,7 +8,7 @@ Commit messages must follow the [Conventional Commits](https://www.conventionalc
 
 Additionally:
 - The description must not exceed 50 characters.
-- The commit body must not exceed 72 characters.
+- Each line in the commit body must not exceed 72 characters.
 
 ## Releases
 Releases follow these specifications:
