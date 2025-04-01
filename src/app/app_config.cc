@@ -1,14 +1,13 @@
 #include "common.hh"
 #include "app_config.hh"
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
+#include "utils/serial_node.hh"
 
 namespace Parrot {
   // (constructor)
   AppConfig::AppConfig(const AssetPath& path)
     : Asset(path) {
     auto json = path.applySubpathToJSON(
-      json::parse(ifstream(path.file))
+      SerialNode::loadFromJSON(path.file)
     );
     loadFromJSON(json);
   }
@@ -16,7 +15,7 @@ namespace Parrot {
   AppConfig::AppConfig(const AssetPath& path, AssetAPI& api)
     : Asset(path) {
     auto json = path.applySubpathToJSON(
-      json::parse(ifstream(path.file))
+      SerialNode::loadFromJSON(path.file)
     );
     loadFromJSON(json, api);
   }

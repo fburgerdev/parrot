@@ -1,7 +1,5 @@
 #include "common.hh"
 #include "asset_registry.hh"
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
 
 namespace Parrot {
   // (constructor)
@@ -70,9 +68,9 @@ namespace Parrot {
     if (stdf::is_regular_file(path)) {
       if (path.extension().string() == ".json") {
         string source = (ostrstream() << ifstream(path).rdbuf()).str();
-        auto json = json::parse(source);
+        auto json = SerialNode::loadFromJSON(path);
         if (json.contains("uuid")) {
-          add(json.at("uuid"), stdf::relative(path, _asset_dir));
+          add(UUID(json.at("uuid")), stdf::relative(path, _asset_dir));
         }
         else {
           add(generateUUID(), stdf::relative(path, _asset_dir));
@@ -90,12 +88,11 @@ namespace Parrot {
     }
   }
   void AssetRegistry::add(const AssetPath& asset_path) {
-    string source = (
-      ostrstream() << ifstream(asset_path.file).rdbuf()
-    ).str();
-    auto json = asset_path.applySubpathToJSON(json::parse(source));
+    auto json = asset_path.applySubpathToJSON(
+      SerialNode::loadFromJSON(asset_path.file)
+    );
     if (json.contains("uuid")) {
-      add(json.at("uuid"), asset_path);
+      add(UUID(json.at("uuid")), asset_path);
     }
     else {
       // TODO: log warning

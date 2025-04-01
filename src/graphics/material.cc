@@ -1,14 +1,13 @@
 #include "common.hh"
 #include "material.hh"
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
+#include "utils/serial_node.hh"
 
 namespace Parrot {
   // (constructor)
   Material::Material(const AssetPath& path, AssetAPI& api)
     : Asset(path) {
     auto json = path.applySubpathToJSON(
-      json::parse(ifstream(path.file))
+      SerialNode::loadFromJSON(path.file)
     );
     loadFromJSON(json, api);
   }

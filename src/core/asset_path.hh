@@ -1,5 +1,6 @@
 #pragma once
 #include "utils/uuid.hh"
+#include "utils/serial_node.hh"
 
 namespace Parrot {
   // JsonType
@@ -21,6 +22,18 @@ namespace Parrot {
     template<JsonType JSON>
     auto applySubpathToJSON(const JSON& root) const {
       const JSON* value = &root;
+      for (const string& token : splitSubpath()) {
+        if (std::isalpha(token.front())) {
+          value = &value->at(token);
+        }
+        else {
+          value = &value->at(std::stoull(token));
+        }
+      }
+      return *value;
+    }
+    auto applySubpathToJSON(const SerialNode& root) const {
+      const SerialNode* value = &root;
       for (const string& token : splitSubpath()) {
         if (std::isalpha(token.front())) {
           value = &value->at(token);

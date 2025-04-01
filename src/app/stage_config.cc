@@ -1,14 +1,13 @@
 #include "common.hh"
 #include "stage_config.hh"
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
+#include "utils/serial_node.hh"
 
 namespace Parrot {
   // (constructor)
   StageConfig::StageConfig(const AssetPath& path, AssetAPI& api)
     : Asset(path) {
     auto json = getAssetPath().applySubpathToJSON(
-      json::parse(ifstream(path.file))
+      SerialNode::loadFromJSON(path.file)
     );
     loadFromJSON(json, api);
   }

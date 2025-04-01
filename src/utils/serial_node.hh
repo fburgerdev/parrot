@@ -9,6 +9,7 @@ namespace Parrot {
   class SerialNode {
   public:
     // (static) loadFromJSON
+    static SerialNode loadFromJSON(strview source);
     static SerialNode loadFromJSON(const stdf::path& filepath);
 
     // (constructor)
@@ -110,10 +111,13 @@ namespace Parrot {
     List<SerialNode>::iterator end();
     List<SerialNode>::const_iterator end() const;
 
-    // compare
+    // == (compare)
     auto operator==(strview str) const {
       return isString() && value<strview>() == str;
     }
+
+    // << (stream)
+    friend ostream& operator<<(ostream& stream, const SerialNode& node);
   private:
     Variant<
       Map<string, SerialNode>, List<SerialNode>, SerialLeaf

@@ -45,6 +45,15 @@ namespace Parrot {
     }
   }
   // :: loadFromJSON
+  SerialNode SerialNode::loadFromJSON(strview source) {
+    try {
+      auto json = json::parse(source);
+      return createFromJSON(json);
+    }
+    catch (const std::exception& e) {
+      throw;
+    }
+  }
   SerialNode SerialNode::loadFromJSON(const stdf::path& filepath) {
     try {
       auto json = json::parse(ifstream(filepath));
@@ -182,5 +191,10 @@ namespace Parrot {
     if (holds<List<SerialNode>>(_value)) {
       return std::get<List<SerialNode>>(_value).end();
     }
+  }
+
+  // << (stream)
+  ostream& operator<<(ostream& stream, const SerialNode& node) {
+    return stream << "SERIALNODE"; //TODO: properly print serial-node
   }
 }

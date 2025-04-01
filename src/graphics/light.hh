@@ -53,14 +53,14 @@ namespace Parrot {
         AmbientLight light;
         // intensity
         if (json.contains("intensity")) {
-          light.intensity = json.at("intensity");
+          light.intensity = DefaultFloat(json.at("intensity"));
         }
         // color
         if (json.contains("color")) {
           light.color = Vec3<uint8>(
-            json.at("color")[0],
-            json.at("color")[1],
-            json.at("color")[2]
+            uint8(json.at("color")[0]),
+            uint8(json.at("color")[1]),
+            uint8(json.at("color")[2])
           );
         }
         value = light;
@@ -70,20 +70,20 @@ namespace Parrot {
         DirectionalLight light;
         // direction
         light.direction = Vec3<DefaultFloat>(
-          json.at("direction")[0],
-          json.at("direction")[1],
-          json.at("direction")[2]
+          DefaultFloat(json.at("direction")[0]),
+          DefaultFloat(json.at("direction")[1]),
+          DefaultFloat(json.at("direction")[2])
         );
         // intensity
         if (json.contains("intensity")) {
-          light.intensity = json.at("intensity");
+          light.intensity = DefaultFloat(json.at("intensity"));
         }
         // color
         if (json.contains("color")) {
           light.color = Vec3<uint8>(
-            json.at("color")[0],
-            json.at("color")[1],
-            json.at("color")[2]
+            uint8(json.at("color")[0]),
+            uint8(json.at("color")[1]),
+            uint8(json.at("color")[2])
           );
         }
         value = light;
@@ -93,24 +93,24 @@ namespace Parrot {
         PointLight light;
         // position
         light.position = Vec3<DefaultFloat>(
-          json.at("position")[0],
-          json.at("position")[1],
-          json.at("position")[2]
+          DefaultFloat(json.at("position")[0]),
+          DefaultFloat(json.at("position")[1]),
+          DefaultFloat(json.at("position")[2])
         );
         // range
         if (json.contains("range")) {
-          light.range = json.at("range");
+          light.range = DefaultFloat(json.at("range"));
         }
         // intensity
         if (json.contains("intensity")) {
-          light.intensity = json.at("intensity");
+          light.intensity = DefaultFloat(json.at("intensity"));
         }
         // color
         if (json.contains("color")) {
           light.color = Vec3<uint8>(
-            json.at("color")[0],
-            json.at("color")[1],
-            json.at("color")[2]
+            uint8(json.at("color")[0]),
+            uint8(json.at("color")[1]),
+            uint8(json.at("color")[2])
           );
         }
         value = light;
@@ -120,30 +120,30 @@ namespace Parrot {
         SpotLight light;
         // position
         light.position = Vec3<DefaultFloat>(
-          json.at("position")[0],
-          json.at("position")[1],
-          json.at("position")[2]
+          DefaultFloat(json.at("position")[0]),
+          DefaultFloat(json.at("position")[1]),
+          DefaultFloat(json.at("position")[2])
         );
         // direction
         light.direction = Vec3<DefaultFloat>(
-          json.at("direction")[0],
-          json.at("direction")[1],
-          json.at("direction")[2]
+          DefaultFloat(json.at("direction")[0]),
+          DefaultFloat(json.at("direction")[1]),
+          DefaultFloat(json.at("direction")[2])
         );
         // angle
         if (json.contains("angle")) {
-          light.angle = json.at("angle");
+          light.angle = DefaultFloat(json.at("angle"));
         }
         // intensity
         if (json.contains("intensity")) {
-          light.intensity = json.at("intensity");
+          light.intensity = DefaultFloat(json.at("intensity"));
         }
         // color
         if (json.contains("color")) {
           light.color = Vec3<uint8>(
-            json.at("color")[0],
-            json.at("color")[1],
-            json.at("color")[2]
+            uint8(json.at("color")[0]),
+            uint8(json.at("color")[1]),
+            uint8(json.at("color")[2])
           );
         }
         value = light;

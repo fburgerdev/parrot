@@ -34,7 +34,7 @@ namespace Parrot {
     template<JsonType JSON>
     void loadFromJSON(const JSON& json, AssetAPI& api) {
       // object
-      if (json.is_object()) {
+      if (json.isMap()) {
         Map<string, MaterialNode> map;
         for (const auto& [key, value] : json.items()) {
           map.try_emplace(key, value, api);
@@ -42,11 +42,11 @@ namespace Parrot {
         value = std::move(map);
       }
       // list or leaf
-      else if (json.is_array()) {
-        const List<JSON>& array = json;
+      else if (json.isList()) {
+        const auto& array = json;
         // leaf
-        if (array.size() == 2 && array.at(0).is_string()) {
-          string dtype = normalized(array.at(0));
+        if (array.size() == 2 && array.at(0).isString()) {
+          string dtype = normalized(string(array.at(0)));
           // i32
           if (dtype == "i32") {
             value = MaterialLeaf(int32(array.at(1)));

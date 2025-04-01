@@ -30,25 +30,25 @@ namespace Parrot {
         // position
         if (json.at("transform").contains("position")) {
           transform.position = Vec3<float32>(
-            json.at("transform").at("position")[0],
-            json.at("transform").at("position")[1],
-            json.at("transform").at("position")[2]
+            DefaultFloat(json.at("transform").at("position")[0]),
+            DefaultFloat(json.at("transform").at("position")[1]),
+            DefaultFloat(json.at("transform").at("position")[2])
           );
         }
         // rotation
         if (json.at("transform").contains("rotation")) {
           transform.rotation = Vec3<float32>(
-            json.at("transform").at("rotation")[0],
-            json.at("transform").at("rotation")[1],
-            json.at("transform").at("rotation")[2]
+            DefaultFloat(json.at("transform").at("rotation")[0]),
+            DefaultFloat(json.at("transform").at("rotation")[1]),
+            DefaultFloat(json.at("transform").at("rotation")[2])
           );
         }
         // scale
         if (json.at("transform").contains("scale")) {
           transform.scale = Vec3<float32>(
-            json.at("transform").at("scale")[0],
-            json.at("transform").at("scale")[1],
-            json.at("transform").at("scale")[2]
+            DefaultFloat(json.at("transform").at("scale")[0]),
+            DefaultFloat(json.at("transform").at("scale")[1]),
+            DefaultFloat(json.at("transform").at("scale")[2])
           );
         }
       }

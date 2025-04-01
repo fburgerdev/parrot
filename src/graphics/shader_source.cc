@@ -1,7 +1,6 @@
 #include "common.hh"
 #include "shader_source.hh"
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
+#include "utils/serial_node.hh"
 
 namespace Parrot {
   // (static) split
@@ -119,7 +118,7 @@ namespace Parrot {
   // (constructor) for Asset
   ShaderProgram::ShaderProgram(const AssetPath& path, AssetAPI& api) {
     auto json = path.applySubpathToJSON(
-      json::parse(ifstream(path.file))
+      SerialNode::loadFromJSON(path.file)
     );
     loadFromJSON(json, api);
   }

@@ -45,7 +45,8 @@ namespace Parrot {
       // z-range
       Vec2<float32> z_range = (
         json.contains("z-range") ? Vec2<float32>(
-          json.at("z-range")[0], json.at("z-range")[1]
+          DefaultFloat(json.at("z-range")[0]),
+          DefaultFloat(json.at("z-range")[1])
         ) : DEFAULT_ZRANGE
       );
       // type

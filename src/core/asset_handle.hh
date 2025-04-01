@@ -40,6 +40,19 @@ namespace Parrot {
         _key = _api->addAsset(std::make_shared<T>(json, stdf::path(), *_api));
       }
     }
+    AssetHandle(const SerialNode& json, AssetAPI& asset_api) /* DEPRECATED */
+      : _api(&asset_api) {
+      if (json.isNumber()) {
+        _key = UUID(json);
+      }
+      else if (json.isString()) {
+        _key = AssetPath(strview(string(json)));
+      }
+      else {
+        _key = _api->addAsset(std::make_shared<T>(json, stdf::path(), *_api));
+      }
+    }
+
 
     // bool (cast)
     operator bool() const {
