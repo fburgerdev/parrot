@@ -10,8 +10,7 @@ namespace Parrot {
     ShaderSource(const string& source);
     // :: for Asset
     ShaderSource(const AssetPath& path, AssetAPI& api);
-    template<JsonType JSON>
-    ShaderSource(const JSON& json, const AssetPath& path, AssetAPI& api)
+    ShaderSource(const SerialNode& node, const AssetPath& path, AssetAPI& api)
       : Asset(path) {
       LOG_ASSET_ERROR("this method only exists to implement the asset-api");
     }
@@ -75,25 +74,23 @@ namespace Parrot {
   public:
     // (constructor) for Asset
     ShaderProgram(const AssetPath& path, AssetAPI& api);
-    template<JsonType JSON>
-    ShaderProgram(const JSON& json, const AssetPath& path, AssetAPI& api)
+    ShaderProgram(const SerialNode& node, const AssetPath& path, AssetAPI& api)
       : Asset(path) {
-      loadFromJSON(json, api);
+      loadFromSerialNode(node, api);
     }
 
-    // loadFromJSON
-    template<JsonType JSON>
-    void loadFromJSON(const JSON& json, AssetAPI& api) {
+    // loadFromSerialNode
+    void loadFromSerialNode(const SerialNode& node, AssetAPI& api) {
       _sources.emplace_back(
         AssetPath(stdf::path(".parrot/model.glsl.macro")), api
       );
       _sources.emplace_back(
         AssetPath(stdf::path(".parrot/surface.glsl.macro")), api
       );
-      if (json.contains("sources")) {
-        for (const auto& source_json : json.at("sources")) {
+      if (node.contains("sources")) {
+        for (const auto& source_node : node.at("sources")) {
           _sources.emplace_back(
-            AssetPath(stdf::path(string(source_json))), api
+            AssetPath(stdf::path(string(source_node))), api
           );
         }
       }

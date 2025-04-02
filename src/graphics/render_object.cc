@@ -10,7 +10,7 @@ namespace Parrot {
     auto json = path.applySubpathToJSON(
       SerialNode::loadFromJSON(path.file)
     );
-    loadFromJSON(json, api);
+    loadFromSerialNode(json, api);
   }
 
   // TODO: make << overload more verbose

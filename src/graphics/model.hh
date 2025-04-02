@@ -16,8 +16,7 @@ namespace Parrot {
     Model(strview name);
     // :: for Asset
     Model(const AssetPath& path, AssetAPI& api);
-    template<JsonType JSON>
-    Model(const JSON& json, const AssetPath& path, AssetAPI& api)
+    Model(const SerialNode& node, const AssetPath& path, AssetAPI& api)
       : Asset(path) {}
 
     // submodels, model_materials, textures

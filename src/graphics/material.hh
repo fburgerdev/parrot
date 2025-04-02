@@ -25,25 +25,23 @@ namespace Parrot {
   struct MaterialNode {
     // (constructor)
     MaterialNode() = default;
-    template<JsonType JSON>
-    MaterialNode(const JSON& json, AssetAPI& api) {
-      loadFromJSON(json, api);
+    MaterialNode(const SerialNode& node, AssetAPI& api) {
+      loadFromSerialNode(node, api);
     }
 
-    // loadFromJSON
-    template<JsonType JSON>
-    void loadFromJSON(const JSON& json, AssetAPI& api) {
+    // loadFromSerialNode
+    void loadFromSerialNode(const SerialNode& node, AssetAPI& api) {
       // object
-      if (json.isMap()) {
+      if (node.isMap()) {
         Map<string, MaterialNode> map;
-        for (const auto& [key, value] : json.items()) {
+        for (const auto& [key, value] : node.items()) {
           map.try_emplace(key, value, api);
         }
         value = std::move(map);
       }
       // list or leaf
-      else if (json.isList()) {
-        const auto& array = json;
+      else if (node.isList()) {
+        const auto& array = node;
         // leaf
         if (array.size() == 2 && array.at(0).isString()) {
           string dtype = normalized(string(array.at(0)));
@@ -139,19 +137,19 @@ namespace Parrot {
       return out;
     }
     template<class T, usize N>
-    static Vec<T, N> parseVec(const auto& json) {
+    static Vec<T, N> parseVec(const auto& node) {
       Vec<T, N> vec;
       for (usize n = 0; n < N; ++n) {
-        vec.at(n) = T(json.at(n));
+        vec.at(n) = T(node.at(n));
       }
       return vec;
     }
     template<class T, usize N, usize M = N>
-    static Mat<T, N, M> parseMat(const auto& json) {
+    static Mat<T, N, M> parseMat(const auto& node) {
       Mat<T, N, M> mat;
       for (usize n = 0; n < N; ++n) {
         for (usize m = 0; m < M; ++m) {
-          mat.at(n, m) = T(json.at(n).at(m));
+          mat.at(n, m) = T(node.at(n).at(m));
         }
       }
       return mat;
@@ -163,22 +161,20 @@ namespace Parrot {
   public:
     // (constructor) for Asset
     Material(const AssetPath& path, AssetAPI& api);
-    template<JsonType JSON>
-    Material(const JSON& json, const AssetPath& path, AssetAPI& api)
+    Material(const SerialNode& node, const AssetPath& path, AssetAPI& api)
       : Asset(path) {
-      loadFromJSON(json, api);
+      loadFromSerialNode(node, api);
     }
 
-    // loadFromJSON
-    template<JsonType JSON>
-    void loadFromJSON(const JSON& json, AssetAPI& api) {
+    // loadFromSerialNode
+    void loadFromSerialNode(const SerialNode& node, AssetAPI& api) {
       // root
-      if (json.contains("uniforms")) {
-        root.loadFromJSON(json.at("uniforms"), api);
+      if (node.contains("uniforms")) {
+        root.loadFromSerialNode(node.at("uniforms"), api);
       }
       // shader
-      if (json.contains("shader")) {
-        shader = AssetHandle<ShaderProgram>(json.at("shader"), api);
+      if (node.contains("shader")) {
+        shader = AssetHandle<ShaderProgram>(node.at("shader"), api);
       }
       else {
         shader = AssetHandle<ShaderProgram>(

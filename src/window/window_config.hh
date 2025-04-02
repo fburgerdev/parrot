@@ -13,46 +13,44 @@ namespace Parrot {
   public:
     // (constructor) for Asset
     WindowConfig(const AssetPath& path, AssetAPI& api);
-    template<JsonType JSON>
-    WindowConfig(const JSON& json, const AssetPath& path, AssetAPI& api)
+    WindowConfig(const SerialNode& node, const AssetPath& path, AssetAPI& api)
       : Asset(path) {
-      loadFromJSON(json, api);
+      loadFromSerialNode(node, api);
     }
 
-    // loadFromJSON
-    template<JsonType JSON>
-    void loadFromJSON(const JSON& json, AssetAPI& api) {
+    // loadFromSerialNode
+    void loadFromSerialNode(const SerialNode& node, AssetAPI& api) {
       // title
-      if (json.contains("title")) {
-        title = string(json.at("title"));
+      if (node.contains("title")) {
+        title = string(node.at("title"));
       }
       // width, height
-      if (json.contains("size")) {
-        width = uint(json.at("size")[0]);
-        height = uint(json.at("size")[1]);
+      if (node.contains("size")) {
+        width = uint(node.at("size")[0]);
+        height = uint(node.at("size")[1]);
       }
       // cursor
-      if (json.contains("cursor")) {
-        if (json.at("cursor") == "normal") {
+      if (node.contains("cursor")) {
+        if (node.at("cursor") == "normal") {
           cursor = CursorState::NORMAL;
         }
-        else if (json.at("cursor") == "hidden") {
+        else if (node.at("cursor") == "hidden") {
           cursor = CursorState::HIDDEN;
         }
-        else if (json.at("cursor") == "captured") {
+        else if (node.at("cursor") == "captured") {
           cursor = CursorState::CAPTURED;
         }
         else {
           LOG_ASSET_WARNING(
             "invalid window-config value {} for key 'cursor',"
             "defaults to 'normal'",
-            json.at("cursor")
+            node.at("cursor")
           );
         }
       }
       // scripts
-      if (json.contains("scripts")) {
-        for (const auto& script : json.at("scripts")) {
+      if (node.contains("scripts")) {
+        for (const auto& script : node.at("scripts")) {
           scripts.emplace_back(string(script));
         }
       }

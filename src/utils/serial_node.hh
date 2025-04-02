@@ -2,8 +2,14 @@
 #include "common.hh"
 
 namespace Parrot {
+  // null
+  struct null {
+    // <=> (compare)
+    auto operator<=>(const null& other) const = default;
+  };
+
   // SerialLeaf
-  using SerialLeaf = Variant<nullptr_t, bool, int64, uint64, double, string>;
+  using SerialLeaf = Variant<null, bool, int64, uint64, double, string>;
   
   // SerialNode
   class SerialNode {
@@ -11,6 +17,10 @@ namespace Parrot {
     // (static) loadFromJSON
     static SerialNode loadFromJSON(strview source);
     static SerialNode loadFromJSON(const stdf::path& filepath);
+
+    // SerialList, SerialMap
+    using SerialList = List<SerialNode>;
+    using SerialMap = Map<string, SerialNode>;
 
     // (constructor)
     SerialNode() = default;
@@ -22,9 +32,9 @@ namespace Parrot {
     template<class T>
     T value() const {
       if (holds<SerialLeaf>(_value)) {
-        if (holds<nullptr_t>(std::get<SerialLeaf>(_value))) {
-          if constexpr (std::is_convertible_v<nullptr_t, T>) {
-            return static_cast<T>(std::get<nullptr_t>(std::get<SerialLeaf>(_value)));
+        if (holds<null>(std::get<SerialLeaf>(_value))) {
+          if constexpr (std::is_convertible_v<null, T>) {
+            return static_cast<T>(std::get<null>(std::get<SerialLeaf>(_value)));
           }
         }
         else if (holds<bool>(std::get<SerialLeaf>(_value))) {
@@ -115,12 +125,31 @@ namespace Parrot {
     auto operator==(strview str) const {
       return isString() && value<strview>() == str;
     }
+    // <=> (compare)
+    std::partial_ordering operator<=>(const SerialNode& other) const {
+      if (_value.index() != other._value.index()) {
+        return _value.index() <=> other._value.index();
+      }
+      if (holds<SerialMap>(_value)) {
+        auto& lhs = std::get<SerialMap>(_value);
+        auto& rhs = std::get<SerialMap>(other._value);
+        return lhs <=> rhs;
+      }
+      else if (holds<SerialList>(_value)) {
+        auto& lhs = std::get<SerialList>(_value);
+        auto& rhs = std::get<SerialList>(other._value);
+        return lhs <=> rhs;
+      }
+      else {
+        auto& lhs = std::get<SerialLeaf>(_value);
+        auto& rhs = std::get<SerialLeaf>(other._value);
+        return lhs <=> rhs;
+      }
+    }
 
     // << (stream)
     friend ostream& operator<<(ostream& stream, const SerialNode& node);
   private:
-    Variant<
-      Map<string, SerialNode>, List<SerialNode>, SerialLeaf
-    > _value = SerialLeaf(nullptr);
+    Variant<SerialMap, SerialList, SerialLeaf> _value = SerialLeaf(null());
   };
 }

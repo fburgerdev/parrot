@@ -5,8 +5,8 @@
 namespace Parrot {
   // JsonType
   template<class T>
-  concept JsonType = requires(T json) {
-    { json.at("key") };
+  concept JsonType = requires(T node) {
+    { node.at("key") };
   };
   // AssetPath
   struct AssetPath {
@@ -19,19 +19,6 @@ namespace Parrot {
     // splitSubpath
     List<string> splitSubpath() const;
     // applySubpathToJSON
-    template<JsonType JSON>
-    auto applySubpathToJSON(const JSON& root) const {
-      const JSON* value = &root;
-      for (const string& token : splitSubpath()) {
-        if (std::isalpha(token.front())) {
-          value = &value->at(token);
-        }
-        else {
-          value = &value->at(std::stoull(token));
-        }
-      }
-      return *value;
-    }
     auto applySubpathToJSON(const SerialNode& root) const {
       const SerialNode* value = &root;
       for (const string& token : splitSubpath()) {

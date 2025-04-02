@@ -7,24 +7,22 @@ namespace Parrot {
   public:
     // (constructor) for Asset
     SceneConfig(const AssetPath& path, AssetAPI& apit);
-    template<JsonType JSON>
-    SceneConfig(const JSON& json, const AssetPath& path, AssetAPI& api)
+    SceneConfig(const SerialNode& node, const AssetPath& path, AssetAPI& api)
       : Asset(path) {
-      loadFromJSON(json, api);
+      loadFromSerialNode(node, api);
     }
 
-    // loadFromJSON
-    template<JsonType JSON>
-    void loadFromJSON(const JSON& json, AssetAPI& api) {
+    // loadFromSerialNode
+    void loadFromSerialNode(const SerialNode& node, AssetAPI& api) {
       // name
-      if (json.contains("name")) {
-        name = string(json.at("name"));
+      if (node.contains("name")) {
+        name = string(node.at("name"));
       }
       // root
-      root = AssetHandle<EntityPreset>(json.at("root"), api);
+      root = AssetHandle<EntityPreset>(node.at("root"), api);
       // scripts
-      if (json.contains("scripts")) {
-        for (const auto& script : json.at("scripts")) {
+      if (node.contains("scripts")) {
+        for (const auto& script : node.at("scripts")) {
           scripts.emplace_back(string(script));
         }
       }

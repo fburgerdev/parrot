@@ -8,14 +8,14 @@ class AssetPathTest : public testing::Test {
 protected:
 	// (constructor)
 	AssetPathTest() {
-		json = nlohmann::json::parse(
+		json = SerialNode::loadFromJSON(strview(
 			"{"
 			"\"key1\":1,"
 			"\"key2\":{\"key3\":3},"
 			"\"key4\":[0,1],"
 			"\"key5\":[0,1,{\"key6\":5},3]"
 			"}"
-		);
+		));
 		tests = {
 			{
 				"path/to/file.extension",
@@ -55,8 +55,8 @@ protected:
 		};
 	}
 	// json, tests
-	nlohmann::json json;
-	Map<strview, Tuple<strview, strview, List<string>, nlohmann::json>> tests;
+	SerialNode json;
+	Map<strview, Tuple<strview, strview, List<string>, SerialNode>> tests;
 };
 
 // (constructor)
@@ -79,7 +79,8 @@ TEST_F(AssetPathTest, splitSubpath) {
 TEST_F(AssetPathTest, applySubpathToJSON) {
 	for (auto& [input, output] : tests) {
 		auto asset_path = AssetPath(input);
-		EXPECT_EQ(asset_path.applySubpathToJSON(json), std::get<3>(output));
+		auto result = asset_path.applySubpathToJSON(json) <=> std::get<3>(output);
+		EXPECT_EQ(result, std::partial_ordering::equivalent);
 	}
 }
 // << (stream)

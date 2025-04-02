@@ -39,111 +39,109 @@ namespace Parrot {
   public:
     // (constructor) for SubAsset
     Light(const AssetPath& path, AssetAPI& api);
-    template<JsonType JSON>
-    Light(const JSON& json, const AssetPath& path, AssetAPI& api)
+    Light(const SerialNode& node, const AssetPath& path, AssetAPI& api)
       : Asset(path) {
-      loadFromJSON(json, api);
+      loadFromSerialNode(node, api);
     }
 
-    // loadFromJSON
-    template<JsonType JSON>
-    void loadFromJSON(const JSON& json, [[maybe_unused]] AssetAPI& api) {
+    // loadFromSerialNode
+    void loadFromSerialNode(const SerialNode& node, [[maybe_unused]] AssetAPI& api) {
       // ambient
-      if (json.at("type") == "ambient") {
+      if (node.at("type") == "ambient") {
         AmbientLight light;
         // intensity
-        if (json.contains("intensity")) {
-          light.intensity = DefaultFloat(json.at("intensity"));
+        if (node.contains("intensity")) {
+          light.intensity = DefaultFloat(node.at("intensity"));
         }
         // color
-        if (json.contains("color")) {
+        if (node.contains("color")) {
           light.color = Vec3<uint8>(
-            uint8(json.at("color")[0]),
-            uint8(json.at("color")[1]),
-            uint8(json.at("color")[2])
+            uint8(node.at("color")[0]),
+            uint8(node.at("color")[1]),
+            uint8(node.at("color")[2])
           );
         }
         value = light;
       }
       // directional
-      else if (json.at("type") == "directional") {
+      else if (node.at("type") == "directional") {
         DirectionalLight light;
         // direction
         light.direction = Vec3<DefaultFloat>(
-          DefaultFloat(json.at("direction")[0]),
-          DefaultFloat(json.at("direction")[1]),
-          DefaultFloat(json.at("direction")[2])
+          DefaultFloat(node.at("direction")[0]),
+          DefaultFloat(node.at("direction")[1]),
+          DefaultFloat(node.at("direction")[2])
         );
         // intensity
-        if (json.contains("intensity")) {
-          light.intensity = DefaultFloat(json.at("intensity"));
+        if (node.contains("intensity")) {
+          light.intensity = DefaultFloat(node.at("intensity"));
         }
         // color
-        if (json.contains("color")) {
+        if (node.contains("color")) {
           light.color = Vec3<uint8>(
-            uint8(json.at("color")[0]),
-            uint8(json.at("color")[1]),
-            uint8(json.at("color")[2])
+            uint8(node.at("color")[0]),
+            uint8(node.at("color")[1]),
+            uint8(node.at("color")[2])
           );
         }
         value = light;
       }
       // point
-      else if (json.at("type") == "point") {
+      else if (node.at("type") == "point") {
         PointLight light;
         // position
         light.position = Vec3<DefaultFloat>(
-          DefaultFloat(json.at("position")[0]),
-          DefaultFloat(json.at("position")[1]),
-          DefaultFloat(json.at("position")[2])
+          DefaultFloat(node.at("position")[0]),
+          DefaultFloat(node.at("position")[1]),
+          DefaultFloat(node.at("position")[2])
         );
         // range
-        if (json.contains("range")) {
-          light.range = DefaultFloat(json.at("range"));
+        if (node.contains("range")) {
+          light.range = DefaultFloat(node.at("range"));
         }
         // intensity
-        if (json.contains("intensity")) {
-          light.intensity = DefaultFloat(json.at("intensity"));
+        if (node.contains("intensity")) {
+          light.intensity = DefaultFloat(node.at("intensity"));
         }
         // color
-        if (json.contains("color")) {
+        if (node.contains("color")) {
           light.color = Vec3<uint8>(
-            uint8(json.at("color")[0]),
-            uint8(json.at("color")[1]),
-            uint8(json.at("color")[2])
+            uint8(node.at("color")[0]),
+            uint8(node.at("color")[1]),
+            uint8(node.at("color")[2])
           );
         }
         value = light;
       }
       // spot
-      else if (json.at("type") == "spot") {
+      else if (node.at("type") == "spot") {
         SpotLight light;
         // position
         light.position = Vec3<DefaultFloat>(
-          DefaultFloat(json.at("position")[0]),
-          DefaultFloat(json.at("position")[1]),
-          DefaultFloat(json.at("position")[2])
+          DefaultFloat(node.at("position")[0]),
+          DefaultFloat(node.at("position")[1]),
+          DefaultFloat(node.at("position")[2])
         );
         // direction
         light.direction = Vec3<DefaultFloat>(
-          DefaultFloat(json.at("direction")[0]),
-          DefaultFloat(json.at("direction")[1]),
-          DefaultFloat(json.at("direction")[2])
+          DefaultFloat(node.at("direction")[0]),
+          DefaultFloat(node.at("direction")[1]),
+          DefaultFloat(node.at("direction")[2])
         );
         // angle
-        if (json.contains("angle")) {
-          light.angle = DefaultFloat(json.at("angle"));
+        if (node.contains("angle")) {
+          light.angle = DefaultFloat(node.at("angle"));
         }
         // intensity
-        if (json.contains("intensity")) {
-          light.intensity = DefaultFloat(json.at("intensity"));
+        if (node.contains("intensity")) {
+          light.intensity = DefaultFloat(node.at("intensity"));
         }
         // color
-        if (json.contains("color")) {
+        if (node.contains("color")) {
           light.color = Vec3<uint8>(
-            uint8(json.at("color")[0]),
-            uint8(json.at("color")[1]),
-            uint8(json.at("color")[2])
+            uint8(node.at("color")[0]),
+            uint8(node.at("color")[1]),
+            uint8(node.at("color")[2])
           );
         }
         value = light;

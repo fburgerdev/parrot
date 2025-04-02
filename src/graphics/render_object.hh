@@ -7,25 +7,23 @@ namespace Parrot {
   struct RenderObject : public Asset {
     // (constructor) for Asset
     RenderObject(const AssetPath& path, AssetAPI& api);
-    template<JsonType JSON>
-    RenderObject(const JSON& json, const AssetPath& path, AssetAPI& api)
+    RenderObject(const SerialNode& node, const AssetPath& path, AssetAPI& api)
       : Asset(path) {
-      loadFromJSON(json, api);
+      loadFromSerialNode(node, api);
     }
 
-    // loadFromJSON
-    template<JsonType JSON>
-    void loadFromJSON(const JSON& json, AssetAPI& api) {
-      model = AssetHandle<Model>(json.at("model"), api);
-      if (json.contains("material")) {
-        material = AssetHandle<Material>(json.at("material"), api);
+    // loadFromSerialNode
+    void loadFromSerialNode(const SerialNode& node, AssetAPI& api) {
+      model = AssetHandle<Model>(node.at("model"), api);
+      if (node.contains("material")) {
+        material = AssetHandle<Material>(node.at("material"), api);
       }
       else {
         material = AssetHandle<Material>(
           AssetPath(stdf::path(".parrot/model.mat.json")), api
         );
       }
-      if (json.contains("opaque") && !json.at("opaque")) {
+      if (node.contains("opaque") && !node.at("opaque")) {
         is_opaque = false;
       }
     }

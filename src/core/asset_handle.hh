@@ -27,29 +27,16 @@ namespace Parrot {
       : _key(path), _api(&asset_api) {}
     AssetHandle(const AssetKey& key, AssetAPI& asset_api)
       : _key(key), _api(&asset_api) {}
-    template<JsonType JSON>
-    AssetHandle(const JSON& json, AssetAPI& asset_api) /* DEPRECATED */
+    AssetHandle(const SerialNode& node, AssetAPI& asset_api) /* DEPRECATED */
       : _api(&asset_api) {
-      if (json.is_number()) {
-        _key = UUID(json);
+      if (node.isNumber()) {
+        _key = UUID(node);
       }
-      else if (json.is_string()) {
-        _key = AssetPath(strview(string(json)));
+      else if (node.isString()) {
+        _key = AssetPath(strview(string(node)));
       }
       else {
-        _key = _api->addAsset(std::make_shared<T>(json, stdf::path(), *_api));
-      }
-    }
-    AssetHandle(const SerialNode& json, AssetAPI& asset_api) /* DEPRECATED */
-      : _api(&asset_api) {
-      if (json.isNumber()) {
-        _key = UUID(json);
-      }
-      else if (json.isString()) {
-        _key = AssetPath(strview(string(json)));
-      }
-      else {
-        _key = _api->addAsset(std::make_shared<T>(json, stdf::path(), *_api));
+        _key = _api->addAsset(std::make_shared<T>(node, stdf::path(), *_api));
       }
     }
 

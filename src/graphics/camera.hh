@@ -33,41 +33,39 @@ namespace Parrot {
     Camera(const OrthographicCamera& value);
     // :: for Asset
     Camera(const AssetPath& path, AssetAPI& api);
-    template<JsonType JSON>
-    Camera(const JSON& json, const AssetPath& path, AssetAPI& api)
+    Camera(const SerialNode& node, const AssetPath& path, AssetAPI& api)
       : Asset(path) {
-      loadFromJSON(json, api);
+      loadFromSerialNode(node, api);
     }
 
-    // loadFromJSON
-    template<JsonType JSON>
-    void loadFromJSON(const JSON& json, [[maybe_unused]] AssetAPI& api) {
+    // loadFromSerialNode
+    void loadFromSerialNode(const SerialNode& node, [[maybe_unused]] AssetAPI& api) {
       // z-range
       Vec2<float32> z_range = (
-        json.contains("z-range") ? Vec2<float32>(
-          DefaultFloat(json.at("z-range")[0]),
-          DefaultFloat(json.at("z-range")[1])
+        node.contains("z-range") ? Vec2<float32>(
+          DefaultFloat(node.at("z-range")[0]),
+          DefaultFloat(node.at("z-range")[1])
         ) : DEFAULT_ZRANGE
       );
       // type
-      if (!json.contains("type") &&
-          json.contains("fov") &&
-          json.contains("scale")) {
-        throw std::logic_error("couldn't deduce camera type from json");
+      if (!node.contains("type") &&
+          node.contains("fov") &&
+          node.contains("scale")) {
+        throw std::logic_error("couldn't deduce camera type from node");
       }
       // :: perspective
-      else if ((json.contains("type") && json.at("type") == "perspective") ||
-          (!json.contains("type") && json.contains("fov"))) {
+      else if ((node.contains("type") && node.at("type") == "perspective") ||
+          (!node.contains("type") && node.contains("fov"))) {
         float32 fov = (
-          json.contains("fov") ? float32(json.at("fov")) : DEFAULT_FOV
+          node.contains("fov") ? float32(node.at("fov")) : DEFAULT_FOV
         );
         value = PerspectiveCamera(fov, z_range);
       }
       // :: orthographic
-      else if ((json.contains("type") && json.at("type") == "orthographic") ||
-          (!json.contains("type") && json.contains("scale"))) {
+      else if ((node.contains("type") && node.at("type") == "orthographic") ||
+          (!node.contains("type") && node.contains("scale"))) {
         float32 scale = (
-          json.contains("scale") ? float32(json.at("scale")) : DEFAULT_SCALE
+          node.contains("scale") ? float32(node.at("scale")) : DEFAULT_SCALE
         );
         value = OrthographicCamera(scale, z_range);
       }

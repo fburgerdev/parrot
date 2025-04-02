@@ -23,16 +23,14 @@ namespace Parrot {
     TextureConfig(AssetHandle<Image> image);
     // :: for Asset
     TextureConfig(const AssetPath& path, AssetAPI& api);
-    template<JsonType JSON>
-    TextureConfig(const JSON& json, const AssetPath& path, AssetAPI& api)
+    TextureConfig(const SerialNode& node, const AssetPath& path, AssetAPI& api)
       : Asset(path) {
-      loadFromJSON(json, api);
+      loadFromSerialNode(node, api);
     }
 
-    // loadFromJSON
-    template<JsonType JSON>
-    void loadFromJSON(const JSON& json, AssetAPI& api) {
-      image = AssetHandle<Image>(json.at("image"), api);
+    // loadFromSerialNode
+    void loadFromSerialNode(const SerialNode& node, AssetAPI& api) {
+      image = AssetHandle<Image>(node.at("image"), api);
       // TODO: properties...
     }
     

@@ -9,7 +9,7 @@ namespace Parrot {
     auto json = path.applySubpathToJSON(
       SerialNode::loadFromJSON(path.file)
     );
-    loadFromJSON(json);
+    loadFromSerialNode(json);
   }
   // :: for Asset
   AppConfig::AppConfig(const AssetPath& path, AssetAPI& api)
@@ -17,6 +17,6 @@ namespace Parrot {
     auto json = path.applySubpathToJSON(
       SerialNode::loadFromJSON(path.file)
     );
-    loadFromJSON(json, api);
+    loadFromSerialNode(json, api);
   }
 }

@@ -9,6 +9,6 @@ namespace Parrot {
     auto json = getAssetPath().applySubpathToJSON(
       SerialNode::loadFromJSON(path.file)
     );
-    loadFromJSON(json, api);
+    loadFromSerialNode(json, api);
   }
 }

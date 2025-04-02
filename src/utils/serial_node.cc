@@ -9,7 +9,7 @@ namespace Parrot {
   static SerialNode createFromJSON(const json& json) {
     if (json.is_primitive()) {
       if (json.is_null()) {
-        return { SerialLeaf(nullptr) };
+        return { SerialLeaf(null()) };
       }
       else if (json.is_boolean()) {
         return { SerialLeaf(bool(json)) };
@@ -74,7 +74,7 @@ namespace Parrot {
 
   // is
   bool SerialNode::isNull() const {
-    return holds<SerialLeaf>(_value) && holds<nullptr_t>(std::get<SerialLeaf>(_value));
+    return holds<SerialLeaf>(_value) && holds<null>(std::get<SerialLeaf>(_value));
   }
   bool SerialNode::isBool() const {
     return holds<SerialLeaf>(_value) && holds<bool>(std::get<SerialLeaf>(_value));
