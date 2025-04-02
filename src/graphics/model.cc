@@ -110,4 +110,6 @@ namespace Parrot {
       path, submodels.size(), textures.size()
     );
   }
+  Model::Model(const SerialNode&, const AssetPath& path, AssetAPI&)
+    : Asset(path) {}
 }

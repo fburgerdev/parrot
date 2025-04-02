@@ -33,46 +33,10 @@ namespace Parrot {
     Camera(const OrthographicCamera& value);
     // :: for Asset
     Camera(const AssetPath& path, AssetAPI& api);
-    Camera(const SerialNode& node, const AssetPath& path, AssetAPI& api)
-      : Asset(path) {
-      loadFromSerialNode(node, api);
-    }
+    Camera(const SerialNode& node, const AssetPath& path, AssetAPI& api);
 
     // loadFromSerialNode
-    void loadFromSerialNode(const SerialNode& node, [[maybe_unused]] AssetAPI& api) {
-      // z-range
-      Vec2<float32> z_range = (
-        node.contains("z-range") ? Vec2<float32>(
-          DefaultFloat(node.at("z-range")[0]),
-          DefaultFloat(node.at("z-range")[1])
-        ) : DEFAULT_ZRANGE
-      );
-      // type
-      if (!node.contains("type") &&
-          node.contains("fov") &&
-          node.contains("scale")) {
-        throw std::logic_error("couldn't deduce camera type from node");
-      }
-      // :: perspective
-      else if ((node.contains("type") && node.at("type") == "perspective") ||
-          (!node.contains("type") && node.contains("fov"))) {
-        float32 fov = (
-          node.contains("fov") ? float32(node.at("fov")) : DEFAULT_FOV
-        );
-        value = PerspectiveCamera(fov, z_range);
-      }
-      // :: orthographic
-      else if ((node.contains("type") && node.at("type") == "orthographic") ||
-          (!node.contains("type") && node.contains("scale"))) {
-        float32 scale = (
-          node.contains("scale") ? float32(node.at("scale")) : DEFAULT_SCALE
-        );
-        value = OrthographicCamera(scale, z_range);
-      }
-      else {
-        throw std::logic_error("unexpected branch");
-      }
-    }
+    void loadFromSerialNode(const SerialNode& node, AssetAPI& api);
     // calcProjectionMatrix
     Mat4x4<float32> calcProjectionMatrix(float32 aspect) const;
 

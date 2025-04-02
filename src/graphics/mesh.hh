@@ -30,7 +30,7 @@ namespace Parrot {
     template<class Vertices, class Indices>
     Mesh(Vertices&& vertices, Indices&& indices)
       : vertices(std::forward<Vertices>(vertices)),
-      indices(std::forward<Indices>(indices)) {}
+        indices(std::forward<Indices>(indices)) {}
 
     // addTriangle
     void addTriangle(Vertex v1, Vertex v2, Vertex v3);

@@ -16,8 +16,7 @@ namespace Parrot {
     Model(strview name);
     // :: for Asset
     Model(const AssetPath& path, AssetAPI& api);
-    Model(const SerialNode& node, const AssetPath& path, AssetAPI& api)
-      : Asset(path) {}
+    Model(const SerialNode& node, const AssetPath& path, AssetAPI& api);
 
     // submodels, model_materials, textures
     List<SubModel> submodels;

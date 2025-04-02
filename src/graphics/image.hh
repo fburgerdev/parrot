@@ -21,10 +21,7 @@ namespace Parrot {
     Image(Image&& other) noexcept;
     // :: for Asset
     Image(const AssetPath& path, AssetAPI& api);
-    Image(const SerialNode& node, const AssetPath& path, AssetAPI& api)
-      : Asset(path) {
-      LOG_ASSET_ERROR("this method only exists to implement the asset-api");
-    }
+    Image(const SerialNode& node, const AssetPath& path, AssetAPI& api);
     // (destructor)
     ~Image();
     // (assignment)

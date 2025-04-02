@@ -23,16 +23,10 @@ namespace Parrot {
     TextureConfig(AssetHandle<Image> image);
     // :: for Asset
     TextureConfig(const AssetPath& path, AssetAPI& api);
-    TextureConfig(const SerialNode& node, const AssetPath& path, AssetAPI& api)
-      : Asset(path) {
-      loadFromSerialNode(node, api);
-    }
+    TextureConfig(const SerialNode& node, const AssetPath& path, AssetAPI& api);
 
     // loadFromSerialNode
-    void loadFromSerialNode(const SerialNode& node, AssetAPI& api) {
-      image = AssetHandle<Image>(node.at("image"), api);
-      // TODO: properties...
-    }
+    void loadFromSerialNode(const SerialNode& node, AssetAPI& api);
     
     // (hor/ver)wrap, (mag/min)filter, mipmap, image
     TextureWrap hor_wrap = TextureWrap::CLAMP_TO_EDGE;

@@ -107,8 +107,12 @@ namespace Parrot {
       _format(std::exchange(other._format, ImageFormat::NONE)),
       _bytes(std::exchange(other._bytes, nullptr)) {}
   // :: for Asset
-  Image::Image(const AssetPath& path, [[maybe_unused]] AssetAPI& api)
+  Image::Image(const AssetPath& path, AssetAPI&)
     : Image(path.file, path.debug_root) {}
+  Image::Image(const SerialNode& node, const AssetPath& path, AssetAPI& api)
+    : Asset(path) {
+    LOG_ASSET_ERROR("this method only exists to implement the asset-api");
+  }
   // (destructor)
   Image::~Image() {
     stbi_image_free(_bytes);
