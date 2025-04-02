@@ -50,13 +50,13 @@ def check_dir_diff(src_dir: Path, dest_dir: Path, suffixes: list[str], name_tran
   return diff
 
 # check_directories
-def check_directories(src_dir: Path, tests_dir: Path):
+def check_directories(src_dir: Path, tests_dir: Path, verbose: bool):
   # missing unit-tests
   missing = check_dir_diff(src_dir, tests_dir, ['.cc'], test_name)
   if missing.total_count > 0:
     print(f"| There are missing unit-test files {{ {missing.total_count} total }}:")
     for directory, directory_count in missing.directories:
-      print(f"| - dir: {directory} {{ {directory_count} units }}")
+      print(f"| - {directory} {{ {directory_count} units }}")
     for file in missing.files:
       print(f"| - {file}")
   # zombie unit-tests
@@ -66,7 +66,7 @@ def check_directories(src_dir: Path, tests_dir: Path):
   if zombie.total_count > 0:
     print(f"| There are zombie unit-test files {{ = {zombie.total_count} total}}:")
     for directory, directory_count in zombie.directories:
-      print(f"| - dir: {directory} {{ {directory_count} files }}")
+      print(f"| - {directory} {{ {directory_count} files }}")
     for file in zombie.files:
       print(f"| - {file}")
   # success
@@ -76,14 +76,14 @@ def check_directories(src_dir: Path, tests_dir: Path):
     return False
 
 # check_unit_tests
-def check_unit_tests():
+def check_unit_tests(verbose: bool):
   # file_path
   file_path = Path(__file__).resolve()
   # repo_path
   repo_path = file_path.parents[1]
   # check
   print("Check unit-tests")
-  success = check_directories(repo_path / "src", repo_path / "tests")
+  success = check_directories(repo_path / "src", repo_path / "tests", verbose)
   if success:
     print("\u2713 Success")
   else:
@@ -92,7 +92,7 @@ def check_unit_tests():
 
 # __main__
 if __name__ == '__main__':
-  if check_unit_tests():
+  if check_unit_tests(True):
     print()
     print("Everything is fine.")
   else:

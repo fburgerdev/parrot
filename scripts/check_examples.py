@@ -1,6 +1,6 @@
 from pathlib import Path
 
-def compare_directories(dir1: Path, dir2: Path, common: Path):
+def compare_directories(dir1: Path, dir2: Path, common: Path, verbose: bool):
   file_map = dict()
   dir1_rel = dir1.relative_to(common)
   dir2_rel = dir2.relative_to(common)
@@ -25,7 +25,8 @@ def compare_directories(dir1: Path, dir2: Path, common: Path):
         file_map[key] = ["dir2"]
       dir2_count += 1
   if dir1_count == dir2_count == len(file_map):
-    print(f"| Directory {dir1_rel} and Directory {dir2_rel} are the same.")
+    if verbose:
+      print(f"| Directory {dir1_rel} and Directory {dir2_rel} are the same.")
     return True
   else:
     print(f"| Directory {dir1_rel} and Directory {dir2_rel} are not the same:")
@@ -37,7 +38,7 @@ def compare_directories(dir1: Path, dir2: Path, common: Path):
     return False
 
 # check_examples
-def check_examples():
+def check_examples(verbose: bool):
   # file_path
   file_path = Path(__file__).resolve()
   # repo_path
@@ -48,7 +49,7 @@ def check_examples():
   print("Check examples")
   for example in (repo_path / "examples").iterdir():
     if len(examples) > 0:
-      success &= compare_directories(examples[-1] / ".parrot", example / ".parrot", repo_path / "examples")
+      success &= compare_directories(examples[-1] / ".parrot", example / ".parrot", repo_path / "examples", verbose)
     examples.append(example)
   if success:
     print("\u2713 Success")
@@ -58,7 +59,7 @@ def check_examples():
 
 # __main__
 if __name__ == '__main__':
-  if check_examples():
+  if check_examples(True):
     print()
     print("Everything is fine.")
   else:
