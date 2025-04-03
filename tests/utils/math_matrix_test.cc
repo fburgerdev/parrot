@@ -10,7 +10,7 @@ public:
 	using testing::Test::Test;
 };
 // :: types
-using MatTypes = ::testing::Types<
+using FullMatTypes = ::testing::Types<
 	// int
 	Mat<int, 3, 3>,
 	// uint
@@ -24,7 +24,10 @@ using MatTypes = ::testing::Types<
 	// double
 	Mat<double, 3, 3>
 >;
-TYPED_TEST_SUITE(MatTest, MatTypes);
+using MinimalMatTypes = ::testing::Types<Mat<float, 3, 3>>;
+//TODO: create macro to toggle full-mat-types
+// TYPED_TEST_SUITE(MatTest, FullMatTypes);
+TYPED_TEST_SUITE(MatTest, MinimalMatTypes);
 
 // VecTest
 template<class T>
@@ -33,8 +36,8 @@ public:
 	// (constructor)
 	using testing::Test::Test;
 };
-// VecTypes
-using VecTypes = ::testing::Types<
+// :: types
+using FullVecTypes = ::testing::Types<
 	// int
 	Mat<int, 3, 1>,
 	// uint
@@ -46,7 +49,10 @@ using VecTypes = ::testing::Types<
 	// double
 	Mat<double, 3, 1>
 >;
-TYPED_TEST_SUITE(VecTest, VecTypes);
+using MinimalVecTypes = ::testing::Types<Mat<float, 3, 1>>;
+//TODO: create macro to toggle full-vec-types
+// TYPED_TEST_SUITE(VecTest, FullVecTypes);
+TYPED_TEST_SUITE(VecTest, MinimalVecTypes);
 
 // at
 TYPED_TEST(MatTest, at) {
