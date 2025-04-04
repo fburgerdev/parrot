@@ -1,0 +1,40 @@
+{
+  "name": "my-game",
+  "stage": {
+    "window": {
+      "title": "Hello, Cube!"
+    },
+    "scene": {
+      "root": {
+        "children": [
+          {
+            "transform": {
+              "position": [ 0, 2, -10 ]
+            },
+            "components": {
+              "camera": {
+                "type": "perspective"
+              }
+            }
+          },
+          {
+            "components": {
+              "render-object": {
+                "model": ".parrot/cube.obj"
+              }
+            },
+            "scripts": [ "Rotate" ]
+          },
+          {
+            "components": {
+              "light": {
+                "type": "directional",
+                "direction": [ 0, -0.707, 0.707 ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
