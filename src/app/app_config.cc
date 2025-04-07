@@ -19,8 +19,9 @@ namespace Parrot {
     );
     loadFromSerialNode(json, api);
   }
-  AppConfig::AppConfig(const SerialNode& node, const AssetPath& path, AssetAPI& api)
-    : Asset(path) {
+  AppConfig::AppConfig(
+    const SerialNode& node, const AssetPath& path, AssetAPI& api
+  ) : Asset(path) {
     loadFromSerialNode(node, api);
   }
 

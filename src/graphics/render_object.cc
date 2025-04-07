@@ -12,13 +12,16 @@ namespace Parrot {
     );
     loadFromSerialNode(json, api);
   }
-  RenderObject::RenderObject(const SerialNode& node, const AssetPath& path, AssetAPI& api)
-    : Asset(path) {
+  RenderObject::RenderObject(
+    const SerialNode& node, const AssetPath& path, AssetAPI& api
+  ) : Asset(path) {
     loadFromSerialNode(node, api);
   }
 
   // loadFromSerialNode
-  void RenderObject::loadFromSerialNode(const SerialNode& node, AssetAPI& api) {
+  void RenderObject::loadFromSerialNode(
+    const SerialNode& node, AssetAPI& api
+  ) {
     model = AssetHandle<Model>(node.at("model"), api);
     if (node.contains("material")) {
       material = AssetHandle<Material>(node.at("material"), api);

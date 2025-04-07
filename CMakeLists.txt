@@ -20,7 +20,7 @@ target_include_directories(parrot PUBLIC src vendor)
 target_compile_definitions(parrot PRIVATE PARROT_GLFW PARROT_OPENGL)
 
 # vendor
-# :: download cpm
+# :: cpm
 file(
   DOWNLOAD
   https://github.com/cpm-cmake/CPM.cmake/releases/download/v0.40.5/CPM.cmake
@@ -32,15 +32,24 @@ CPMAddPackage(
   NAME assimp
   GITHUB_REPOSITORY assimp/assimp
   GIT_TAG v5.4.3
+  GIT_SHALLOW TRUE
   OPTIONS
-    "ASSIMP_INSTALL ON"
     "BUILD_SHARED_LIBS OFF"
+    "ASSIMP_INSTALL OFF"
+    "ASSIMP_NO_EXPORT ON"
     "ASSIMP_BUILD_TESTS OFF"
-    "ASSIMP_BUILD_ALL_EXPORTERS_BY_DEFAULT OFF"
+    "ASSIMP_BUILD_ASSIMP_TOOLS OFF"
     "ASSIMP_BUILD_ASSIMP_VIEW OFF"
+    "ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT OFF"
+    "ASSIMP_BUILD_ALL_EXPORTERS_BY_DEFAULT OFF"
+    "ASSIMP_BUILD_OBJ_IMPORTER ON"
+    "ASSIMP_BUILD_FBX_IMPORTER ON"
+    "ASSIMP_BUILD_GLTF_IMPORTER ON"
 )
-target_include_directories(parrot PUBLIC "${CMAKE_BINARY_DIR}/_deps/assimp-src/include")
-target_include_directories(parrot PUBLIC "${CMAKE_BINARY_DIR}/_deps/assimp-build/include")
+target_include_directories(parrot PUBLIC
+  "${CMAKE_BINARY_DIR}/_deps/assimp-src/include"
+  "${CMAKE_BINARY_DIR}/_deps/assimp-build/include"
+)
 # :: glfw (target)
 CPMAddPackage(
   NAME glfw
@@ -53,17 +62,22 @@ CPMAddPackage(
     "GLFW_BUILD_EXAMPLES OFF"
     "GLFW_BUILD_DOCS OFF"
 )
-target_include_directories(parrot PUBLIC "${CMAKE_BINARY_DIR}/_deps/glfw-src/include")
-target_include_directories(parrot PUBLIC "${CMAKE_BINARY_DIR}/_deps/glfw-build/include")
+target_include_directories(parrot PUBLIC
+  "${CMAKE_BINARY_DIR}/_deps/glfw-src/include"
+  "${CMAKE_BINARY_DIR}/_deps/glfw-build/include"
+)
 # :: json (target)
 CPMAddPackage(
   NAME json
   VERSION 3.7.3
   URL https://github.com/nlohmann/json/releases/download/v3.7.3/include.zip
-  URL_HASH SHA256=87b5884741427220d3a33df1363ae0e8b898099fbc59f1c451113f6732891014
+  URL_HASH
+    SHA256=87b5884741427220d3a33df1363ae0e8b898099fbc59f1c451113f6732891014
 )
-target_include_directories(parrot PUBLIC "${CMAKE_BINARY_DIR}/_deps/json-src/include")
-target_include_directories(parrot PUBLIC "${CMAKE_BINARY_DIR}/_deps/json-build/include")
+target_include_directories(parrot PUBLIC
+  "${CMAKE_BINARY_DIR}/_deps/json-src/include"
+  "${CMAKE_BINARY_DIR}/_deps/json-build/include"
+)
 # :: glad (target)
 add_subdirectory(vendor/glad)
 # :: stb (target)
@@ -76,12 +90,16 @@ file(GLOB_RECURSE EXAMPLE_HELLO_CUBE_SOURCES examples/hello_cube/*.hh)
 file(GLOB_RECURSE EXAMPLE_HELLO_CUBE_SOURCES examples/hello_cube/*.cc)
 target_sources(example_hello_cube PRIVATE ${EXAMPLE_HELLO_CUBE_SOURCES})
 # :: include directories
-target_include_directories(example_hello_cube PUBLIC src vendor examples/hello_cube)
+target_include_directories(example_hello_cube PUBLIC examples/hello_cube)
+target_include_directories(example_hello_cube PUBLIC src vendor)
 # :: links
 target_link_libraries(example_hello_cube PRIVATE parrot)
 target_link_libraries(example_hello_cube PRIVATE assimp glad glfw stb)
 # :: macros
-target_compile_definitions(example_hello_cube PRIVATE PARROT_GLFW PARROT_OPENGL)
+target_compile_definitions(example_hello_cube PRIVATE
+  PARROT_GLFW
+  PARROT_OPENGL
+)
 
 # example_teapot (target)
 add_executable(example_teapot)
@@ -90,12 +108,16 @@ file(GLOB_RECURSE EXAMPLE_TEAPOT_SOURCES examples/teapot/*.hh)
 file(GLOB_RECURSE EXAMPLE_TEAPOT_SOURCES examples/teapot/*.cc)
 target_sources(example_teapot PRIVATE ${EXAMPLE_TEAPOT_SOURCES})
 # :: include directories
-target_include_directories(example_teapot PUBLIC src vendor examples/teapot)
+target_include_directories(example_teapot PUBLIC examples/teapot)
+target_include_directories(example_teapot PUBLIC src vendor)
 # :: links
 target_link_libraries(example_teapot PRIVATE parrot)
 target_link_libraries(example_teapot PRIVATE assimp glad glfw stb)
 # :: macros
-target_compile_definitions(example_teapot PRIVATE PARROT_GLFW PARROT_OPENGL)
+target_compile_definitions(example_teapot PRIVATE
+  PARROT_GLFW
+  PARROT_OPENGL
+)
 
 # example_pirate (target)
 add_executable(example_pirate_bay)
@@ -104,23 +126,28 @@ file(GLOB_RECURSE EXAMPLE_PIRATE_BAY_SOURCES examples/pirate_bay/*.hh)
 file(GLOB_RECURSE EXAMPLE_PIRATE_BAY_SOURCES examples/pirate_bay/*.cc)
 target_sources(example_pirate_bay PRIVATE ${EXAMPLE_PIRATE_BAY_SOURCES})
 # :: include directories
-target_include_directories(example_pirate_bay PUBLIC src vendor examples/pirate_bay)
+target_include_directories(example_pirate_bay PUBLIC examples/pirate_bay)
+target_include_directories(example_pirate_bay PUBLIC src vendor)
 # :: links
 target_link_libraries(example_pirate_bay PRIVATE parrot)
 target_link_libraries(example_pirate_bay PRIVATE assimp glad glfw stb)
 # :: macros
-target_compile_definitions(example_pirate_bay PRIVATE PARROT_GLFW PARROT_OPENGL)
+target_compile_definitions(example_pirate_bay PRIVATE
+  PARROT_GLFW
+  PARROT_OPENGL
+)
 
 # tests (target)
 enable_testing()
 add_executable(tests)
 # :: gtest
 include(FetchContent)
+set(GTEST_ARCHIVE_FILE "03597a01ee50ed33e9dfd640b249b4be3799d395.zip")
 FetchContent_Declare(
   googletest
-  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+  URL https://github.com/google/googletest/archive/${GTEST_ARCHIVE_FILE}
 )
-# :: for windows, prevent overriding the parent project's compiler/linker settings
+# :: for windows, prevent overriding the parent project's settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 # :: files
@@ -129,16 +156,21 @@ file(GLOB_RECURSE TESTS_SOURCES tests/*.cc)
 target_sources(tests PRIVATE ${TESTS_SOURCES})
 # :: include directories
 target_include_directories(tests PUBLIC tests src vendor)
-target_include_directories(tests PUBLIC "${CMAKE_BINARY_DIR}/_deps/googletest-src/googletest/include")
-target_include_directories(tests PUBLIC "${CMAKE_BINARY_DIR}/_deps/googletest-src/googlemock/include")
-target_include_directories(tests PUBLIC "${CMAKE_BINARY_DIR}/_deps/googletest-build/googletest/include")
-target_include_directories(tests PUBLIC "${CMAKE_BINARY_DIR}/_deps/googletest-build/googlemock/include")
+target_include_directories(tests PUBLIC
+  "${CMAKE_BINARY_DIR}/_deps/googletest-src/googletest/include"
+  "${CMAKE_BINARY_DIR}/_deps/googletest-src/googlemock/include"
+  "${CMAKE_BINARY_DIR}/_deps/googletest-build/googletest/include"
+  "${CMAKE_BINARY_DIR}/_deps/googletest-build/googlemock/include"
+)
 # :: links
 target_link_libraries(tests PRIVATE parrot)
 target_link_libraries(tests PRIVATE GTest::gtest_main)
 target_link_libraries(tests PRIVATE assimp glad glfw stb)
 # :: macros
-target_compile_definitions(tests PRIVATE PARROT_GLFW PARROT_OPENGL)
+target_compile_definitions(tests PRIVATE
+  PARROT_GLFW
+  PARROT_OPENGL
+)
 # :: add tests
 include(GoogleTest)
 gtest_discover_tests(tests)

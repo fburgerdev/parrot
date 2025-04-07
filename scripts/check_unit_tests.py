@@ -31,19 +31,19 @@ def remove_suffixes(files: list[str]):
   return result
 
 # check_dir_diff
-def check_dir_diff(src_dir: Path, dest_dir: Path, suffixes: list[str], name_transform):
+def check_dir_diff(src: Path, dest: Path, suffixes: list[str], name_transform):
   diff = DirDiff()
-  for root_path, _, files in src_dir.walk():
-    rel_path = root_path.relative_to(src_dir)
-    if (dest_dir / rel_path).exists():
+  for root_path, _, files in src.walk():
+    rel_path = root_path.relative_to(src)
+    if (dest / rel_path).exists():
       for file in remove_suffixes(files):
-        if not exists(dest_dir / rel_path / name_transform(file), suffixes):
+        if not exists(dest / rel_path / name_transform(file), suffixes):
           diff.files.append(rel_path / name_transform(file))
           diff.total_count += 1
     else:
       missing_file_count = 0
       for file in remove_suffixes(files):
-        if not exists(dest_dir / rel_path / name_transform(file), suffixes):
+        if not exists(dest / rel_path / name_transform(file), suffixes):
           missing_file_count += 1
           diff.total_count += 1
       diff.directories.append((rel_path, missing_file_count))
@@ -51,20 +51,20 @@ def check_dir_diff(src_dir: Path, dest_dir: Path, suffixes: list[str], name_tran
 
 # check_directories
 def check_directories(src_dir: Path, tests_dir: Path, verbose: bool):
-  # missing unit-tests
+  # missing tests
   missing = check_dir_diff(src_dir, tests_dir, ['.cc'], test_name)
   if missing.total_count > 0:
-    print(f"| There are missing unit-test files {{ {missing.total_count} total }}:")
+    print(f"| There are missing test files {{ {missing.total_count} total }}:")
     for directory, directory_count in missing.directories:
       print(f"| - {directory} {{ {directory_count} units }}")
     for file in missing.files:
       print(f"| - {file}")
-  # zombie unit-tests
+  # zombie tests
   zombie = check_dir_diff(tests_dir, src_dir, ['.hh', '.cc'], src_name)
   zombie.total_count -= 1
   zombie.files.remove(Path("main"))
   if zombie.total_count > 0:
-    print(f"| There are zombie unit-test files {{ = {zombie.total_count} total}}:")
+    print(f"| There are zombie test files {{ = {zombie.total_count} total}}:")
     for directory, directory_count in zombie.directories:
       print(f"| - {directory} {{ {directory_count} files }}")
     for file in zombie.files:

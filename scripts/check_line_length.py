@@ -13,18 +13,25 @@ def check_repo(repo_path: Path, ignore_paths: list[Path], verbose: bool):
           if file_name.endswith(suffix):
             with open(root / file_name, encoding='utf-8') as file:
               to_long_lines = []
-              lines = [ line[:-1] if len(line) > 0 else line for line in file.readlines() ]
+              lines = []
+              for line in file.readlines():
+                if len(line) > 0:
+                  lines.append(line[:-1])
+                else:
+                  lines.append('')
               for i in range(len(lines)):
                 if len(lines[i]) > 80:
                   to_long_lines.append(i)
               if len(to_long_lines) > 0:
+                rel_path = (root / file_name).relative_to(repo_path)
                 if verbose:
-                  print(f"| Found in {(root / file_name).relative_to(repo_path)}:")
+                  print(f"| Found in {rel_path}:")
                   for line_index in to_long_lines:
-                    print(f"| {lines[line_index]} [length {len(lines[line_index])} in line {line_index}]")
+                    line = lines[line_index]
+                    print(f"| {line} [length {len(line)} line {line_index}]")
                   print("|")
                 else:
-                  print(f"| - {(root / file_name).relative_to(repo_path)} {{ {len(to_long_lines)} lines }}")
+                  print(f"| - {rel_path} {{ {len(to_long_lines)} lines }}")
               count += len(to_long_lines)
   print(f"| Found {count} lines with more than 80 characters.")
   return count == 0

@@ -14,13 +14,16 @@ namespace Parrot {
     );
     loadFromSerialNode(json, api);
   }
-  TextureConfig::TextureConfig(const SerialNode& node, const AssetPath& path, AssetAPI& api)
-    : Asset(path) {
+  TextureConfig::TextureConfig(
+    const SerialNode& node, const AssetPath& path, AssetAPI& api
+  ) : Asset(path) {
     loadFromSerialNode(node, api);
   }
 
   // loadFromSerialNode
-  void TextureConfig::loadFromSerialNode(const SerialNode& node, AssetAPI& api) {
+  void TextureConfig::loadFromSerialNode(
+    const SerialNode& node, AssetAPI& api
+  ) {
     image = AssetHandle<Image>(node.at("image"), api);
     //TODO: properties...
   }

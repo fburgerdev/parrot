@@ -74,25 +74,43 @@ namespace Parrot {
 
   // is
   bool SerialNode::isNull() const {
-    return holds<SerialLeaf>(_value) && holds<null>(std::get<SerialLeaf>(_value));
+    if (holds<SerialLeaf>(_value)) {
+      return holds<null>(std::get<SerialLeaf>(_value));
+    }
+    return false;
   }
   bool SerialNode::isBool() const {
-    return holds<SerialLeaf>(_value) && holds<bool>(std::get<SerialLeaf>(_value));
+    if (holds<SerialLeaf>(_value)) {
+      return holds<bool>(std::get<SerialLeaf>(_value));
+    }
+    return false;
   }
   bool SerialNode::isNumber() const {
     return isInt() || isUint() || isFloat();
   }
   bool SerialNode::isInt() const {
-    return holds<SerialLeaf>(_value) && holds<int64>(std::get<SerialLeaf>(_value));
+    if (holds<SerialLeaf>(_value)) {
+      return holds<int64>(std::get<SerialLeaf>(_value));
+    }
+    return false;
   }
   bool SerialNode::isUint() const {
-    return holds<SerialLeaf>(_value) && holds<uint64>(std::get<SerialLeaf>(_value));
+    if (holds<SerialLeaf>(_value)) {
+      return holds<uint64>(std::get<SerialLeaf>(_value));
+    }
+    return false;
   }
   bool SerialNode::isFloat() const {
-    return holds<SerialLeaf>(_value) && holds<double>(std::get<SerialLeaf>(_value));
+    if (holds<SerialLeaf>(_value)) {
+      return holds<double>(std::get<SerialLeaf>(_value));
+    }
+    return false;
   }
   bool SerialNode::isString() const {
-    return holds<SerialLeaf>(_value) && holds<string>(std::get<SerialLeaf>(_value));
+    if (holds<SerialLeaf>(_value)) {
+      return holds<string>(std::get<SerialLeaf>(_value));
+    }
+    return false;
   }
   bool SerialNode::isList() const {
     return holds<List<SerialNode>>(_value);

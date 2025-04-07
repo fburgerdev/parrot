@@ -11,13 +11,16 @@ namespace Parrot {
     );
     loadFromSerialNode(json, api);
   }
-  EntityPreset::EntityPreset(const SerialNode& node, const AssetPath& path, AssetAPI& api)
-    : Asset(path) {
+  EntityPreset::EntityPreset(
+    const SerialNode& node, const AssetPath& path, AssetAPI& api
+  ) : Asset(path) {
     loadFromSerialNode(node, api);
   }
 
   // loadFromSerialNode
-  void EntityPreset::loadFromSerialNode(const SerialNode& node, AssetAPI& api) {
+  void EntityPreset::loadFromSerialNode(
+    const SerialNode& node, AssetAPI& api
+  ) {
     // tag
     if (node.contains("tag")) {
       tag = string(node.at("tag"));

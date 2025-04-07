@@ -111,8 +111,9 @@ namespace Parrot {
   // :: for Asset
   ShaderSource::ShaderSource(const AssetPath& path, AssetAPI& api)
     : ShaderSource((ostrstream() << ifstream(path.file).rdbuf()).str()) {}
-  ShaderSource::ShaderSource(const SerialNode&, const AssetPath& path, AssetAPI&)
-    : Asset(path) {
+  ShaderSource::ShaderSource(
+    const SerialNode&, const AssetPath& path, AssetAPI&
+  ) : Asset(path) {
     LOG_ASSET_ERROR("this method only exists to implement the asset-api");
   }
 
@@ -147,13 +148,16 @@ namespace Parrot {
     );
     loadFromSerialNode(json, api);
   }
-  ShaderProgram::ShaderProgram(const SerialNode& node, const AssetPath& path, AssetAPI& api)
-    : Asset(path) {
+  ShaderProgram::ShaderProgram(
+    const SerialNode& node, const AssetPath& path, AssetAPI& api
+  ) : Asset(path) {
     loadFromSerialNode(node, api);
   }
 
   // loadFromSerialNode
-  void ShaderProgram::loadFromSerialNode(const SerialNode& node, AssetAPI& api) {
+  void ShaderProgram::loadFromSerialNode(
+    const SerialNode& node, AssetAPI& api
+  ) {
     _sources.emplace_back(
       AssetPath(stdf::path(".parrot/model.glsl.macro")), api
     );

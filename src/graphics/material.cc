@@ -10,7 +10,9 @@ namespace Parrot {
   }
 
   // loadFromSerialNode
-  void MaterialNode::loadFromSerialNode(const SerialNode& node, AssetAPI& api) {
+  void MaterialNode::loadFromSerialNode(
+    const SerialNode& node, AssetAPI& api
+  ) {
     // object
     if (node.isMap()) {
       Map<string, MaterialNode> map;
@@ -122,13 +124,16 @@ namespace Parrot {
     );
     loadFromSerialNode(json, api);
   }
-  Material::Material(const SerialNode& node, const AssetPath& path, AssetAPI& api)
-    : Asset(path) {
+  Material::Material(
+    const SerialNode& node, const AssetPath& path, AssetAPI& api
+  ) : Asset(path) {
     loadFromSerialNode(node, api);
   }
 
   // loadFromSerialNode
-  void Material::loadFromSerialNode(const SerialNode& node, AssetAPI& api) {
+  void Material::loadFromSerialNode(
+    const SerialNode& node, AssetAPI& api
+  ) {
     // root
     if (node.contains("uniforms")) {
       root.loadFromSerialNode(node.at("uniforms"), api);

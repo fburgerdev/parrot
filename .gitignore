@@ -3,7 +3,7 @@ build
 out
 
 # scripts
-scripts/__pycache__
+__pycache__
 
 # visual studio
 .vs

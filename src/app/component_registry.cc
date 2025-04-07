@@ -5,9 +5,14 @@
 #include "utils/serial_node.hh"
 
 namespace Parrot {
+  // ComponentRegistrEntry
   using ComponentRegistryEntry = RegistryEntry<
     Factory<Component>, const SerialNode&, const AssetPath&, AssetAPI&
   >;
+  // factories
+  using CameraFactory = BasicFactory<CameraComponent, Component>;
+  using LightFactory = BasicFactory<LightComponent, Component>;
+  using RenderObjectFactory = BasicFactory<RenderObjectComponent, Component>;
   // (global) g_registry
   template<>
   Map<string, ComponentRegistryEntry> g_registry<
@@ -16,36 +21,30 @@ namespace Parrot {
     {
       "camera",
       {
-        typeid(BasicFactory<CameraComponent, Component>).hash_code(), [](
-          const SerialNode& json, const AssetPath& asset_path, AssetAPI& asset_api
+        typeid(CameraFactory).hash_code(), [](
+          const SerialNode& node, const AssetPath& path, AssetAPI& api
         ) {
-          return std::make_unique<BasicFactory<CameraComponent, Component>>(
-            json, asset_path, asset_api
-          );
+          return std::make_unique<CameraFactory>(node, path, api);
         }
       },
     },
     {
       "light",
       {
-        typeid(BasicFactory<LightComponent, Component>).hash_code(),[](
-          const SerialNode& json, const AssetPath& asset_path, AssetAPI& asset_api
+        typeid(LightFactory).hash_code(),[](
+          const SerialNode& node, const AssetPath& path, AssetAPI& api
         ) {
-          return std::make_unique<BasicFactory<LightComponent, Component>>(
-            json, asset_path, asset_api
-          );
+          return std::make_unique<LightFactory>(node, path, api);
         }
       },
     },
     {
       "render-object",
       {
-        typeid(BasicFactory<RenderObjectComponent, Component>).hash_code(), [](
-          const SerialNode& json, const AssetPath& asset_path, AssetAPI& asset_api
+        typeid(RenderObjectFactory).hash_code(), [](
+          const SerialNode& node, const AssetPath& path, AssetAPI& api
         ) {
-          return std::make_unique<BasicFactory<RenderObjectComponent, Component>>(
-            json, asset_path, asset_api
-          );
+          return std::make_unique<RenderObjectFactory>(node, path, api);
         }
       },
     },

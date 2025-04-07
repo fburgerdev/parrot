@@ -49,7 +49,10 @@ def check_examples(verbose: bool):
   print("Check examples")
   for example in (repo_path / "examples").iterdir():
     if len(examples) > 0:
-      success &= compare_directories(examples[-1] / ".parrot", example / ".parrot", repo_path / "examples", verbose)
+      dir1 = examples[-1] / ".parrot"
+      dir2 = example / ".parrot"
+      common = repo_path / "examples"
+      success &= compare_directories(dir1, dir2, common, verbose)
     examples.append(example)
   if success:
     print("\u2713 Success")

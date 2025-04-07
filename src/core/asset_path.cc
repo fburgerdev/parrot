@@ -38,7 +38,8 @@ namespace Parrot {
   // << (stream)
   ostream& operator<<(ostream& stream, const AssetPath& asset_path) {
     if (asset_path.debug_root) {
-      stream << stdf::relative(asset_path.file, *asset_path.debug_root).string();
+      auto rel_path = stdf::relative(asset_path.file, *asset_path.debug_root);
+      stream << rel_path.string();
     }
     else {
       stream << asset_path.file.string();

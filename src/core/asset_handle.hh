@@ -40,7 +40,6 @@ namespace Parrot {
       }
     }
 
-
     // bool (cast)
     operator bool() const {
       return _api;

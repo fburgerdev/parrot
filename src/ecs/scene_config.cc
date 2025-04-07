@@ -11,13 +11,16 @@ namespace Parrot {
     );
     loadFromSerialNode(json, api);
   }
-  SceneConfig::SceneConfig(const SerialNode& node, const AssetPath& path, AssetAPI& api)
-    : Asset(path) {
+  SceneConfig::SceneConfig(
+    const SerialNode& node, const AssetPath& path, AssetAPI& api
+  ) : Asset(path) {
     loadFromSerialNode(node, api);
   }
 
   // loadFromSerialNode
-  void SceneConfig::loadFromSerialNode(const SerialNode& node, AssetAPI& api) {
+  void SceneConfig::loadFromSerialNode(
+    const SerialNode& node, AssetAPI& api
+  ) {
     // name
     if (node.contains("name")) {
       name = string(node.at("name"));
