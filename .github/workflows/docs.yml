@@ -1,0 +1,29 @@
+name: Generate and Deploy Documentation
+on:
+  push:
+    branches:
+      - develop
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y doxygen graphviz
+        python -m pip install --upgrade pip
+        pip install -r docs/requirements.txt
+    - name: Generate Doxygen XML
+      run: |
+        mkdir -p build/doxygen
+        doxygen Doxyfile
+    - name: Build Sphinx Documentation
+      run: |
+        sphinx-build -b html docs/ build/sphinx/html
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build/sphinx/html

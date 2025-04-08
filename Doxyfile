@@ -1,10 +1,13 @@
-PROJECT_NAME = Parrot
-OUTPUT_DIRECTORY = docs
-GENERATE_HTML = YES
+# Doxyfile Configuration
+
+# Directories to scan for source code
+INPUT = ./src
 RECURSIVE = YES
-INPUT = src
-QUIET = YES
-GENERATE_LATEX = NO
-HTML_EXTRA_FILES = docs/theme/doxygen-awesome-darkmode-toggle.js
-HTML_EXTRA_STYLESHEET = docs/theme/doxygen-awesome.css
-HTML_HEADER = docs/theme/header.html
+
+# Generate XML output for Breathe
+GENERATE_XML = YES
+XML_OUTPUT = xml
+OUTPUT_DIRECTORY = build/doxygen
+
+# Optional: Disable HTML output if not needed
+GENERATE_HTML = NO
