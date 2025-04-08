@@ -27,7 +27,10 @@ def exists(path: Path, suffixes: list[str]):
 def remove_suffixes(files: list[str]):
   result = set()
   for file in files:
-    result.add(file[0:file.find('.')])
+    file = file[0:file.find('.')]
+    if file.endswith("_impl"):
+      file = file[0:file.find("_impl")]
+    result.add(file)
   return result
 
 # check_dir_diff
