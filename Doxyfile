@@ -3,6 +3,8 @@
 # Directories to scan for source code
 INPUT = ./src
 RECURSIVE = YES
+EXTRACT_PRIVATE = NO
+EXTRACT_PROTECTED = NO
 
 # Generate XML output for Breathe
 GENERATE_XML = YES
