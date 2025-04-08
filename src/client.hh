@@ -21,6 +21,8 @@ namespace Parrot {
     EntityScript(Entity& entity, AssetAPI& asset_api);
     virtual void raiseEvent(const Event& e) override;
 
+    /// @brief Reference to Entity instance the Script is attached to.
+    /// @note This pointer is never null.
     Entity* entity;
     AssetAPI* asset_api;
   private:
@@ -33,6 +35,8 @@ namespace Parrot {
     SceneScript(Scene& scene, AssetAPI& asset_api);
     virtual void raiseEvent(const Event& e) override;
 
+    /// @brief Reference to Scene instance the Script is attached to.
+    /// @note This pointer is never null.
     Scene* scene;
     AssetAPI* asset_api;
   private:
@@ -45,6 +49,8 @@ namespace Parrot {
     StageScript(Stage& stage);
     virtual void raiseEvent(const Event& e) override;
 
+    /// @brief Reference to Stage instance the Script is attached to.
+    /// @note This pointer is never null.
     Stage* stage;
   private:
     virtual void setScriptOwner(Scriptable* owner) override;
@@ -56,6 +62,8 @@ namespace Parrot {
     AppScript(App& app);
     virtual void raiseEvent(const Event& e) override;
 
+    /// @brief Reference to App instance the Script is attached to.
+    /// @note This pointer is never null.
     App* app;
   private:
     virtual void setScriptOwner(Scriptable* owner) override;
