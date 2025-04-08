@@ -17,6 +17,7 @@ jobs:
         pip install -r docs/requirements.txt
     - name: Generate Doxygen XML
       run: |
+        rm -rf build/doxygen
         mkdir -p build/doxygen
         doxygen Doxyfile
     - name: Build Sphinx Documentation
