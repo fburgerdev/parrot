@@ -5,3 +5,6 @@ RECURSIVE = YES
 INPUT = src
 QUIET = YES
 GENERATE_LATEX = NO
+HTML_EXTRA_FILES = docs/theme/doxygen-awesome-darkmode-toggle.js
+HTML_EXTRA_STYLESHEET = docs/theme/doxygen-awesome.css
+HTML_HEADER = docs/theme/header.html
