@@ -8,7 +8,7 @@ namespace Parrot {
 
   // WindowCloseRequest
   struct WindowCloseRequest {};
-  // <<
+  // << (stream)
   ostream& operator<<(ostream& stream, const WindowCloseRequest& e);
 
   // KeyPress
@@ -155,7 +155,7 @@ namespace Parrot {
     KeyCode code;
     KeyState state;
   };
-  // <<
+  // << (stream)
   ostream& operator<<(ostream& stream, const KeyPress& e);
 
   // MousePress
@@ -173,7 +173,7 @@ namespace Parrot {
     MouseButton button;
     MouseState state;
   };
-  // <<
+  // << (stream)
   ostream& operator<<(ostream& stream, const MousePress& e);
 
   // MouseMove
@@ -181,21 +181,17 @@ namespace Parrot {
     // coords
     Vec2<float32> coords;
   };
-  // <<
+  // << (stream)
   ostream& operator<<(ostream& stream, const MouseMove& e);
 
   // WindowEvent
   class WindowEvent : public Event {
   public:
-    // WindowEvent
-    WindowEvent(const WindowCloseRequest& wqr)
-      : _value(wqr) {}
-    WindowEvent(const KeyPress& kp)
-      : _value(kp) {}
-    WindowEvent(const MousePress& mp)
-      : _value(mp) {}
-    WindowEvent(const MouseMove& mm)
-      : _value(mm) {}
+    // (constructor)
+    WindowEvent(const WindowCloseRequest& wqr);
+    WindowEvent(const KeyPress& kp);
+    WindowEvent(const MousePress& mp);
+    WindowEvent(const MouseMove& mm);
 
     // getTargetWindow
     Window* getTargetWindow() const;
@@ -213,11 +209,9 @@ namespace Parrot {
     const MouseMove* getMouseMove() const;
 
     // getDebugType
-    virtual strview getDebugType() const override {
-      return "WindowEvent";
-    }
+    virtual strview getDebugType() const override;
 
-    // <<
+    // << (stream)
     friend ostream& operator<<(ostream& stream, const WindowEvent& e);
   private:
     Variant<

@@ -30,32 +30,16 @@ namespace Parrot {
 
       // createVertexBuffer
       template<class... Args>
-      VertexBuffer& createVertexBuffer(Args&&... args) {
-        return _vertex_buffers.try_emplace(
-          generateUUID(), std::forward<Args>(args)...
-        ).first->second;
-      }
+      VertexBuffer& createVertexBuffer(Args&&... args);
       // createIndexBuffer
       template<class... Args>
-      IndexBuffer& createIndexBuffer(Args&&... args) {
-        return _index_buffers.try_emplace(
-          generateUUID(), std::forward<Args>(args)...
-        ).first->second;
-      }
+      IndexBuffer& createIndexBuffer(Args&&... args);
       // createUniformBuffer
       template<class... Args>
-      UniformBuffer& createUniformBuffer(Args&&... args) {
-        return _uniform_buffers.try_emplace(
-          generateUUID(), std::forward<Args>(args)...
-        ).first->second;
-      }
+      UniformBuffer& createUniformBuffer(Args&&... args);
       // createVertexArray
       template<class... Args>
-      VertexArray& createVertexArray(Args&&... args) {
-        return _vertex_arrays.try_emplace(
-          generateUUID(), std::forward<Args>(args)...
-        ).first->second;
-      }
+      VertexArray& createVertexArray(Args&&... args);
 
       // applyMaterial
       uint applyMaterial(
@@ -75,5 +59,34 @@ namespace Parrot {
       HashMap<UUID, UniformBuffer> _uniform_buffers;
       HashMap<UUID, VertexArray> _vertex_arrays;
     };
+
+    // createVertexBuffer
+    template<class... Args>
+    VertexBuffer& Context::createVertexBuffer(Args&&... args) {
+      return _vertex_buffers.try_emplace(
+        generateUUID(), std::forward<Args>(args)...
+      ).first->second;
+    }
+    // createIndexBuffer
+    template<class... Args>
+    IndexBuffer& Context::createIndexBuffer(Args&&... args) {
+      return _index_buffers.try_emplace(
+        generateUUID(), std::forward<Args>(args)...
+      ).first->second;
+    }
+    // createUniformBuffer
+    template<class... Args>
+    UniformBuffer& Context::createUniformBuffer(Args&&... args) {
+      return _uniform_buffers.try_emplace(
+        generateUUID(), std::forward<Args>(args)...
+      ).first->second;
+    }
+    // createVertexArray
+    template<class... Args>
+    VertexArray& Context::createVertexArray(Args&&... args) {
+      return _vertex_arrays.try_emplace(
+        generateUUID(), std::forward<Args>(args)...
+      ).first->second;
+    }
   }
 }

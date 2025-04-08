@@ -55,7 +55,7 @@ namespace Parrot {
   // :: for Asset
   Camera::Camera(const AssetPath& path, AssetAPI& api)
     : Asset(path) {
-    auto json = path.applySubpathToJSON(
+    auto json = path.applySubpathToNode(
       SerialNode::loadFromJSON(path.file)
     );
     loadFromSerialNode(json, api);
@@ -108,7 +108,7 @@ namespace Parrot {
     }, value);
   }
 
-  // <<
+  // << (stream)
   ostream& operator<<(ostream& stream, const PerspectiveCamera& camera) {
     stream << "PerspectiveCamera(";
     stream << "fov=" << camera.fov << ",";

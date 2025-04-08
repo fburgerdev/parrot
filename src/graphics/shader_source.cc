@@ -143,7 +143,7 @@ namespace Parrot {
   //* ShaderProgram
   // (constructor) for Asset
   ShaderProgram::ShaderProgram(const AssetPath& path, AssetAPI& api) {
-    auto json = path.applySubpathToJSON(
+    auto json = path.applySubpathToNode(
       SerialNode::loadFromJSON(path.file)
     );
     loadFromSerialNode(json, api);

@@ -28,9 +28,7 @@ namespace Parrot {
     // (constructor)
     Mesh() = default;
     template<class Vertices, class Indices>
-    Mesh(Vertices&& vertices, Indices&& indices)
-      : vertices(std::forward<Vertices>(vertices)),
-        indices(std::forward<Indices>(indices)) {}
+    Mesh(Vertices&& vertices, Indices&& indices);
 
     // addTriangle
     void addTriangle(Vertex v1, Vertex v2, Vertex v3);
@@ -41,4 +39,10 @@ namespace Parrot {
     List<Vertex> vertices;
     List<uint32> indices;
   };
+
+  // (constructor)
+  template<class Vertices, class Indices>
+  Mesh::Mesh(Vertices&& vertices, Indices&& indices)
+    : vertices(std::forward<Vertices>(vertices)),
+      indices(std::forward<Indices>(indices)) {}
 }

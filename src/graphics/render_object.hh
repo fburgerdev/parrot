@@ -13,9 +13,9 @@ namespace Parrot {
     void loadFromSerialNode(const SerialNode& node, AssetAPI& api);
 
     // model, material, is_opaque
-    AssetHandle<Model> model; /* API */
-    AssetHandle<Material> material; /* API */
-    bool is_opaque = true; /* API */
+    AssetHandle<Model> model;
+    AssetHandle<Material> material;
+    bool is_opaque = true;
   };
   // << (stream)
   ostream& operator<<(ostream& stream, const RenderObject& render_object);

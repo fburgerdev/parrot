@@ -3,34 +3,18 @@
 #include "utils/serial_node.hh"
 
 namespace Parrot {
-  // JsonType
-  template<class T>
-  concept JsonType = requires(T node) {
-    { node.at("key") };
-  };
   // AssetPath
   struct AssetPath {
     // (constructor)
     AssetPath() = default;
-    AssetPath(const stdf::path& file); /* API */
-    AssetPath(const stdf::path& file, strview sub) /* API */;
-    AssetPath(strview path) /* API */;
+    AssetPath(const stdf::path& file);
+    AssetPath(const stdf::path& file, strview sub);
+    AssetPath(strview path);
 
     // splitSubpath
     List<string> splitSubpath() const;
-    // applySubpathToJSON
-    auto applySubpathToJSON(const SerialNode& root) const {
-      const SerialNode* value = &root;
-      for (const string& token : splitSubpath()) {
-        if (std::isalpha(token.front())) {
-          value = &value->at(token);
-        }
-        else {
-          value = &value->at(std::stoull(token));
-        }
-      }
-      return *value;
-    }
+    // applySubpathToNode
+    SerialNode applySubpathToNode(const SerialNode& root) const;
     // <=> (compare)
     auto operator<=>(const AssetPath& other) const = default;
     // << (stream)
@@ -42,5 +26,5 @@ namespace Parrot {
     Opt<stdf::path> debug_root; // for debugging
   };
   // AssetKey
-  using AssetKey = Variant<UUID, AssetPath>; /* API */
+  using AssetKey = Variant<UUID, AssetPath>;
 }

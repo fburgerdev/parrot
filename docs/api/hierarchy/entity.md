@@ -145,8 +145,8 @@ const T& Entity::getComponent() const;
 ### `addComponent`
 
 ```c++
-template<class T, class... TArgs>
-T& Entity::addComponent(TArgs&&... args);
+template<class T, class... Args>
+T& Entity::addComponent(Args&&... args);
 ```
 
 > Emplace a component of the given type.

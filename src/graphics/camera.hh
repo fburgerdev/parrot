@@ -14,8 +14,8 @@ namespace Parrot {
     Mat4x4<float32> calcProjectionMatrix(float32 aspect) const;
 
     // fov, z_range
-    float32 fov /* API */ = DEFAULT_FOV;
-    Vec2<float32> z_range /* API */ = DEFAULT_ZRANGE;
+    float32 fov = DEFAULT_FOV;
+    Vec2<float32> z_range = DEFAULT_ZRANGE;
   };
   // OrthographicCamera
   struct OrthographicCamera {
@@ -23,8 +23,8 @@ namespace Parrot {
     Mat4x4<float32> calcProjectionMatrix(float32 aspect) const;
 
     // scale, z_range
-    float32 scale /* API */ = DEFAULT_SCALE;
-    Vec2<float32> z_range /* API */ = DEFAULT_ZRANGE;
+    float32 scale = DEFAULT_SCALE;
+    Vec2<float32> z_range = DEFAULT_ZRANGE;
   };
   // Camera
   struct Camera : public Asset {
@@ -43,9 +43,9 @@ namespace Parrot {
     // value
     Variant<
       PerspectiveCamera, OrthographicCamera
-    > value /* API */ = PerspectiveCamera();
+    > value = PerspectiveCamera();
   };
-  // <<
+  // << (stream)
   ostream& operator<<(ostream& stream, const OrthographicCamera& camera);
   ostream& operator<<(ostream& stream, const PerspectiveCamera& camera);
   ostream& operator<<(ostream& stream, const Camera& camera);

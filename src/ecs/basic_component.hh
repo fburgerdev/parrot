@@ -12,8 +12,12 @@ namespace Parrot {
     virtual ~BasicComponent() = default;
 
     // getID
-    virtual usize getID() const override {
-      return typeid(BasicComponent<T>).hash_code();
-    }
+    virtual usize getID() const override;
   };
+
+  // getID
+  template<class T>
+  usize BasicComponent<T>::getID() const {
+    return typeid(BasicComponent<T>).hash_code();
+  }
 }

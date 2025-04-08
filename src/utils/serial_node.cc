@@ -211,6 +211,32 @@ namespace Parrot {
     }
   }
 
+  // == (compare)
+  bool SerialNode::operator==(strview str) const {
+    return isString() && value<strview>() == str;
+  }
+  // <=> (compare)
+  std::partial_ordering SerialNode::operator<=>(const SerialNode& other) const {
+    if (_value.index() != other._value.index()) {
+      return std::partial_ordering(_value.index() <=> other._value.index());
+    }
+    if (holds<SerialMap>(_value)) {
+      auto& lhs = std::get<SerialMap>(_value);
+      auto& rhs = std::get<SerialMap>(other._value);
+      return std::partial_ordering(lhs <=> rhs);
+    }
+    else if (holds<SerialList>(_value)) {
+      auto& lhs = std::get<SerialList>(_value);
+      auto& rhs = std::get<SerialList>(other._value);
+      return std::partial_ordering(lhs <=> rhs);
+    }
+    else {
+      auto& lhs = std::get<SerialLeaf>(_value);
+      auto& rhs = std::get<SerialLeaf>(other._value);
+      return lhs <=> rhs;
+    }
+  }
+
   // << (stream)
   ostream& operator<<(ostream& stream, const SerialNode& node) {
     return stream << "SERIALNODE"; //TODO: properly print serial-node

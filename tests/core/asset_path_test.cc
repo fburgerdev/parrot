@@ -75,11 +75,11 @@ TEST_F(AssetPathTest, splitSubpath) {
 		EXPECT_EQ(asset_path.splitSubpath(), std::get<2>(output));
 	}
 }
-// applySubpathToJSON
-TEST_F(AssetPathTest, applySubpathToJSON) {
+// applySubpathToNode
+TEST_F(AssetPathTest, applySubpathToNode) {
 	for (auto& [input, output] : tests) {
 		auto asset_path = AssetPath(input);
-		auto result = asset_path.applySubpathToJSON(json) <=> std::get<3>(output);
+		auto result = asset_path.applySubpathToNode(json) <=> std::get<3>(output);
 		EXPECT_EQ(result, std::partial_ordering::equivalent);
 	}
 }

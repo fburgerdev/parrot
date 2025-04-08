@@ -119,7 +119,7 @@ namespace Parrot {
   // (constructor) for Asset
   Material::Material(const AssetPath& path, AssetAPI& api)
     : Asset(path) {
-    auto json = path.applySubpathToJSON(
+    auto json = path.applySubpathToNode(
       SerialNode::loadFromJSON(path.file)
     );
     loadFromSerialNode(json, api);

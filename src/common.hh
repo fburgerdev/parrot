@@ -69,15 +69,13 @@ namespace Parrot {
   using Opt = std::optional<T>;
   template<typename T1, typename T2>
   using Pair = std::pair<T1, T2>;
-  template<typename... TArgs>
-  using Tuple = std::tuple<TArgs...>;
-  template<typename... TArgs>
-  using Variant = std::variant<TArgs...>;
+  template<typename... Args>
+  using Tuple = std::tuple<Args...>;
+  template<typename... Args>
+  using Variant = std::variant<Args...>;
   // :: funcs
   template<class T, class... Args>
-  bool holds(const Variant<Args...>& variant) {
-    return std::holds_alternative<T>(variant);
-  }
+  bool holds(const Variant<Args...>& variant);
 
   // container
   // :: sequential
@@ -130,7 +128,7 @@ namespace Parrot {
   using std::fstream;
   using std::ifstream;
   using std::ofstream;
-  // :: stringstream
+  // :: strstream
   using strstream = std::stringstream;
   using istrstream = std::istringstream;
   using ostrstream = std::ostringstream;
@@ -143,4 +141,12 @@ namespace Parrot {
   using UniqueLock = std::unique_lock<Mutex>;
   template<typename Mutex>
   using SharedLock = std::shared_lock<Mutex>;
+
+  // ---
+  
+  // holds
+  template<class T, class... Args>
+  bool holds(const Variant<Args...>& variant) {
+    return std::holds_alternative<T>(variant);
+  }
 }

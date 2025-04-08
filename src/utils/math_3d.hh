@@ -4,6 +4,46 @@
 namespace Parrot {
   // calcTranslationMatrix
   template<typename T = DefaultFloat>
+  Mat4x4<T> calcTranslationMatrix(const Vec3<T>& translation);
+  // calcScaleMatrix
+  template<typename T = DefaultFloat>
+  Mat4x4<T> calcScaleMatrix(const Vec3<T>& scale);
+  /*
+    Note that the following function calcs a matrix that performs rotations in
+    the following order:
+    y -> x -> z
+    which is the "yaw, pitch, roll" pattern when having the following
+    coordinate system
+    y
+    |  z
+    | /
+    |/
+    ------x
+    and when looking in the +z direction
+  */
+  // calcRotationMatrix (using euler radius)
+  template<typename T = DefaultFloat>
+  Mat4x4<T> calcRotationMatrix(const Vec3<T>& euler_rotation);
+
+  // Transform
+  template<class T = DefaultFloat>
+  class Transform {
+  public:
+    // calcLocalModelMatrix
+    Mat4x4<T> calcLocalModelMatrix() const;
+    // calcLocalViewMatrix
+    Mat4x4<T> calcLocalViewMatrix() const;
+
+    // position, rotation, scale
+    Vec3<T> position = { 0.0F, 0.0F, 0.0F };
+    Vec3<T> rotation = { 0.0F, 0.0F, 0.0F };
+    Vec3<T> scale = { 1.0F, 1.0F, 1.0F };
+  };
+
+  // ---
+  
+  // calcTranslationMatrix
+  template<typename T>
   Mat4x4<T> calcTranslationMatrix(const Vec3<T>& translation) {
     Mat4x4<T> out = identity<T, 4>();
     out.at(0, 3) = translation.x;
@@ -12,7 +52,7 @@ namespace Parrot {
     return out;
   }
   // calcScaleMatrix
-  template<typename T = DefaultFloat>
+  template<typename T>
   Mat4x4<T> calcScaleMatrix(const Vec3<T>& scale) {
     Mat4x4<T> out = identity<T, 4>();
     out.at(0, 0) *= scale.x;
@@ -20,21 +60,8 @@ namespace Parrot {
     out.at(2, 2) *= scale.z;
     return out;
   }
-  /*
-    Note that the following function calcs a matrix that performs rotations in
-    the following order:
-    y -> x -> z
-    which is the "yaw, pitch, roll" pattern when having the following
-    coordinate system
-    y
-    |  z  
-    | /
-    |/
-    ------x
-    and when looking in the +z direction 
-  */
   // calcRotationMatrix (using euler radius)
-  template<typename T = DefaultFloat>
+  template<typename T>
   Mat4x4<T> calcRotationMatrix(const Vec3<T>& euler_rotation) {
     Mat4x4<T> out = zeros<T, 4>();
     T sina = std::sin(euler_rotation.y);
@@ -61,27 +88,20 @@ namespace Parrot {
     return out;
   }
 
-  // Transform
-  template<class T = DefaultFloat>
-  class Transform {
-  public:
-    // calcLocalModelMatrix
-    Mat4x4<T> calcLocalModelMatrix() const {
-      Mat4x4<T> translation_matrix = calcTranslationMatrix(position);
-      Mat4x4<T> rotation_matrix = calcRotationMatrix(rotation);
-      Mat4x4<T> scale_matrix = calcScaleMatrix(scale);
-      return translation_matrix * rotation_matrix * scale_matrix;
-    }
-    // calcLocalViewMatrix
-    Mat4x4<T> calcLocalViewMatrix() const {
-      Mat4x4<T> translation_matrix = calcTranslationMatrix(-position);
-      Mat4x4<T> rotation_matrix = transposed(calcRotationMatrix(rotation));
-      return rotation_matrix * translation_matrix;
-    }
-
-    // position, rotation, scale
-    Vec3<T> position = { 0.0F, 0.0F, 0.0F };
-    Vec3<T> rotation = { 0.0F, 0.0F, 0.0F };
-    Vec3<T> scale = { 1.0F, 1.0F, 1.0F };
-  };
+  //* Transform
+  // calcLocalModelMatrix
+  template<class T>
+  Mat4x4<T> Transform<T>::calcLocalModelMatrix() const {
+    Mat4x4<T> translation_matrix = calcTranslationMatrix(position);
+    Mat4x4<T> rotation_matrix = calcRotationMatrix(rotation);
+    Mat4x4<T> scale_matrix = calcScaleMatrix(scale);
+    return translation_matrix * rotation_matrix * scale_matrix;
+  }
+  // calcLocalViewMatrix
+  template<class T>
+  Mat4x4<T> Transform<T>::calcLocalViewMatrix() const {
+    Mat4x4<T> translation_matrix = calcTranslationMatrix(-position);
+    Mat4x4<T> rotation_matrix = transposed(calcRotationMatrix(rotation));
+    return rotation_matrix * translation_matrix;
+  }
 }

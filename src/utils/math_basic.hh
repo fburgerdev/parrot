@@ -3,17 +3,17 @@
 
 namespace Parrot {
   // default
-  using DefaultFloat = float32; /* API */
+  using DefaultFloat = float32;
 
   // constants
-  // :: PI
+  // :: pi
   template<class T = DefaultFloat>
   constexpr T PI;
   template<>
   constexpr float32 PI<float32> = 3.1415926F;
   template<>
   constexpr float64 PI<float64> = 3.1415926;
-  // :: SQRT_2
+  // :: sqrt(2)
   template<class T = DefaultFloat>
   constexpr T SQRT_2;
   template<>
@@ -23,15 +23,32 @@ namespace Parrot {
 
   // clamp
   template<class T = DefaultFloat>
+  constexpr T clamp(T value, T min, T max);
+
+  // min
+  template<class First, class... Rest>
+  constexpr First min(First left, Rest&&... rest);
+  // max
+  template<class First, class... Rest>
+  constexpr First max(First left, Rest&&... rest);
+
+  // pow
+  template<class T = DefaultFloat>
+  constexpr T pow(T base, usize exponent);
+
+  // ---
+  
+  // clamp
+  template<class T>
   constexpr T clamp(T value, T min, T max) {
     return (value < min ? min : (value > max ? max : value));
   }
 
   // min
-  template<class TFirst, class... TRest>
-  constexpr TFirst min(TFirst left, TRest&&... rest) {
-    if constexpr (sizeof...(TRest)) {
-      TFirst right = TFirst(min(std::forward<TRest>(rest)...));
+  template<class First, class... Rest>
+  constexpr First min(First left, Rest&&... rest) {
+    if constexpr (sizeof...(Rest)) {
+      First right = First(min(std::forward<Rest>(rest)...));
       return right < left ? right : left;
     }
     else {
@@ -39,10 +56,10 @@ namespace Parrot {
     }
   }
   // max
-  template<class TFirst, class... TRest>
-  constexpr TFirst max(TFirst left, TRest&&... rest) {
-    if constexpr (sizeof...(TRest)) {
-      TFirst right = TFirst(max(std::forward<TRest>(rest)...));
+  template<class First, class... Rest>
+  constexpr First max(First left, Rest&&... rest) {
+    if constexpr (sizeof...(Rest)) {
+      First right = First(max(std::forward<Rest>(rest)...));
       return left < right ? right : left;
     }
     else {
@@ -51,7 +68,7 @@ namespace Parrot {
   }
 
   // pow
-  template<class T = DefaultFloat>
+  template<class T>
   constexpr T pow(T base, usize exponent) {
     T out = (T)1.0;
     for (usize i = 0; i < exponent; ++i) {

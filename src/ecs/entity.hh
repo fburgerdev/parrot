@@ -33,52 +33,40 @@ namespace Parrot {
     Entity& operator=(Entity&&) = default;
 
     // getTag
-    const string& getTag() const; /* API */
+    const string& getTag() const;
     // findByTag
     Set<Entity*> findByTag(
       strview tag, Set<Entity*>&& found = {}
-    ); /* API */
+    );
     Set<const Entity*> findByTag(
       strview tag, Set<const Entity*>&& found = {}
-    ) const; /* API */
+    ) const;
 
     // children
     // :: create
-    Entity& createChild(bool is_visible = false); /* API */
+    Entity& createChild(bool is_visible = false);
     // :: destroy
-    bool destroyChild(UUID uuid); /* API */
-    bool destroyChild(strview tag); /* API */
+    bool destroyChild(UUID uuid);
+    bool destroyChild(strview tag);
     // :: foreach
-    void foreachChild(Func<void(Entity&)> func); /* API */
-    void foreachChild(Func<void(const Entity&)> func) const; /* API */
+    void foreachChild(Func<void(Entity&)> func);
+    void foreachChild(Func<void(const Entity&)> func) const;
 
     // component
     // :: has
     template<class T>
-    bool hasComponent() const /* API */ {
-      return _components.contains(typeid(T).hash_code());
-    }
+    bool hasComponent() const;
     // :: get
     template<class T>
-    T& getComponent() /* API */ {
-      return dynamic_cast<T&>(*_components.at(typeid(T).hash_code()));
-    }
+    T& getComponent();
     template<class T>
-    const T& getComponent() const /* API */ {
-      return dynamic_cast<const T&>(*_components.at(typeid(T).hash_code()));
-    }
+    const T& getComponent() const;
     // :: add
-    template<class T, class... TArgs>
-    T& addComponent(TArgs&&... args) /* API */ {
-      auto component = std::make_unique<T>(std::forward<TArgs>(args)...);
-      _components.emplace(typeid(T).hash_code(), std::move(component));
-      return getComponent<T>();
-    }
+    template<class T, class... Args>
+    T& addComponent(Args&&... args);
     // :: remove
     template<class T>
-    void removeComponent() /* API */ {
-      _components.erase(typeid(T).hash_code());
-    }
+    void removeComponent();
 
     // update
     void update(float32 delta_time);
@@ -92,10 +80,38 @@ namespace Parrot {
     ) const override;
 
     // transform
-    Transform<> transform; /* API */
+    Transform<> transform;
   private:
     string _tag;
     Map<UUID, HierarchyNode<Entity>> _children;
     Map<usize, UniquePtr<Component>> _components; //? reduce indirection
   };
+
+  // component
+  // :: has
+  template<class T>
+  bool Entity::hasComponent() const {
+    return _components.contains(typeid(T).hash_code());
+  }
+  // :: get
+  template<class T>
+  T& Entity::getComponent() {
+    return dynamic_cast<T&>(*_components.at(typeid(T).hash_code()));
+  }
+  template<class T>
+  const T& Entity::getComponent() const {
+    return dynamic_cast<const T&>(*_components.at(typeid(T).hash_code()));
+  }
+  // :: add
+  template<class T, class... Args>
+  T& Entity::addComponent(Args&&... args) {
+    auto component = std::make_unique<T>(std::forward<Args>(args)...);
+    _components.emplace(typeid(T).hash_code(), std::move(component));
+    return getComponent<T>();
+  }
+  // :: remove
+  template<class T>
+  void Entity::removeComponent() {
+    _components.erase(typeid(T).hash_code());
+  }
 }

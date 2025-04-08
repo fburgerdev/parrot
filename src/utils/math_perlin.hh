@@ -4,13 +4,41 @@
 namespace Parrot {
   // quinticfade
   template<class T = DefaultFloat>
+  T quinticfade(T x);
+
+  // generatePerlin2D
+  // :: single layer
+  template<class T = DefaultFloat>
+  List<T> generatePerlin2D(
+    Vec2u sample_size, Vec2u grid_size, RNG<T>& rng
+  );
+  // :: (no random-generator)
+  template<class T>
+  List<T> generatePerlin2D(
+    Vec2u sample_size, Vec2u grid_size
+  );
+  // :: multiple layers
+  template<class T = DefaultFloat>
+  List<T> generatePerlin2D(
+    Vec2u sample_size, Vec2u grid_size, usize octaves, RNG<T>& rng
+  );
+  // :: (no random-generator)
+  template<class T = DefaultFloat>
+  List<T> generatePerlin2D(
+    Vec2u sample_size, Vec2u grid_size, usize octaves
+  );
+
+  // ---
+  
+  // quinticfade
+  template<class T>
   T quinticfade(T x) {
     return 6 * pow(x, 5) - 15 * pow(x, 4) + 10 * pow(x, 3);
   }
   
   // generatePerlin2D
   // :: single layer
-  template<class T = DefaultFloat>
+  template<class T>
   List<T> generatePerlin2D(
     Vec2u sample_size, Vec2u grid_size, RNG<T>& rng
   ) {
@@ -67,7 +95,7 @@ namespace Parrot {
     return generatePerlin2D(sample_size, grid_size, rng);
   }
   // :: multiple layers
-  template<class T = DefaultFloat>
+  template<class T>
   List<T> generatePerlin2D(
     Vec2u sample_size, Vec2u grid_size, usize octaves, RNG<T>& rng
   ) {
@@ -91,7 +119,7 @@ namespace Parrot {
     return samples;
   }
   // :: (no random-generator)
-  template<class T = DefaultFloat>
+  template<class T>
   List<T> generatePerlin2D(
     Vec2u sample_size, Vec2u grid_size, usize octaves
   ) {

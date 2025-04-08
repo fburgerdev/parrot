@@ -30,57 +30,11 @@ namespace Parrot {
 
     // value
     template<class T>
-    T value() const {
-      if (holds<SerialLeaf>(_value)) {
-        auto& leaf = std::get<SerialLeaf>(_value);
-        if (holds<null>(std::get<SerialLeaf>(_value))) {
-          if constexpr (std::is_convertible_v<null, T>) {
-            return static_cast<T>(std::get<null>(leaf));
-          }
-        }
-        else if (holds<bool>(std::get<SerialLeaf>(_value))) {
-          if constexpr (std::is_convertible_v<bool, T>) {
-            return static_cast<T>(std::get<bool>(leaf));
-          }
-        }
-        else if (holds<int64>(std::get<SerialLeaf>(_value))) {
-          if constexpr (std::is_convertible_v<int64, T>) {
-            return static_cast<T>(std::get<int64>(leaf));
-          }
-        }
-        else if (holds<uint64>(std::get<SerialLeaf>(_value))) {
-          if constexpr (std::is_convertible_v<uint64, T>) {
-            return static_cast<T>(std::get<uint64>(leaf));
-          }
-        }
-        else if (holds<double>(std::get<SerialLeaf>(_value))) {
-          if constexpr (std::is_convertible_v<double, T>) {
-            return static_cast<T>((std::get<double>(leaf)));
-          }
-        }
-        else if (holds<string>(std::get<SerialLeaf>(_value))) {
-          if constexpr (std::is_convertible_v<string, T>) {
-            return static_cast<T>(std::get<string>(leaf));
-          }
-        }
-      }
-      else if (holds<List<SerialNode>>(_value)) {
-        if constexpr (std::is_convertible_v<List<SerialNode>, T>) {
-          return static_cast<T>(std::get<List<SerialNode>>(_value));
-        }
-      }
-      else if (holds<Map<string, SerialNode>>(_value)) {
-        if constexpr (std::is_convertible_v<Map<string, SerialNode>, T>) {
-          return static_cast<T>(std::get<Map<string, SerialNode>>(_value));
-        }
-      }
-    }
+    T value() const;
 
     // operator()
     template<class T>
-    explicit operator T() const {
-      return value<T>();
-    }
+    explicit operator T() const;
 
     // is
     bool isNull() const;
@@ -123,34 +77,66 @@ namespace Parrot {
     List<SerialNode>::const_iterator end() const;
 
     // == (compare)
-    auto operator==(strview str) const {
-      return isString() && value<strview>() == str;
-    }
+    bool operator==(strview str) const;
     // <=> (compare)
-    std::partial_ordering operator<=>(const SerialNode& other) const {
-      if (_value.index() != other._value.index()) {
-        return _value.index() <=> other._value.index();
-      }
-      if (holds<SerialMap>(_value)) {
-        auto& lhs = std::get<SerialMap>(_value);
-        auto& rhs = std::get<SerialMap>(other._value);
-        return lhs <=> rhs;
-      }
-      else if (holds<SerialList>(_value)) {
-        auto& lhs = std::get<SerialList>(_value);
-        auto& rhs = std::get<SerialList>(other._value);
-        return lhs <=> rhs;
-      }
-      else {
-        auto& lhs = std::get<SerialLeaf>(_value);
-        auto& rhs = std::get<SerialLeaf>(other._value);
-        return lhs <=> rhs;
-      }
-    }
-
+    std::partial_ordering operator<=>(const SerialNode& other) const;
     // << (stream)
     friend ostream& operator<<(ostream& stream, const SerialNode& node);
   private:
     Variant<SerialMap, SerialList, SerialLeaf> _value = SerialLeaf(null());
   };
+
+  // value
+  template<class T>
+  T SerialNode::value() const {
+    if (holds<SerialLeaf>(_value)) {
+      auto& leaf = std::get<SerialLeaf>(_value);
+      if (holds<null>(std::get<SerialLeaf>(_value))) {
+        if constexpr (std::is_convertible_v<null, T>) {
+          return static_cast<T>(std::get<null>(leaf));
+        }
+      }
+      else if (holds<bool>(std::get<SerialLeaf>(_value))) {
+        if constexpr (std::is_convertible_v<bool, T>) {
+          return static_cast<T>(std::get<bool>(leaf));
+        }
+      }
+      else if (holds<int64>(std::get<SerialLeaf>(_value))) {
+        if constexpr (std::is_convertible_v<int64, T>) {
+          return static_cast<T>(std::get<int64>(leaf));
+        }
+      }
+      else if (holds<uint64>(std::get<SerialLeaf>(_value))) {
+        if constexpr (std::is_convertible_v<uint64, T>) {
+          return static_cast<T>(std::get<uint64>(leaf));
+        }
+      }
+      else if (holds<double>(std::get<SerialLeaf>(_value))) {
+        if constexpr (std::is_convertible_v<double, T>) {
+          return static_cast<T>((std::get<double>(leaf)));
+        }
+      }
+      else if (holds<string>(std::get<SerialLeaf>(_value))) {
+        if constexpr (std::is_convertible_v<string, T>) {
+          return static_cast<T>(std::get<string>(leaf));
+        }
+      }
+    }
+    else if (holds<List<SerialNode>>(_value)) {
+      if constexpr (std::is_convertible_v<List<SerialNode>, T>) {
+        return static_cast<T>(std::get<List<SerialNode>>(_value));
+      }
+    }
+    else if (holds<Map<string, SerialNode>>(_value)) {
+      if constexpr (std::is_convertible_v<Map<string, SerialNode>, T>) {
+        return static_cast<T>(std::get<Map<string, SerialNode>>(_value));
+      }
+    }
+  }
+
+  // operator()
+  template<class T>
+  SerialNode::operator T() const {
+    return value<T>();
+  }
 }

@@ -13,38 +13,22 @@ namespace Parrot {
     Logger(strview name);
 
     // log
-    template<LogLevel Level, class... TArgs>
-    void log(strview scope, strview format, const TArgs&... args) {
-      if (uint(Level) >= uint(getLevel(scope))) {
-        logHead(scope, Level);
-        logBody(format, args...);
-      }
-    }
-    // :: trace
-    template<class... TArgs>
-    void logTrace(strview scope, strview format, const TArgs&... args) {
-      log<LogLevel::TRACE>(scope, format, args...);
-    }
+    template<LogLevel Level, class... Args>
+    void log(strview scope, strview fmt, const Args&... args);
+    template<class... Args>
+    void logTrace(strview scope, strview fmt, const Args&... args);
     // :: debug
-    template<class... TArgs>
-    void logDebug(strview scope, strview format, const TArgs&... args) {
-      log<LogLevel::DEBUG>(scope, format, args...);
-    }
+    template<class... Args>
+    void logDebug(strview scope, strview fmt, const Args&... args);
     // :: info
-    template<class... TArgs>
-    void logInfo(strview scope, strview format, const TArgs&... args) {
-      log<LogLevel::INFO>(scope, format, args...);
-    }
+    template<class... Args>
+    void logInfo(strview scope, strview fmt, const Args&... args);
     // :: warning
-    template<class... TArgs>
-    void logWarning(strview scope, strview format, const TArgs&... args) {
-      log<LogLevel::WARNING>(scope, format, args...);
-    }
+    template<class... Args>
+    void logWarning(strview scope, strview fmt, const Args&... args);
     // :: error
-    template<class... TArgs>
-    void logError(strview scope, strview format, const TArgs&... args) {
-      log<LogLevel::ERROR>(scope, format, args...);
-    }
+    template<class... Args>
+    void logError(strview scope, strview fmt, const Args&... args);
 
     // level
     // :: get
@@ -55,21 +39,59 @@ namespace Parrot {
     void setLevel(strview scope, LogLevel level);
   private:
     void logHead(strview scope, LogLevel level);
-    void logBody(strview format);
-    template<class TFirst, class... TRest>
-    void logBody(strview format, const TFirst& first, const TRest&... rest) {
-      for (auto it = format.begin(); it != format.end(); ++it) {
-        if (std::next(it) != format.end()) {
-          if (*it == '{' && *std::next(it) == '}') {
-            cout << first;
-            return logBody(strview(std::next(it, 2), format.end()), rest...);
-          }
-        }
-        cout << *it;
-      }
-    }
+    void logBody(strview fmt);
+    template<class First, class... Rest>
+    void logBody(strview fmt, const First& first, const Rest&... rest);
 
     string _name;
     Map<string, LogLevel> _levels;
   };
+
+  // log
+  template<LogLevel Level, class... Args>
+  void Logger::log(strview scope, strview fmt, const Args&... args) {
+    if (uint(Level) >= uint(getLevel(scope))) {
+      logHead(scope, Level);
+      logBody(fmt, args...);
+    }
+  }
+  // :: trace
+  template<class... Args>
+  void Logger::logTrace(strview scope, strview fmt, const Args&... args) {
+    log<LogLevel::TRACE>(scope, fmt, args...);
+  }
+  // :: debug
+  template<class... Args>
+  void Logger::logDebug(strview scope, strview fmt, const Args&... args) {
+    log<LogLevel::DEBUG>(scope, fmt, args...);
+  }
+  // :: info
+  template<class... Args>
+  void Logger::logInfo(strview scope, strview fmt, const Args&... args) {
+    log<LogLevel::INFO>(scope, fmt, args...);
+  }
+  // :: warning
+  template<class... Args>
+  void Logger::logWarning(strview scope, strview fmt, const Args&... args) {
+    log<LogLevel::WARNING>(scope, fmt, args...);
+  }
+  // :: error
+  template<class... Args>
+  void Logger::logError(strview scope, strview fmt, const Args&... args) {
+    log<LogLevel::ERROR>(scope, fmt, args...);
+  }
+  
+  // logBody
+  template<class First, class... Rest>
+  void Logger::logBody(strview fmt, const First& first, const Rest&... rest) {
+    for (auto it = fmt.begin(); it != fmt.end(); ++it) {
+      if (std::next(it) != fmt.end()) {
+        if (*it == '{' && *std::next(it) == '}') {
+          cout << first;
+          return logBody(strview(std::next(it, 2), fmt.end()), rest...);
+        }
+      }
+      cout << *it;
+    }
+  }
 }

@@ -88,7 +88,7 @@ namespace Parrot {
     }
   }
   void AssetRegistry::add(const AssetPath& asset_path) {
-    auto json = asset_path.applySubpathToJSON(
+    auto json = asset_path.applySubpathToNode(
       SerialNode::loadFromJSON(asset_path.file)
     );
     if (json.contains("uuid")) {

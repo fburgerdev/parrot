@@ -24,8 +24,8 @@ namespace Parrot {
     void foreachChild(Func<void(const Scriptable&)> func) const;
 
     // window, scene_layers
-    Window window; /* API */
-    List<Pair<Scene, Renderer>> scene_layers; /* API */
+    Window window;
+    List<Pair<Scene, Renderer>> scene_layers;
   private:
     GPUContext _gpu_context;
   };

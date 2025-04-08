@@ -22,19 +22,19 @@ namespace Parrot {
     Window& operator=(Window&&) = default;
 
     // getTitle
-    const string& getTitle(); /* API */
+    const string& getTitle();
     // setIcon (tray icon)
-    void setIcon(const uchar* bytes, uint width, uint height); /* API */
+    void setIcon(const uchar* bytes, uint width, uint height);
 
     // isOpen
-    bool isOpen() const; /* API */
+    bool isOpen() const;
     // close
-    void close(); /* API */
+    void close();
 
     // setCursorState
-    void setCursorState(CursorState state); /* API */
+    void setCursorState(CursorState state);
     // getCursorCoords
-    Vec2<> getCursorCoords() const; /* API */
+    Vec2<> getCursorCoords() const;
 
     // bind
     void bind();

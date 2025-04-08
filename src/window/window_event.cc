@@ -2,6 +2,16 @@
 #include "window_event.hh"
 
 namespace Parrot {
+  // (constructor)
+  WindowEvent::WindowEvent(const WindowCloseRequest& wqr)
+    : _value(wqr) {}
+  WindowEvent::WindowEvent(const KeyPress& kp)
+    : _value(kp) {}
+  WindowEvent::WindowEvent(const MousePress& mp)
+    : _value(mp) {}
+  WindowEvent::WindowEvent(const MouseMove& mm)
+    : _value(mm) {}
+
   // getTargetWindow
   Window* WindowEvent::getTargetWindow() const {
     return (Window*)target;
@@ -60,7 +70,12 @@ namespace Parrot {
     return nullptr;
   }
 
-  // <<
+  // getDebugType
+  strview WindowEvent::getDebugType() const {
+    return "WindowEvent";
+  }
+
+  // << (stream)
   ostream& operator<<(
     ostream& stream, [[maybe_unused]] const WindowCloseRequest& e
   ) {

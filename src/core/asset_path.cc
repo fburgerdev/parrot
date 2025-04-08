@@ -35,6 +35,19 @@ namespace Parrot {
     }
     return splitted;
   }
+  // applySubpathToNode
+  SerialNode AssetPath::applySubpathToNode(const SerialNode& root) const {
+    const SerialNode* value = &root;
+    for (const string& token : splitSubpath()) {
+      if (std::isalpha(token.front())) {
+        value = &value->at(token);
+      }
+      else {
+        value = &value->at(std::stoull(token));
+      }
+    }
+    return *value;
+  }
   // << (stream)
   ostream& operator<<(ostream& stream, const AssetPath& asset_path) {
     if (asset_path.debug_root) {

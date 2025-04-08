@@ -9,11 +9,11 @@ namespace Parrot {
     Script() = default;
 
     // onUpdate
-    virtual void onUpdate(float32 delta_time); /* API */
+    virtual void onUpdate(float32 delta_time);
     // resolveEvent
-    virtual bool resolveEvent(const Event& e); /* API */
+    virtual bool resolveEvent(const Event& e);
     // raiseEvent
-    virtual void raiseEvent(const Event& e) = 0; /* API */
+    virtual void raiseEvent(const Event& e) = 0;
 
     // getID
     template<class T>
