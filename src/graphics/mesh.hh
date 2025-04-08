@@ -39,10 +39,5 @@ namespace Parrot {
     List<Vertex> vertices;
     List<uint32> indices;
   };
-
-  // (constructor)
-  template<class Vertices, class Indices>
-  Mesh::Mesh(Vertices&& vertices, Indices&& indices)
-    : vertices(std::forward<Vertices>(vertices)),
-      indices(std::forward<Indices>(indices)) {}
 }
+#include "mesh_impl.hh"

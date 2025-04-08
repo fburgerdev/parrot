@@ -141,12 +141,5 @@ namespace Parrot {
   using UniqueLock = std::unique_lock<Mutex>;
   template<typename Mutex>
   using SharedLock = std::shared_lock<Mutex>;
-
-  // ---
-  
-  // holds
-  template<class T, class... Args>
-  bool holds(const Variant<Args...>& variant) {
-    return std::holds_alternative<T>(variant);
-  }
 }
+#include "common_impl.hh"

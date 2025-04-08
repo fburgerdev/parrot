@@ -16,7 +16,4 @@ namespace Parrot {
   private:
     AssetPath _path;
   };
-  // AssetType
-  template<class T>
-  concept AssetType = std::is_base_of_v<Asset, T>;
 }

@@ -27,15 +27,6 @@ namespace Parrot {
 
       List<uchar> _bytes;
     };
-
-    // embedList
-    template<usize N, class T>
-    Array<T, N> SurfaceBlock::embedList(const List<T>& list) {
-      Array<T, N> out;
-      for (usize i = 0; i < list.size(); ++i) {
-        out.at(i) = list.at(i);
-      }
-      return out;
-    }
   }
 }
+#include "surface_opengl_impl.hh"
