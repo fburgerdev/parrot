@@ -5,21 +5,14 @@
 
 namespace Parrot {
   namespace OpenGL {
-    // MAX_LIGHT_COUNT
-    //! This must match with MAX_LIGHT_COUNT in ".parrot/surface.glsl.macro"
     constexpr uint MAX_LIGHT_COUNT = 50;
 
-    // SurfaceBlock
     struct SurfaceBlock {
-      // (constructor)
       SurfaceBlock();
 
-      // set
       void set(const RenderData& render_data);
 
-      // getSize
       usize getSize() const;
-      // getBuffer
       const uchar* getBuffer() const;
     private:
       template<usize N, class T>

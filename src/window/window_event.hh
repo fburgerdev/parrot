@@ -3,18 +3,12 @@
 #include "utils/math_matrix.hh"
 
 namespace Parrot {
-  // forward: Window
   class Window;
 
-  // WindowCloseRequest
   struct WindowCloseRequest {};
-  // << (stream)
   ostream& operator<<(ostream& stream, const WindowCloseRequest& e);
 
-  // KeyPress
-  // :: Code
   enum class KeyCode {
-    // GERMAN layout
     KEY_GER_ESZETT = 1000,
     KEY_GER_UMLAUT_U = 1001,
     KEY_GER_UMLAUT_O = 1002,
@@ -22,7 +16,6 @@ namespace Parrot {
     KEY_ADD = 1004,
     KEY_HASH = 1005,
 
-    // glfw supported
     KEY_UNKNOWN = -1,
     KEY_SPACE = 32,
     KEY_APOSTROPHE = 39, /* ' */
@@ -145,73 +138,51 @@ namespace Parrot {
     KEY_RIGHT_SUPER = 347,
     KEY_MENU = 348
   };
-  // :: State
   enum class KeyState {
     PRESSED, RELEASED, REPEATED
   };
-  // :: Event
   struct KeyPress {
-    // code, state
     KeyCode code;
     KeyState state;
   };
-  // << (stream)
   ostream& operator<<(ostream& stream, const KeyPress& e);
 
-  // MousePress
-  // :: Button
   enum class MouseButton {
     LEFT, MIDDLE, RIGHT
   };
-  // :: State
   enum class MouseState {
     PRESSED, RELEASED
   };
-  // :: Event
   struct MousePress {
-    // button, state
     MouseButton button;
     MouseState state;
   };
-  // << (stream)
   ostream& operator<<(ostream& stream, const MousePress& e);
 
-  // MouseMove
   struct MouseMove {
-    // coords
     Vec2<float32> coords;
   };
-  // << (stream)
   ostream& operator<<(ostream& stream, const MouseMove& e);
 
-  // WindowEvent
   class WindowEvent : public Event {
   public:
-    // (constructor)
     WindowEvent(const WindowCloseRequest& wqr);
     WindowEvent(const KeyPress& kp);
     WindowEvent(const MousePress& mp);
     WindowEvent(const MouseMove& mm);
 
-    // getTargetWindow
     Window* getTargetWindow() const;
-    // getWindowCloseRequest
     WindowCloseRequest* getWindowCloseRequest();
     const WindowCloseRequest* getWindowCloseRequest() const;
-    // getKeyPress
     KeyPress* getKeyPress();
     const KeyPress* getKeyPress() const;
-    // getMousePress
     MousePress* getMousePress();
     const MousePress* getMousePress() const;
-    // getMouseMove
     MouseMove* getMouseMove();
     const MouseMove* getMouseMove() const;
 
-    // getDebugType
     virtual strview getDebugType() const override;
 
-    // << (stream)
     friend ostream& operator<<(ostream& stream, const WindowEvent& e);
   private:
     Variant<

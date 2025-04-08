@@ -10,43 +10,28 @@ namespace Parrot {
 #endif
 
 namespace Parrot {
-  // Window
   class Window : public Scriptable {
   public:
-    // (constructor)
     Window(const WindowConfig& config, Scriptable* parent = nullptr);
     Window(Window&&) = default;
-    // (destructor)
     ~Window();
-    // (assignment)
     Window& operator=(Window&&) = default;
 
-    // getTitle
     const string& getTitle();
-    // setIcon (tray icon)
     void setIcon(const uchar* bytes, uint width, uint height);
 
-    // isOpen
     bool isOpen() const;
-    // close
     void close();
 
-    // setCursorState
     void setCursorState(CursorState state);
-    // getCursorCoords
     Vec2<> getCursorCoords() const;
 
-    // bind
     void bind();
-    // unbind
     void unbind();
 
-    // pollEvents
     List<WindowEvent> pollEvents();
-    // swapBuffers
     void swapBuffers();
 
-    // foreachChild (impl. Scriptable)
     virtual void foreachChild(
       Func<void(Scriptable&)> func
     ) override;

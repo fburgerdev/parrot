@@ -7,16 +7,13 @@ namespace Parrot {
   /**
    * @brief This is an AssetManager
   */
-  // AssetManager
   class AssetManager : public AssetAPI {
   public:
-    // (constructor)
     AssetManager() = default;
     AssetManager(const stdf::path& asset_dir);
     AssetManager(const stdf::path& asset_dir,
       LoadingPolicy loading_policy, UnloadingPolicy unloading_policy
     );
-    // getAssetDirectory
     /**
      * @brief Returns the asset-directory
     */
@@ -25,9 +22,7 @@ namespace Parrot {
     /**
      * @brief Adds asset
     */
-    // addAsset (impl. AssetAPI)
     virtual UUID addAsset(SharedPtr<Asset> asset) override;
-    // lockAsset (impl. AssetAPI)
     virtual SharedPtr<const Asset> lockAsset(
       const AssetKey& key, AssetFactory factory
     ) override;

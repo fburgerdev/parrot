@@ -3,24 +3,18 @@
 
 namespace Parrot {
   namespace OpenGL {
-    // IndexBuffer
     class IndexBuffer {
     public:
-      // (constructor)
       IndexBuffer(usize count);
       IndexBuffer(const uint32* indices, usize count);
       IndexBuffer(const IndexBuffer&) = delete;
       IndexBuffer(IndexBuffer&& other) noexcept;
-      // (destructor)
       ~IndexBuffer();
-      // (assignment)
       IndexBuffer& operator=(const IndexBuffer&) = delete;
       IndexBuffer& operator=(IndexBuffer&& other) noexcept;
 
-      // overwriteData
       void overwriteData(const uint32* indices, usize count, usize index = 0);
 
-      // bind / unbind
       void bind() const;
       static void unbind();
     private:

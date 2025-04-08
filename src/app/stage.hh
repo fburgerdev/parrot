@@ -5,25 +5,18 @@
 #include "graphics/renderer.hh"
 
 namespace Parrot {
-  // getRenderData
   RenderData getRenderData(Scene& scene);
   
-  // Stage
   class Stage : public Scriptable {
   public:
-    // (constructor)
     Stage(const StageConfig& config, Scriptable* parent, AssetAPI& api);
 
-    // update
     void update(float32 delta_time);
-    // render
     void render();
 
-    // foreachChild (impl. Scriptable)
     void foreachChild(Func<void(Scriptable&)> func);
     void foreachChild(Func<void(const Scriptable&)> func) const;
 
-    // window, scene_layers
     Window window;
     List<Pair<Scene, Renderer>> scene_layers;
   private:

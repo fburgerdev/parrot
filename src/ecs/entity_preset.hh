@@ -7,17 +7,13 @@
 #include "core/log.hh"
 
 namespace Parrot {
-  // EntityPreset (Asset)
   class EntityPreset : public Asset {
   public:
-    // (constructor) for Asset
     EntityPreset(const AssetPath& asset_path, AssetAPI& api);
     EntityPreset(const SerialNode& node, const AssetPath& path, AssetAPI& api);
 
-    // loadFromSerialNode
     void loadFromSerialNode(const SerialNode& node, AssetAPI& api);
     
-    // tag, transform, children, components, scripts
     string tag = "Entity";
     Transform<> transform;
     List<AssetHandle<EntityPreset>> children;

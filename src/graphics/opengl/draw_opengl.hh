@@ -3,9 +3,7 @@
 
 namespace Parrot {
   namespace OpenGL {
-    // prepareDraw
     void prepareDraw();
-    // draw
     void draw(usize count);
   }
 }

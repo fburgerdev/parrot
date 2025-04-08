@@ -3,7 +3,6 @@
 #include "core/log.hh"
 
 namespace Parrot {
-  // ImageFormat
   enum class ImageFormat {
     NONE = 0, GRAY, RGB, RGBA
   };
@@ -14,34 +13,23 @@ namespace Parrot {
   */
   class Image : public Asset {
   public:
-    // (constructor)
     Image(const stdf::path& filepath, Opt<stdf::path> debug_root = {});
     Image(strview name, const uchar* buffer, usize size);
     Image(const Image& other);
     Image(Image&& other) noexcept;
-    // :: for Asset
     Image(const AssetPath& path, AssetAPI& api);
     Image(const SerialNode& node, const AssetPath& path, AssetAPI& api);
-    // (destructor)
     ~Image();
-    // (assignment)
     Image& operator=(const Image& other);
     Image& operator=(Image&& other) noexcept;
 
-    // safeAs
-    // :: bmp
     void safeAsBMP(
       const stdf::path& filepath, Opt<stdf::path> debug_root = {}
     ) const;
 
-    // get
-    // :: width
     uint getWidth() const;
-    // :: height
     uint getHeight() const;
-    // :: format
     ImageFormat getFormat() const;
-    // :: bytes
     const uchar* getBytes() const;
   private:
     static stdf::path getDebugFilepath(

@@ -5,23 +5,18 @@
 
 namespace Parrot {
   namespace OpenGL {
-    // VertexArray
     class VertexArray {
     public:
-      // (constructor)
       VertexArray(
         VertexBuffer&& buffer, IndexBuffer&& index,
         const List<AttributeGPU>& attributes
       );
       VertexArray(const VertexArray&) = delete;
       VertexArray(VertexArray&& other) noexcept;
-      // (destructor)
       ~VertexArray();
-      // (assignment)
       VertexArray& operator=(const VertexArray&) = delete;
       VertexArray& operator=(VertexArray&& other) noexcept;
 
-      // bind / unbind
       void bind() const;
       static void unbind();
     private:
