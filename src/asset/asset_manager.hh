@@ -4,6 +4,9 @@
 #include "asset_policy.hh"
 
 namespace Parrot {
+  /**
+   * @brief This is an AssetManager
+  */
   // AssetManager
   class AssetManager : public AssetAPI {
   public:
@@ -14,8 +17,14 @@ namespace Parrot {
       LoadingPolicy loading_policy, UnloadingPolicy unloading_policy
     );
     // getAssetDirectory
+    /**
+     * @brief Returns the asset-directory
+    */
     const stdf::path getAssetDirectory() const;
 
+    /**
+     * @brief Adds asset
+    */
     // addAsset (impl. AssetAPI)
     virtual UUID addAsset(SharedPtr<Asset> asset) override;
     // lockAsset (impl. AssetAPI)
