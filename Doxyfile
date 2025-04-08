@@ -1,15 +1,18 @@
 # Doxyfile Configuration
 
-# Directories to scan for source code
+# Source Code
 INPUT = ./src
+FILE_PATTERNS = *.hh
 RECURSIVE = YES
 EXTRACT_PRIVATE = NO
 EXTRACT_PROTECTED = NO
+HIDE_UNDOC_CLASSES = YES
+HIDE_UNDOC_MEMBERS = YES
+INLINE_SOURCES = NO
+SOURCE_BROWSER = NO
 
-# Generate XML output for Breathe
+# XML Output
 GENERATE_XML = YES
 XML_OUTPUT = xml
 OUTPUT_DIRECTORY = build/doxygen
-
-# Optional: Disable HTML output if not needed
 GENERATE_HTML = NO
