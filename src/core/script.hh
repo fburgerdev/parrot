@@ -2,6 +2,7 @@
 #include "event.hh"
 
 namespace Parrot {
+  /// @ingroup Internals
   /// @brief Base class for script types.
   class Script {
   public:

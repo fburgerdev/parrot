@@ -3,6 +3,7 @@
 
 namespace Parrot {
   class Scriptable;
+  /// @ingroup PublicAPI
   /// @brief Base class event types.
   class Event {
   public:

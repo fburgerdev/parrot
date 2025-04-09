@@ -2,6 +2,7 @@
 #include "common.hh"
 
 namespace Parrot {
+  /// @ingroup Internals
   /// @brief Interface for class that creates instances of @c T.
   /// @tparam T The type of the instances to be created
   template<class T>
@@ -14,6 +15,7 @@ namespace Parrot {
     virtual UniquePtr<T> create() const = 0;
   };
 
+  /// @ingroup Internals
   /// @brief A basic implementation for Factory<Base> that creates
   /// copies of an existing instance.
   /// @tparam T The type of the instances to be created

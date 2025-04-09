@@ -3,6 +3,7 @@
 #include "utils/uuid.hh"
 
 namespace Parrot {
+  /// @ingroup Internals
   /// @brief Base class for game assets. 
   class Asset : public UUIDObject {
   public:

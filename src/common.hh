@@ -25,6 +25,15 @@
 #include <mutex> // mutex, recursive_mutex, UniqueLock
 #include <shared_mutex> // shared_mutex, SharedLock
 
+/// @defgroup PublicAPI Public API
+/// Intended to be used for game creation.
+
+/// @defgroup Utils Utilities
+/// Common tools used for both game creation and parrot development.
+
+/// @defgroup Internals Internals
+/// Not intended for game creation use but only for parrot developers.
+
 namespace Parrot {
   namespace stdr = std::ranges;
   namespace stdf = std::filesystem;

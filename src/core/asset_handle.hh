@@ -3,8 +3,10 @@
 #include "asset_path.hh"
 
 namespace Parrot {
+  /// @ingroup Internals
   /// @brief Function that loads an Asset from the given location.
   using AssetFactory = Func<SharedPtr<Asset>(const AssetPath&)>;
+  /// @ingroup Internals
   /// @brief Interface for an Asset memory manager (loading and unloading).
   class AssetAPI {
   public:
@@ -20,6 +22,7 @@ namespace Parrot {
       const AssetKey& key, AssetFactory factory
     ) = 0;
   };
+  /// @ingroup PublicAPI
   /// @brief Reference to an Asset that doesn't require the Asset to be loaded.
   template<class T>
   class AssetHandle {

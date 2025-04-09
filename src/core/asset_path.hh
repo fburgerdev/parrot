@@ -3,6 +3,7 @@
 #include "utils/serial_node.hh"
 
 namespace Parrot {
+  /// @ingroup PublicAPI
   /// @brief Location of an asset using its filepath and subpath
   struct AssetPath {
     /// @brief Construct empty AssetPath

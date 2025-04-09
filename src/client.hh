@@ -15,6 +15,7 @@
 #include "utils/math_perlin.hh"
 
 namespace Parrot {
+  /// @ingroup PublicAPI
   /// @brief Script attached to Entity instances.
   class EntityScript : public Script {
   public:
@@ -29,6 +30,7 @@ namespace Parrot {
     virtual void setScriptOwner(Scriptable* owner) override;
   };
   
+  /// @ingroup PublicAPI
   /// @brief Script attached to Scene instances.
   class SceneScript : public Script {
   public:
@@ -43,6 +45,7 @@ namespace Parrot {
     virtual void setScriptOwner(Scriptable* owner) override;
   };
   
+  /// @ingroup PublicAPI
   /// @brief Script attached to Stage instances.
   class StageScript : public Script {
   public:
@@ -56,6 +59,7 @@ namespace Parrot {
     virtual void setScriptOwner(Scriptable* owner) override;
   };
 
+  /// @ingroup PublicAPI
   /// @brief Script attached to the App instance.
   class AppScript : public Script {
   public:
