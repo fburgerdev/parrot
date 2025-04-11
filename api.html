@@ -53,6 +53,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4I0EN6Parrot11AssetHandleE"><code class="docutils literal notranslate"><span class="pre">Parrot::AssetHandle</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6Parrot9AssetPathE"><code class="docutils literal notranslate"><span class="pre">Parrot::AssetPath</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6Parrot5EventE"><code class="docutils literal notranslate"><span class="pre">Parrot::Event</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6Parrot9ComponentE"><code class="docutils literal notranslate"><span class="pre">Parrot::Component</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6Parrot6EntityE"><code class="docutils literal notranslate"><span class="pre">Parrot::Entity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6Parrot5SceneE"><code class="docutils literal notranslate"><span class="pre">Parrot::Scene</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#utilities">Utilities</a></li>
@@ -106,7 +109,7 @@
 <span id="_CPPv3N6Parrot12EntityScriptE"></span><span id="_CPPv2N6Parrot12EntityScriptE"></span><span id="Parrot::EntityScript"></span><span class="target" id="classParrot_1_1EntityScript"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EntityScript</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6Parrot6ScriptE" title="Parrot::Script"><span class="n"><span class="pre">Script</span></span></a><a class="headerlink" href="#_CPPv4N6Parrot12EntityScriptE" title="Link to this definition"></a><br /></dt>
 <dd><div class="docutils container">
 <em>#include &lt;client.hh&gt;</em></div>
-<p><a class="reference internal" href="#classParrot_1_1Script"><span class="std std-ref">Script</span></a> attached to Entity instances. </p>
+<p><a class="reference internal" href="#classParrot_1_1Script"><span class="std std-ref">Script</span></a> attached to <a class="reference internal" href="#classParrot_1_1Entity"><span class="std std-ref">Entity</span></a> instances. </p>
 </dd></dl>
 
 <dl class="cpp class">
@@ -114,7 +117,7 @@
 <span id="_CPPv3N6Parrot11SceneScriptE"></span><span id="_CPPv2N6Parrot11SceneScriptE"></span><span id="Parrot::SceneScript"></span><span class="target" id="classParrot_1_1SceneScript"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SceneScript</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6Parrot6ScriptE" title="Parrot::Script"><span class="n"><span class="pre">Script</span></span></a><a class="headerlink" href="#_CPPv4N6Parrot11SceneScriptE" title="Link to this definition"></a><br /></dt>
 <dd><div class="docutils container">
 <em>#include &lt;client.hh&gt;</em></div>
-<p><a class="reference internal" href="#classParrot_1_1Script"><span class="std std-ref">Script</span></a> attached to Scene instances. </p>
+<p><a class="reference internal" href="#classParrot_1_1Script"><span class="std std-ref">Script</span></a> attached to <a class="reference internal" href="#classParrot_1_1Scene"><span class="std std-ref">Scene</span></a> instances. </p>
 </dd></dl>
 
 <dl class="cpp class">
@@ -156,6 +159,31 @@
 <em>#include &lt;event.hh&gt;</em></div>
 <p>Base class event types. </p>
 <p>Subclassed by WindowEvent</p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N6Parrot9ComponentE">
+<span id="_CPPv3N6Parrot9ComponentE"></span><span id="_CPPv2N6Parrot9ComponentE"></span><span id="Parrot::Component"></span><span class="target" id="classParrot_1_1Component"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Component</span></span></span><a class="headerlink" href="#_CPPv4N6Parrot9ComponentE" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;component.hh&gt;</em></div>
+<p>Reusable functionality to attach to Entities. </p>
+<p>Subclassed by BasicComponent&lt; T &gt;</p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N6Parrot6EntityE">
+<span id="_CPPv3N6Parrot6EntityE"></span><span id="_CPPv2N6Parrot6EntityE"></span><span id="Parrot::Entity"></span><span class="target" id="classParrot_1_1Entity"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Entity</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">UUIDObject</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">Scriptable</span></span><a class="headerlink" href="#_CPPv4N6Parrot6EntityE" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;entity.hh&gt;</em></div>
+<p>Hierarchical object composed by Components. </p>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N6Parrot5SceneE">
+<span id="_CPPv3N6Parrot5SceneE"></span><span id="_CPPv2N6Parrot5SceneE"></span><span id="Parrot::Scene"></span><span class="target" id="classParrot_1_1Scene"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Scene</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">Scriptable</span></span><a class="headerlink" href="#_CPPv4N6Parrot5SceneE" title="Link to this definition"></a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;scene.hh&gt;</em></div>
+<p>Game world containing Entities in a hierarchy. </p>
 </dd></dl>
 
 </dd></dl>
