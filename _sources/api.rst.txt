@@ -4,8 +4,32 @@ API Reference
 Public API
 ----------
 
-.. doxygengroup:: PublicAPI
+.. doxygen:: PublicAPI
    :project: Parrot
+
+.. doxygenclass:: App
+   :project: Parrot
+   :members:
+
+.. doxygenclass:: Stage
+   :project: Parrot
+   :members:
+
+.. doxygenclass:: Window
+   :project: Parrot
+   :members:
+
+.. doxygenclass:: Scene
+   :project: Parrot
+   :members:
+
+.. doxygenclass:: Entity
+   :project: Parrot
+   :members:
+
+.. doxygenclass:: Component
+   :project: Parrot
+   :members:
 
 Utilities
 ---------

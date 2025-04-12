@@ -1,8 +1,8 @@
 .. MyProject documentation main file, created by
    sphinx-quickstart on <date>.
 
-Welcome to Parrot's Documentation
-====================================
+Parrot Documentation
+====================
 
 .. toctree::
    :maxdepth: 2

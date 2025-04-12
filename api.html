@@ -45,19 +45,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#public-api">Public API</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6Parrot12EntityScriptE"><code class="docutils literal notranslate"><span class="pre">Parrot::EntityScript</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6Parrot11SceneScriptE"><code class="docutils literal notranslate"><span class="pre">Parrot::SceneScript</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6Parrot11StageScriptE"><code class="docutils literal notranslate"><span class="pre">Parrot::StageScript</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6Parrot9AppScriptE"><code class="docutils literal notranslate"><span class="pre">Parrot::AppScript</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4I0EN6Parrot11AssetHandleE"><code class="docutils literal notranslate"><span class="pre">Parrot::AssetHandle</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6Parrot9AssetPathE"><code class="docutils literal notranslate"><span class="pre">Parrot::AssetPath</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6Parrot5EventE"><code class="docutils literal notranslate"><span class="pre">Parrot::Event</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6Parrot9ComponentE"><code class="docutils literal notranslate"><span class="pre">Parrot::Component</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6Parrot6EntityE"><code class="docutils literal notranslate"><span class="pre">Parrot::Entity</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#_CPPv4N6Parrot5SceneE"><code class="docutils literal notranslate"><span class="pre">Parrot::Scene</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#public-api">Public API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#utilities">Utilities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#internals-for-parrot-developers">Internals (for Parrot Developers)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#_CPPv412AssetFactory"><code class="docutils literal notranslate"><span class="pre">AssetFactory</span></code></a></li>
@@ -100,94 +88,30 @@
 <h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h1>
 <section id="public-api">
 <h2>Public API<a class="headerlink" href="#public-api" title="Link to this heading"></a></h2>
-<dl>
-<dt class="sig sig-object cpp">
-<span class="target" id="group__PublicAPI"></span><em><span class="pre">group</span></em> <span class="sig-name descname"><span class="pre">Public</span> <span class="pre">API</span></span></dt>
-<dd><p>Intended to be used for game creation. </p>
-<dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N6Parrot12EntityScriptE">
-<span id="_CPPv3N6Parrot12EntityScriptE"></span><span id="_CPPv2N6Parrot12EntityScriptE"></span><span id="Parrot::EntityScript"></span><span class="target" id="classParrot_1_1EntityScript"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">EntityScript</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6Parrot6ScriptE" title="Parrot::Script"><span class="n"><span class="pre">Script</span></span></a><a class="headerlink" href="#_CPPv4N6Parrot12EntityScriptE" title="Link to this definition"></a><br /></dt>
-<dd><div class="docutils container">
-<em>#include &lt;client.hh&gt;</em></div>
-<p><a class="reference internal" href="#classParrot_1_1Script"><span class="std std-ref">Script</span></a> attached to <a class="reference internal" href="#classParrot_1_1Entity"><span class="std std-ref">Entity</span></a> instances. </p>
-</dd></dl>
-
-<dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N6Parrot11SceneScriptE">
-<span id="_CPPv3N6Parrot11SceneScriptE"></span><span id="_CPPv2N6Parrot11SceneScriptE"></span><span id="Parrot::SceneScript"></span><span class="target" id="classParrot_1_1SceneScript"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">SceneScript</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6Parrot6ScriptE" title="Parrot::Script"><span class="n"><span class="pre">Script</span></span></a><a class="headerlink" href="#_CPPv4N6Parrot11SceneScriptE" title="Link to this definition"></a><br /></dt>
-<dd><div class="docutils container">
-<em>#include &lt;client.hh&gt;</em></div>
-<p><a class="reference internal" href="#classParrot_1_1Script"><span class="std std-ref">Script</span></a> attached to <a class="reference internal" href="#classParrot_1_1Scene"><span class="std std-ref">Scene</span></a> instances. </p>
-</dd></dl>
-
-<dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N6Parrot11StageScriptE">
-<span id="_CPPv3N6Parrot11StageScriptE"></span><span id="_CPPv2N6Parrot11StageScriptE"></span><span id="Parrot::StageScript"></span><span class="target" id="classParrot_1_1StageScript"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">StageScript</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6Parrot6ScriptE" title="Parrot::Script"><span class="n"><span class="pre">Script</span></span></a><a class="headerlink" href="#_CPPv4N6Parrot11StageScriptE" title="Link to this definition"></a><br /></dt>
-<dd><div class="docutils container">
-<em>#include &lt;client.hh&gt;</em></div>
-<p><a class="reference internal" href="#classParrot_1_1Script"><span class="std std-ref">Script</span></a> attached to Stage instances. </p>
-</dd></dl>
-
-<dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N6Parrot9AppScriptE">
-<span id="_CPPv3N6Parrot9AppScriptE"></span><span id="_CPPv2N6Parrot9AppScriptE"></span><span id="Parrot::AppScript"></span><span class="target" id="classParrot_1_1AppScript"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">AppScript</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N6Parrot6ScriptE" title="Parrot::Script"><span class="n"><span class="pre">Script</span></span></a><a class="headerlink" href="#_CPPv4N6Parrot9AppScriptE" title="Link to this definition"></a><br /></dt>
-<dd><div class="docutils container">
-<em>#include &lt;client.hh&gt;</em></div>
-<p><a class="reference internal" href="#classParrot_1_1Script"><span class="std std-ref">Script</span></a> attached to the App instance. </p>
-</dd></dl>
-
-<dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4I0EN6Parrot11AssetHandleE">
-<span id="_CPPv3I0EN6Parrot11AssetHandleE"></span><span id="_CPPv2I0EN6Parrot11AssetHandleE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classParrot_1_1AssetHandle"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">AssetHandle</span></span></span><a class="headerlink" href="#_CPPv4I0EN6Parrot11AssetHandleE" title="Link to this definition"></a><br /></dt>
-<dd><div class="docutils container">
-<em>#include &lt;asset_handle.hh&gt;</em></div>
-<p>Reference to an <a class="reference internal" href="#classParrot_1_1Asset"><span class="std std-ref">Asset</span></a> that doesn’t require the <a class="reference internal" href="#classParrot_1_1Asset"><span class="std std-ref">Asset</span></a> to be loaded. </p>
-</dd></dl>
-
-<dl class="cpp struct">
-<dt class="sig sig-object cpp" id="_CPPv4N6Parrot9AssetPathE">
-<span id="_CPPv3N6Parrot9AssetPathE"></span><span id="_CPPv2N6Parrot9AssetPathE"></span><span id="Parrot::AssetPath"></span><span class="target" id="structParrot_1_1AssetPath"></span><span class="k"><span class="pre">struct</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">AssetPath</span></span></span><a class="headerlink" href="#_CPPv4N6Parrot9AssetPathE" title="Link to this definition"></a><br /></dt>
-<dd><div class="docutils container">
-<em>#include &lt;asset_path.hh&gt;</em></div>
-<p>Location of an asset using its filepath and subpath. </p>
-</dd></dl>
-
-<dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N6Parrot5EventE">
-<span id="_CPPv3N6Parrot5EventE"></span><span id="_CPPv2N6Parrot5EventE"></span><span id="Parrot::Event"></span><span class="target" id="classParrot_1_1Event"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Event</span></span></span><a class="headerlink" href="#_CPPv4N6Parrot5EventE" title="Link to this definition"></a><br /></dt>
-<dd><div class="docutils container">
-<em>#include &lt;event.hh&gt;</em></div>
-<p>Base class event types. </p>
-<p>Subclassed by WindowEvent</p>
-</dd></dl>
-
-<dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N6Parrot9ComponentE">
-<span id="_CPPv3N6Parrot9ComponentE"></span><span id="_CPPv2N6Parrot9ComponentE"></span><span id="Parrot::Component"></span><span class="target" id="classParrot_1_1Component"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Component</span></span></span><a class="headerlink" href="#_CPPv4N6Parrot9ComponentE" title="Link to this definition"></a><br /></dt>
-<dd><div class="docutils container">
-<em>#include &lt;component.hh&gt;</em></div>
-<p>Reusable functionality to attach to Entities. </p>
-<p>Subclassed by BasicComponent&lt; T &gt;</p>
-</dd></dl>
-
-<dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N6Parrot6EntityE">
-<span id="_CPPv3N6Parrot6EntityE"></span><span id="_CPPv2N6Parrot6EntityE"></span><span id="Parrot::Entity"></span><span class="target" id="classParrot_1_1Entity"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Entity</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">UUIDObject</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">Scriptable</span></span><a class="headerlink" href="#_CPPv4N6Parrot6EntityE" title="Link to this definition"></a><br /></dt>
-<dd><div class="docutils container">
-<em>#include &lt;entity.hh&gt;</em></div>
-<p>Hierarchical object composed by Components. </p>
-</dd></dl>
-
-<dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4N6Parrot5SceneE">
-<span id="_CPPv3N6Parrot5SceneE"></span><span id="_CPPv2N6Parrot5SceneE"></span><span id="Parrot::Scene"></span><span class="target" id="classParrot_1_1Scene"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Scene</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><span class="n"><span class="pre">Scriptable</span></span><a class="headerlink" href="#_CPPv4N6Parrot5SceneE" title="Link to this definition"></a><br /></dt>
-<dd><div class="docutils container">
-<em>#include &lt;scene.hh&gt;</em></div>
-<p>Game world containing Entities in a hierarchy. </p>
-</dd></dl>
-
-</dd></dl>
-
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenclass: Cannot find class “App” in doxygen xml output for project “Parrot” from directory: ../build/doxygen/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenclass: Cannot find class “Stage” in doxygen xml output for project “Parrot” from directory: ../build/doxygen/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenclass: Cannot find class “Window” in doxygen xml output for project “Parrot” from directory: ../build/doxygen/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenclass: Cannot find class “Scene” in doxygen xml output for project “Parrot” from directory: ../build/doxygen/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenclass: Cannot find class “Entity” in doxygen xml output for project “Parrot” from directory: ../build/doxygen/xml</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>doxygenclass: Cannot find class “Component” in doxygen xml output for project “Parrot” from directory: ../build/doxygen/xml</p>
+</div>
 </section>
 <section id="utilities">
 <h2>Utilities<a class="headerlink" href="#utilities" title="Link to this heading"></a></h2>
@@ -266,7 +190,7 @@
 <dd><div class="docutils container">
 <em>#include &lt;script.hh&gt;</em></div>
 <p>Base class for script types. </p>
-<p>Subclassed by <a class="reference internal" href="#classParrot_1_1AppScript"><span class="std std-ref">AppScript</span></a>, <a class="reference internal" href="#classParrot_1_1EntityScript"><span class="std std-ref">EntityScript</span></a>, <a class="reference internal" href="#classParrot_1_1SceneScript"><span class="std std-ref">SceneScript</span></a>, <a class="reference internal" href="#classParrot_1_1StageScript"><span class="std std-ref">StageScript</span></a></p>
+<p>Subclassed by AppScript, EntityScript, SceneScript, StageScript</p>
 </dd></dl>
 
 </dd></dl>
