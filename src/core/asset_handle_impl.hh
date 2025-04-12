@@ -1,7 +1,6 @@
 #pragma once
 
 namespace Parrot {
-  // (constructor)
   template<class T>
   AssetHandle<T>::AssetHandle(UUID uuid, AssetAPI& asset_api)
     : _key(uuid), _api(&asset_api) {
@@ -28,12 +27,10 @@ namespace Parrot {
     }
   }
 
-  // bool (cast)
   template<class T>
   AssetHandle<T>::operator bool() const {
     return _api;
   }
-  // lock
   template<class T>
   SharedPtr<const T> AssetHandle<T>::lock() const {
     return std::static_pointer_cast<const T>(

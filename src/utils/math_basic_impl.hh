@@ -1,13 +1,11 @@
 #pragma once
 
 namespace Parrot {
-  // clamp
   template<class T>
   constexpr T clamp(T value, T min, T max) {
     return (value < min ? min : (value > max ? max : value));
   }
 
-  // min
   template<class First, class... Rest>
   constexpr First min(First left, Rest&&... rest) {
     if constexpr (sizeof...(Rest)) {
@@ -18,7 +16,6 @@ namespace Parrot {
       return left;
     }
   }
-  // max
   template<class First, class... Rest>
   constexpr First max(First left, Rest&&... rest) {
     if constexpr (sizeof...(Rest)) {
@@ -30,7 +27,6 @@ namespace Parrot {
     }
   }
 
-  // pow
   template<class T>
   constexpr T pow(T base, usize exponent) {
     T out = (T)1.0;

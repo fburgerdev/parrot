@@ -1,8 +1,6 @@
 #pragma once
 
 namespace Parrot {
-  //* Mat
-  // (constructor)
   template<typename T, usize N, usize M>
   template<typename U>
   Mat<T, N, M>::Mat(const Mat<U, N, M>& mat) {
@@ -10,7 +8,6 @@ namespace Parrot {
       _array.at(i) = T(mat.at(i));
     }
   }
-  // at
   template<typename T, usize N, usize M>
   T& Mat<T, N, M>::at(usize index) {
     return _array.at(index);
@@ -27,7 +24,6 @@ namespace Parrot {
   const T& Mat<T, N, M>::at(usize n, usize m) const {
     return _array.at(M * n + m);
   }
-  // data
   template<typename T, usize N, usize M>
   T* Mat<T, N, M>::data() {
     return _array.data();
@@ -37,8 +33,6 @@ namespace Parrot {
     return _array.data();
   }
 
-  //* Mat2x1
-  // (constructor)
   template<typename T>
   Mat<T, 2, 1>::Mat(T val)
     : x(val), y(val) {
@@ -52,7 +46,6 @@ namespace Parrot {
   Mat<T, 2, 1>::Mat(const Mat<U, N, 1>& vec)
     : x(T(vec.at(0))), y(T(vec.at(1))) {
   }
-  // at
   template<typename T>
   T& Mat<T, 2, 1>::at(usize index) {
     return index == 0 ? x : y;
@@ -70,8 +63,6 @@ namespace Parrot {
     return at(n);
   }
 
-  //* Mat3x1 
-  // (constructor)
   template<typename T>
   Mat<T, 3, 1>::Mat(T val)
     : x(val), y(val), z(val) {
@@ -98,7 +89,6 @@ namespace Parrot {
   Mat<T, 3, 1>::Mat(const Mat<U, 2, 1>& vec)
     : x(vec.at(0)), y(vec.at(1)), z(0) {
   }
-  // at
   template<typename T>
   T& Mat<T, 3, 1>::at(usize index) {
     return index == 0 ? x : index == 1 ? y : z;
@@ -116,8 +106,6 @@ namespace Parrot {
     return at(n);
   }
 
-  //* Mat4x1
-  // (constructor)
   template<typename T>
   Mat<T, 4, 1>::Mat(T val)
     : x(val), y(val), z(val), w(val) {
@@ -161,7 +149,6 @@ namespace Parrot {
   Mat<T, 4, 1>::Mat(const Mat<U, 3, 1>& vec)
     : x(vec.at(0)), y(vec.at(1)), z(vec.at(2)), w(0) {
   }
-  // at
   template<typename T>
   T& Mat<T, 4, 1>::at(usize index) {
     return index == 0 ? x : index == 1 ? y : index == 2 ? z : w;
@@ -179,7 +166,6 @@ namespace Parrot {
     return at(n);
   }
 
-  // zeros
   template<typename T, usize N, usize M>
   Mat<T, N, M> zeros() {
     Mat<T, N, M> mat;
@@ -188,7 +174,6 @@ namespace Parrot {
     }
     return mat;
   }
-  // identity
   template<typename T, usize N>
   Mat<T, N> identity() {
     Mat<T, N> mat = zeros<T, N>();
@@ -198,7 +183,6 @@ namespace Parrot {
     return mat;
   }
 
-  // - (unary)
   template<typename T, usize N, usize M>
   Mat<T, N, M> operator-(const Mat<T, N, M>& mat) {
     Mat<T, N, M> out;
@@ -207,7 +191,6 @@ namespace Parrot {
     }
     return out;
   }
-  // +=
   template<typename T, usize N, usize M>
   Mat<T, N, M>& operator+=(Mat<T, N, M>& mat, const Mat<T, N, M>& other) {
     for (usize i = 0; i < N * M; ++i) {
@@ -215,7 +198,6 @@ namespace Parrot {
     }
     return mat;
   }
-  // -=
   template<typename T, usize N, usize M>
   Mat<T, N, M>& operator-=(Mat<T, N, M>& mat, const Mat<T, N, M>& other) {
     for (usize i = 0; i < N * M; ++i) {
@@ -223,7 +205,6 @@ namespace Parrot {
     }
     return mat;
   }
-  // *=
   template<typename T, usize N, usize M>
   Mat<T, N, M>& operator*=(Mat<T, N, M>& mat, T scalar) {
     for (usize i = 0; i < N * M; ++i) {
@@ -231,7 +212,6 @@ namespace Parrot {
     }
     return mat;
   }
-  // /=
   template<typename T, usize N, usize M>
   Mat<T, N, M>& operator/=(Mat<T, N, M>& mat, T scalar) {
     for (usize i = 0; i < N * M; ++i) {
@@ -240,35 +220,30 @@ namespace Parrot {
     return mat;
   }
 
-  // +
   template<typename T, usize N, usize M>
   Mat<T, N, M> operator+(const Mat<T, N, M>& mat, const Mat<T, N, M>& other) {
     Mat<T, N, M> out(mat);
     out += other;
     return out;
   }
-  // -
   template<typename T, usize N, usize M>
   Mat<T, N, M> operator-(const Mat<T, N, M>& mat, const Mat<T, N, M>& other) {
     Mat<T, N, M> out(mat);
     out -= other;
     return out;
   }
-  // * (scalar)
   template<typename T, usize N, usize M>
   Mat<T, N, M> operator*(const Mat<T, N, M>& mat, T scalar) {
     Mat<T, N, M> out(mat);
     out *= scalar;
     return out;
   }
-  // / (scalar)
   template<typename T, usize N, usize M>
   Mat<T, N, M> operator/(const Mat<T, N, M>& mat, T scalar) {
     Mat<T, N, M> out(mat);
     out /= scalar;
     return out;
   }
-  // *
   template<typename T, usize N, usize M, usize L>
   Mat<T, N, L> operator*(const Mat<T, N, M>& mat1, const Mat<T, M, L>& mat2) {
     Mat<T, N, L> out = zeros<T, N, L>();
@@ -287,7 +262,6 @@ namespace Parrot {
     return mat1;
   }
 
-  // dot
   template<typename T, usize N, usize M>
   T dot(const Mat<T, N, M>& mat1, const Mat<T, N, M>& mat2) {
     T out = 0;
@@ -296,7 +270,6 @@ namespace Parrot {
     }
     return out;
   }
-  // cross
   template<typename T>
   Mat<T, 3, 1> cross(const Mat<T, 3, 1>& v1, const Mat<T, 3, 1>& v2) {
     return {
@@ -305,23 +278,19 @@ namespace Parrot {
       v1.y * v2.x - v1.x * v2.y,
     };
   }
-  // magnitude
   template<typename T, usize N, usize M>
   T magnitude(const Mat<T, N, M>& mat) {
     return std::sqrt(dot(mat, mat));
   }
-  // length
   template<typename T, usize N, usize M>
   T length(const Mat<T, N, M>& mat) {
     return magnitude(mat);
   }
-  // dist
   template<typename T, usize N, usize M>
   T dist(const Mat<T, N, M>& mat1, const Mat<T, N, M>& mat2) {
     return length(mat2 - mat1);
   }
 
-  // normalize(d)
   template<typename T, usize N, usize M>
   Mat<T, N, M>& normalize(Mat<T, N, M>& mat) {
     return mat /= length(mat);
@@ -331,7 +300,6 @@ namespace Parrot {
     return mat / length(mat);
   }
 
-  // transpose(d)
   template<typename T, usize N>
   Mat<T, N>& transpose(Mat<T, N>& mat) {
     for (usize n1 = 0; n1 < N; ++n1) {
@@ -354,7 +322,6 @@ namespace Parrot {
     return out;
   }
 
-  // insert
   template<typename T, usize N1, usize M1, usize N2, usize M2>
   Mat<T, N1, M1>& insert(
     Mat<T, N1, M1>& dest, const Mat<T, N2, M2>& src,
@@ -367,7 +334,6 @@ namespace Parrot {
     }
     return dest;
   }
-  // resize
   template<usize N1, usize M1, typename T, usize N2, usize M2>
   Mat<T, N1, M1> resize(
     const Mat<T, N2, M2>& mat, const Mat<uint, 2, 1>& origin
@@ -377,7 +343,6 @@ namespace Parrot {
     return out;
   }
 
-  // << (stream)
   template<typename T, usize N, usize M>
   ostream& operator<<(ostream& stream, const Mat<T, N, M>& mat) {
     if constexpr (M == 1) {

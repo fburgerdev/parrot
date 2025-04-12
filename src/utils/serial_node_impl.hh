@@ -1,7 +1,6 @@
 #pragma once
 
 namespace Parrot {
-  // value
   template<class T>
   T SerialNode::value() const {
     if (holds<SerialLeaf>(_value)) {
@@ -49,7 +48,6 @@ namespace Parrot {
     }
   }
 
-  // operator()
   template<class T>
   SerialNode::operator T() const {
     return value<T>();

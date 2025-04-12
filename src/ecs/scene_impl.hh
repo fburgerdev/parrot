@@ -1,7 +1,6 @@
 #pragma once
 
 namespace Parrot {
-  // queryEntities
   template<class T>
   List<Entity*> Scene::queryEntities() {
     List<Entity*> found;

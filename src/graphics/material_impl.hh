@@ -1,9 +1,6 @@
 #pragma once
 
 namespace Parrot {
-  //* MaterialNode
-  // parse
-  // :: vec
   template<class T, usize N>
   Vec<T, N> MaterialNode::parseVec(const auto& node) {
     Vec<T, N> vec;
@@ -12,7 +9,6 @@ namespace Parrot {
     }
     return vec;
   }
-  // :: mat
   template<class T, usize N, usize M>
   Mat<T, N, M> MaterialNode::parseMat(const auto& node) {
     Mat<T, N, M> mat;
