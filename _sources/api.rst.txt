@@ -7,27 +7,27 @@ Public API
 .. doxygen:: PublicAPI
    :project: Parrot
 
-.. doxygenclass:: App
+.. doxygenclass:: Parrot::App
    :project: Parrot
    :members:
 
-.. doxygenclass:: Stage
+.. doxygenclass:: Parrot::Stage
    :project: Parrot
    :members:
 
-.. doxygenclass:: Window
+.. doxygenclass:: Parrot::Window
    :project: Parrot
    :members:
 
-.. doxygenclass:: Scene
+.. doxygenclass:: Parrot::Scene
    :project: Parrot
    :members:
 
-.. doxygenclass:: Entity
+.. doxygenclass:: Parrot::Entity
    :project: Parrot
    :members:
 
-.. doxygenclass:: Component
+.. doxygenclass:: Parrot::Component
    :project: Parrot
    :members:
 
