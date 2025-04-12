@@ -3,7 +3,7 @@
 #include "utils/math_matrix.hh"
 
 namespace Parrot {
-  inline const float32 DEFAULT_FOV = (3.1415926F / 2.0F); // 90deg
+  inline const float32 DEFAULT_FOV = (PI<float32> / 2.0F); // 90deg
   inline const float32 DEFAULT_SCALE = 1.0F;
   inline const Vec2<float32> DEFAULT_ZRANGE = Vec2<float32>(0.01F, 10'000.0F);
 
