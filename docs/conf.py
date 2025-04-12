@@ -16,4 +16,4 @@ breathe_projects = {
 }
 breathe_default_project = f"{project}"
 # theme
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'furo'
