@@ -64,7 +64,7 @@ namespace Parrot {
         LOG_WINDOW_TRACE("detected {}", e);
       });
       glfwSetMouseButtonCallback(handle(_handle), [](HandleGLFW* window,
-          int glfw_button, int glfw_action, [[maybe_unused]] int glfw_mods
+          int glfw_button, int glfw_action, int
         ) {
         MouseButton button = (
           glfw_button == GLFW_MOUSE_BUTTON_LEFT ? MouseButton::LEFT : (
@@ -87,8 +87,8 @@ namespace Parrot {
         LOG_WINDOW_TRACE("detected {}", e);
       });
       glfwSetKeyCallback(handle(_handle), [](HandleGLFW* window,
-          int glfw_key, [[maybe_unused]] int glfw_scancode,
-          int glfw_action, [[maybe_unused]] int glfw_mods
+          int glfw_key, int,
+          int glfw_action, int
         ) {
         KeyCode code = (KeyCode)glfw_key;
         KeyState state = (

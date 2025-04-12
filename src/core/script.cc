@@ -12,12 +12,12 @@ namespace Parrot {
   }
 
   // onUpdate
-  void Script::onUpdate([[maybe_unused]] float32 delta_time) {
+  void Script::onUpdate([[maybe_unused]]float32 delta_time) {
     LOG_APP_TRACE("Script::onUpdate(delta_time={})", delta_time);
   }
 
   // resolveEvent
-  bool Script::resolveEvent([[maybe_unused]] const Event& e) {
+  bool Script::resolveEvent(const Event&) {
     return false;
   }
 }

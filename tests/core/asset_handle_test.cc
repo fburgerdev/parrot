@@ -7,7 +7,7 @@ using namespace Parrot;
 class TestAsset : public Asset {
 public:
   // (constructor)
-  TestAsset(const AssetPath& path, [[maybe_unused]] AssetAPI& api)
+  TestAsset(const AssetPath& path, AssetAPI&)
     : Asset(path) {}
 };
 

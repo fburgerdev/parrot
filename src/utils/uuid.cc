@@ -38,12 +38,12 @@ namespace Parrot {
       LOG_ASSET_ERROR("unsupported asset file extension in {}", filepath);
     }
   }
-  UUIDObject::UUIDObject([[maybe_unused]] const UUIDObject& other)
+  UUIDObject::UUIDObject(const UUIDObject&)
     : _uuid(generateUUID()) {}
   UUIDObject::UUIDObject(UUIDObject&& other) noexcept
     : _uuid(std::exchange(other._uuid, 0)) {}
   // (assignment)
-  UUIDObject& UUIDObject::operator=([[maybe_unused]] const UUIDObject& other) {
+  UUIDObject& UUIDObject::operator=(const UUIDObject&) {
     _uuid = generateUUID();
     return *this;
   }
