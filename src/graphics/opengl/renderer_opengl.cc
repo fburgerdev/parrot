@@ -50,15 +50,15 @@ namespace Parrot {
             auto proj = render_data.camera.second->calcProjectionMatrix(
               1080.0F / 720.0F
             );
-            auto view = render_data.camera.first->calcLocalViewMatrix();
+            auto view = render_data.camera.first->calcGlobalViewMatrix();
             shader_opengl.setUniform(
               "u_total_time", g_global_watch.elapsed()
             );
             shader_opengl.setUniform(
-              "u_local_to_world", transform.calcLocalModelMatrix()
+              "u_local_to_world", transform.calcGlobalModelMatrix()
             );
             shader_opengl.setUniform(
-              "u_local_to_world_normal", calcRotationMatrix(transform.rotation)
+              "u_local_to_world_normal", transform.calcGlobalRotationMatrix()
             );
             vertex_array.bind();
             draw(mesh.indices.size());

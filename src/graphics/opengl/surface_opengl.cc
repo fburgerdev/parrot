@@ -12,7 +12,7 @@ namespace Parrot {
     void SurfaceBlock::set(const RenderData& render_data) {
       const auto& [transform, camera] = render_data.camera;
       auto view = (
-        transform ? transform->calcLocalViewMatrix() : identity<float32, 4>()
+        transform ? transform->calcGlobalViewMatrix() : identity<float32, 4>()
         );
       auto proj = (
         camera ? camera->calcProjectionMatrix(1080.0F / 720.0F) : (

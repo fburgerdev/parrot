@@ -5,13 +5,20 @@
 namespace Parrot {
   // (constructor)
   Entity::Entity(Scriptable* parent)
-    : Scriptable(parent) {}
+    : Scriptable(parent) {
+    if (Entity* parent_entity = dynamic_cast<Entity*>(parent)) {
+      transform.setParent(&parent_entity->transform);
+    }
+  }
   Entity::Entity(
     SharedPtr<const EntityPreset> preset,
     Scriptable* parent, AssetAPI& asset_api
   ) : Scriptable(parent) {
     _tag = preset->tag;
     transform = preset->transform;
+    if (Entity* parent_entity = dynamic_cast<Entity*>(parent)) {
+      transform.setParent(&parent_entity->transform);
+    }
     for (const auto& handle : preset->children) {
       auto child = HierarchyNode<Entity>(handle.lock(), this, asset_api);
       _children.emplace(child.getUUID(), std::move(child));

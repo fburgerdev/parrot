@@ -41,6 +41,23 @@ namespace Parrot {
   }
 
   template<class T>
+  Transform<T>::Transform(const Transform<T>* parent)
+    : TreeNode(parent) {}
+
+  template<class T>
+  Mat4x4<T> Transform<T>::calcLocalRotationMatrix() const {
+    return calcRotationMatrix(rotation);
+  }
+  template<class T>
+  Mat4x4<T> Transform<T>::calcGlobalRotationMatrix() const {
+    if (this->hasParent()) {
+      auto* parent = this->getParent();
+      return parent->calcGlobalRotationMatrix() * calcLocalRotationMatrix();
+    }
+    return calcLocalRotationMatrix();
+  }
+
+  template<class T>
   Mat4x4<T> Transform<T>::calcLocalModelMatrix() const {
     Mat4x4<T> translation_matrix = calcTranslationMatrix(position);
     Mat4x4<T> rotation_matrix = calcRotationMatrix(rotation);
@@ -48,9 +65,27 @@ namespace Parrot {
     return translation_matrix * rotation_matrix * scale_matrix;
   }
   template<class T>
+  Mat4x4<T> Transform<T>::calcGlobalModelMatrix() const {
+    if (this->hasParent()) {
+      auto* parent = this->getParent();
+      return parent->calcGlobalModelMatrix() * calcLocalModelMatrix();
+    }
+    return calcLocalModelMatrix();
+  }
+
+  template<class T>
   Mat4x4<T> Transform<T>::calcLocalViewMatrix() const {
     Mat4x4<T> translation_matrix = calcTranslationMatrix(-position);
     Mat4x4<T> rotation_matrix = transposed(calcRotationMatrix(rotation));
     return rotation_matrix * translation_matrix;
+  }
+  template<class T>
+  Mat4x4<T> Transform<T>::calcGlobalViewMatrix() const {
+    if (this->hasParent()) {
+      auto* parent = this->getParent();
+      _ASSERT(this != parent);
+      return parent->calcGlobalModelMatrix() * calcLocalViewMatrix();
+    }
+    return calcLocalViewMatrix();
   }
 }

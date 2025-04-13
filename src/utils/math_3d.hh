@@ -1,5 +1,6 @@
 #pragma once
 #include "math_matrix.hh"
+#include "tree_node.hh"
 
 namespace Parrot {
   template<typename T = DefaultFloat>
@@ -23,10 +24,19 @@ namespace Parrot {
   Mat4x4<T> calcRotationMatrix(const Vec3<T>& euler_rotation);
 
   template<class T = DefaultFloat>
-  class Transform {
+  class Transform : public TreeNode<Transform<T>> {
   public:
+    Transform() = default;
+    Transform(const Transform<T>* parent);
+
+    Mat4x4<T> calcLocalRotationMatrix() const;
+    Mat4x4<T> calcGlobalRotationMatrix() const;
+
     Mat4x4<T> calcLocalModelMatrix() const;
+    Mat4x4<T> calcGlobalModelMatrix() const;
+
     Mat4x4<T> calcLocalViewMatrix() const;
+    Mat4x4<T> calcGlobalViewMatrix() const;
 
     Vec3<T> position = { 0.0F, 0.0F, 0.0F };
     Vec3<T> rotation = { 0.0F, 0.0F, 0.0F };
