@@ -2,10 +2,10 @@
 #include "utils/logger.hh"
 
 namespace Parrot {
-  inline Logger engine_logger = Logger("parrot");
+  inline Logger g_engine_logger = Logger("parrot");
 }
 #if !defined(PARROT_NO_LOG)
-#define LOGGER ::Parrot::engine_logger
+#define LOGGER ::Parrot::g_engine_logger
 #define LOG_GLOBAL_TRACE(fmt,...) LOGGER.logTrace(strview(), fmt, __VA_ARGS__)
 #define LOG_GLOBAL_DEBUG(fmt,...) LOGGER.logDebug(strview(), fmt, __VA_ARGS__)
 #define LOG_GLOBAL_INFO(fmt,...) LOGGER.logInfo(strview(), fmt, __VA_ARGS__)

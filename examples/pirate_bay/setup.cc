@@ -1,6 +1,6 @@
 #include "client.hh"
 #include "scripts/fps.hh"
-#include "scripts/render-main.hh"
+#include "scripts/render_main.hh"
 #include "scripts/controller.hh"
 #include "scripts/terrain_mesh.hh"
 

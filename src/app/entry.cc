@@ -28,13 +28,13 @@ namespace Parrot {
 
   // (static) launch
   static void launch() {
-    engine_logger.setLevel("app", LogLevel::DEBUG);
-    engine_logger.setLevel("core", LogLevel::DEBUG);
-    engine_logger.setLevel("asset", LogLevel::DEBUG);
-    engine_logger.setLevel("ecs", LogLevel::DEBUG);
-    engine_logger.setLevel("graphics", LogLevel::DEBUG);
-    engine_logger.setLevel("math", LogLevel::DEBUG);
-    engine_logger.setLevel("window", LogLevel::DEBUG);
+    g_engine_logger.setLevel("app", LogLevel::DEBUG);
+    g_engine_logger.setLevel("core", LogLevel::DEBUG);
+    g_engine_logger.setLevel("asset", LogLevel::DEBUG);
+    g_engine_logger.setLevel("ecs", LogLevel::DEBUG);
+    g_engine_logger.setLevel("graphics", LogLevel::DEBUG);
+    g_engine_logger.setLevel("math", LogLevel::DEBUG);
+    g_engine_logger.setLevel("window", LogLevel::DEBUG);
 
     cout << s_info << endl;
     cout << s_debug_head << endl;

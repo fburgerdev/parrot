@@ -11,7 +11,6 @@ namespace Parrot {
     Factory() = default;
     virtual ~Factory() = default;
 
-    /// @return Created instance
     virtual UniquePtr<T> create() const = 0;
   };
 
@@ -25,7 +24,6 @@ namespace Parrot {
   public:
     using T::T;
 
-    /// @return Created UniquePtr<T> cast to UniquePtr<Base>
     virtual UniquePtr<Base> create() const override;
   };
 }

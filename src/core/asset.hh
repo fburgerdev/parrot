@@ -7,16 +7,22 @@ namespace Parrot {
   /// @brief Base class for game assets. 
   class Asset : public UUIDObject {
   public:
-    /// @brief Construct empty Asset with no data
+    /// @trivial
     Asset() = default;
-    /// @param path Path the Asset is loaded from
+    /// @trivial
     Asset(const AssetPath& path);
-    /// @param path Path the Asset is loaded from
+    /// @trivial
     Asset(AssetPath&& path);
 
-    /// @return The AssetPath where this Asset is loaded from
+    /// @trivial
     const AssetPath& getAssetPath() const;
   private:
     AssetPath _path;
   };
+  /// @ingroup Internals
+  /// @brief Requirements for game assets.
+  template<class T>
+  concept AssetType = requires(T asset, ostream&& source) {
+    T(std::move(source));
+  } && std::is_base_of_v<Asset, T>;
 }
