@@ -18,6 +18,7 @@ ENABLE_PREPROCESSING = YES
 MACRO_EXPANSION = YES
 EXPAND_ONLY_PREDEF = NO
 PREDEFINED += DOXYGEN
+ALIASES += trivial="This method is trivial and needs no documentation."
 
 # XML Output
 GENERATE_XML = YES
