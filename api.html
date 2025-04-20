@@ -1119,24 +1119,43 @@
 </dd></dl>
 
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4I0EN6Parrot7FactoryE">
-<span id="_CPPv3I0EN6Parrot7FactoryE"></span><span id="_CPPv2I0EN6Parrot7FactoryE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classParrot_1_1Factory"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Factory</span></span></span><a class="headerlink" href="#_CPPv4I0EN6Parrot7FactoryE" title="Link to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0DpEN6Parrot7FactoryE">
+<span id="_CPPv3I0DpEN6Parrot7FactoryE"></span><span id="_CPPv2I0DpEN6Parrot7FactoryE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="sig-name descname"><span class="n"><span class="pre">Args</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classParrot_1_1Factory"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Factory</span></span></span><a class="headerlink" href="#_CPPv4I0DpEN6Parrot7FactoryE" title="Link to this definition">¶</a><br /></dt>
 <dd><div class="docutils container">
 <em>#include &lt;factory.hh&gt;</em></div>
 <p>Interface for class that creates instances of <code class="docutils literal notranslate"><span class="pre">T</span></code>. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>T</strong> – The type of the instances to be created </p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>T</strong> – The type of the instances to be created </p></li>
+<li><p><strong>Args</strong> – The arguments passed to <code class="docutils literal notranslate"><span class="pre">create</span></code> to create an instance </p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="cpp class">
-<dt class="sig sig-object cpp" id="_CPPv4I00EN6Parrot12BasicFactoryE">
-<span id="_CPPv3I00EN6Parrot12BasicFactoryE"></span><span id="_CPPv2I00EN6Parrot12BasicFactoryE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Base</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classParrot_1_1BasicFactory"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BasicFactory</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I00EN6Parrot12BasicFactoryE" title="Parrot::BasicFactory::T"><span class="n"><span class="pre">T</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0EN6Parrot7FactoryE" title="Parrot::Factory"><span class="n"><span class="pre">Factory</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00EN6Parrot12BasicFactoryE" title="Parrot::BasicFactory::Base"><span class="n"><span class="pre">Base</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4I00EN6Parrot12BasicFactoryE" title="Link to this definition">¶</a><br /></dt>
+<dt class="sig sig-object cpp" id="_CPPv4I0DpEN6Parrot13LambdaFactoryE">
+<span id="_CPPv3I0DpEN6Parrot13LambdaFactoryE"></span><span id="_CPPv2I0DpEN6Parrot13LambdaFactoryE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="sig-name descname"><span class="n"><span class="pre">Args</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classParrot_1_1LambdaFactory"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">LambdaFactory</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0DpEN6Parrot7FactoryE" title="Parrot::Factory"><span class="n"><span class="pre">Factory</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I0DpEN6Parrot13LambdaFactoryE" title="Parrot::LambdaFactory::T"><span class="n"><span class="pre">T</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4I0DpEN6Parrot13LambdaFactoryE" title="Link to this definition">¶</a><br /></dt>
 <dd><div class="docutils container">
 <em>#include &lt;factory.hh&gt;</em></div>
-<p>A basic implementation for <a class="reference internal" href="#classParrot_1_1Factory"><span class="std std-ref">Factory&lt;Base&gt;</span></a> that creates copies of an existing instance. </p>
+<p>A basic implementation for <a class="reference internal" href="#classParrot_1_1Factory"><span class="std std-ref">Factory&lt;Base&gt;</span></a> that calls a given method (usually a lambda) to create instances. </p>
+<dl class="field-list simple">
+<dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>T</strong> – The type of the instances to be created </p></li>
+<li><p><strong>Args</strong> – The arguments passed to <code class="docutils literal notranslate"><span class="pre">create</span></code> to create an instance </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4I00EN6Parrot11CopyFactoryE">
+<span id="_CPPv3I00EN6Parrot11CopyFactoryE"></span><span id="_CPPv2I00EN6Parrot11CopyFactoryE"></span><span class="k"><span class="pre">template</span></span><span class="p"><span class="pre">&lt;</span></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">T</span></span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Base</span></span></span><span class="p"><span class="pre">&gt;</span></span><br /><span class="target" id="classParrot_1_1CopyFactory"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">CopyFactory</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I00EN6Parrot11CopyFactoryE" title="Parrot::CopyFactory::T"><span class="n"><span class="pre">T</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4I0DpEN6Parrot7FactoryE" title="Parrot::Factory"><span class="n"><span class="pre">Factory</span></span></a><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4I00EN6Parrot11CopyFactoryE" title="Parrot::CopyFactory::Base"><span class="n"><span class="pre">Base</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4I00EN6Parrot11CopyFactoryE" title="Link to this definition">¶</a><br /></dt>
+<dd><div class="docutils container">
+<em>#include &lt;factory.hh&gt;</em></div>
+<p>A basic implementation for <a class="reference internal" href="#classParrot_1_1Factory"><span class="std std-ref">Factory&lt;Base&gt;</span></a> that copies an existing instance to create instances. </p>
 <dl class="field-list simple">
 <dt class="field-odd">Template Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1310,8 +1329,9 @@
 <li><a class="reference internal" href="#_CPPv412AssetFactory"><code class="docutils literal notranslate"><span class="pre">AssetFactory</span></code></a></li>
 <li><a class="reference internal" href="#_CPPv4N6Parrot5AssetE"><code class="docutils literal notranslate"><span class="pre">Parrot::Asset</span></code></a></li>
 <li><a class="reference internal" href="#_CPPv4N6Parrot8AssetAPIE"><code class="docutils literal notranslate"><span class="pre">Parrot::AssetAPI</span></code></a></li>
-<li><a class="reference internal" href="#_CPPv4I0EN6Parrot7FactoryE"><code class="docutils literal notranslate"><span class="pre">Parrot::Factory</span></code></a></li>
-<li><a class="reference internal" href="#_CPPv4I00EN6Parrot12BasicFactoryE"><code class="docutils literal notranslate"><span class="pre">Parrot::BasicFactory</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4I0DpEN6Parrot7FactoryE"><code class="docutils literal notranslate"><span class="pre">Parrot::Factory</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4I0DpEN6Parrot13LambdaFactoryE"><code class="docutils literal notranslate"><span class="pre">Parrot::LambdaFactory</span></code></a></li>
+<li><a class="reference internal" href="#_CPPv4I00EN6Parrot11CopyFactoryE"><code class="docutils literal notranslate"><span class="pre">Parrot::CopyFactory</span></code></a></li>
 <li><a class="reference internal" href="#_CPPv4N6Parrot6ScriptE"><code class="docutils literal notranslate"><span class="pre">Parrot::Script</span></code></a></li>
 </ul>
 </li>
