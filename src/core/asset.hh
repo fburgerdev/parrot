@@ -19,10 +19,17 @@ namespace Parrot {
   private:
     AssetPath _path;
   };
-  /// @ingroup Internals
-  /// @brief Requirements for game assets.
+
   template<class T>
-  concept AssetType = requires(T asset, ostream&& source) {
-    T(std::move(source));
-  } && std::is_base_of_v<Asset, T>;
+  concept InternalAsset = requires(T asset, SerialNode node) {
+    static_cast<Asset>(asset);
+    T{AssetPath()};
+  };
+  template<class T>
+  concept ExternalAsset = requires(T asset, stdf::path path) {
+    static_cast<Asset>(asset);
+    T{path};
+  };
+  template<class T>
+  concept AssetType = InternalAsset<T> || ExternalAsset<T>;
 }
