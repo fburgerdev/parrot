@@ -18,32 +18,26 @@ an asset manager and window handling, the game engine provides a basic foundatio
 ## 📖 Documentation
 Read the full documentation [here](docs/index.md).
 
-## 🔧 Building the Project
+## 🎮 Create a game!
 
-### Prerequisites
-- C++20 compatible compiler
-- CMake (version 3.16 or higher)
+### Make sure you have installed
+- C++ compiler (>= c++20)
+- CMake (>= 3.16)
 
-### Build Steps
+### Run in your console
 ```sh
 # Clone the repository
-git clone https://github.com/your-repo/parrot.git
-cd parrot
+git clone https://github.com/fburgerdev/parrot.git -b game my_game
+cd my_game
 
-# Create a build directory
-mkdir build && cd build
+# Configure and build
+cmake -S . -B build
+cd build
+cmake --build . -j20
 
-# Configure with CMake
-cmake .. -DCMAKE_BUILD_TYPE=Release
-
-# Build the engine
-make -j20
+# Play!
+./build/Debug/my_game.exe
 ```
-
-## 🎮 Hello, Rotating Cube!
-To create a basic game with a rotating cube in Parrot:
-
-// TODO
 
 ## 🛠 Developer Notes
 For more details on Parrot’s architecture and contribution guidelines:
