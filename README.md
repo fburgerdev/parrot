@@ -36,7 +36,7 @@ cd build
 cmake --build . -j20
 
 # Play!
-./build/Debug/my_game.exe
+./Debug/my_game.exe
 ```
 
 ## 🛠 Developer Notes
