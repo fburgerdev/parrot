@@ -10,9 +10,9 @@ namespace Parrot {
     Factory<Component>, const SerialNode&, const AssetPath&, AssetAPI&
   >;
   // factories
-  using CameraFactory = BasicFactory<CameraComponent, Component>;
-  using LightFactory = BasicFactory<LightComponent, Component>;
-  using RenderObjectFactory = BasicFactory<RenderObjectComponent, Component>;
+  using CameraFactory = CopyFactory<CameraComponent, Component>;
+  using LightFactory = CopyFactory<LightComponent, Component>;
+  using RenderObjectFactory = CopyFactory<RenderObjectComponent, Component>;
   // (global) g_registry
   template<>
   Map<string, ComponentRegistryEntry> g_registry<

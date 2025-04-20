@@ -17,10 +17,20 @@ struct Derived : public Base {
 //* Factory
 // no methods implemented
 
-//* BasicFactory
+//* LambdaFactory
 // create
-TEST(BasicFactory, create) {
-	auto factory = BasicFactory<Derived, Base>(42);
+TEST(LambdaFactory, create) {
+	auto factory = LambdaFactory<Base>([]() {
+		return std::make_unique<Derived>(42);
+	});
+	factory.create()->value = 0;
+	EXPECT_EQ(factory.create()->value, 42);
+}
+
+//* CopyFactory
+// create
+TEST(CopyFactory, create) {
+	auto factory = CopyFactory<Derived, Base>(42);
 	factory.create()->value = 0;
 	EXPECT_EQ(factory.create()->value, 42);
 }
