@@ -15,7 +15,7 @@ namespace Parrot {
     string name = "App";
     stdf::path asset_dir = ".";
     LoadingPolicy loading_policy = LoadingPolicy::LAZY_LOAD;
-    UnloadingPolicy unloading_policy = UnloadingPolicy::UNLOAD_APP;
+    UnloadingPolicy unloading_policy = UnloadingPolicy::UNLOAD_NEVER;
     AssetHandle<StageConfig> main_stage;
   };
 }

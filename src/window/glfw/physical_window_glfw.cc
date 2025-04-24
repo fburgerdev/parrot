@@ -64,25 +64,25 @@ namespace Parrot {
         LOG_WINDOW_TRACE("detected {}", e);
       });
       glfwSetMouseButtonCallback(handle(_handle), [](HandleGLFW* window,
-          int glfw_button, int glfw_action, int
+          int button, int action, int
         ) {
-        MouseButton button = (
-          glfw_button == GLFW_MOUSE_BUTTON_LEFT ? MouseButton::LEFT : (
-            glfw_button == GLFW_MOUSE_BUTTON_MIDDLE ? MouseButton::MIDDLE : (
-              glfw_button == GLFW_MOUSE_BUTTON_RIGHT ? MouseButton::RIGHT : (
+        MousePress::Button mouse_button = (
+          action == GLFW_MOUSE_BUTTON_LEFT ? MousePress::Button::LEFT : (
+            action == GLFW_MOUSE_BUTTON_MIDDLE ? MousePress::Button::MIDDLE : (
+              action == GLFW_MOUSE_BUTTON_RIGHT ? MousePress::Button::RIGHT : (
                 throw std::logic_error("invalid enum value")
               )
             )
           )
         );
-        MouseState state = (
-          glfw_action == GLFW_PRESS ? MouseState::PRESSED : (
-            glfw_action == GLFW_RELEASE ? MouseState::RELEASED : (
+        MousePress::State mouse_state = (
+          action == GLFW_PRESS ? MousePress::State::PRESSED : (
+            action == GLFW_RELEASE ? MousePress::State::RELEASED : (
               throw std::logic_error("invalid enum value")
             )
           )
         );
-        WindowEvent e(MousePress({ button, state }));
+        WindowEvent e(MousePress({ mouse_button, mouse_state }));
         s_event_queues.at(window).emplace_back(e);
         LOG_WINDOW_TRACE("detected {}", e);
       });

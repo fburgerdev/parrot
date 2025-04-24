@@ -50,7 +50,7 @@ namespace Parrot {
 
     stdf::path _asset_dir;
     LoadingPolicy _load_policy = LoadingPolicy::LAZY_LOAD;
-    UnloadingPolicy _unload_policy = UnloadingPolicy::UNLOAD_APP;
+    UnloadingPolicy _unload_policy = UnloadingPolicy::UNLOAD_NEVER;
     Registry _registry;
     Map<UUID, Variant<SharedPtr<Asset>, WeakPtr<Asset>>> _loaded;
   };

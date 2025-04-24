@@ -120,7 +120,7 @@ namespace Parrot {
   // (constructor)
   AssetManager::AssetManager(const stdf::path& asset_dir)
     : AssetManager(asset_dir,
-      LoadingPolicy::LAZY_LOAD, UnloadingPolicy::UNLOAD_APP
+      LoadingPolicy::LAZY_LOAD, UnloadingPolicy::UNLOAD_NEVER
   ) {}
   AssetManager::AssetManager(
     const stdf::path& asset_dir,

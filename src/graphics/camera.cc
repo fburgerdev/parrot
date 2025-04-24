@@ -109,22 +109,22 @@ namespace Parrot {
   }
 
   // << (stream)
-  ostream& operator<<(ostream& stream, const PerspectiveCamera& camera) {
+  ostream& operator<<(ostream& stream, const PerspectiveCamera& cam) {
     stream << "PerspectiveCamera(";
-    stream << "fov=" << camera.fov << ",";
-    stream << "zrange=" << camera.z_range << ")";
+    stream << "fov=" << cam.fov << ",";
+    stream << "zrange=" << cam.z_range << ")";
     return stream;
   }
-  ostream& operator<<(ostream& stream, const OrthographicCamera& camera) {
+  ostream& operator<<(ostream& stream, const OrthographicCamera& cam) {
     stream << "OrthographicCamera(";
-    stream << "scale=" << camera.scale << ",";
-    stream << "zrange=" << camera.z_range << ")";
+    stream << "scale=" << cam.scale << ",";
+    stream << "zrange=" << cam.z_range << ")";
     return stream;
   }
-  ostream& operator<<(ostream& stream, const Camera& camera) {
-    std::visit([&](const auto& specific_camera) {
-      stream << specific_camera;
-    }, camera.value);
+  ostream& operator<<(ostream& stream, const Camera& cam) {
+    std::visit([&](const auto& specific_cam) {
+      stream << specific_cam;
+    }, cam.value);
     return stream;
   }
 }

@@ -15,21 +15,30 @@ namespace Parrot {
   public:
     Image(const stdf::path& filepath, Opt<stdf::path> debug_root = {});
     Image(strview name, const uchar* buffer, usize size);
+    /// @trivial
     Image(const Image& other);
+    /// @trivial
     Image(Image&& other) noexcept;
     Image(const AssetPath& path, AssetAPI& api);
     Image(const SerialNode& node, const AssetPath& path, AssetAPI& api);
+    /// @trivial
     ~Image();
+    /// @trivial
     Image& operator=(const Image& other);
+    /// @trivial
     Image& operator=(Image&& other) noexcept;
 
     void safeAsBMP(
       const stdf::path& filepath, Opt<stdf::path> debug_root = {}
     ) const;
 
+    /// @trivial
     uint getWidth() const;
+    /// @trivial
     uint getHeight() const;
+    /// @trivial
     ImageFormat getFormat() const;
+    /// @return Pointer to the beginning of the pixel buffer (row-major)
     const uchar* getBytes() const;
   private:
     static stdf::path getDebugFilepath(

@@ -46,8 +46,8 @@ namespace Parrot {
           }
         }
         else if (auto* mp = we->getMousePress()) {
-          if (mp->state == MouseState::PRESSED) {
-            if (mp->button == MouseButton::LEFT) {
+          if (mp->state == MousePress::State::PRESSED) {
+            if (mp->button == MousePress::Button::LEFT) {
               if (!_captured) {
                 _captured = true;
                 stage->window.setCursorState(CursorState::CAPTURED);

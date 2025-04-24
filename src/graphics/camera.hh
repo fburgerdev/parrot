@@ -10,11 +10,17 @@ namespace Parrot {
   struct PerspectiveCamera {
     Mat4x4<float32> calcProjectionMatrix(float32 aspect) const;
 
+    /// @trivial
+    friend ostream& operator<<(ostream& stream, const PerspectiveCamera& cam);
+
     float32 fov = DEFAULT_FOV;
     Vec2<float32> z_range = DEFAULT_ZRANGE;
   };
   struct OrthographicCamera {
     Mat4x4<float32> calcProjectionMatrix(float32 aspect) const;
+
+    /// @trivial
+    friend ostream& operator<<(ostream& stream, const OrthographicCamera& cam);
 
     float32 scale = DEFAULT_SCALE;
     Vec2<float32> z_range = DEFAULT_ZRANGE;
@@ -28,11 +34,10 @@ namespace Parrot {
     void loadFromSerialNode(const SerialNode& node, AssetAPI& api);
     Mat4x4<float32> calcProjectionMatrix(float32 aspect) const;
 
-    Variant<
-      PerspectiveCamera, OrthographicCamera
-    > value = PerspectiveCamera();
+    /// @trivial
+    friend ostream& operator<<(ostream& stream, const Camera& cam);
+
+    /// @trivial
+    Variant<PerspectiveCamera, OrthographicCamera> value = PerspectiveCamera();
   };
-  ostream& operator<<(ostream& stream, const OrthographicCamera& camera);
-  ostream& operator<<(ostream& stream, const PerspectiveCamera& camera);
-  ostream& operator<<(ostream& stream, const Camera& camera);
 }

@@ -5,7 +5,10 @@
 #include "graphics/render_object.hh"
 
 namespace Parrot {
+  /// @trivial
   using CameraComponent = BasicComponent<Camera>;
+  /// @trivial
   using LightComponent = BasicComponent<Light>;
+  /// @trivial
   using RenderObjectComponent = BasicComponent<RenderObject>;
 }

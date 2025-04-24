@@ -66,7 +66,7 @@ namespace Parrot {
       // unloading-policy
       if (node_asset_manager.contains("unloading-policy")) {
         if (node_asset_manager.at("unloading-policy") == "app") {
-          unloading_policy = UnloadingPolicy::UNLOAD_APP;
+          unloading_policy = UnloadingPolicy::UNLOAD_NEVER;
         }
         else if (node_asset_manager.at("unloading-policy") == "scene") {
           // TODO: implement unloading-policy 'scene'
