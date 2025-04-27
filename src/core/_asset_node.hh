@@ -2,16 +2,17 @@
 #include "_asset_handle.hh"
 
 namespace Parrot {
-  class _AssetNode : public _Asset {
+  template<class T = _Asset>// requires std::is_base_of_v<_Asset, T>
+  class _AssetNode : public T {
   public:
     template<class T>
     _AssetHandle<T> createAssetHandle(const AssetKey& key) {
-      return { _manager->addAsset(key, *this), *_manager };
+      return { this->_manager->registerAsset(key, *this), *this->_manager };
     }
 
     template<class T>
     friend class _AssetHandle;
   private:
-    using _Asset::_Asset;
+    using T::T;
   };
 }
