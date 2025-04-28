@@ -15,29 +15,47 @@ namespace Parrot {
   };
   class _AssetFolderManager : public _AssetManager {
   public:
-    _AssetFolderManager()
-      : _root(this) {}
+    _AssetFolderManager(const stdf::path& asset_dir)
+      : _root(this), _registry(asset_dir) {
+      _ASSERT(stdf::is_directory(asset_dir));
+    }
+
+    const stdf::path& getAssetDirectory() {
+      return _registry.getRoot();
+    }
 
     _AssetFolderRoot& getAssetRoot() {
       return _root;
     }
+
+    virtual Deserializer& getDeserializer() {
+      return _deserializer;
+    }
   private:
     class Registry {
     public:
+      Registry(const stdf::path& root)
+        : _root(root) {}
+
+      const stdf::path& getRoot() const {
+        return _root;
+      }
+
       bool contains(const AssetKey& key) const {
         if (holds<UUID>(key)) {
           return _uuid_to_path.contains(std::get<UUID>(key));
         }
         else {
-          return _path_to_uuid.contains(std::get<AssetPath>(key));
+          return _path_to_uuid.contains(normalize(std::get<AssetPath>(key)));
         }
       }
       UUID operator[](const AssetPath& path) {
-        auto it = _path_to_uuid.find(path);
+        AssetPath normalized = normalize(path);
+        auto it = _path_to_uuid.find(normalized);
         if (it == _path_to_uuid.end()) {
           UUID uuid = generateUUID();
-          _uuid_to_path.emplace(uuid, path);
-          _path_to_uuid.emplace(path, uuid);
+          _uuid_to_path.emplace(uuid, normalized);
+          _path_to_uuid.emplace(normalized, uuid);
           return uuid;
         }
         else {
@@ -48,6 +66,19 @@ namespace Parrot {
         return _uuid_to_path.at(uuid);
       }
     private:
+      AssetPath normalize(const AssetPath& path) const {
+        AssetPath normalized = path;
+        if (normalized.file.is_relative()) {
+          normalized.file = stdf::canonical(_root / normalized.file);
+        }
+        else {
+          _ASSERT(!stdf::relative(normalized.file, _root).empty());
+          normalized.file = stdf::canonical(normalized.file);
+        }
+        return normalized;
+      }
+
+      stdf::path _root;
       HashMap<UUID, AssetPath> _uuid_to_path;
       Map<AssetPath, UUID> _path_to_uuid; // TOOD: Map -> HashMap
     };
@@ -95,6 +126,7 @@ namespace Parrot {
     }
 
     _AssetFolderRoot _root;
+    Deserializer _deserializer;
     Registry _registry;
     HashMap<UUID, List<UUID>> _dependencies;
     HashMap<UUID, Variant<SharedPtr<_Asset>, WeakPtr<_Asset>>> _assets;
