@@ -4,9 +4,11 @@
 #include "_asset_manager.hh"
 
 namespace Parrot {
-  template<class T>// requires std::is_base_of_v<_Asset, T>
+  template<class T>
   class _AssetHandle {
   public:
+    using Type = T;
+
     _AssetHandle() = default;
 
     SharedPtr<T> lock() const {
@@ -17,7 +19,7 @@ namespace Parrot {
         auto asset = UniquePtr<_Asset>(new T());
         asset->_manager = _manager;
         return asset;
-      };
+        };
       return std::dynamic_pointer_cast<T>(
         _manager->lockAsset(_key, LambdaFactory<_Asset>(lambda))
       );
@@ -40,4 +42,12 @@ namespace Parrot {
     AssetKey _key = UUID(0);
     _AssetManager* _manager = nullptr;
   };
+
+  template<class T>
+  constexpr bool IS_ASSET_HANDLE = false;
+  template<class T>
+  constexpr bool IS_ASSET_HANDLE<_AssetHandle<T>> = true;
+
+  template<class T>
+  concept AssetHandleType = IS_ASSET_HANDLE<T>;
 }
