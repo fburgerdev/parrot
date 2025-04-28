@@ -12,10 +12,10 @@ namespace Parrot {
     friend class _AssetNode;
     template<class T>
     friend class _AssetHandle;
+    friend class _SerialAsset;
   protected:
     _Asset(_AssetManager* manager = nullptr)
-      : _manager(manager) {
-    }
+      : _manager(manager) {}
   private:
     _AssetManager* _manager;
   };
