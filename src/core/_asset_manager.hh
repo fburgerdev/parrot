@@ -7,6 +7,5 @@ namespace Parrot {
   public:
     virtual AssetRef lockAsset(const AssetKey& key, const Factory<_Asset>& factory) = 0;
     virtual UUID registerAsset(const AssetKey& key, _Asset& parent) = 0;
-    virtual Deserializer& getDeserializer() = 0;
   };
 }

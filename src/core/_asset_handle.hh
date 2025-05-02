@@ -16,10 +16,13 @@ namespace Parrot {
         return nullptr;
       }
       auto lambda = [&]() {
-        auto asset = UniquePtr<_Asset>(new T());
-        asset->_manager = _manager;
-        return asset;
-        };
+        if constexpr (requires { T{*_manager}; }) {
+          return std::make_unique<T>(*_manager);
+        }
+        else {
+          return std::make_unique<T>();
+        }
+      };
       return std::dynamic_pointer_cast<T>(
         _manager->lockAsset(_key, LambdaFactory<_Asset>(lambda))
       );

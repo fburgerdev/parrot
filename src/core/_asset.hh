@@ -1,23 +1,18 @@
 #pragma once
 #include "core/asset_path.hh"
-#include "utils/serial_node.hh"
+#include "utils/deserializer.hh"
 
 namespace Parrot {
   class _AssetManager;
   class _Asset {
   public:
-    virtual bool loadAsset(const AssetPath& path) = 0;
+    struct LoadContext {
+      AssetPath asset_path;
+      istream& data_stream;
+      Deserializer& deserializer;
+    };
 
-    template<class T>
-    friend class _AssetNode;
-    template<class T>
-    friend class _AssetHandle;
-    friend class _SerialAsset;
-  protected:
-    _Asset(_AssetManager* manager = nullptr)
-      : _manager(manager) {}
-  private:
-    _AssetManager* _manager;
+    virtual bool loadAsset(LoadContext& context) = 0;
   };
   using AssetRef = SharedPtr<_Asset>;
 }

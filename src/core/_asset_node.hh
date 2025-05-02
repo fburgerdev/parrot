@@ -5,15 +5,15 @@ namespace Parrot {
   template<class T = _Asset>// requires std::is_base_of_v<_Asset, T>
   class _AssetNode : public T {
   public:
+    _AssetNode(_AssetManager& manager)
+      : _manager(&manager) {}
+
     template<class U>
     _AssetHandle<U> createAssetHandle(const AssetKey& key) {
-      return { this->_manager->registerAsset(key, *this), *this->_manager };
+      return { _manager->registerAsset(key, *this), *_manager };
     }
-
-    template<class T>
-    friend class _AssetHandle;
   private:
-    using T::T;
+    _AssetManager* _manager = nullptr;
   };
 
   template<class T, class Handle>

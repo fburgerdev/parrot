@@ -5,7 +5,7 @@
 namespace Parrot {
   class _AssetFolderRoot : public _AssetNode<> {
   public:
-    virtual bool loadAsset(const AssetPath& path) override {
+    virtual bool loadAsset(LoadContext&) override {
       return false;
     }
 
@@ -16,7 +16,7 @@ namespace Parrot {
   class _AssetFolderManager : public _AssetManager {
   public:
     _AssetFolderManager(const stdf::path& asset_dir)
-      : _root(this), _registry(asset_dir) {
+      : _root(*this), _registry(asset_dir) {
       _ASSERT(stdf::is_directory(asset_dir));
     }
 
@@ -26,10 +26,6 @@ namespace Parrot {
 
     _AssetFolderRoot& getAssetRoot() {
       return _root;
-    }
-
-    virtual Deserializer& getDeserializer() {
-      return _deserializer;
     }
   private:
     class Registry {
@@ -80,7 +76,7 @@ namespace Parrot {
 
       stdf::path _root;
       HashMap<UUID, AssetPath> _uuid_to_path;
-      Map<AssetPath, UUID> _path_to_uuid; // TOOD: Map -> HashMap
+      Map<AssetPath, UUID> _path_to_uuid; // TODO: Map -> HashMap
     };
 
     virtual AssetRef lockAsset(const AssetKey& key, const Factory<_Asset>& factory) override {
@@ -98,8 +94,11 @@ namespace Parrot {
           return std::get<WeakPtr<_Asset>>(it->second).lock();
         }
       }
+      AssetPath asset_path = _registry.at(uuid);
+      ifstream stream{asset_path.file};
+      _Asset::LoadContext context{asset_path, stream, _deserializer};
       auto asset = AssetRef(factory.create());
-      if (asset->loadAsset(_registry.at(uuid))) {
+      if (asset->loadAsset(context)) {
         if (it != _assets.end()) {
           it->second = asset;
         }

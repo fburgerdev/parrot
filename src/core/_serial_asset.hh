@@ -5,9 +5,8 @@
 namespace Parrot {
   class _SerialAsset : public _Asset {
   public:
-    virtual bool loadAsset(const AssetPath& path) override {
-      auto& deserializer = _manager->getDeserializer();
-      deserializer.deserialize(path.file, *this);
+    virtual bool loadAsset(LoadContext& context) override {
+      context.deserializer.deserialize(context.asset_path.file, *this);
       return true;
     }
     virtual StructureNode structure() = 0;
