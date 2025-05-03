@@ -1,6 +1,6 @@
 #pragma once
 #include "core/_asset_handle.hh"
-#include "core/_asset_node.hh"
+#include "_asset_node.hh"
 
 namespace Parrot {
   class _AssetFolderRoot : public _AssetNode<> {

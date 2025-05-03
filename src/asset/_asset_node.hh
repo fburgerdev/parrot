@@ -1,5 +1,5 @@
 #pragma once
-#include "_asset_handle.hh"
+#include "core/_asset_handle.hh"
 
 namespace Parrot {
   template<class T = _Asset>// requires std::is_base_of_v<_Asset, T>

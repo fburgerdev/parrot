@@ -1,15 +1,19 @@
 #pragma once
-#include "_asset_handle.hh"
-#include "utils/serial_node.hh"
+#include "_asset_node.hh"
 
 namespace Parrot {
-  class _SerialAsset : public _Asset {
+  template<class T>
+  class AssetAdapter : public _Asset, protected T {
+    virtual bool loadAsset(LoadContext& context) override;
+  };
+  template<class T>
+  class SerialAssetAdapter : public _Asset, protected T {
   public:
     virtual bool loadAsset(LoadContext& context) override {
       context.deserializer.deserialize(context.asset_path.file, *this);
       return true;
     }
-    virtual StructureNode structure() = 0;
+    StructureNode structure();
   };
   template<AssetHandleType Handle, class Node>
     requires AssetNodeType<Node, Handle>
@@ -19,7 +23,7 @@ namespace Parrot {
       return parent.createAssetHandle<Type>(node.value<UUID>());
     }
     else if (node.isString()) {
-      AssetPath asset_path{stdf::path{node.value<string>()}};
+      AssetPath asset_path{ stdf::path{node.value<string>()} };
       return parent.createAssetHandle<Type>(asset_path);
     }
     else if (node.isMap()) {
