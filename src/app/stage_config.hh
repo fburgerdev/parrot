@@ -14,4 +14,9 @@ namespace Parrot {
     List<AssetHandle<SceneConfig>> scenes;
     List<string> scripts;
   };
+  struct _StageConfig {
+    _AssetHandle<_WindowConfig> window;
+    List<_AssetHandle<_SceneConfig>> scenes;
+    List<string> scripts;
+  };
 }

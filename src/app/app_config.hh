@@ -18,4 +18,11 @@ namespace Parrot {
     UnloadingPolicy unloading_policy = UnloadingPolicy::UNLOAD_NEVER;
     AssetHandle<StageConfig> main_stage;
   };
+  struct _AppConfig {
+    string name = "App";
+    stdf::path asset_dir = ".";
+    LoadingPolicy loading_policy = LoadingPolicy::LAZY_LOAD;
+    UnloadingPolicy unloading_policy = UnloadingPolicy::UNLOAD_NEVER;
+    _AssetHandle<_StageConfig> main_stage;
+  };
 }

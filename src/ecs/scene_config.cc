@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "scene_config.hh"
-#include "utils/serial_node.hh"
+#include "core/log.hh"
 
 namespace Parrot {
   // (constructor) for Asset

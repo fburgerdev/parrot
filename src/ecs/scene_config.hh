@@ -13,4 +13,9 @@ namespace Parrot {
     AssetHandle<EntityPreset> root;
     List<string> scripts;
   };
+  struct _SceneConfig {
+    string name = "Unnamed Scene";
+    _AssetHandle<_EntityPreset> root;
+    List<string> scripts;
+  };
 }

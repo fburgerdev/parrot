@@ -1,6 +1,5 @@
 #include "common.hh"
 #include "material.hh"
-#include "utils/serial_node.hh"
 
 namespace Parrot {
   //* MaterialNode

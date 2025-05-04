@@ -1,6 +1,6 @@
 #include "common.hh"
 #include "app_config.hh"
-#include "utils/serial_node.hh"
+#include "core/log.hh"
 
 namespace Parrot {
   // (constructor)

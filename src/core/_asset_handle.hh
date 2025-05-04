@@ -1,6 +1,5 @@
 #pragma once
 #include "_asset_manager.hh"
-#include "core/factory.hh"
 #include "core/asset_path.hh"
 
 namespace Parrot {

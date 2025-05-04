@@ -1,5 +1,6 @@
 #pragma once
 #include "_asset.hh"
+#include "core/factory.hh"
 #include "utils/deserializer.hh"
 
 namespace Parrot {

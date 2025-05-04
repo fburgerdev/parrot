@@ -1,6 +1,5 @@
 #include "common.hh"
 #include "shader_source.hh"
-#include "utils/serial_node.hh"
 
 namespace Parrot {
   // (static) split

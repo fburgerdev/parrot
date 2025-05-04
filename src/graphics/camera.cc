@@ -1,7 +1,6 @@
 #include "common.hh"
 #include "camera.hh"
 #include "core/log.hh"
-#include "utils/serial_node.hh"
 
 namespace Parrot {
   // calcProjectionMatrix

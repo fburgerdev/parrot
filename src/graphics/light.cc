@@ -1,6 +1,5 @@
 #include "common.hh"
 #include "light.hh"
-#include "utils/serial_node.hh"
 
 namespace Parrot {
   // (constructor) for Asset
