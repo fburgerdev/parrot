@@ -69,6 +69,10 @@ namespace Parrot {
       auto structure = target.structure(std::forward<Args>(args)...);
       deserialize(SerialNode::loadFromJSON(path), structure);
     }
+    void load(const stdf::path& path, StructureNode& structure) {
+      _path = SerialPath{ path };
+      deserialize(SerialNode::loadFromJSON(path), structure);
+    }
 
     ErrorPolicy getErrorPolicy() {
       return _error_policy;
