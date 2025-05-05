@@ -1,6 +1,6 @@
 #pragma once
 #include "_asset_manager.hh"
-#include "core/asset_path.hh"
+#include "asset_path.hh"
 
 namespace Parrot {
   template<class T>

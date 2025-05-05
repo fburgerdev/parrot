@@ -3,7 +3,6 @@
 #include "utils/deserializer.hh"
 
 namespace Parrot {
-  class _AssetManager;
   class _Asset {
   public:
     struct LoadContext {
